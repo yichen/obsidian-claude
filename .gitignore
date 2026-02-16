@@ -1,8 +1,18 @@
+/*
 
+# But track the .claude directory and its contents
+!/.claude/
+!/.claude/**
+
+# Also track the .gitignore itself
+!/.gitignore
+
+# macOS
 .DS_Store
-.obsidian/.obsidian
+
+# Obsidian workspace (if it somehow gets in .claude)
 .obsidian/
 
-# Python compiled files
+# Python (if you have scripts in .claude)
 *.pyc
 __pycache__/
