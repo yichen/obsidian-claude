@@ -21,4 +21,4 @@ Perform a complete git sync of the Obsidian repository:
 - If rebase has conflicts, stop and report the conflicts to the user
 - Do not use `--force` when pushing
 
-Execute the git commands in the `/Users/chen.y/Obsidian` directory.
+Execute the git commands in the `/Users/ychen2/Obsidian` directory.

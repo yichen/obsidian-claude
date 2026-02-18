@@ -4,6 +4,10 @@
 !/.claude/
 !/.claude/**
 
+# Machine-specific settings (absolute paths, per-computer permissions)
+.claude/settings.local.json
+.claude/settings.local.sync-conflict-*
+
 # Also track the .gitignore itself
 !/.gitignore
 
