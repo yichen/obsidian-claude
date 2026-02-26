@@ -82,12 +82,14 @@ Use the current time (PST) for the `HH:MM` header.
 
 ### Step 6: Report
 
-Output a summary:
-1. **New entries added** — list what was added to each MEMORY.md section
-2. **Entries updated** — list what was modified
-3. **Entries skipped** — list duplicates that were already recorded
-4. **Daily log** — confirm the daily log file path
-5. **MEMORY.md line count** — current count and whether compression is recommended
+Output a **concise** summary. **Only include sections that have non-zero items.** Omit any section where the count is zero or there is nothing to report.
+
+Possible sections (include only if applicable):
+- **Added** — what was added to MEMORY.md (always show if anything was added)
+- **Updated** — what was modified in existing entries
+- **Skipped** — duplicates already recorded
+- **Daily log** — confirm the file path (always show)
+- **MEMORY.md** — line count (always show; warn if >500)
 
 ## Important Notes
 
