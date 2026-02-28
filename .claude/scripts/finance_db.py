@@ -111,7 +111,7 @@ CATEGORIES = [
     ("Ride Share", "Transportation"),
     ("Parking", "Transportation"),
     ("Car Maintenance", "Transportation"),
-    ("Flights", "Transportation"),
+    ("Flights", "Travel"),
     # Shopping
     ("Amazon", "Shopping"),
     ("Online Shopping", "Shopping"),
