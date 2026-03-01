@@ -5,13 +5,18 @@ import csv
 import json
 import os
 import re
+import shutil
 import sqlite3
 import sys
 from pathlib import Path
 
+import yaml
+
 VAULT_ROOT = Path(__file__).resolve().parent.parent.parent
 DB_PATH = VAULT_ROOT / "Finance" / "finance.db"
 CSV_ROOT = VAULT_ROOT / "Finance" / "credit-card"
+AMAZON_CSV_ROOT = Path.home() / "Dropbox" / "0-FinancialStatements" / "amazon"
+PAYSLIP_ROOT = VAULT_ROOT / "Finance" / "payslips"
 
 # ---------------------------------------------------------------------------
 # Schema
@@ -66,6 +71,80 @@ CREATE INDEX IF NOT EXISTS idx_txn_date ON transactions(date);
 CREATE INDEX IF NOT EXISTS idx_txn_category ON transactions(category_id);
 CREATE INDEX IF NOT EXISTS idx_txn_account ON transactions(account_id);
 CREATE INDEX IF NOT EXISTS idx_txn_source ON transactions(source_file);
+
+CREATE TABLE IF NOT EXISTS amazon_orders (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    order_id TEXT NOT NULL,
+    order_date TEXT NOT NULL,
+    order_timestamp TEXT,
+    asin TEXT NOT NULL,
+    product_name TEXT,
+    product_condition TEXT,
+    quantity INTEGER,
+    unit_price REAL,
+    unit_price_tax REAL,
+    subtotal REAL,
+    subtotal_tax REAL,
+    shipping_charge REAL,
+    total_discount REAL,
+    total_amount REAL,
+    currency TEXT DEFAULT 'USD',
+    payment_method TEXT,
+    card_type TEXT,
+    card_last4 TEXT,
+    order_status TEXT,
+    ship_date TEXT,
+    shipping_address TEXT,
+    shipping_option TEXT,
+    website TEXT,
+    category_id INTEGER REFERENCES categories(id),
+    notes TEXT,
+    UNIQUE(order_id, asin)
+);
+
+CREATE INDEX IF NOT EXISTS idx_amazon_date ON amazon_orders(order_date);
+CREATE INDEX IF NOT EXISTS idx_amazon_card ON amazon_orders(card_last4);
+CREATE INDEX IF NOT EXISTS idx_amazon_category ON amazon_orders(category_id);
+
+CREATE TABLE IF NOT EXISTS payslips (
+    id INTEGER PRIMARY KEY,
+    employer TEXT NOT NULL,
+    employee_id TEXT,
+    pay_period_start TEXT NOT NULL,
+    pay_period_end TEXT NOT NULL,
+    pay_date TEXT NOT NULL,
+    pay_type TEXT NOT NULL,
+    hours_worked REAL,
+    gross_pay REAL NOT NULL,
+    pre_tax_deductions REAL,
+    employee_taxes REAL,
+    post_tax_deductions REAL,
+    net_pay REAL NOT NULL,
+    total_earnings REAL,
+    total_employer_benefits REAL,
+    deposit_amount REAL,
+    source_file TEXT NOT NULL,
+    source_pages TEXT,
+    processed_at TEXT,
+    UNIQUE(employer, pay_date, pay_period_start, pay_period_end, gross_pay)
+);
+
+CREATE TABLE IF NOT EXISTS payslip_line_items (
+    id INTEGER PRIMARY KEY,
+    payslip_id INTEGER NOT NULL REFERENCES payslips(id) ON DELETE CASCADE,
+    section TEXT NOT NULL,
+    description TEXT NOT NULL,
+    amount REAL NOT NULL,
+    ytd REAL,
+    dates TEXT,
+    hours REAL,
+    rate REAL
+);
+
+CREATE INDEX IF NOT EXISTS idx_payslip_date ON payslips(pay_date);
+CREATE INDEX IF NOT EXISTS idx_payslip_employer ON payslips(employer);
+CREATE INDEX IF NOT EXISTS idx_payslip_type ON payslips(pay_type);
+CREATE INDEX IF NOT EXISTS idx_payslip_items ON payslip_line_items(payslip_id);
 """
 
 # ---------------------------------------------------------------------------
@@ -474,12 +553,22 @@ def get_db():
     return conn
 
 
+def backup_db():
+    """Create a .bak copy of the database before destructive operations."""
+    if DB_PATH.exists():
+        bak = DB_PATH.with_suffix(".db.bak")
+        shutil.copy2(DB_PATH, bak)
+        size_kb = bak.stat().st_size / 1024
+        print(f"Backup: {bak.name} ({size_kb:.0f} KB)")
+
+
 # ---------------------------------------------------------------------------
 # Commands
 # ---------------------------------------------------------------------------
 
 def cmd_init():
     """Create schema, seed accounts, categories, and rules."""
+    backup_db()
     conn = get_db()
     conn.executescript(SCHEMA)
 
@@ -527,6 +616,7 @@ def cmd_init():
 
 def cmd_import():
     """Import CSVs into the database (idempotent)."""
+    backup_db()
     conn = get_db()
 
     # Build account name -> id lookup
@@ -613,6 +703,309 @@ def cmd_import():
     }, indent=2))
 
 
+def _parse_money(val):
+    """Parse a monetary string, returning None for 'Not Available' or empty."""
+    if not val or val == "Not Available":
+        return None
+    try:
+        return float(val.strip("'\""))
+    except ValueError:
+        return None
+
+
+def _parse_payment_method(raw):
+    """Extract (card_type, card_last4) from payment method string.
+
+    Examples:
+        'Visa - 1158'           -> ('Visa', '1158')
+        'MasterCard - 7030'     -> ('MasterCard', '7030')
+        'Gift Certificate/Card' -> ('Gift Certificate/Card', None)
+        'Gift Certificate/Card and Visa - 1158' -> ('Visa', '1158')
+        'Bank Account - 437'    -> ('Bank Account', '437')
+        'Not Available'         -> (None, None)
+    """
+    if not raw or raw == "Not Available":
+        return None, None
+    # Handle mixed payment: "Gift Certificate/Card and Visa - 1158"
+    if " and " in raw:
+        raw = raw.split(" and ", 1)[1]
+    match = re.match(r"^(.+?)\s*-\s*(\d+)$", raw)
+    if match:
+        return match.group(1).strip(), match.group(2)
+    return raw.strip(), None
+
+
+def cmd_import_amazon():
+    """Import Amazon order history CSVs into the database (idempotent)."""
+    backup_db()
+    conn = get_db()
+    # Ensure amazon_orders table exists
+    conn.executescript(SCHEMA)
+
+    # Watermark: skip rows at or before the latest order date already imported
+    watermark_row = conn.execute(
+        "SELECT MAX(order_date) FROM amazon_orders"
+    ).fetchone()
+    watermark = watermark_row[0] if watermark_row and watermark_row[0] else None
+
+    csv_files = sorted(AMAZON_CSV_ROOT.glob("*.csv"))
+    if not csv_files:
+        print(json.dumps({"error": f"No CSV files found in {AMAZON_CSV_ROOT}"}))
+        return
+
+    total_new = 0
+    total_skipped = 0
+
+    for csv_file in csv_files:
+        with open(csv_file, newline="", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for row in reader:
+                # Parse order date
+                order_timestamp = row.get("Order Date", "")
+                if not order_timestamp:
+                    continue
+                order_date = order_timestamp[:10]  # YYYY-MM-DD from ISO 8601
+
+                # Fast path: skip if before watermark
+                if watermark and order_date <= watermark:
+                    total_skipped += 1
+                    continue
+
+                order_id = row.get("Order ID", "")
+                asin = row.get("ASIN", "")
+                if not order_id or not asin:
+                    continue
+
+                card_type, card_last4 = _parse_payment_method(
+                    row.get("Payment Method Type", "")
+                )
+
+                ship_date_raw = row.get("Ship Date", "")
+                ship_date = ship_date_raw[:10] if ship_date_raw and ship_date_raw != "Not Available" else None
+
+                quantity_raw = row.get("Original Quantity", "")
+                try:
+                    quantity = int(quantity_raw) if quantity_raw else None
+                except ValueError:
+                    quantity = None
+
+                try:
+                    conn.execute(
+                        """INSERT OR IGNORE INTO amazon_orders
+                           (order_id, order_date, order_timestamp, asin,
+                            product_name, product_condition, quantity,
+                            unit_price, unit_price_tax, subtotal, subtotal_tax,
+                            shipping_charge, total_discount, total_amount,
+                            currency, payment_method, card_type, card_last4,
+                            order_status, ship_date, shipping_address,
+                            shipping_option, website)
+                           VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                        (
+                            order_id,
+                            order_date,
+                            order_timestamp,
+                            asin,
+                            row.get("Product Name", ""),
+                            row.get("Product Condition", ""),
+                            quantity,
+                            _parse_money(row.get("Unit Price", "")),
+                            _parse_money(row.get("Unit Price Tax", "")),
+                            _parse_money(row.get("Shipment Item Subtotal", "")),
+                            _parse_money(row.get("Shipment Item Subtotal Tax", "")),
+                            _parse_money(row.get("Shipping Charge", "")),
+                            _parse_money(row.get("Total Discounts", "")),
+                            _parse_money(row.get("Total Amount", "")),
+                            row.get("Currency", "USD"),
+                            row.get("Payment Method Type", ""),
+                            card_type,
+                            card_last4,
+                            row.get("Order Status", ""),
+                            ship_date,
+                            row.get("Shipping Address", ""),
+                            row.get("Shipping Option", ""),
+                            row.get("Website", ""),
+                        ),
+                    )
+                    if conn.execute("SELECT changes()").fetchone()[0] > 0:
+                        total_new += 1
+                    else:
+                        total_skipped += 1
+                except sqlite3.IntegrityError:
+                    total_skipped += 1
+
+    conn.commit()
+
+    total = conn.execute("SELECT COUNT(*) FROM amazon_orders").fetchone()[0]
+    new_watermark = conn.execute(
+        "SELECT MAX(order_date) FROM amazon_orders"
+    ).fetchone()[0]
+    conn.close()
+
+    print(json.dumps({
+        "csv_files": len(csv_files),
+        "new_orders": total_new,
+        "skipped": total_skipped,
+        "total_orders": total,
+        "watermark": new_watermark,
+    }, indent=2))
+
+
+def cmd_import_payslips():
+    """Import payslip YAML files into the database (idempotent)."""
+    backup_db()
+    conn = get_db()
+    conn.executescript(SCHEMA)
+
+    files_scanned = 0
+    new_payslips = 0
+    skipped = 0
+    line_items_inserted = 0
+
+    LINE_ITEM_SECTIONS = [
+        "earnings",
+        "employee_taxes",
+        "pre_tax_deductions",
+        "post_tax_deductions",
+        "employer_paid_benefits",
+    ]
+
+    for employer_dir in sorted(PAYSLIP_ROOT.iterdir()):
+        if not employer_dir.is_dir():
+            continue
+        for yaml_file in sorted(employer_dir.glob("*.yaml")):
+            files_scanned += 1
+            with open(yaml_file, encoding="utf-8") as f:
+                data = yaml.safe_load(f)
+            if not data:
+                continue
+
+            summary = data.get("summary", {}).get("current", {})
+            source = data.get("source", {})
+            deposit = data.get("deposit", {})
+            source_pages = json.dumps(source.get("pages")) if source.get("pages") else None
+            source_file = f"{employer_dir.name}/{yaml_file.name}"
+
+            try:
+                conn.execute(
+                    """INSERT OR IGNORE INTO payslips
+                       (employer, employee_id, pay_period_start, pay_period_end,
+                        pay_date, pay_type, hours_worked, gross_pay,
+                        pre_tax_deductions, employee_taxes, post_tax_deductions,
+                        net_pay, total_earnings, total_employer_benefits,
+                        deposit_amount, source_file, source_pages, processed_at)
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (
+                        data.get("employer"),
+                        data.get("employee_id"),
+                        data.get("pay_period_start"),
+                        data.get("pay_period_end"),
+                        data.get("pay_date"),
+                        data.get("pay_type"),
+                        summary.get("hours_worked"),
+                        summary.get("gross_pay", 0),
+                        summary.get("pre_tax_deductions"),
+                        summary.get("employee_taxes"),
+                        summary.get("post_tax_deductions"),
+                        summary.get("net_pay", 0),
+                        data.get("total_earnings"),
+                        data.get("total_employer_paid_benefits"),
+                        deposit.get("amount"),
+                        source_file,
+                        source_pages,
+                        source.get("processed_at"),
+                    ),
+                )
+                if conn.execute("SELECT changes()").fetchone()[0] > 0:
+                    new_payslips += 1
+                    # Get the inserted payslip id
+                    payslip_id = conn.execute(
+                        "SELECT id FROM payslips WHERE source_file=?",
+                        (source_file,),
+                    ).fetchone()[0]
+
+                    # Insert line items for each section
+                    for section in LINE_ITEM_SECTIONS:
+                        items = data.get(section, [])
+                        if not items:
+                            continue
+                        for item in items:
+                            conn.execute(
+                                """INSERT INTO payslip_line_items
+                                   (payslip_id, section, description, amount, ytd, dates, hours, rate)
+                                   VALUES (?,?,?,?,?,?,?,?)""",
+                                (
+                                    payslip_id,
+                                    section,
+                                    item.get("description", ""),
+                                    item.get("amount", 0),
+                                    item.get("ytd"),
+                                    item.get("dates"),
+                                    item.get("hours"),
+                                    item.get("rate"),
+                                ),
+                            )
+                            line_items_inserted += 1
+                else:
+                    skipped += 1
+            except sqlite3.IntegrityError:
+                skipped += 1
+
+    conn.commit()
+    total = conn.execute("SELECT COUNT(*) FROM payslips").fetchone()[0]
+    conn.close()
+
+    print(json.dumps({
+        "files_scanned": files_scanned,
+        "new_payslips": new_payslips,
+        "skipped_duplicates": skipped,
+        "total_payslips": total,
+        "line_items_inserted": line_items_inserted,
+    }, indent=2))
+
+
+def cmd_categorize_amazon():
+    """Apply keyword rules to uncategorized Amazon orders."""
+    conn = get_db()
+
+    # Load rules sorted by priority
+    rules = conn.execute("""
+        SELECT r.pattern, r.category_id, r.priority
+        FROM categorization_rules r
+        ORDER BY r.priority, r.id
+    """).fetchall()
+
+    # Get uncategorized Amazon orders
+    uncategorized = conn.execute(
+        "SELECT id, product_name FROM amazon_orders WHERE category_id IS NULL"
+    ).fetchall()
+
+    categorized_count = 0
+    for order_id, product_name in uncategorized:
+        if not product_name:
+            continue
+        name_upper = product_name.upper()
+        for pattern, cat_id, _priority in rules:
+            if pattern.upper() in name_upper:
+                conn.execute(
+                    "UPDATE amazon_orders SET category_id=? WHERE id=?",
+                    (cat_id, order_id),
+                )
+                categorized_count += 1
+                break
+
+    conn.commit()
+
+    remaining = conn.execute(
+        "SELECT COUNT(*) FROM amazon_orders WHERE category_id IS NULL"
+    ).fetchone()[0]
+
+    conn.close()
+    print(json.dumps({
+        "newly_categorized": categorized_count,
+        "remaining_uncategorized": remaining,
+    }, indent=2))
+
+
 def cmd_status():
     """Print database statistics."""
     conn = get_db()
@@ -645,6 +1038,25 @@ def cmd_status():
         GROUP BY a.id ORDER BY a.display_name
     """).fetchall()
 
+    # Amazon orders stats
+    amazon_total = 0
+    amazon_categorized = 0
+    amazon_date_range = None
+    try:
+        amazon_total = conn.execute("SELECT COUNT(*) FROM amazon_orders").fetchone()[0]
+        amazon_categorized = conn.execute(
+            "SELECT COUNT(*) FROM amazon_orders WHERE category_id IS NOT NULL"
+        ).fetchone()[0]
+        amazon_dr = conn.execute(
+            "SELECT MIN(order_date), MAX(order_date) FROM amazon_orders"
+        ).fetchone()
+        if amazon_dr and amazon_dr[0]:
+            amazon_date_range = {"from": amazon_dr[0], "to": amazon_dr[1]}
+    except sqlite3.OperationalError:
+        pass  # Table doesn't exist yet
+
+    amazon_pct = (amazon_categorized / amazon_total * 100) if amazon_total > 0 else 0
+
     result = {
         "total_transactions": total,
         "spending_transactions": spending,
@@ -665,6 +1077,13 @@ def cmd_status():
             }
             for row in acct_stats
         ],
+        "amazon_orders": {
+            "total": amazon_total,
+            "categorized": amazon_categorized,
+            "uncategorized": amazon_total - amazon_categorized,
+            "categorization_pct": round(amazon_pct, 1),
+            "date_range": amazon_date_range,
+        },
     }
     conn.close()
     print(json.dumps(result, indent=2))
@@ -896,9 +1315,9 @@ def _apply_single_rule(conn, pattern, cat_id):
 def main():
     if len(sys.argv) < 2:
         print("Usage: finance_db.py <command> [args]")
-        print("Commands: init, import, status, categorize, uncategorized,")
-        print("          add-rule <pattern> <category>, set-category <id> <category> [--create-rule],")
-        print("          query <sql>")
+        print("Commands: init, import, import-amazon, import-payslips, status, categorize, categorize-amazon,")
+        print("          uncategorized, add-rule <pattern> <category>,")
+        print("          set-category <id> <category> [--create-rule], query <sql>")
         sys.exit(1)
 
     cmd = sys.argv[1]
@@ -907,10 +1326,16 @@ def main():
         cmd_init()
     elif cmd == "import":
         cmd_import()
+    elif cmd == "import-amazon":
+        cmd_import_amazon()
+    elif cmd == "import-payslips":
+        cmd_import_payslips()
     elif cmd == "status":
         cmd_status()
     elif cmd == "categorize":
         cmd_categorize()
+    elif cmd == "categorize-amazon":
+        cmd_categorize_amazon()
     elif cmd == "uncategorized":
         cmd_uncategorized()
     elif cmd == "add-rule":

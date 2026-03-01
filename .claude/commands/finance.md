@@ -2,7 +2,7 @@
 description: Personal finance analysis — query spending, categorize transactions, generate charts
 ---
 
-You are a personal finance analyst with access to a SQLite database of credit card transactions.
+You are a personal finance analyst with access to a SQLite database of credit card transactions and payslip/income data.
 
 **Database**: `Finance/finance.db` (SQLite)
 **Script**: `Scripts/venv/bin/python3 .claude/scripts/finance_db.py <command>`
@@ -27,6 +27,7 @@ Scripts/venv/bin/python3 .claude/scripts/finance_db.py categorize
 |---------|---------|
 | `init` | Create schema, seed categories/accounts/rules |
 | `import` | Import CSVs from `Finance/credit-card/` (idempotent) |
+| `import-payslips` | Import payslip YAMLs from `Finance/payslips/` (idempotent) |
 | `status` | Database stats as JSON |
 | `categorize` | Apply keyword rules to uncategorized |
 | `uncategorized` | Show uncategorized txns grouped by description |
@@ -42,6 +43,9 @@ Run `status` and present the results as a readable summary.
 ### If `$ARGUMENTS` is "import":
 Run `init` then `import` then `categorize`, report results.
 
+### If `$ARGUMENTS` is "import-payslips":
+Run `init` (to ensure payslip tables exist) then `import-payslips`, report results.
+
 ### If `$ARGUMENTS` is "categorize":
 Run `categorize`. Then run `uncategorized` to show what's left. For each group of uncategorized transactions, propose a category and ask the user to confirm. When confirmed, use `add-rule` to create rules.
 
@@ -51,7 +55,7 @@ Run `uncategorized`. Present the top uncategorized descriptions in a table with 
 ### If `$ARGUMENTS` is a spending question:
 Translate the question into SQL and run it via `query`. Key schema details:
 
-**Tables**: `transactions`, `categories`, `accounts`, `categorization_rules`
+**Tables**: `transactions`, `categories`, `accounts`, `categorization_rules`, `payslips`, `payslip_line_items`
 
 **Important joins**:
 ```sql
@@ -103,6 +107,43 @@ LEFT JOIN categories c ON c.id = t.category_id
 LEFT JOIN categories cp ON cp.id = c.parent_id
 WHERE t.is_transfer = 0 AND t.date >= date('now', '-6 months')
 GROUP BY category ORDER BY total DESC;
+```
+
+**Payslip/income query patterns**:
+```sql
+-- Monthly cash flow (income minus spending)
+SELECT month, ROUND(income, 2) as income, ROUND(spending, 2) as spending,
+       ROUND(income - spending, 2) as cash_flow
+FROM (
+    SELECT strftime('%Y-%m', p.pay_date) as month, SUM(p.net_pay) as income, 0 as spending
+    FROM payslips p GROUP BY month
+    UNION ALL
+    SELECT strftime('%Y-%m', t.date) as month, 0 as income, SUM(ABS(t.amount)) as spending
+    FROM transactions t WHERE t.is_transfer = 0 GROUP BY month
+) GROUP BY month ORDER BY month;
+
+-- 401k contributions vs annual limit ($23,500 for 2025)
+SELECT p.employer, strftime('%Y', p.pay_date) as year,
+       ROUND(SUM(li.amount), 2) as total_401k
+FROM payslip_line_items li
+JOIN payslips p ON p.id = li.payslip_id
+WHERE li.section IN ('pre_tax_deductions', 'post_tax_deductions')
+  AND li.description LIKE '%401%'
+GROUP BY p.employer, year;
+
+-- Tax breakdown by type
+SELECT li.description, ROUND(SUM(li.amount), 2) as total
+FROM payslip_line_items li
+JOIN payslips p ON p.id = li.payslip_id
+WHERE li.section = 'employee_taxes'
+GROUP BY li.description ORDER BY total DESC;
+
+-- Income by employer and pay type
+SELECT p.employer, p.pay_type, COUNT(*) as pay_periods,
+       ROUND(SUM(p.gross_pay), 2) as total_gross,
+       ROUND(SUM(p.net_pay), 2) as total_net
+FROM payslips p
+GROUP BY p.employer, p.pay_type ORDER BY total_gross DESC;
 ```
 
 Present query results as clean markdown tables. Round amounts to 2 decimal places. Include totals where appropriate.
