@@ -1,0 +1,9 @@
+- Packing
+	- Lighting
+	- water
+- Itineraries
+	- [day trip](https://www.ordinary-adventures.com/2019/08/deception-pass-weekend-adventure/#hiking)
+- Hiking
+	- Bowman Bay Loop
+		- 5 mile loop. I like to start by Rosario head (this is on the north side of the bridge, the Fidalgo Island side, closer to Anacortes). You can start with a short loop out to Rosario head (excellent views to the north and west).
+		- Beach walking and tidepooling. On the south side of the bridge, on the Whidbey Island side, both North Beach and West Beach have lots of beach to walk on and North Beach in particular has excellent [tidepools](https://ordinary-adventures.com/2017/05/where-to-go-tidepooling/) at low tide. You can walk between the bridge, both of these beaches and the main campground in about a mile and a half. West Beach is an excellent place to watch a sunset!

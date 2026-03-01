@@ -1,0 +1,18 @@
+Account Type,Account,Beginning mkt Value,Change in Investment,Ending mkt Value,Short Balance,Ending Net Value,Dividends This Period,Dividends Year to Date,Interest This Year,Interest Year to Date,Total This Period,Total Year to Date
+BrokerageLink Roth,652903260,90371.89,-3680.49,86690.78,,,,,,,86.25,86.25
+ 
+
+Symbol/CUSIP,Description,Quantity,Price,Beginning Value,Ending Value,Cost Basis
+ 
+
+652903260 
+Stocks 
+QQQ,INVESCO QQQ TR UNIT SER 1 ,40.15200,522.29000,20526.90,20970.98,18040.10
+AAPL,APPLE INC ,101.50500,236.00000,50460.88,23955.18,15654.72
+NVDA,NVIDIA CORPORATION COM ,20.00000,120.07000,unavailable,2401.40,2378.80
+Subtotal of Stocks,,,,,47327.56,36073.62,,,, 
+
+652903260 
+Core Account 
+FDRXX,FIDELITY GOVERNMENT CASH RESERVES ,39363.22000,1.00000,19384.11,39363.22,not applicable
+Subtotal of Core Account,,,,,39363.22,,,,,

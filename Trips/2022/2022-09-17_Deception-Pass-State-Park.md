@@ -1,0 +1,3 @@
+- 15 minutes to Pacific Northwest Naval Air Museum
+- 16 minutes to Joseph Whidbey State Park
+- 

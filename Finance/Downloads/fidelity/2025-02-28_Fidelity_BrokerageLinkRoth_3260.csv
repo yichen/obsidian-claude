@@ -1,0 +1,21 @@
+Account Type,Account,Beginning mkt Value,Change in Investment,Ending mkt Value,Short Balance,Ending Net Value,Dividends This Period,Dividends Year to Date,Interest This Year,Interest Year to Date,Total This Period,Total Year to Date
+BrokerageLink Roth,652903260,86690.78,961.78,87652.56,,,,,,,127.81,214.06
+ 
+
+Symbol/CUSIP,Description,Quantity,Price,Beginning Value,Ending Value,Cost Basis
+ 
+
+652903260 
+Stocks 
+QQQ,INVESCO QQQ TR UNIT SER 1 ,40.15200,508.17000,20970.98,20404.04,18040.10
+BABA,ALIBABA GROUP HOLDING LTD SPON ADS EACH REP 8 ORD SHS ,40.00000,132.51000,unavailable,5300.40,4434.44
+AAPL,APPLE INC ,101.61300,241.84000,23955.18,24574.08,15654.72
+BIDU,BAIDU INC SPON ADS EACH REP 8 ORD SHS ,20.00000,86.45000,unavailable,1729.00,1876.50
+NVDA,NVIDIA CORPORATION COM ,20.00000,124.92000,2401.40,2498.40,2378.80
+PDD,PDD HOLDINGS INC AMERICAN DEPOSITARY SHARES ,20.00000,113.69000,unavailable,2273.80,2281.87
+Subtotal of Stocks,,,,,56779.72,44666.43,,,, 
+
+652903260 
+Core Account 
+FDRXX,FIDELITY GOVERNMENT CASH RESERVES ,30872.84000,1.00000,39363.22,30872.84,not applicable
+Subtotal of Core Account,,,,,30872.84,,,,,

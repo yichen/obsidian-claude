@@ -1,0 +1,36 @@
+[Spark-profiler V0 ship-it](https://groups.google.com/a/stripe.com/g/foundation-shipped/c/jR3dZGnzWo0/m/xQNDopQyAQAJ)
+
+- goal: debug failed jobs and identify bottlenecks, improve cost
+- past: zepelin notebook is retired
+- What users want
+	- present Spark UI data from a single application run in a digestible format to help identify issues.
+	- consolidate data from beyond Spark UI user scan determine if its a job issue or external issues (queue, cluster resource etc)
+	- display application data over time so users can visualize long term job trends
+- What are other options
+	- most open source tools don't support Spark 3
+	- limited value beyond Spark UI
+- solution
+	- Developed on Hubble to help users quickly debug common failures and identify trends.
+		- answer why is my job slower
+			- by looking at the number of executors received over time.
+			- by look at how often the job is being preempted.
+		- my job failed randomly.
+			- look at the recent config changes to your job
+			- see the recommendations table for configs used by similar apps
+		- why my job failed
+			- look at stage completion statuses
+			- look at task failure messages for a specific stage.
+		- Why is my new job taking such a long time to run
+			- look at the percentile metrics
+			- Look at garbage collection, I/O, cpu, and shuffle time percentage
+- What users like
+	- rule out potential root cause and identify receiving fewer executors as the root cause
+	- "I really like the pre-emption graph"
+- What users don't like
+	- load time, dashboard performance
+		- due to the large amount of data the dashboard had to pull.
+		- templated queries can only be run sequentially one at a time, resulting in 5+ minutes of laod time.
+		- A solution is to convert Presto tables to Iceberg tables, which is more performant.
+- Future work
+	- This is tied back to [H2 project](https://docs.google.com/spreadsheets/d/1waO1DjbGVYlxefUm3evh8CCIe2ldE8RcqvqIRjiU7Lo/edit#gid=799149003&range=27:27&fvid=323858991)
+		

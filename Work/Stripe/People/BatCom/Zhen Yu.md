@@ -1,0 +1,15 @@
+- 2022-09-22
+	- Wednesday
+	- working on multiple things at the same time.
+		- black friday scaling up.
+		- risk assessment heading up to black friday.
+		- identified UAR risk.
+		- just finished smaller executor project.
+		- graviton migration. This is very new. Need to make sure hadoop, spark, yarn, all works on ARM. compilation may not work. Java: the concern is when hadoop jobs call native calls (C++ code). 
+		- My worry: if Hadoop has native call, and ARMs don't have these libraries. 
+		- YourKit profiler, it is injected to spark-submit. See https://confluence.corp.stripe.com/display/BATCOM/Using+YourKit+Java+Profiler
+		- snapshot heap with YourKit, once every 10 minutes, cause executor timeout.
+		- I am considering using javaagent to do continous profiling.
+
+- John Bender is working on Spark 3.
+- His name is zhen1
