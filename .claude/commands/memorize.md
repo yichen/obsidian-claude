@@ -27,8 +27,8 @@ If `$ARGUMENTS` is empty:
 | Key Learnings | Technical gotchas, root causes, "aha" moments | "Obsidian embeds don't work with relative paths from subfolders" |
 | Decisions | Architecture/tool choices with rationale | "Using materialized views pattern for daily log aggregation" |
 | File Locations | Important paths discovered | "Parenting schedule: `Children/parenting-schedule-2-2-5-5.md`" |
-| User Preferences | Workflow preferences observed | "Prefers daily journal as source of truth" |
-| Active Context | Ongoing work, open threads | "Reorganizing Health folder structure" |
+| User Preferences | Behavioral corrections, workflow preferences | "Prefers investigation and data before recommendations" |
+| Active Context | Ongoing work, open threads (with status marker) | "Reorganizing Health folder structure `(active)`" |
 
 ### Step 3: Deduplicate
 
@@ -44,6 +44,8 @@ Add new entries to the appropriate sections in `memory/MEMORY.md`:
 - Each Decision entry includes rationale
 - Keep entries concise (2-5 bullet points per topic)
 - Maintain reverse-chronological order within sections (newest first)
+- **User Preferences** go under `## User Preferences` — these are behavioral corrections (things Claude should always/never do). Deduplicate against existing entries before adding.
+- **Active Context** items include a status marker: `(active)`, `(COMPLETED)`, or `(stale — prune candidate)`
 
 After updating, check the line count:
 - If >500 lines: warn the user and suggest running `/memory-compress`
@@ -74,6 +76,11 @@ Use this format for each session entry:
 
 **Files touched**:
 - [paths + what changed]
+
+**Retain**:
+- [2-5 self-contained narrative facts that would be useful if encountered out of context]
+- Each fact should standalone — include enough context to understand without reading the full entry
+- Focus on insights, corrections, and decisions — not routine actions
 
 ---
 ```

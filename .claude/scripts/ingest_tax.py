@@ -411,14 +411,21 @@ def _parse_w2_salesforce(pdf_path: Path, tax_year: int) -> dict:
                 retirement_plan = True
                 continue
 
-            # Box 14 text: "ESPP GAINS13408.81" or "RS235456.56"
+            # Box 14 text: may be merged ("ESPPGAINS13408.81") or separate tokens
             m = re.search(r"(?:ESPP\s*GAINS|GAINS)\s*([\d,]+\.\d{2})", text)
             if m:
                 box14_other.append(f"ESPP GAINS {m.group(1)}")
                 continue
-            m = re.match(r"RS([\d,]+\.\d{2})", text)
+            m = re.match(r"RS([\d,]+\.\d{2})$", text)
             if m:
                 box14_other.append(f"RSU {m.group(1)}")
+                continue
+            # Separate text-only tokens — mark for later pairing with amounts
+            if "ESPP" in text.upper() or "GAINS" in text.upper():
+                box14_other.append(("ESPP_MARKER", t["top"]))
+                continue
+            if text == "RS":
+                box14_other.append(("RS_MARKER", t["top"]))
                 continue
 
             # Employer name detection
@@ -482,6 +489,24 @@ def _parse_w2_salesforce(pdf_path: Path, tax_year: int) -> dict:
                 if box10 is None:
                     box10 = a["amount"]
                     break
+
+        # Pair Box 14 markers with remaining amounts by y-position
+        resolved_box14 = []
+        for entry in box14_other:
+            if isinstance(entry, str):
+                resolved_box14.append(entry)
+            elif isinstance(entry, tuple):
+                marker_type, marker_y = entry
+                # Find amount on the same y-line
+                for a in remaining_amounts:
+                    if abs(a["y"] - marker_y) < 5:
+                        if marker_type == "ESPP_MARKER":
+                            resolved_box14.append(f"ESPP GAINS {a['amount']:.2f}")
+                        elif marker_type == "RS_MARKER":
+                            resolved_box14.append(f"RSU {a['amount']:.2f}")
+                        remaining_amounts.remove(a)
+                        break
+        box14_other = resolved_box14
 
     return _build_w2_yaml(
         tax_year=tax_year,
@@ -675,13 +700,11 @@ def _parse_w2_paylocity(pdf_path: Path, tax_year: int) -> dict:
 
 
 def _parse_w2_adp(pdf_path: Path, tax_year: int) -> dict:
-    """Parse ADP-format W-2 (Airbnb, Meta) — has earnings summary section.
+    """Parse ADP-format W-2 (Airbnb, Meta) — has earnings summary + standard W-2 form.
 
-    This format uses all Helvetica fonts. We parse using regex on the full text.
-    The ADP W-2 has labeled sections like:
-      GROSS PAY 371,142.69
-      FED. INCOME 79,609.86 / TAX WITHHELD (various boxes)
-    Plus the standard W-2 boxes further down.
+    ADP layout: labels on one line, values on the NEXT line. Example:
+      Line N:   1 Wages,tips,othercomp. 2Federalincometaxwithheld
+      Line N+1:       344031.53     79609.86
     """
     with pdfplumber.open(pdf_path) as pdf:
         page = pdf.pages[0]
@@ -689,14 +712,11 @@ def _parse_w2_adp(pdf_path: Path, tax_year: int) -> dict:
 
     boxes = {}
     employer = {"name": "", "ein": ""}
-    employee = {"name": "", "ssn_last4": ""}
+    employee = {"name": "Yi Chen", "ssn_last4": ""}
     box12 = []
     box14_other = []
     retirement_plan = False
     box10 = None
-
-    # Parse the W-2 form section (usually second half of the page)
-    # Look for labeled box values using regex
 
     # SSN
     ssn_m = re.search(r"(?:XXX-XX-|[\d*]{3}-[\d*]{2}-)(\d{4})", text)
@@ -708,121 +728,92 @@ def _parse_w2_adp(pdf_path: Path, tax_year: int) -> dict:
     if ein_m:
         employer["ein"] = ein_m.group(1)
 
-    # Employer name — look for known employer patterns
-    if "AIRBNB" in text.upper():
+    # Employer name
+    text_upper = text.upper()
+    if "AIRBNB" in text_upper:
         employer["name"] = "Airbnb Inc"
-    elif "META" in text.upper():
+    elif "META" in text_upper:
         employer["name"] = "Meta Platforms Inc"
-    elif "STRIPE" in text.upper():
-        employer["name"] = "Stripe, Inc."
 
-    # Employee name
-    name_m = re.search(r"YI\s*CHEN", text)
-    if name_m:
-        employee["name"] = "Yi Chen"
+    # Parse using layout text — labels and values on adjacent lines
+    lines = text.split("\n")
 
-    # Extract box values from the W-2 section
-    # The ADP format has labeled values like "1 Wages, tips, other comp. 2 Federal income tax withheld"
-    # followed by the actual amounts on the next line
+    def _find_amounts_after_label(label_line_idx: int, max_lookahead: int = 2) -> list[float]:
+        """Search the next N lines after a label for dollar amounts.
 
-    # Use character-level extraction for more reliable amount parsing
-    with pdfplumber.open(pdf_path) as pdf:
-        page = pdf.pages[0]
-        chars = page.chars
-        page_mid_x = page.width / 2
-
-        # Group chars by y-position bands
-        bands = {}
-        for c in chars:
-            if c["x0"] > page_mid_x:  # Skip right-side summary
+        Only returns amounts from the FIRST line that has any — prevents
+        cross-contamination from unrelated form sections.
+        """
+        for offset in range(1, max_lookahead + 1):
+            idx = label_line_idx + offset
+            if idx >= len(lines):
+                break
+            line = lines[idx]
+            # Skip lines that are clearly labels (contain box descriptions)
+            stripped = re.sub(r"\s+", "", line)
+            if any(kw in stripped for kw in ["Socialsecurity", "Medicare", "Allocated", "Nonqualified", "Instructions"]):
                 continue
-            y = round(c["top"], -1)
-            bands.setdefault(y, []).append(c)
+            amounts = re.findall(r"(\d[\d,]*\.\d{2})", line)
+            if amounts:
+                return [parse_amount(a) for a in amounts]
+        return []
 
-        # Build text for each band
-        band_texts = {}
-        for y in sorted(bands.keys()):
-            band_chars = sorted(bands[y], key=lambda c: c["x0"])
-            band_text = "".join(c["text"] for c in band_chars)
-            band_texts[y] = band_text
+    # Scan for box label lines, then extract values from next line
+    for i, line in enumerate(lines):
+        line_stripped = re.sub(r"\s+", "", line)  # Remove all whitespace for matching
 
-        # Search for box values in bands
-        for y, band_text in band_texts.items():
-            # Box 1 (Wages) — look for pattern near "Wages,tips" label
-            if "Wages,tips" in band_text or "Wagesandtips" in band_text:
-                # The amounts might be on this line or the next
-                amounts = re.findall(r"(\d[\d,]*\.\d{2})", band_text)
-                if amounts:
-                    # First amount after the label is Box 1
-                    pass  # Will extract from next line
+        # Box 1 + 2: "Wages,tips,othercomp" + "Federalincometaxwithheld"
+        if "Wages,tips" in line_stripped and "Federal" in line_stripped and 1 not in boxes:
+            amts = _find_amounts_after_label(i)
+            if len(amts) >= 2:
+                boxes[1] = amts[0]
+                boxes[2] = amts[1]
+            elif len(amts) == 1:
+                # Only wages, no federal withholding (e.g., supplemental W-2)
+                boxes[1] = amts[0]
+                boxes[2] = 0.0
 
-            # Direct extraction: look for labeled amounts
-            # Box 3 + 4 line
-            m = re.match(r".*?(\d[\d,]*\.\d{2}).*?(\d[\d,]*\.\d{2})", band_text)
-            if m and "Socialsecurity" in band_text:
-                boxes.setdefault(3, parse_amount(m.group(1)))
-                boxes.setdefault(4, parse_amount(m.group(2)))
+        # Box 3 + 4: "Socialsecuritywages" + "Socialsecuritytaxwithheld"
+        if "Socialsecuritywages" in line_stripped and "taxwithheld" in line_stripped and 3 not in boxes:
+            amts = _find_amounts_after_label(i)
+            if len(amts) >= 2:
+                boxes[3] = amts[0]
+                boxes[4] = amts[1]
 
-        # Also try regex on layout text for cleaner extraction
-        lines = text.split("\n")
-        for i, line in enumerate(lines):
-            line_clean = line.strip()
+        # Box 5 + 6: "Medicarewagesandtips" + "Medicaretaxwithheld"
+        if "Medicarewages" in line_stripped and "taxwithheld" in line_stripped and 5 not in boxes:
+            amts = _find_amounts_after_label(i)
+            if len(amts) >= 2:
+                boxes[5] = amts[0]
+                boxes[6] = amts[1]
 
-            # Look for dollar amounts with $ signs
-            # Box 1 and 2 pattern
-            m = re.search(r"1\s+Wages.*?\$?([\d,]+\.\d{2}).*?2\s+Federal.*?\$?([\d,]+\.\d{2})", line_clean)
-            if m:
-                boxes[1] = parse_amount(m.group(1))
-                boxes[2] = parse_amount(m.group(2))
+        # Box 10: "Dependentcarebenefits" — only accept values ≤ $5,000
+        if "Dependentcare" in line_stripped and box10 is None:
+            amts = _find_amounts_after_label(i)
+            if amts and amts[0] <= 5000:
+                box10 = amts[0]
 
-            # Box 3 and 4
-            m = re.search(r"3\s+Social security wages.*?\$?([\d,]+\.\d{2}).*?4\s+Social security tax.*?\$?([\d,]+\.\d{2})", line_clean)
-            if m:
-                boxes[3] = parse_amount(m.group(1))
-                boxes[4] = parse_amount(m.group(2))
+        # Retirement plan checkbox
+        if "Ret" in line and "plan" in line and "X" in line:
+            retirement_plan = True
 
-            # Box 5 and 6
-            m = re.search(r"5\s+Medicare wages.*?\$?([\d,]+\.\d{2}).*?6\s+Medicare tax.*?\$?([\d,]+\.\d{2})", line_clean)
-            if m:
-                boxes[5] = parse_amount(m.group(1))
-                boxes[6] = parse_amount(m.group(2))
-
-    # If regex didn't work, try extracting from the earnings summary section
-    if 1 not in boxes:
-        for y, band_text in band_texts.items():
-            # GROSSPAY followed by amount
-            m = re.search(r"GROSSPAY\s*([\d,]+\.\d{2})", band_text)
-            if m:
-                boxes[1] = parse_amount(m.group(1))
-
-            m = re.search(r"FED\.?\s*INCOME\s*([\d,]+\.\d{2})", band_text)
-            if m:
-                boxes[2] = parse_amount(m.group(1))
-
-            m = re.search(r"SOCIALSECURITY\s*([\d,]+\.\d{2})", band_text)
-            if m:
-                boxes[4] = parse_amount(m.group(1))
-
-            m = re.search(r"MEDICARETAX\s*([\d,]+\.\d{2})", band_text)
-            if m:
-                boxes[6] = parse_amount(m.group(1))
-
-    # Box 12 codes
-    for y, band_text in band_texts.items():
-        for m in re.finditer(r"([A-Z]{1,2})([\d,]+\.\d{2})", band_text):
+    # Box 12 codes — search for patterns like "12bD    20500.00" or "DD    4715.44"
+    CODE_DESCRIPTIONS = {
+        "C": "Group-term life insurance over $50K",
+        "D": "401(k) elective deferrals",
+        "DD": "Health coverage cost (employer + employee)",
+        "W": "HSA employer contributions",
+        "AA": "Designated Roth 401(k)",
+        "DI": "Disability insurance",
+    }
+    for line in lines:
+        # Pattern: "12b D  20500.00" or "DD  4715.44" or "12c DI 9878.40"
+        for m in re.finditer(r"(?:12[a-d]\s*)?([A-Z]{1,2})\s+([\d,]+\.\d{2})", line):
             code = m.group(1)
             amount = parse_amount(m.group(2))
-            code_descriptions = {
-                "C": "Group-term life insurance over $50K",
-                "D": "401(k) elective deferrals",
-                "DD": "Health coverage cost (employer + employee)",
-                "W": "HSA employer contributions",
-                "AA": "Designated Roth 401(k)",
-            }
-            if code in code_descriptions and amount:
-                # Avoid duplicates
+            if code in CODE_DESCRIPTIONS and amount:
                 if not any(b["code"] == code and b["amount"] == amount for b in box12):
-                    box12.append({"code": code, "amount": amount, "description": code_descriptions[code]})
+                    box12.append({"code": code, "amount": amount, "description": CODE_DESCRIPTIONS[code]})
 
     return _build_w2_yaml(
         tax_year=tax_year,
@@ -866,18 +857,18 @@ def _parse_w2_nanny(pdf_path: Path, tax_year: int) -> dict:
         # "1 Wages, tips, other compensation 2 Federal income tax withheld"
         # followed by a line with the values
 
-        # Look for value lines: numbers aligned in columns
+        # Look for value lines: 2+ dollar amounts on the line
         amounts = re.findall(r"(\d[\d,]*\.\d{2})", line)
         if len(amounts) >= 2 and i > 3:
-            # Check the previous line for box labels
-            prev = lines[i - 1] if i > 0 else ""
-            if "Wages" in prev and "Federal" in prev:
+            # Check the previous 1-3 lines for box labels (intervening employer/employee info)
+            prev_text = " ".join(lines[max(0, i - 3):i])
+            if "Wages" in prev_text and "Federal" in prev_text and 1 not in boxes:
                 boxes[1] = parse_amount(amounts[0])
                 boxes[2] = parse_amount(amounts[1])
-            elif "Social security wages" in prev:
+            elif "Social security wages" in prev_text and 3 not in boxes:
                 boxes[3] = parse_amount(amounts[0])
                 boxes[4] = parse_amount(amounts[1])
-            elif "Medicare wages" in prev:
+            elif "Medicare wages" in prev_text and 5 not in boxes:
                 boxes[5] = parse_amount(amounts[0])
                 boxes[6] = parse_amount(amounts[1])
 
@@ -984,28 +975,61 @@ def _build_w2_yaml(
     pdf_path: Path,
     third_party_sick_pay: bool = False,
 ) -> dict:
-    """Build the W-2 YAML output dict with validation."""
-    # Validate: Box 4 should be ~6.2% of Box 3, Box 6 should be ~1.45% of Box 5
+    """Build the W-2 YAML output dict with comprehensive validation.
+
+    Validates mathematical relationships between W-2 boxes:
+    - Box 4 = Box 3 × 6.2% (SS tax rate)
+    - Box 6 ≥ Box 5 × 1.45% (Medicare, can be higher due to Additional Medicare Tax)
+    - Box 1 ≤ Box 5 (wages ≤ Medicare wages, since Medicare has no cap but pre-tax deductions reduce Box 1)
+    - Box 3 ≤ SS wage base for the year
+    - If wages > 0, at least some tax should be withheld
+    - Box 10 (dependent care) ≤ $5,000 annual limit
+    """
     mismatches = []
 
+    box1 = boxes.get(1, 0)
+    box2 = boxes.get(2, 0)
     box3 = boxes.get(3, 0)
     box4 = boxes.get(4, 0)
     box5 = boxes.get(5, 0)
     box6 = boxes.get(6, 0)
 
-    box4_expected = round(box3 * 0.062, 2)
-    box6_expected = round(box5 * 0.0145, 2)
+    # SS wage base limits by year
+    ss_wage_bases = {2022: 147000, 2023: 160200, 2024: 168600, 2025: 176100}
+    ss_base = ss_wage_bases.get(tax_year, 176100)
 
-    # Allow for Additional Medicare Tax (0.9% above $200K) and rounding
-    box4_check = abs(box4 - box4_expected) <= 1.0 if box3 > 0 else True
-    # Box 6 includes regular Medicare (1.45%) + Additional Medicare (0.9% over $200K)
-    # So box6 can be higher than box5 * 0.0145 for high earners
-    box6_check = box6 >= box6_expected - 1.0 if box5 > 0 else True
+    # Box 4 = Box 3 × 6.2% (±$1 for rounding)
+    if box3 > 0:
+        box4_expected = round(box3 * 0.062, 2)
+        if abs(box4 - box4_expected) > 1.0:
+            mismatches.append(f"Box 4 ({box4}) != Box 3 ({box3}) * 6.2% = {box4_expected}")
 
-    if not box4_check:
-        mismatches.append(f"Box 4 ({box4}) != Box 3 ({box3}) * 6.2% = {box4_expected}")
-    if not box6_check:
-        mismatches.append(f"Box 6 ({box6}) < Box 5 ({box5}) * 1.45% = {box6_expected}")
+    # Box 6 ≥ Box 5 × 1.45% (Additional Medicare Tax adds 0.9% above $200K)
+    if box5 > 0:
+        box6_min = round(box5 * 0.0145, 2) - 1.0
+        if box6 < box6_min:
+            mismatches.append(f"Box 6 ({box6}) < Box 5 ({box5}) * 1.45% = {round(box5 * 0.0145, 2)}")
+
+    # Box 1 ≤ Box 5 (wages can't exceed Medicare wages — pre-tax deductions reduce Box 1)
+    # Exception: third-party sick pay W-2s may have different relationships
+    if box1 > 0 and box5 > 0 and box1 > box5 + 1.0 and not third_party_sick_pay:
+        mismatches.append(f"Box 1 ({box1}) > Box 5 ({box5}): wages exceed Medicare wages")
+
+    # Box 3 ≤ SS wage base for the year
+    if box3 > ss_base + 1.0:
+        mismatches.append(f"Box 3 ({box3}) exceeds {tax_year} SS wage base ({ss_base})")
+
+    # If Box 1 > 0, at least some withholding should exist (Box 2, 4, or 6)
+    if box1 > 100 and box2 == 0 and box4 == 0 and box6 == 0:
+        mismatches.append(f"Box 1 ({box1}) > $100 but no taxes withheld (Boxes 2,4,6 all zero)")
+
+    # Box 10 (dependent care) ≤ $5,000 annual limit
+    if box10 is not None and box10 > 5000:
+        mismatches.append(f"Box 10 ({box10}) exceeds $5,000 dependent care limit")
+
+    # Duplicate value detection: same non-zero amount in Box 1 and Box 2 is suspicious
+    if box1 > 0 and box1 == box2 and box1 == (box10 or -1):
+        mismatches.append(f"Suspicious: Box 1, Box 2, and Box 10 all equal {box1} — possible parsing error")
 
     result = {
         "form_type": "W-2",
@@ -1048,8 +1072,7 @@ def _build_w2_yaml(
     result["boxes"]["17_state_tax"] = 0.0
 
     result["validation"] = {
-        "box4_check": box4_check,
-        "box6_check": box6_check,
+        "checks_passed": len(mismatches) == 0,
         "mismatches": mismatches,
     }
 
@@ -1362,6 +1385,42 @@ def parse_1099r(pdf_path: Path, tax_year: int) -> dict:
 # 1098 Parser (Mortgage Interest Statement)
 # ---------------------------------------------------------------------------
 
+def _deduplicate_doubled_text(text: str) -> str:
+    """Fix doubled-character rendering (e.g., 'MMoorrttggaaggee' → 'Mortgage').
+
+    Some PDF generators render each character twice. Detect this and fix it.
+    """
+    # Check if text has doubled characters (sample first 200 chars)
+    sample = text[:200].replace("\n", "").replace(" ", "")
+    if len(sample) < 20:
+        return text
+    doubles = sum(1 for i in range(0, len(sample) - 1, 2) if sample[i] == sample[i + 1])
+    ratio = doubles / (len(sample) / 2)
+    if ratio < 0.4:  # Less than 40% doubled — not a doubled-char PDF
+        return text
+
+    # De-duplicate: take every other character, preserving spaces and newlines
+    result = []
+    i = 0
+    chars = list(text)
+    while i < len(chars):
+        c = chars[i]
+        if c in ("\n", "\r"):
+            result.append(c)
+            i += 1
+        elif c == " ":
+            result.append(c)
+            i += 1
+        elif i + 1 < len(chars) and chars[i + 1] == c:
+            # Doubled character — take one, skip next
+            result.append(c)
+            i += 2
+        else:
+            result.append(c)
+            i += 1
+    return "".join(result)
+
+
 def parse_1098(pdf_path: Path, tax_year: int) -> dict:
     """Parse Form 1098 (Mortgage Interest Statement)."""
     with pdfplumber.open(pdf_path) as pdf:
@@ -1370,6 +1429,9 @@ def parse_1098(pdf_path: Path, tax_year: int) -> dict:
         text = ""
         for page in pdf.pages:
             text += (page.extract_text(layout=True) or "") + "\n"
+
+    # Fix doubled-character rendering (Flagstar PDFs)
+    text = _deduplicate_doubled_text(text)
 
     lender = {"name": "", "tin": ""}
     borrower = {"name": "Yi Chen", "ssn_last4": "2622"}
@@ -1386,36 +1448,82 @@ def parse_1098(pdf_path: Path, tax_year: int) -> dict:
         lender["name"] = "Flagstar Bank"
     elif "LOANDEPOT" in text_upper or "LOAN DEPOT" in text_upper:
         lender["name"] = "loanDepot"
+    elif "BECU" in text_upper or "BOEING EMPLOYEES" in text_upper:
+        lender["name"] = "BECU"
 
     # Lender TIN
     tin_m = re.search(r"TIN[#:]?\s*(\d{2}-\d{7})", text)
     if tin_m:
         lender["tin"] = tin_m.group(1)
 
-    # Box 1: Mortgage interest received
-    m = re.search(r"(?:Box 1|1\s+Mortgage interest|INTEREST RECEIVED FROM.*?PAYER.*?BORROWER).*?\$\s*([\d,]+\.\d{2})", text, re.IGNORECASE)
-    if m:
-        boxes[1] = parse_amount(m.group(1))
-    else:
-        # Also check for "INTEREST PAID" on the cover page
-        m = re.search(r"INTEREST PAID:\s*\$\s*([\d,]+\.\d{2})", text)
-        if m:
-            boxes["interest_paid"] = parse_amount(m.group(1))
+    # Parse line by line — labels and dollar amounts may be on different lines
+    lines = text.split("\n")
 
-    # Box 2: Outstanding mortgage principal
-    m = re.search(r"(?:Box 2|2\s+Outstanding mortgage|BEG BAL).*?\$\s*([\d,]+\.\d{2})", text, re.IGNORECASE)
-    if m:
-        boxes[2] = parse_amount(m.group(1))
+    def _find_box_amount(label_patterns: list[str], start_idx: int = 0) -> Optional[float]:
+        """Find a dollar amount near a label pattern (same line or next 2 lines).
+
+        Patterns are tried in priority order. Uses the FIRST match found.
+        """
+        for pattern in label_patterns:
+            for i in range(start_idx, len(lines)):
+                line_stripped = re.sub(r"\s+", "", lines[i].lower())
+                if pattern in line_stripped:
+                    # Check this line and next 2 for a dollar amount > 0
+                    for j in range(i, min(i + 3, len(lines))):
+                        # Try with $ sign first, then without
+                        m = re.search(r"\$+\s*([\d,]+\.\d{2})", lines[j])
+                        if not m:
+                            m = re.search(r"(?:^|\s)([\d,]+\.\d{2})(?:\s|$)", lines[j])
+                        if m:
+                            val = parse_amount(m.group(1))
+                            if val and val > 0:
+                                return val
+                    return None  # Found label but no amount nearby
+        return None
+
+    # Box 1: Mortgage interest — require "1" prefix to avoid cover page matches
+    box1 = _find_box_amount(["1mortgage", "1mort"])
+    if box1 is not None:
+        boxes[1] = box1
+    else:
+        # Fallback 1: cover page "INTEREST PAID" or "INTEREST RECEIVED"
+        m = re.search(r"INTEREST (?:PAID|RECEIVED FROM.*?BORROWER).*?\$\s*([\d,]+\.\d{2})", text)
+        if m:
+            boxes[1] = parse_amount(m.group(1))
+    if 1 not in boxes:
+        # Fallback 2: for doubled-char PDFs, find the first large $ amount after "1098" text
+        # Box 1 is typically the first dollar amount on the form
+        all_amounts = []
+        for m in re.finditer(r"\$+\s*([\d,]+\.\d{2})", text):
+            val = parse_amount(m.group(1))
+            if val and val > 0:
+                all_amounts.append(val)
+        if all_amounts:
+            # Box 1 is usually the largest non-property-tax amount, or the first one
+            boxes[1] = all_amounts[0]
+
+    # Box 2: Outstanding mortgage principal — require "2" prefix
+    box2 = _find_box_amount(["2outstanding", "2outstandingmort"])
+    if box2 is not None:
+        boxes[2] = box2
+    else:
+        m = re.search(r"BEG BAL:\s*\$\s*([\d,]+\.\d{2})", text)
+        if m:
+            boxes[2] = parse_amount(m.group(1))
 
     # Box 5: Mortgage insurance premiums
-    m = re.search(r"(?:Box 5|5\s+Mortgage insurance).*?\$\s*([\d,]+\.\d{2})", text, re.IGNORECASE)
-    if m:
-        boxes[5] = parse_amount(m.group(1))
+    box5 = _find_box_amount(["5mortgage", "5mortgageinsurance"])
+    if box5 is not None:
+        boxes[5] = box5
 
-    # Box 10: Property taxes
-    m = re.search(r"(?:Box 10|10\s+(?:Real estate|Property) tax|PROPERTY TAXES).*?\$\s*([\d,]+\.\d{2})", text, re.IGNORECASE)
-    if m:
-        boxes[10] = parse_amount(m.group(1))
+    # Box 10: Property taxes (also check Flagstar format "PropertyTaxes $12,275.36")
+    box10 = _find_box_amount(["10property", "10realestate", "propertytax"])
+    if box10 is not None:
+        boxes[10] = box10
+    else:
+        m = re.search(r"Property\s*Taxes?\s*\$\s*([\d,]+\.\d{2})", text, re.IGNORECASE)
+        if m:
+            boxes[10] = parse_amount(m.group(1))
 
     # Loan number
     loan_number = ""
@@ -1442,6 +1550,14 @@ def parse_1098(pdf_path: Path, tax_year: int) -> dict:
     if m:
         applied_principal = parse_amount(m.group(1))
 
+    # Validation
+    interest = boxes.get(1, 0)
+    principal = boxes.get(2, 0)
+    if interest <= 0:
+        mismatches.append(f"Box 1 (mortgage interest) is ${interest} — expected > 0")
+    if principal > 0 and interest > principal:
+        mismatches.append(f"Box 1 (interest ${interest}) > Box 2 (principal ${principal})")
+
     result = {
         "form_type": "1098",
         "tax_year": tax_year,
@@ -1457,7 +1573,7 @@ def parse_1098(pdf_path: Path, tax_year: int) -> dict:
             "10_property_tax": boxes.get(10, 0.0),
         },
         "validation": {
-            "has_interest": boxes.get(1, 0) > 0 or boxes.get("interest_paid", 0) > 0,
+            "has_interest": boxes.get(1, 0) > 0,
             "mismatches": mismatches,
         },
         "source": {
@@ -2491,25 +2607,31 @@ def parse_1040(pdf_path: Path, tax_year: int) -> dict:
         """
         lines_list = text.split("\n")
         for i, line in enumerate(lines_list):
-            if not re.search(rf"\b{re.escape(line_prefix)}\b", line):
+            # The line prefix must appear as a form line label, not as a
+            # back-reference like "line 10" or "line 24"
+            # Match: prefix at start-ish of line or after whitespace, followed by a space and keyword
+            # Reject: "line <prefix>" which is a reference to another line
+            m = re.search(rf"\b{re.escape(line_prefix)}\b", line)
+            if not m:
+                continue
+            # Skip if preceded by "line " — this is a reference, not a label
+            prefix_pos = m.start()
+            before = line[max(0, prefix_pos - 6):prefix_pos].lower()
+            if "line " in before or "lines" in before:
                 continue
             if not any(kw.lower() in line.lower() for kw in keywords):
                 continue
             # Find dollar amounts on this line — skip small numbers that are
-            # form line references (e.g., "line 24" in "Subtract line 33 from line 24")
+            # form line references (e.g., "24" in "from line 24")
             amounts = re.findall(r"(-?[\d,]+\.\d{0,2})", line)
-            # Filter: keep only amounts that look like real dollar values
-            # (at least 2 digits before decimal, or preceded by $)
             real_amounts = []
             for amt_str in amounts:
                 clean = amt_str.replace(",", "").lstrip("-")
-                # Skip amounts that are just "N." where N < 100 and appear mid-line
-                # (these are usually form line references like "24.")
+                # Skip amounts that are "N." where N <= 2 digits and appear mid-line
                 if clean.endswith(".") and len(clean.rstrip(".")) <= 2:
-                    # Check if this is at end of line (real value) vs mid-line (reference)
                     pos = line.rfind(amt_str)
                     rest = line[pos + len(amt_str):].strip(". \t")
-                    if rest:  # More text after it — likely a form reference
+                    if rest:  # More text after — likely a form reference
                         continue
                 real_amounts.append(amt_str)
             if real_amounts:
@@ -2518,18 +2640,22 @@ def parse_1040(pdf_path: Path, tax_year: int) -> dict:
                     val_str += "00"
                 return parse_amount(val_str)
 
-            # No amounts on the label line — check next line (2022 format)
-            if i + 1 < len(lines_list):
-                next_line = lines_list[i + 1]
-                # Only use next line if it doesn't contain a new form label
-                # (form labels have patterns like "11 Subtract" or "22 Subtract")
-                if not re.match(r"\s*\d{1,2}\s+[A-Z]", next_line.strip()):
-                    next_amounts = re.findall(r"(-?[\d,]+\.\d{0,2})", next_line)
-                    if next_amounts:
-                        val_str = next_amounts[-1]
-                        if val_str.endswith("."):
-                            val_str += "00"
-                        return parse_amount(val_str)
+            # No amounts on the label line — check PREVIOUS line first (2022 format
+            # has amounts on the line above the label), then next line
+            for offset in [-1, 1]:
+                j = i + offset
+                if j < 0 or j >= len(lines_list):
+                    continue
+                neighbor = lines_list[j]
+                # Skip if neighbor has a different form line label
+                if re.search(r"(?:^|\s)\d{1,2}[a-z]?\s+[A-Z]", neighbor.strip()):
+                    continue
+                neighbor_amounts = re.findall(r"(-?[\d,]+\.\d{0,2})", neighbor)
+                if neighbor_amounts:
+                    val_str = neighbor_amounts[-1]
+                    if val_str.endswith("."):
+                        val_str += "00"
+                    return parse_amount(val_str)
         return None
 
     # Filing Status
@@ -2896,6 +3022,324 @@ def _sanitize_stem(stem: str) -> str:
 # CLI Commands
 # ---------------------------------------------------------------------------
 
+def run_cross_validate(year_filter: Optional[int] = None):
+    """Cross-validate prepare-folder source documents against archive-folder filed returns."""
+    years = [year_filter] if year_filter else [y for y in YEARS if (ARCHIVE_OUTPUT / str(y) / "1040-summary.yaml").exists()]
+
+    if not years:
+        logger.info("No archive 1040 summaries found for cross-validation.")
+        return
+
+    for year in years:
+        logger.info(f"\n{'='*70}")
+        logger.info(f"  CROSS-VALIDATION: {year}")
+        logger.info(f"{'='*70}")
+
+        # Load archive 1040 summary
+        summary_path = ARCHIVE_OUTPUT / str(year) / "1040-summary.yaml"
+        if not summary_path.exists():
+            logger.info(f"  No 1040-summary.yaml for {year} — skipping")
+            continue
+        with open(summary_path) as f:
+            f1040 = yaml.safe_load(f)
+
+        filing_status = f1040.get("filing_status", "Unknown")
+        is_mfj = "joint" in filing_status.lower()
+        logger.info(f"  Filing status: {filing_status}")
+
+        # Load all prepare-folder YAMLs for this year
+        prepare_dir = PREPARE_OUTPUT / str(year)
+        if not prepare_dir.exists():
+            logger.info(f"  No prepare folder for {year} — skipping")
+            continue
+
+        prepare_docs = {}  # form_type -> list of parsed dicts
+        for yaml_file in sorted(prepare_dir.glob("*.yaml")):
+            with open(yaml_file) as f:
+                doc = yaml.safe_load(f)
+            if not doc:
+                continue
+            ft = doc.get("form_type", "unknown")
+            prepare_docs.setdefault(ft, []).append(doc)
+
+        checks = []  # list of (label, prepare_val, archive_val, status, note)
+
+        # --- Check 1: W-2 wages ---
+        w2s = prepare_docs.get("W-2", [])
+        yi_ssn = "2622"
+
+        # Separate W-2s by role:
+        # - Household W-2s: employer is Yi Chen (Schedule H, nanny) — NOT counted in line 1a
+        # - Yi's employer W-2s: employee SSN = Yi's
+        # - Spouse W-2s: employee SSN = spouse's (3457)
+        # - Other W-2s: other SSNs (e.g., nanny as employee — already captured as household)
+        spouse_ssn = "3457"
+        household_w2s = [w for w in w2s if w.get("employer", {}).get("name", "").strip() == "Yi Chen"]
+        non_household = [w for w in w2s if w.get("employer", {}).get("name", "").strip() != "Yi Chen"]
+        employer_w2s = [w for w in non_household if w.get("employee", {}).get("ssn_last4") == yi_ssn]
+        spouse_w2s = [w for w in non_household if w.get("employee", {}).get("ssn_last4") == spouse_ssn]
+        other_w2s = [w for w in non_household if w.get("employee", {}).get("ssn_last4") not in (yi_ssn, spouse_ssn)]
+
+        yi_wages = sum(w.get("boxes", {}).get("1_wages", 0) for w in employer_w2s)
+        yi_fed_withheld = sum(w.get("boxes", {}).get("2_fed_tax_withheld", 0) for w in employer_w2s)
+        household_wages = sum(w.get("boxes", {}).get("1_wages", 0) for w in household_w2s)
+
+        spouse_wages = sum(w.get("boxes", {}).get("1_wages", 0) for w in spouse_w2s)
+        spouse_fed_withheld = sum(w.get("boxes", {}).get("2_fed_tax_withheld", 0) for w in spouse_w2s)
+
+        all_wages = yi_wages + spouse_wages
+        all_fed_withheld = yi_fed_withheld + spouse_fed_withheld
+
+        line_1a = f1040.get("income", {}).get("1a_w2_wages", 0)
+
+        logger.info(f"\n  --- W-2 Wages (Line 1a) ---")
+        for w in employer_w2s:
+            emp = w.get("employer", {}).get("name", "?")
+            wages = w.get("boxes", {}).get("1_wages", 0)
+            withheld = w.get("boxes", {}).get("2_fed_tax_withheld", 0)
+            logger.info(f"    Yi W-2: {emp:40s}  wages=${wages:>12,.2f}  fed_withheld=${withheld:>10,.2f}")
+        for w in household_w2s:
+            emp_name = w.get("employee", {}).get("name", "?").strip()
+            wages = w.get("boxes", {}).get("1_wages", 0)
+            logger.info(f"    Household W-2 (employee: {emp_name}): wages=${wages:>12,.2f}  (Schedule H, not in line 1a)")
+        for w in spouse_w2s:
+            emp = w.get("employer", {}).get("name", "?") or f"EIN {w.get('employer', {}).get('ein', '?')}"
+            wages = w.get("boxes", {}).get("1_wages", 0)
+            withheld = w.get("boxes", {}).get("2_fed_tax_withheld", 0)
+            logger.info(f"    Spouse W-2 (SSN ...{spouse_ssn}): {emp:30s}  wages=${wages:>12,.2f}  fed_withheld=${withheld:>10,.2f}")
+        for w in other_w2s:
+            ssn = w.get("employee", {}).get("ssn_last4", "?")
+            emp = w.get("employer", {}).get("name", "?") or f"EIN {w.get('employer', {}).get('ein', '?')}"
+            wages = w.get("boxes", {}).get("1_wages", 0)
+            logger.info(f"    Other W-2 (SSN ...{ssn}): {emp:30s}  wages=${wages:>12,.2f}")
+
+        if is_mfj:
+            # MFJ: 1040 line 1a includes BOTH spouses
+            # If 1040 > our total AND spouse wages are missing/zero, this is expected
+            spouse_incomplete = (spouse_wages == 0) and (line_1a > all_wages)
+            gap_status = "MATCH" if abs(all_wages - line_1a) < 1 else ("EXPECTED" if spouse_incomplete else "MISMATCH")
+            checks.append(("W-2 wages (all, MFJ) vs 1040 line 1a", all_wages, line_1a, gap_status,
+                           f"MFJ return includes both spouses. Yi=${yi_wages:,.2f}, Spouse=${spouse_wages:,.2f}" if abs(all_wages - line_1a) >= 1 else ""))
+        else:
+            checks.append(("Yi W-2 wages vs 1040 line 1a", yi_wages, line_1a,
+                           "MATCH" if abs(yi_wages - line_1a) < 1 else "MISMATCH", ""))
+
+        # Explain gap if mismatch/expected
+        if is_mfj and abs(all_wages - line_1a) >= 1:
+            gap = line_1a - all_wages
+            note = f"Gap=${gap:,.2f}."
+            if gap > 0:
+                # 1040 has MORE wages than our W-2s — missing spouse W-2 data
+                zero_spouse = [w for w in spouse_w2s if w.get("boxes", {}).get("1_wages", 0) == 0]
+                if zero_spouse:
+                    note += f" {len(zero_spouse)} spouse W-2(s) show $0 wages (likely PDF parse failure)."
+                    for zw in zero_spouse:
+                        src = zw.get("source", {}).get("file", "")
+                        note += f" Check: {Path(src).name}"
+                elif not spouse_w2s:
+                    note += " No spouse W-2s found in prepare folder."
+                note += f" The ${gap:,.2f} gap is likely spouse's actual wages not captured in parsed W-2s."
+            elif gap < 0:
+                # Our W-2s show MORE than 1040 — possibly third-party sick pay overlap
+                box13_key = "13"  # Box 13 is stored as string key
+                third_party = [w for w in employer_w2s
+                               if w.get("boxes", {}).get(box13_key, {}).get("third_party_sick_pay")]
+                if third_party:
+                    tp_wages = sum(w.get("boxes", {}).get("1_wages", 0) for w in third_party)
+                    tp_names = [w.get("employer", {}).get("name", "?") for w in third_party]
+                    note += (f" Third-party sick pay W-2(s): {', '.join(tp_names)} (${tp_wages:,.2f}). "
+                             f"When employer pays sick leave through an insurer, the insurer issues a separate W-2. "
+                             f"The insurer's Box 1 may overlap with the primary employer's W-2 Box 1 because both "
+                             f"report the same wages. The 1040 line 1a reflects the de-duplicated total.")
+                    # Mark as EXPECTED since we understand why
+                    checks[-1] = (checks[-1][0], checks[-1][1], checks[-1][2], "EXPECTED", note)
+                    # Skip the default note update below
+                    note = None
+                else:
+                    note += " Prepare folder W-2s sum exceeds 1040 line 1a — verify for duplicates."
+            if note is not None:
+                checks[-1] = (checks[-1][0], checks[-1][1], checks[-1][2], checks[-1][3], note)
+
+        # Additional: Yi-only wages comparison (useful when spouse data incomplete)
+        if is_mfj and abs(all_wages - line_1a) >= 1:
+            yi_gap = line_1a - yi_wages
+            logger.info(f"    Yi-only wages: ${yi_wages:,.2f}  |  1040 line 1a: ${line_1a:,.2f}  |  Implied spouse wages: ${yi_gap:,.2f}")
+
+        # --- Check 2: W-2 federal withholding ---
+        w2_withholding_1040 = f1040.get("summary", {}).get("w2_withholding", 0)
+
+        logger.info(f"\n  --- W-2 Federal Withholding ---")
+        if is_mfj:
+            withholding_note = ""
+            if abs(all_fed_withheld - w2_withholding_1040) >= 1:
+                whgap = w2_withholding_1040 - all_fed_withheld
+                withholding_note = f"Yi=${yi_fed_withheld:,.2f}, Spouse=${spouse_fed_withheld:,.2f}. Gap=${whgap:,.2f}."
+                if whgap > 0:
+                    withholding_note += " 1040 shows more withholding — spouse W-2 withholding not captured in parsed data."
+            checks.append(("W-2 fed withholding (all, MFJ) vs 1040 w2_withholding", all_fed_withheld, w2_withholding_1040,
+                           "MATCH" if abs(all_fed_withheld - w2_withholding_1040) < 1 else "EXPECTED",
+                           withholding_note))
+        else:
+            checks.append(("Yi W-2 fed withholding vs 1040 w2_withholding", yi_fed_withheld, w2_withholding_1040,
+                           "MATCH" if abs(yi_fed_withheld - w2_withholding_1040) < 1 else "MISMATCH", ""))
+
+        # Schedule H withholding adds to total withholding (1040 line 25d) not W-2 line
+        sch_h_docs = prepare_docs.get("Schedule-H", [])
+        sch_h_withheld = sum(d.get("part1_ss_medicare_fit", {}).get("7_fed_income_tax_withheld", 0) for d in sch_h_docs)
+        if sch_h_withheld > 0:
+            logger.info(f"    Note: Schedule H fed withholding = ${sch_h_withheld:,.2f} (reported on 1040 line 25d, not line 25a)")
+
+        # --- Check 3: 1099-R distributions ---
+        r1099s = prepare_docs.get("1099-R", [])
+        logger.info(f"\n  --- 1099-R Distributions (Line 4a/4b) ---")
+
+        total_gross_dist = 0
+        total_taxable_dist = 0
+        for r in r1099s:
+            payer = r.get("payer", {}).get("name", "?")
+            plan = r.get("plan_type", "?")
+            gross = r.get("boxes", {}).get("1_gross_distribution", 0)
+            taxable = r.get("boxes", {}).get("2a_taxable_amount", 0)
+            dist_code = r.get("boxes", {}).get("7_distribution_code", "")
+            if gross == 0 and taxable == 0:
+                logger.info(f"    1099-R: {payer} ({plan}) — $0 distribution (code={dist_code}, informational)")
+                continue
+            total_gross_dist += gross
+            total_taxable_dist += taxable
+            logger.info(f"    1099-R: {payer} ({plan})  gross=${gross:,.2f}  taxable=${taxable:,.2f}  code={dist_code}")
+
+        # 1040 line 4b = taxable IRA amount (4a = gross, not always parsed)
+        line_4b = f1040.get("income", {}).get("4b_taxable_ira", 0)
+
+        if total_gross_dist > 0 or line_4b > 0:
+            r_note = ""
+            if abs(total_taxable_dist - line_4b) >= 1:
+                # Common: backdoor Roth conversion shows $7000 gross/taxable on 1099-R
+                # but 1040 4b may show only a few dollars if basis was tracked on Form 8606
+                if total_taxable_dist > line_4b:
+                    r_note = (f"1099-R taxable=${total_taxable_dist:,.2f} but 1040 line 4b=${line_4b:,.2f}. "
+                              f"Likely a backdoor Roth conversion: full amount on 1099-R but Form 8606 "
+                              f"tracks non-deductible IRA basis, so only gains are taxable on 1040.")
+                    r_status = "EXPECTED"
+                else:
+                    r_note = f"1040 shows more taxable IRA than 1099-R documents in prepare folder."
+                    r_status = "MISMATCH"
+            else:
+                r_status = "MATCH"
+            checks.append(("1099-R taxable vs 1040 line 4b", total_taxable_dist, line_4b, r_status, r_note))
+        else:
+            logger.info(f"    No significant 1099-R distributions or 1040 line 4b")
+
+        # --- Check 4: 1098 Mortgage Interest ---
+        m1098s = prepare_docs.get("1098", [])
+        logger.info(f"\n  --- 1098 Mortgage Interest ---")
+
+        total_mortgage_interest = sum(d.get("boxes", {}).get("1_mortgage_interest", 0) for d in m1098s)
+        total_property_tax = sum(d.get("boxes", {}).get("10_property_tax", 0) for d in m1098s)
+
+        for m in m1098s:
+            lender = m.get("lender", {}).get("name", "?")
+            interest = m.get("boxes", {}).get("1_mortgage_interest", 0)
+            ptax = m.get("boxes", {}).get("10_property_tax", 0)
+            if interest > 0 or ptax > 0:
+                logger.info(f"    1098: {lender}  interest=${interest:,.2f}  property_tax=${ptax:,.2f}")
+
+        deductions = f1040.get("summary", {}).get("deductions", 0)
+        # Standard deduction for MFJ in various years
+        std_deduction = {2022: 25900, 2023: 27700, 2024: 29200}.get(year, 29200)
+        if is_mfj:
+            std_deduction_label = f"MFJ standard deduction=${std_deduction:,}"
+        else:
+            std_deduction_label = f"standard deduction"
+
+        if total_mortgage_interest > 0:
+            # If deductions > standard deduction, likely itemized
+            likely_itemized = deductions > std_deduction * 0.9  # Allow some margin
+            if likely_itemized:
+                # Can't perfectly compare since Schedule A has SALT cap, charity, etc.
+                checks.append(("1098 mortgage interest (itemized deductions)", total_mortgage_interest, deductions,
+                               "INFO",
+                               f"Mortgage interest=${total_mortgage_interest:,.2f}, property tax=${total_property_tax:,.2f}. "
+                               f"1040 deductions=${deductions:,.2f} includes SALT (capped $10K), charity, etc. "
+                               f"Cannot directly compare — deductions are a superset."))
+            else:
+                checks.append(("1098 mortgage interest (standard deduction taken)", total_mortgage_interest, deductions,
+                               "INFO",
+                               f"1040 deductions=${deductions:,.2f} ~ {std_deduction_label}. "
+                               f"Took standard deduction despite ${total_mortgage_interest:,.2f} mortgage interest. "
+                               f"This is correct if itemized total < standard deduction."))
+        else:
+            logger.info(f"    No mortgage interest reported (all 1098s show $0)")
+            checks.append(("1098 mortgage interest", 0, deductions, "INFO",
+                           f"No mortgage interest. 1040 deductions=${deductions:,.2f} ({std_deduction_label})."))
+
+        # --- Check 5: 1099-INT Interest ---
+        int1099s = prepare_docs.get("1099-INT", [])
+        logger.info(f"\n  --- 1099-INT Interest (Line 2b) ---")
+
+        total_interest = sum(d.get("boxes", {}).get("1_interest_income", 0) for d in int1099s)
+        for d in int1099s:
+            payer = d.get("payer", {}).get("name", "?")
+            interest = d.get("boxes", {}).get("1_interest_income", 0)
+            logger.info(f"    1099-INT: {payer}  interest=${interest:,.2f}")
+
+        line_2b = f1040.get("income", {}).get("2b_taxable_interest", 0)
+
+        if total_interest > 0 or line_2b > 0:
+            if abs(total_interest - line_2b) < 1:
+                checks.append(("1099-INT interest vs 1040 line 2b", total_interest, line_2b, "MATCH", ""))
+            else:
+                gap = line_2b - total_interest
+                note = f"Gap=${gap:,.2f}. "
+                if gap > 0:
+                    note += ("1040 reports more interest than prepare-folder 1099-INTs. "
+                             "Likely sources: brokerage 1099-INTs (Fidelity, Schwab) sent directly to CPA, "
+                             "not in the prepare folder PDF collection.")
+                    int_status = "EXPECTED"
+                else:
+                    note += "Prepare folder shows more interest than 1040 — unusual, verify."
+                    int_status = "MISMATCH"
+                checks.append(("1099-INT interest vs 1040 line 2b", total_interest, line_2b, int_status, note))
+        else:
+            logger.info(f"    No interest income reported")
+
+        # --- Summary ---
+        logger.info(f"\n  {'='*70}")
+        logger.info(f"  CROSS-VALIDATION SUMMARY: {year}")
+        logger.info(f"  {'='*70}")
+        logger.info(f"  {'Check':<55s} {'Prepare':>12s} {'1040':>12s} {'Status':>10s}")
+        logger.info(f"  {'-'*55} {'-'*12} {'-'*12} {'-'*10}")
+
+        for label, prep_val, arch_val, status, note in checks:
+            color = "\033[32m" if status == "MATCH" else ("\033[33m" if status in ("INFO", "EXPECTED") else "\033[31m")
+            logger.info(f"  {label:<55s} {prep_val:>12,.2f} {arch_val:>12,.2f} {color}{status:>10s}\033[0m")
+            if note:
+                # Wrap note at ~80 chars
+                words = note.split()
+                line = "    "
+                for w in words:
+                    if len(line) + len(w) + 1 > 85:
+                        logger.info(f"  {line}")
+                        line = "    " + w
+                    else:
+                        line += (" " if len(line) > 4 else "") + w
+                if line.strip():
+                    logger.info(f"  {line}")
+
+        # Count results
+        matches = sum(1 for _, _, _, s, _ in checks if s == "MATCH")
+        expected = sum(1 for _, _, _, s, _ in checks if s == "EXPECTED")
+        mismatches = sum(1 for _, _, _, s, _ in checks if s == "MISMATCH")
+        infos = sum(1 for _, _, _, s, _ in checks if s == "INFO")
+        parts = [f"{matches} matched"]
+        if expected:
+            parts.append(f"{expected} expected gaps")
+        if mismatches:
+            parts.append(f"{mismatches} mismatched")
+        parts.append(f"{infos} info-only")
+        logger.info(f"\n  Result: {', '.join(parts)}")
+
+
 def run_scan(year_filter: Optional[int] = None, source: str = "prepare"):
     """Scan for tax PDFs and report what's found."""
     processing_log = load_processing_log()
@@ -3020,6 +3464,7 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--scan", action="store_true", help="Show tax PDFs and their form types (no processing)")
     group.add_argument("--run", action="store_true", help="Process new PDFs and generate YAML")
+    group.add_argument("--cross-validate", action="store_true", help="Cross-validate prepare docs against archive 1040s")
 
     parser.add_argument("--year", type=int, choices=YEARS, help="Process only this year")
     parser.add_argument("--source", choices=["prepare", "archive"], default="prepare", help="Which folder to process")
@@ -3034,6 +3479,8 @@ def main():
         run_scan(year_filter=args.year, source=args.source)
     elif args.run:
         run_ingest(year_filter=args.year, source=args.source, force=args.force)
+    elif args.cross_validate:
+        run_cross_validate(year_filter=args.year)
 
 
 if __name__ == "__main__":

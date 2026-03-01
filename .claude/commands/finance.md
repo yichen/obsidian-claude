@@ -28,6 +28,7 @@ Scripts/venv/bin/python3 .claude/scripts/finance_db.py categorize
 | `init` | Create schema, seed categories/accounts/rules |
 | `import` | Import CSVs from `Finance/credit-card/` (idempotent) |
 | `import-payslips` | Import payslip YAMLs from `Finance/payslips/` (idempotent) |
+| `import-tax` | Import tax YAMLs from `Finance/tax/` (idempotent) |
 | `status` | Database stats as JSON |
 | `categorize` | Apply keyword rules to uncategorized |
 | `uncategorized` | Show uncategorized txns grouped by description |
@@ -45,6 +46,9 @@ Run `init` then `import` then `categorize`, report results.
 
 ### If `$ARGUMENTS` is "import-payslips":
 Run `init` (to ensure payslip tables exist) then `import-payslips`, report results.
+
+### If `$ARGUMENTS` is "import-tax":
+Run `import-tax`, report results. This loads all tax YAMLs from `Finance/tax/prepare/` and `Finance/tax/archive/` into the `tax_documents` and `tax_line_items` tables.
 
 ### If `$ARGUMENTS` is "categorize":
 Run `categorize`. Then run `uncategorized` to show what's left. For each group of uncategorized transactions, propose a category and ask the user to confirm. When confirmed, use `add-rule` to create rules.
@@ -144,6 +148,50 @@ SELECT p.employer, p.pay_type, COUNT(*) as pay_periods,
        ROUND(SUM(p.net_pay), 2) as total_net
 FROM payslips p
 GROUP BY p.employer, p.pay_type ORDER BY total_gross DESC;
+```
+
+**Tax document query patterns**:
+```sql
+-- Tables: tax_documents (td), tax_line_items (li)
+-- td fields: form_type, tax_year, source_folder (prepare/archive), payer_name, payer_tin, recipient_ssn_last4, filing_status
+-- li fields: doc_id, box_name, box_value (numeric), box_text (string), box_bool (0/1)
+
+-- W-2 wages by year and employer
+SELECT td.tax_year, td.payer_name, li.box_value as wages
+FROM tax_documents td JOIN tax_line_items li ON li.doc_id = td.id
+WHERE td.form_type = 'W-2' AND li.box_name = '1_wages' AND td.recipient_ssn_last4 = '2622'
+ORDER BY td.tax_year, td.payer_name;
+
+-- AGI trend across filed returns
+SELECT td.tax_year, td.filing_status,
+  MAX(CASE WHEN li.box_name='summary.adjusted_gross_income' THEN li.box_value END) as AGI,
+  MAX(CASE WHEN li.box_name='summary.total_tax' THEN li.box_value END) as total_tax,
+  MAX(CASE WHEN li.box_name='summary.refund_or_owed' THEN li.box_value END) as refund_owed
+FROM tax_documents td JOIN tax_line_items li ON li.doc_id = td.id
+WHERE td.form_type = '1040'
+GROUP BY td.tax_year ORDER BY td.tax_year;
+
+-- Total withholding by year (from W-2s)
+SELECT td.tax_year, ROUND(SUM(li.box_value), 2) as total_fed_withheld
+FROM tax_documents td JOIN tax_line_items li ON li.doc_id = td.id
+WHERE td.form_type = 'W-2' AND li.box_name = '2_fed_tax_withheld' AND td.recipient_ssn_last4 = '2622'
+GROUP BY td.tax_year ORDER BY td.tax_year;
+
+-- Mortgage interest by year
+SELECT td.tax_year, td.payer_name, li.box_value as mortgage_interest
+FROM tax_documents td JOIN tax_line_items li ON li.doc_id = td.id
+WHERE td.form_type = '1098' AND li.box_name = '1_mortgage_interest'
+ORDER BY td.tax_year;
+
+-- 401k contributions from W-2 Box 12 Code D
+SELECT td.tax_year, td.payer_name, li.box_value as elective_deferrals
+FROM tax_documents td JOIN tax_line_items li ON li.doc_id = td.id
+WHERE td.form_type = 'W-2' AND li.box_name = '12_D'
+ORDER BY td.tax_year;
+
+-- All form types for a year
+SELECT td.form_type, td.payer_name, td.yaml_file
+FROM tax_documents td WHERE td.tax_year = 2025 ORDER BY td.form_type;
 ```
 
 Present query results as clean markdown tables. Round amounts to 2 decimal places. Include totals where appropriate.

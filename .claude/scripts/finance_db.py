@@ -17,6 +17,7 @@ DB_PATH = VAULT_ROOT / "Finance" / "finance.db"
 CSV_ROOT = VAULT_ROOT / "Finance" / "credit-card"
 AMAZON_CSV_ROOT = Path.home() / "Dropbox" / "0-FinancialStatements" / "amazon"
 PAYSLIP_ROOT = VAULT_ROOT / "Finance" / "payslips"
+TAX_ROOT = VAULT_ROOT / "Finance" / "tax"
 
 # ---------------------------------------------------------------------------
 # Schema
@@ -145,6 +146,37 @@ CREATE INDEX IF NOT EXISTS idx_payslip_date ON payslips(pay_date);
 CREATE INDEX IF NOT EXISTS idx_payslip_employer ON payslips(employer);
 CREATE INDEX IF NOT EXISTS idx_payslip_type ON payslips(pay_type);
 CREATE INDEX IF NOT EXISTS idx_payslip_items ON payslip_line_items(payslip_id);
+
+CREATE TABLE IF NOT EXISTS tax_documents (
+    id INTEGER PRIMARY KEY,
+    form_type TEXT NOT NULL,
+    tax_year INTEGER NOT NULL,
+    source_folder TEXT NOT NULL,
+    payer_name TEXT,
+    payer_tin TEXT,
+    recipient_ssn_last4 TEXT,
+    filing_status TEXT,
+    source_file TEXT NOT NULL,
+    yaml_file TEXT NOT NULL,
+    processed_at TEXT,
+    validation_ok INTEGER DEFAULT 1,
+    UNIQUE(yaml_file)
+);
+
+CREATE TABLE IF NOT EXISTS tax_line_items (
+    id INTEGER PRIMARY KEY,
+    doc_id INTEGER NOT NULL REFERENCES tax_documents(id) ON DELETE CASCADE,
+    box_name TEXT NOT NULL,
+    box_value REAL,
+    box_text TEXT,
+    box_bool INTEGER
+);
+
+CREATE INDEX IF NOT EXISTS idx_tax_doc_year ON tax_documents(tax_year);
+CREATE INDEX IF NOT EXISTS idx_tax_doc_type ON tax_documents(form_type);
+CREATE INDEX IF NOT EXISTS idx_tax_doc_folder ON tax_documents(source_folder);
+CREATE INDEX IF NOT EXISTS idx_tax_items_doc ON tax_line_items(doc_id);
+CREATE INDEX IF NOT EXISTS idx_tax_items_box ON tax_line_items(box_name);
 """
 
 # ---------------------------------------------------------------------------
@@ -1006,6 +1038,183 @@ def cmd_categorize_amazon():
     }, indent=2))
 
 
+def cmd_import_tax():
+    """Import tax YAML files into the database (idempotent)."""
+    backup_db()
+    conn = get_db()
+    conn.executescript(SCHEMA)
+
+    new_docs = 0
+    skipped = 0
+    items_inserted = 0
+
+    # Scan both prepare and archive folders
+    for folder_type in ["prepare", "archive"]:
+        folder_root = TAX_ROOT / folder_type
+        if not folder_root.exists():
+            continue
+        for year_dir in sorted(folder_root.iterdir()):
+            if not year_dir.is_dir() or not year_dir.name.isdigit():
+                continue
+            for yaml_file in sorted(year_dir.glob("*.yaml")):
+                yaml_rel = str(yaml_file.relative_to(VAULT_ROOT))
+
+                # Skip if already imported
+                existing = conn.execute(
+                    "SELECT id FROM tax_documents WHERE yaml_file=?", (yaml_rel,)
+                ).fetchone()
+                if existing:
+                    skipped += 1
+                    continue
+
+                with open(yaml_file, encoding="utf-8") as f:
+                    data = yaml.safe_load(f)
+                if not data:
+                    continue
+
+                form_type = data.get("form_type", "")
+                tax_year = data.get("tax_year", 0)
+                source = data.get("source", {})
+
+                # Extract payer/entity name based on form type
+                payer_name = ""
+                payer_tin = ""
+                if form_type == "W-2":
+                    payer_name = data.get("employer", {}).get("name", "")
+                    payer_tin = data.get("employer", {}).get("ein", "")
+                elif form_type in ("1099-R", "1099-INT", "1099-SA"):
+                    payer_name = data.get("payer", {}).get("name", "")
+                    payer_tin = data.get("payer", {}).get("tin", "")
+                elif form_type == "1098":
+                    payer_name = data.get("lender", {}).get("name", "")
+                    payer_tin = data.get("lender", {}).get("tin", "")
+                elif form_type in ("5498-SA", "5498"):
+                    payer_name = data.get("trustee", {}).get("name", "")
+                    payer_tin = data.get("trustee", {}).get("tin", "")
+                elif form_type == "Schedule-H":
+                    payer_name = data.get("employer", {}).get("name", "")
+                    payer_tin = data.get("employer", {}).get("ein", "")
+                elif form_type == "1040":
+                    payer_name = data.get("taxpayer", {}).get("name", "")
+                    payer_tin = ""
+
+                recipient_ssn = ""
+                for key in ["employee", "recipient", "borrower", "taxpayer"]:
+                    ssn = data.get(key, {}).get("ssn_last4", "")
+                    if ssn:
+                        recipient_ssn = ssn
+                        break
+
+                filing_status = data.get("filing_status", "")
+                validation = data.get("validation", {})
+                mismatches = validation.get("mismatches", [])
+                validation_ok = 1 if not mismatches else 0
+
+                conn.execute(
+                    """INSERT INTO tax_documents
+                       (form_type, tax_year, source_folder, payer_name, payer_tin,
+                        recipient_ssn_last4, filing_status, source_file, yaml_file,
+                        processed_at, validation_ok)
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
+                    (
+                        str(form_type),
+                        tax_year,
+                        folder_type,
+                        payer_name,
+                        payer_tin,
+                        recipient_ssn,
+                        filing_status,
+                        source.get("file", ""),
+                        yaml_rel,
+                        source.get("processed_at", ""),
+                        validation_ok,
+                    ),
+                )
+
+                doc_id = conn.execute(
+                    "SELECT id FROM tax_documents WHERE yaml_file=?", (yaml_rel,)
+                ).fetchone()[0]
+                new_docs += 1
+
+                # Insert line items from boxes/summary/income sections
+                items = _extract_tax_line_items(data, form_type)
+                for box_name, box_value, box_text, box_bool in items:
+                    conn.execute(
+                        """INSERT INTO tax_line_items
+                           (doc_id, box_name, box_value, box_text, box_bool)
+                           VALUES (?,?,?,?,?)""",
+                        (doc_id, box_name, box_value, box_text, box_bool),
+                    )
+                    items_inserted += 1
+
+    conn.commit()
+    print(json.dumps({
+        "new_documents": new_docs,
+        "skipped_existing": skipped,
+        "line_items_inserted": items_inserted,
+    }, indent=2))
+
+
+def _extract_tax_line_items(data: dict, form_type: str) -> list:
+    """Extract box-level line items from a tax YAML data dict.
+
+    Returns list of (box_name, box_value, box_text, box_bool) tuples.
+    """
+    items = []
+
+    # Extract from 'boxes' dict (W-2, 1099-R, 1098, 1099-INT, 5498, etc.)
+    boxes = data.get("boxes", {})
+    for key, val in boxes.items():
+        key_str = str(key)
+        if isinstance(val, (int, float)):
+            items.append((key_str, float(val), None, None))
+        elif isinstance(val, bool):
+            items.append((key_str, None, None, 1 if val else 0))
+        elif isinstance(val, str):
+            items.append((key_str, None, val, None))
+        elif isinstance(val, dict):
+            # Nested dict like box 13 checkboxes
+            for subkey, subval in val.items():
+                full_key = f"{key_str}.{subkey}"
+                if isinstance(subval, bool):
+                    items.append((full_key, None, None, 1 if subval else 0))
+                elif isinstance(subval, (int, float)):
+                    items.append((full_key, float(subval), None, None))
+                elif isinstance(subval, str):
+                    items.append((full_key, None, subval, None))
+        elif isinstance(val, list):
+            # List of dicts like box 12 codes
+            for i, entry in enumerate(val):
+                if isinstance(entry, dict):
+                    code = entry.get("code", "")
+                    amount = entry.get("amount")
+                    desc = entry.get("description", "")
+                    box_key = f"{key_str}_{code}" if code else f"{key_str}_{i}"
+                    items.append((box_key, float(amount) if amount else None, desc, None))
+
+    # Extract from 'summary' dict (1040)
+    summary = data.get("summary", {})
+    if isinstance(summary, dict) and form_type == "1040":
+        for key, val in summary.items():
+            if isinstance(val, (int, float)):
+                items.append((f"summary.{key}", float(val), None, None))
+
+    # Extract from 'income' dict (1040)
+    income = data.get("income", {})
+    if isinstance(income, dict) and form_type == "1040":
+        for key, val in income.items():
+            if isinstance(val, (int, float)):
+                items.append((f"income.{key}", float(val), None, None))
+
+    # Extract plan_type, account_number as text items
+    for text_field in ["plan_type", "account_number", "loan_number", "property_address"]:
+        val = data.get(text_field)
+        if val:
+            items.append((text_field, None, str(val), None))
+
+    return items
+
+
 def cmd_status():
     """Print database statistics."""
     conn = get_db()
@@ -1085,6 +1294,29 @@ def cmd_status():
             "date_range": amazon_date_range,
         },
     }
+
+    # Tax documents stats
+    try:
+        tax_total = conn.execute("SELECT COUNT(*) FROM tax_documents").fetchone()[0]
+        if tax_total > 0:
+            tax_items = conn.execute("SELECT COUNT(*) FROM tax_line_items").fetchone()[0]
+            tax_by_type = conn.execute("""
+                SELECT form_type, COUNT(*) FROM tax_documents
+                GROUP BY form_type ORDER BY form_type
+            """).fetchall()
+            tax_by_year = conn.execute("""
+                SELECT tax_year, COUNT(*) FROM tax_documents
+                GROUP BY tax_year ORDER BY tax_year
+            """).fetchall()
+            result["tax_documents"] = {
+                "total": tax_total,
+                "line_items": tax_items,
+                "by_form_type": {row[0]: row[1] for row in tax_by_type},
+                "by_year": {row[0]: row[1] for row in tax_by_year},
+            }
+    except sqlite3.OperationalError:
+        pass  # Table doesn't exist yet
+
     conn.close()
     print(json.dumps(result, indent=2))
 
@@ -1315,7 +1547,7 @@ def _apply_single_rule(conn, pattern, cat_id):
 def main():
     if len(sys.argv) < 2:
         print("Usage: finance_db.py <command> [args]")
-        print("Commands: init, import, import-amazon, import-payslips, status, categorize, categorize-amazon,")
+        print("Commands: init, import, import-amazon, import-payslips, import-tax, status, categorize, categorize-amazon,")
         print("          uncategorized, add-rule <pattern> <category>,")
         print("          set-category <id> <category> [--create-rule], query <sql>")
         sys.exit(1)
@@ -1330,6 +1562,8 @@ def main():
         cmd_import_amazon()
     elif cmd == "import-payslips":
         cmd_import_payslips()
+    elif cmd == "import-tax":
+        cmd_import_tax()
     elif cmd == "status":
         cmd_status()
     elif cmd == "categorize":

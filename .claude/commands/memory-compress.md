@@ -56,12 +56,20 @@ Topic slug format: lowercase, hyphens, no dates (e.g., `obsidian-embeds`, `journ
 ### Step 3: Prune Active Context
 
 Remove Active Context items where:
-- The date is **older than 7 days** from today
+- The status is `(COMPLETED)` or `(stale — prune candidate)`
+- The date is **older than 7 days** from today and status is not explicitly `(active)`
 - The item has been superseded by a Key Learning or Decision entry
 
 For pruned items:
 - If they contain useful learnings not captured elsewhere, move to Key Learnings first
 - Then remove from Active Context
+
+### Step 3b: Deduplicate User Preferences
+
+In the `## User Preferences` section:
+- Remove exact or near-duplicate entries (same instruction, different wording)
+- Merge related preferences into a single bullet where appropriate
+- Remove preferences that contradict each other (keep the more recent one)
 
 ### Step 4: Prune Stale Decisions
 
