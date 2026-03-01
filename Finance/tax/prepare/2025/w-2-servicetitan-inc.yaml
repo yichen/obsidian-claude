@@ -1,0 +1,34 @@
+form_type: W-2
+tax_year: 2025
+employer:
+  name: ServiceTitan, Inc.
+  ein: 26-0331862
+employee:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_wages: 9667.14
+  2_fed_tax_withheld: 5026.68
+  3_ss_wages: 9667.14
+  4_ss_tax_withheld: 599.36
+  5_medicare_wages: 9667.14
+  6_medicare_tax_withheld: 140.17
+  '12':
+  - code: C
+    amount: 51.75
+    description: Group-term life insurance over $50K
+  '13':
+    retirement_plan: true
+    statutory_employee: false
+    third_party_sick_pay: false
+  15_state: WA
+  16_state_wages: 0.00
+  17_state_tax: 0.00
+validation:
+  checks_passed: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2025/W-2_Form_2025_Chen_2026_02_26_08_35_16_-0800_W-2_ESS.pdf
+  pages:
+  - 1
+  processed_at: '2026-02-28T21:34:23'

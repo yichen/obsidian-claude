@@ -1,0 +1,26 @@
+form_type: '1098'
+tax_year: 2025
+lender:
+  name: Rocket Mortgage
+  tin: ''
+borrower:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_mortgage_interest: 7840.74
+  2_outstanding_principal: 226599.15
+  5_mortgage_insurance: 0.00
+  10_property_tax: 6209.48
+validation:
+  has_interest: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2025/Form-1098-694006164-5806.pdf
+  pages:
+  - 1
+  - 2
+  processed_at: '2026-02-28T21:34:22'
+loan_number: 0694006164
+property_address: 2516 175TH AVE NE
+ending_balance: 220939.05
+principal_applied: 5660.10

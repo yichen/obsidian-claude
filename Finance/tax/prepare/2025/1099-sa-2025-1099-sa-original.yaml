@@ -1,0 +1,23 @@
+form_type: 1099-SA
+tax_year: 2025
+payer:
+  name: ''
+  tin: ''
+recipient:
+  name: Yi Chen
+  ssn_last4: '2622'
+account_type: HSA
+boxes:
+  1_gross_distribution: 0.00
+  2_earnings_excess_contributions: 0.00
+  3_distribution_code: ''
+  4_fmv_on_death: 0.00
+validation:
+  has_distribution: false
+  is_blank_template: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-1099-SA-original.pdf
+  pages:
+  - 1
+  processed_at: '2026-02-28T21:34:19'

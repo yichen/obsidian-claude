@@ -1,0 +1,44 @@
+form_type: W-2
+tax_year: 2024
+employer:
+  name: Salesforce, Inc.
+  ein: 94-3320693
+employee:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_wages: 310446.67
+  2_fed_tax_withheld: 66156.55
+  3_ss_wages: 168600.00
+  4_ss_tax_withheld: 10453.20
+  5_medicare_wages: 331121.77
+  6_medicare_tax_withheld: 5981.37
+  10_dependent_care: 2500.00
+  '12':
+  - code: C
+    amount: 1072.95
+    description: Group-term life insurance over $50K
+  - code: W
+    amount: 8300.00
+    description: HSA employer contributions
+  - code: AA
+    amount: 1166.68
+    description: Designated Roth 401(k)
+  - code: D
+    amount: 20675.10
+    description: 401(k) elective deferrals
+  '13':
+    retirement_plan: true
+    statutory_employee: false
+    third_party_sick_pay: false
+  15_state: WA
+  16_state_wages: 0.00
+  17_state_tax: 0.00
+validation:
+  checks_passed: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/2024-W2-Salesforce.pdf
+  pages:
+  - 1
+  processed_at: '2026-02-28T21:34:27'

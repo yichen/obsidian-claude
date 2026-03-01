@@ -1,0 +1,22 @@
+form_type: '1098'
+tax_year: 2023
+lender:
+  name: Flagstar Bank
+  tin: 38-2734984
+borrower:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_mortgage_interest: 20774.18
+  2_outstanding_principal: 702334.91
+  5_mortgage_insurance: 0.00
+  10_property_tax: 13540.50
+validation:
+  has_interest: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-flagstar-form-1098.pdf
+  pages:
+  - 1
+  - 2
+  processed_at: '2026-02-28T21:34:30'

@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for file in \"/Users/yichen/Obsidian/Children/Personal Health Record (PHR)/Laurence\"/*.xml)",
+      "Bash(do if grep -qi \"weight\\|height\" \"$file\")",
+      "Bash(then basename \"$file\" fi done)",
+      "Bash(for file in \"/Users/yichen/Obsidian/Children/Personal Health Record (PHR)/Laurence/LAURENCE CHEN_health-summary-\"*\"2024.xml\")",
+      "Bash(ls:*)",
+      "Bash(awk:*)",
+      "Bash(python3:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

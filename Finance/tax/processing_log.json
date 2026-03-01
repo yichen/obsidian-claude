@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "last_run": "2026-02-28T21:35:12",
+  "files": {
+    "/Users/ychen2/Dropbox/1-Tax/3-archive/2024/Yi Chen and Sheri Martin's 2024 Tax Return Final.pdf": {
+      "status": "success",
+      "form_type": "1040",
+      "output_file": "Finance/tax/archive/2024/1040-summary.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-02-28T21:35:12"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/3-archive/2023/2023-tax-final.pdf": {
+      "status": "success",
+      "form_type": "1040",
+      "output_file": "Finance/tax/archive/2023/1040-summary.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-02-28T21:35:12"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/3-archive/2022/Yi Chen and Sheri Martin's 2022 Tax Return.pdf": {
+      "status": "success",
+      "form_type": "1040",
+      "output_file": "Finance/tax/archive/2022/1040-summary.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-02-28T21:35:12"
+    }
+  }
+}

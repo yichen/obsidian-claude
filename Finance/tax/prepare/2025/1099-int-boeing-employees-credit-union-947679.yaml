@@ -1,0 +1,22 @@
+form_type: 1099-INT
+tax_year: 2025
+payer:
+  name: Boeing Employees Credit Union
+  tin: 91-0219435
+recipient:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_interest_income: 18.22
+  2_early_withdrawal_penalty: 0.00
+  3_us_savings_bonds: 0.00
+  4_fed_tax_withheld: 0.00
+validation:
+  has_interest: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2025/BECU-Statement-F270CEC9-4719-DD17-8228-52BFDBE7B9B3.PDF
+  pages:
+  - 1
+  processed_at: '2026-02-28T21:34:23'
+account_number: '3588947679'

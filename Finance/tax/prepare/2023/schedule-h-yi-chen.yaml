@@ -1,0 +1,38 @@
+form_type: Schedule-H
+tax_year: 2023
+employer:
+  name: Yi Chen
+  ein: 26-0200415
+  ssn_last4: '2622'
+part1_ss_medicare_fit:
+  1_ss_wages: 3660.00
+  2_ss_tax: 453.84
+  3_medicare_wages: 3660.00
+  4_medicare_tax: 106.14
+  5_additional_medicare_wages: 0.00
+  6_additional_medicare_tax: 0.00
+  7_fed_income_tax_withheld: 524.42
+  8_total: 1084.40
+part2_futa:
+  13_state: Washington
+  14_state_unemployment_contributions: 48.68
+  15_futa_wages: 3660.00
+  16_futa_tax: 21.96
+part3_total:
+  25_subtotal_from_part1: 1084.40
+  26_total_household_taxes: 1106.36
+validation:
+  ss_tax_check: true
+  medicare_tax_check: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2023/nanny-on-w2/diana.schedule_h.20231231.pdf
+  pages:
+  - 2
+  - 3
+  processed_at: '2026-02-28T21:34:35'
+cross_validation:
+  nanny_w2_file: Finance/tax/prepare/2023/w-2-yi-chen.yaml
+  nanny_w2_box1: 3660.00
+  schedule_h_line1: 3660.00
+  match: true

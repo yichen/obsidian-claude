@@ -1,0 +1,985 @@
+2026-03-01 07:59:21,532 INFO: Parsing Statement1312025.pdf
+2026-03-01 07:59:22,514 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 07:59:22,518 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-01-31.yaml
+2026-03-01 07:59:22,519 WARNING:   Validation: FAILED
+2026-03-01 07:59:22,519 WARNING:     - Account X86-610887: holdings sum $1,008,447.09 != ending value $1,111,824.09 (diff=$103,377.00)
+2026-03-01 07:59:22,519 WARNING:     - Account Z06-592753: holdings sum $22,598.27 != ending value $22,850.59 (diff=$252.32)
+2026-03-01 07:59:22,519 WARNING:     - Account Z08-759437: holdings sum $22,598.27 != ending value $22,829.79 (diff=$231.52)
+2026-03-01 07:59:22,519 WARNING:     - Account 231-574209: holdings sum $4,150.59 != ending value $60,897.45 (diff=$56,746.86)
+2026-03-01 07:59:22,519 INFO: Parsing Statement2282025.pdf
+2026-03-01 07:59:23,559 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 07:59:23,564 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-02-28.yaml
+2026-03-01 07:59:23,564 WARNING:   Validation: FAILED
+2026-03-01 07:59:23,564 WARNING:     - Portfolio income $634.99 != sum of account income $28.03
+2026-03-01 07:59:23,564 WARNING:     - Account X86-610887: beg($1,111,824.09) + add($61.02) + sub($-0.21) + chg($30,052.07) = $1,141,936.76 != ending $1,141,936.97
+2026-03-01 07:59:23,564 WARNING:     - Account X86-610887: holdings sum $1,041,706.97 != ending value $1,141,936.97 (diff=$100,230.00)
+2026-03-01 07:59:23,564 WARNING:     - Account Z06-592753: holdings sum $18,828.14 != ending value $19,073.01 (diff=$244.87)
+2026-03-01 07:59:23,564 WARNING:     - Account Z08-759437: holdings sum $18,828.14 != ending value $19,052.15 (diff=$224.01)
+2026-03-01 07:59:23,564 WARNING:     - Account 231-574209: holdings sum $4,080.83 != ending value $59,773.32 (diff=$55,692.49)
+2026-03-01 07:59:23,564 INFO: Parsing Statement3312025.pdf
+2026-03-01 07:59:24,737 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 07:59:24,742 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-03-31.yaml
+2026-03-01 07:59:24,742 WARNING:   Validation: FAILED
+2026-03-01 07:59:24,743 WARNING:     - Portfolio income $780.70 != sum of account income $74.13
+2026-03-01 07:59:24,743 WARNING:     - Account X86-610887: beg($1,141,936.97) + add($95.85) + sub($-0.21) + chg($-104,879.30) = $1,037,153.10 != ending $1,037,153.52
+2026-03-01 07:59:24,743 WARNING:     - Account X86-610887: holdings sum $950,699.52 != ending value $1,037,153.52 (diff=$86,454.00)
+2026-03-01 07:59:24,743 WARNING:     - Account Z06-592753: holdings sum $16,753.50 != ending value $17,007.33 (diff=$253.83)
+2026-03-01 07:59:24,743 WARNING:     - Account Z08-759437: holdings sum $16,753.50 != ending value $16,986.40 (diff=$232.90)
+2026-03-01 07:59:24,743 WARNING:     - Account 231-574209: holdings sum $3,879.62 != ending value $56,300.85 (diff=$52,421.23)
+2026-03-01 07:59:24,743 INFO: Parsing Statement4302025.pdf
+2026-03-01 07:59:25,783 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 07:59:25,788 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-04-30.yaml
+2026-03-01 07:59:25,789 WARNING:   Validation: FAILED
+2026-03-01 07:59:25,789 WARNING:     - Portfolio income $753.26 != sum of account income $63.92
+2026-03-01 07:59:25,789 WARNING:     - Account X86-610887: beg($1,037,153.52) + add($92.28) + sub($-0.21) + chg($8,012.23) = $1,045,257.61 != ending $1,045,258.03
+2026-03-01 07:59:25,789 WARNING:     - Account X86-610887: holdings sum $951,926.85 != ending value $1,045,258.03 (diff=$93,331.18)
+2026-03-01 07:59:25,789 WARNING:     - Account Z06-592753: holdings sum $16,995.14 != ending value $17,263.10 (diff=$267.96)
+2026-03-01 07:59:25,789 WARNING:     - Account Z08-759437: holdings sum $16,995.14 != ending value $17,239.54 (diff=$244.40)
+2026-03-01 07:59:25,789 WARNING:     - Account 231-574209: holdings sum $3,922.45 != ending value $55,965.19 (diff=$52,042.74)
+2026-03-01 07:59:25,789 INFO: Parsing Statement5312025.pdf
+2026-03-01 07:59:26,782 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 07:59:26,787 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-05-31.yaml
+2026-03-01 07:59:26,787 WARNING:   Validation: FAILED
+2026-03-01 07:59:26,787 WARNING:     - Portfolio income $374.02 != sum of account income $82.50
+2026-03-01 07:59:26,787 WARNING:     - Account X86-610887: beg($1,045,258.03) + add($67.35) + sub($-323,798.35) + chg($92,033.65) = $252.31 != ending $252.52
+2026-03-01 07:59:26,787 WARNING:     - Account Z26-474983: beg($42,529.01) + add($54,272.19) + sub($-43,047.32) + chg($74.00) = $53,830.88 != ending $53,827.88
+2026-03-01 07:59:26,787 WARNING:     - Account Z06-592753: holdings sum $19,812.92 != ending value $20,086.47 (diff=$273.55)
+2026-03-01 07:59:26,787 WARNING:     - Account Z08-759437: holdings sum $19,812.92 != ending value $20,061.40 (diff=$248.48)
+2026-03-01 07:59:26,787 WARNING:     - Account 231-574209: holdings sum $2,728.45 != ending value $59,542.18 (diff=$56,813.73)
+2026-03-01 07:59:26,787 INFO: Parsing Statement6302025.pdf
+2026-03-01 07:59:27,733 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 07:59:27,738 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-06-30.yaml
+2026-03-01 07:59:27,738 WARNING:   Validation: FAILED
+2026-03-01 07:59:27,738 WARNING:     - Portfolio income $100.46 != sum of account income $105.64
+2026-03-01 07:59:27,738 WARNING:     - Account X86-610887: beg($252.52) + add($532.96) + sub($-252.52) + chg($0.02) = $-812,775.39 != ending $0.02
+2026-03-01 07:59:27,738 WARNING:     - Account Z26-474983: beg($53,827.88) + add($64,232.12) + sub($-77,974.86) + chg($79.25) = $40,167.39 != ending $40,164.39
+2026-03-01 07:59:27,738 WARNING:     - Account Z31-859340: beg($100.17) + add($100.00) + sub($0.00) + chg($0.32) = $200.49 != ending $100.49
+2026-03-01 07:59:27,738 WARNING:     - Account Z06-592753: holdings sum $20,146.14 != ending value $20,425.69 (diff=$279.55)
+2026-03-01 07:59:27,738 WARNING:     - Account Z08-759437: holdings sum $20,146.14 != ending value $20,399.33 (diff=$253.19)
+2026-03-01 07:59:27,738 WARNING:     - Account 231-574209: holdings sum $14,136.85 != ending value $75,922.23 (diff=$61,785.38)
+2026-03-01 07:59:27,738 INFO: Parsing Statement7312025.pdf
+2026-03-01 07:59:28,623 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 07:59:28,628 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-07-31.yaml
+2026-03-01 07:59:28,628 WARNING:   Validation: FAILED
+2026-03-01 07:59:28,628 WARNING:     - Portfolio income $62.73 != sum of account income $64.19
+2026-03-01 07:59:28,628 WARNING:     - Account Z26-474983: beg($40,164.39) + add($9,658.72) + sub($-28,815.45) + chg($41.99) = $21,052.65 != ending $21,049.65
+2026-03-01 07:59:28,628 WARNING:     - Account Z31-859340: beg($100.49) + add($100.00) + sub($0.00) + chg($0.34) = $200.83 != ending $100.83
+2026-03-01 07:59:28,628 WARNING:     - Account Z06-592753: holdings sum $20,905.48 != ending value $21,188.90 (diff=$283.42)
+2026-03-01 07:59:28,628 WARNING:     - Account Z08-759437: holdings sum $20,905.48 != ending value $21,161.87 (diff=$256.39)
+2026-03-01 07:59:28,628 WARNING:     - Account 231-574209: holdings sum $14,674.23 != ending value $77,865.13 (diff=$63,190.90)
+2026-03-01 07:59:28,628 INFO: Parsing Statement8312025.pdf
+2026-03-01 07:59:29,535 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 07:59:29,540 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-08-31.yaml
+2026-03-01 07:59:29,540 WARNING:   Validation: FAILED
+2026-03-01 07:59:29,540 WARNING:     - Portfolio income $33.66 != sum of account income $8.87
+2026-03-01 07:59:29,540 WARNING:     - Account Z26-474983: beg($21,049.65) + add($33,210.79) + sub($-50,178.39) + chg($26.25) = $4,111.30 != ending $4,108.30
+2026-03-01 07:59:29,540 WARNING:     - Account Z06-592753: holdings sum $21,192.46 != ending value $21,482.59 (diff=$290.13)
+2026-03-01 07:59:29,540 WARNING:     - Account Z08-759437: holdings sum $21,192.46 != ending value $21,454.95 (diff=$262.49)
+2026-03-01 07:59:29,540 WARNING:     - Account 231-574209: holdings sum $15,237.48 != ending value $79,862.58 (diff=$64,625.10)
+2026-03-01 07:59:29,540 INFO: Parsing Statement9302025.pdf
+2026-03-01 07:59:30,517 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 07:59:30,521 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-09-30.yaml
+2026-03-01 07:59:30,522 WARNING:   Validation: FAILED
+2026-03-01 07:59:30,522 WARNING:     - Portfolio income $26.59 != sum of account income $2.77
+2026-03-01 07:59:30,522 WARNING:     - Account Z26-474983: beg($4,108.30) + add($49,965.95) + sub($-36,529.55) + chg($25.28) = $17,572.98 != ending $17,569.98
+2026-03-01 07:59:30,522 WARNING:     - Account Z31-859340: beg($102.25) + add($3,100.00) + sub($-3,000.00) + chg($0.33) = $202.58 != ending $102.58
+2026-03-01 07:59:30,522 WARNING:     - Account Z06-592753: holdings sum $23,410.44 != ending value $23,710.93 (diff=$300.49)
+2026-03-01 07:59:30,522 WARNING:     - Account Z08-759437: holdings sum $23,410.44 != ending value $23,682.33 (diff=$271.89)
+2026-03-01 07:59:30,522 WARNING:     - Account 231-574209: holdings sum $16,780.72 != ending value $83,831.68 (diff=$67,050.96)
+2026-03-01 07:59:30,522 INFO: Parsing Statement10312025.pdf
+2026-03-01 07:59:31,427 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 07:59:31,431 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-10-31.yaml
+2026-03-01 07:59:31,432 WARNING:   Validation: FAILED
+2026-03-01 07:59:31,432 WARNING:     - Portfolio income $48.10 != sum of account income $22.26
+2026-03-01 07:59:31,432 WARNING:     - Account Z26-474983: beg($17,569.98) + add($34,867.40) + sub($-41,529.49) + chg($27.30) = $10,938.19 != ending $10,935.19
+2026-03-01 07:59:31,432 WARNING:     - Account Z31-859340: beg($102.58) + add($3,100.00) + sub($-3,000.00) + chg($0.33) = $202.91 != ending $102.91
+2026-03-01 07:59:31,432 WARNING:     - Account Z06-592753: holdings sum $25,105.23 != ending value $25,403.56 (diff=$298.33)
+2026-03-01 07:59:31,432 WARNING:     - Account Z08-759437: holdings sum $25,105.23 != ending value $25,374.34 (diff=$269.11)
+2026-03-01 07:59:31,432 WARNING:     - Account 231-574209: holdings sum $17,005.25 != ending value $86,649.33 (diff=$69,644.08)
+2026-03-01 07:59:31,432 INFO: Parsing Statement11302025.pdf
+2026-03-01 07:59:32,340 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 07:59:32,344 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-11-30.yaml
+2026-03-01 07:59:32,344 WARNING:   Validation: FAILED
+2026-03-01 07:59:32,344 WARNING:     - Portfolio income $89.68 != sum of account income $2.62
+2026-03-01 07:59:32,344 WARNING:     - Account Z26-474983: beg($10,935.19) + add($127,484.73) + sub($-63,068.70) + chg($88.52) = $75,442.74 != ending $75,439.74
+2026-03-01 07:59:32,344 WARNING:     - Account Z31-859340: beg($102.91) + add($3,100.00) + sub($-3,000.00) + chg($0.31) = $203.22 != ending $103.22
+2026-03-01 07:59:32,344 WARNING:     - Account Z06-592753: holdings sum $23,644.49 != ending value $23,959.76 (diff=$315.27)
+2026-03-01 07:59:32,344 WARNING:     - Account Z08-759437: holdings sum $23,644.49 != ending value $23,930.49 (diff=$286.00)
+2026-03-01 07:59:32,344 WARNING:     - Account 231-574209: holdings sum $16,720.42 != ending value $86,844.59 (diff=$70,124.17)
+2026-03-01 07:59:32,344 INFO: Parsing Statement12312025.pdf
+2026-03-01 07:59:33,422 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 07:59:33,427 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-12-31.yaml
+2026-03-01 07:59:33,427 WARNING:   Validation: FAILED
+2026-03-01 07:59:33,427 WARNING:     - Portfolio income $916.16 != sum of account income $763.96
+2026-03-01 07:59:33,427 WARNING:     - Account Z26-474983: beg($75,439.74) + add($124,892.43) + sub($-165,659.24) + chg($152.20) = $34,828.13 != ending $34,825.13
+2026-03-01 07:59:33,427 WARNING:     - Account Z31-859340: beg($103.22) + add($9,900.00) + sub($-3,000.00) + chg($26.98) = $7,030.20 != ending $10,030.20
+2026-03-01 07:59:33,427 WARNING:     - Account Z31-859340: holdings sum $9,390.99 != ending value $10,030.20 (diff=$639.21)
+2026-03-01 07:59:33,427 WARNING:     - Account Z06-592753: holdings sum $24,086.58 != ending value $24,416.48 (diff=$329.90)
+2026-03-01 07:59:33,427 WARNING:     - Account Z08-759437: holdings sum $24,086.58 != ending value $24,387.30 (diff=$300.72)
+2026-03-01 07:59:33,427 WARNING:     - Account 231-574209: holdings sum $16,854.75 != ending value $87,480.79 (diff=$70,626.04)
+2026-03-01 08:05:24,475 INFO: Parsing Statement1312025.pdf
+2026-03-01 08:05:25,460 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:25,467 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-01-31.yaml
+2026-03-01 08:05:25,467 WARNING:   Validation: FAILED
+2026-03-01 08:05:25,467 WARNING:     - Account X86-610887: holdings sum $1,112,040.55 != ending value $1,111,824.09 (diff=$216.46)
+2026-03-01 08:05:25,467 WARNING:     - Account Z26-474983: holdings sum $-10,805.73 != ending value $20,258.03 (diff=$31,063.76)
+2026-03-01 08:05:25,467 INFO: Parsing Statement2282025.pdf
+2026-03-01 08:05:26,461 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:26,467 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-02-28.yaml
+2026-03-01 08:05:26,467 WARNING:   Validation: FAILED
+2026-03-01 08:05:26,467 WARNING:     - Account X86-610887: beg($1,111,824.09) + add($61.02) + sub($-0.21) + chg($30,052.07) = $1,141,936.76 != ending $1,141,936.97
+2026-03-01 08:05:26,467 WARNING:     - Account X86-610887: holdings sum $1,142,214.45 != ending value $1,141,936.97 (diff=$277.48)
+2026-03-01 08:05:26,467 WARNING:     - Account Z26-474983: holdings sum $-42,024.09 != ending value $16,985.84 (diff=$59,009.93)
+2026-03-01 08:05:26,467 WARNING:     - Account Z06-592753: holdings sum $35,162.30 != ending value $19,073.01 (diff=$16,089.29)
+2026-03-01 08:05:26,467 INFO: Parsing Statement3312025.pdf
+2026-03-01 08:05:27,613 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:27,620 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-03-31.yaml
+2026-03-01 08:05:27,620 WARNING:   Validation: FAILED
+2026-03-01 08:05:27,620 WARNING:     - Account X86-610887: holdings sum $1,037,526.85 != ending value $1,037,153.52 (diff=$373.33)
+2026-03-01 08:05:27,620 WARNING:     - Account Z26-474983: holdings sum $-117,844.59 != ending value $17,976.27 (diff=$135,820.86)
+2026-03-01 08:05:27,620 WARNING:     - Account 249-729024: holdings sum $8,003.56 != ending value $0.88 (diff=$8,002.68)
+2026-03-01 08:05:27,620 WARNING:     - Account Z06-592753: holdings sum $28,965.26 != ending value $17,007.33 (diff=$11,957.93)
+2026-03-01 08:05:27,620 INFO: Parsing Statement4302025.pdf
+2026-03-01 08:05:28,641 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:28,648 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-04-30.yaml
+2026-03-01 08:05:28,648 WARNING:   Validation: FAILED
+2026-03-01 08:05:28,648 WARNING:     - Portfolio income $753.26 != sum of account income $754.13
+2026-03-01 08:05:28,648 WARNING:     - Account X86-610887: holdings sum $1,044,742.46 != ending value $1,045,258.03 (diff=$515.57)
+2026-03-01 08:05:28,648 WARNING:     - Account Z26-474983: holdings sum $-125,009.33 != ending value $42,529.01 (diff=$167,538.34)
+2026-03-01 08:05:28,648 WARNING:     - Account Z06-592753: holdings sum $17,251.10 != ending value $17,263.10 (diff=$12.00)
+2026-03-01 08:05:28,648 WARNING:     - Account Z08-759437: holdings sum $17,230.13 != ending value $17,239.54 (diff=$9.41)
+2026-03-01 08:05:28,648 INFO: Parsing Statement5312025.pdf
+2026-03-01 08:05:29,602 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:29,609 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-05-31.yaml
+2026-03-01 08:05:29,609 WARNING:   Validation: FAILED
+2026-03-01 08:05:29,609 WARNING:     - Portfolio income $374.02 != sum of account income $379.22
+2026-03-01 08:05:29,609 WARNING:     - Account Z26-474983: beg($42,529.01) + add($54,272.19) + sub($-43,047.32) + chg($74.00) = $53,830.88 != ending $53,827.88
+2026-03-01 08:05:29,609 WARNING:     - Account X86-610887: holdings sum $-1,130,777.17 != ending value $252.52 (diff=$1,131,029.69)
+2026-03-01 08:05:29,609 WARNING:     - Account Z26-474983: holdings sum $-402,696.35 != ending value $53,827.88 (diff=$456,524.23)
+2026-03-01 08:05:29,609 WARNING:     - Account Z31-859340: holdings sum $104.99 != ending value $100.17 (diff=$4.82)
+2026-03-01 08:05:29,609 INFO: Parsing Statement6302025.pdf
+2026-03-01 08:05:30,567 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:30,574 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-06-30.yaml
+2026-03-01 08:05:30,574 WARNING:   Validation: FAILED
+2026-03-01 08:05:30,574 WARNING:     - Portfolio income $100.46 != sum of account income $105.66
+2026-03-01 08:05:30,574 WARNING:     - Account X86-610887: beg($252.52) + add($0.00) + sub($-252.52) + chg($0.02) = $-813,308.14 != ending $0.02
+2026-03-01 08:05:30,574 WARNING:     - Account X86-610887: holdings sum $-318,501.46 != ending value $0.02 (diff=$318,501.48)
+2026-03-01 08:05:30,574 WARNING:     - Account Z26-474983: holdings sum $-584,436.36 != ending value $40,164.39 (diff=$624,600.75)
+2026-03-01 08:05:30,574 WARNING:     - Account Z31-859340: holdings sum $201.96 != ending value $100.49 (diff=$101.47)
+2026-03-01 08:05:30,574 INFO: Parsing Statement7312025.pdf
+2026-03-01 08:05:31,413 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:31,419 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-07-31.yaml
+2026-03-01 08:05:31,419 WARNING:   Validation: FAILED
+2026-03-01 08:05:31,419 WARNING:     - Portfolio income $62.73 != sum of account income $64.19
+2026-03-01 08:05:31,419 WARNING:     - Account Z26-474983: holdings sum $-676,191.24 != ending value $21,049.65 (diff=$697,240.89)
+2026-03-01 08:05:31,419 WARNING:     - Account Z31-859340: holdings sum $203.32 != ending value $100.83 (diff=$102.49)
+2026-03-01 08:05:31,419 INFO: Parsing Statement8312025.pdf
+2026-03-01 08:05:32,313 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:32,319 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-08-31.yaml
+2026-03-01 08:05:32,319 WARNING:   Validation: FAILED
+2026-03-01 08:05:32,319 WARNING:     - Portfolio income $33.66 != sum of account income $35.12
+2026-03-01 08:05:32,319 WARNING:     - Account Z26-474983: holdings sum $-822,695.93 != ending value $4,108.30 (diff=$826,804.23)
+2026-03-01 08:05:32,319 WARNING:     - Account Z31-859340: holdings sum $-5,891.00 != ending value $102.25 (diff=$5,993.25)
+2026-03-01 08:05:32,319 INFO: Parsing Statement9302025.pdf
+2026-03-01 08:05:33,295 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:33,301 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-09-30.yaml
+2026-03-01 08:05:33,301 WARNING:   Validation: FAILED
+2026-03-01 08:05:33,301 WARNING:     - Portfolio income $26.59 != sum of account income $28.05
+2026-03-01 08:05:33,301 WARNING:     - Account Z26-474983: holdings sum $-853,817.72 != ending value $17,569.98 (diff=$871,387.70)
+2026-03-01 08:05:33,301 WARNING:     - Account Z31-859340: holdings sum $110.32 != ending value $102.58 (diff=$7.74)
+2026-03-01 08:05:33,301 INFO: Parsing Statement10312025.pdf
+2026-03-01 08:05:34,182 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:34,188 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-10-31.yaml
+2026-03-01 08:05:34,188 WARNING:   Validation: FAILED
+2026-03-01 08:05:34,188 WARNING:     - Portfolio income $48.10 != sum of account income $49.56
+2026-03-01 08:05:34,188 WARNING:     - Account Z26-474983: holdings sum $-949,723.61 != ending value $10,935.19 (diff=$960,658.80)
+2026-03-01 08:05:34,188 WARNING:     - Account Z31-859340: holdings sum $111.64 != ending value $102.91 (diff=$8.73)
+2026-03-01 08:05:34,188 INFO: Parsing Statement11302025.pdf
+2026-03-01 08:05:35,090 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:35,096 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-11-30.yaml
+2026-03-01 08:05:35,096 WARNING:   Validation: FAILED
+2026-03-01 08:05:35,096 WARNING:     - Portfolio income $89.68 != sum of account income $91.14
+2026-03-01 08:05:35,096 WARNING:     - Account Z26-474983: holdings sum $-946,321.97 != ending value $75,439.74 (diff=$1,021,761.71)
+2026-03-01 08:05:35,096 WARNING:     - Account Z31-859340: holdings sum $112.88 != ending value $103.22 (diff=$9.66)
+2026-03-01 08:05:35,096 INFO: Parsing Statement12312025.pdf
+2026-03-01 08:05:36,172 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:36,178 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-12-31.yaml
+2026-03-01 08:05:36,179 WARNING:   Validation: FAILED
+2026-03-01 08:05:36,179 WARNING:     - Account Z26-474983: holdings sum $-1,369,275.18 != ending value $34,825.13 (diff=$1,404,100.31)
+2026-03-01 08:05:36,179 WARNING:     - Account Z31-859340: holdings sum $35,907.19 != ending value $10,030.20 (diff=$25,876.99)
+2026-03-01 08:05:36,179 INFO: Parsing Statement1312026.pdf
+2026-03-01 08:05:37,112 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:05:37,117 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2026-01-31.yaml
+2026-03-01 08:05:37,117 WARNING:   Validation: FAILED
+2026-03-01 08:05:37,117 WARNING:     - Account Z26-474983: holdings sum $-77,582.96 != ending value $10,256.86 (diff=$87,839.82)
+2026-03-01 08:06:32,515 INFO: Parsing Statement1312025.pdf
+2026-03-01 08:06:33,500 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:33,506 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-01-31.yaml
+2026-03-01 08:06:33,506 INFO:   Validation: PASSED
+2026-03-01 08:06:33,506 INFO: Parsing Statement2282025.pdf
+2026-03-01 08:06:34,509 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:34,514 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-02-28.yaml
+2026-03-01 08:06:34,515 WARNING:   Validation: FAILED
+2026-03-01 08:06:34,515 WARNING:     - Account X86-610887: beg($1,111,824.09) + add($61.02) + sub($-0.21) + chg($30,052.07) = $1,141,936.76 != ending $1,141,936.97
+2026-03-01 08:06:34,515 INFO: Parsing Statement3312025.pdf
+2026-03-01 08:06:35,662 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:35,667 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-03-31.yaml
+2026-03-01 08:06:35,668 INFO:   Validation: PASSED
+2026-03-01 08:06:35,668 INFO: Parsing Statement4302025.pdf
+2026-03-01 08:06:36,682 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:36,688 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-04-30.yaml
+2026-03-01 08:06:36,688 WARNING:   Validation: FAILED
+2026-03-01 08:06:36,688 WARNING:     - Portfolio income $753.26 != sum of account income $754.13
+2026-03-01 08:06:36,688 WARNING:     - Account X86-610887: holdings sum $1,044,276.85 != ending value $1,045,258.03 (diff=$981.18)
+2026-03-01 08:06:36,688 WARNING:     - Account Z06-592753: holdings sum $17,251.10 != ending value $17,263.10 (diff=$12.00)
+2026-03-01 08:06:36,688 WARNING:     - Account Z08-759437: holdings sum $17,230.13 != ending value $17,239.54 (diff=$9.41)
+2026-03-01 08:06:36,688 INFO: Parsing Statement5312025.pdf
+2026-03-01 08:06:37,646 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:37,651 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-05-31.yaml
+2026-03-01 08:06:37,651 WARNING:   Validation: FAILED
+2026-03-01 08:06:37,651 WARNING:     - Portfolio income $374.02 != sum of account income $379.22
+2026-03-01 08:06:37,651 WARNING:     - Account Z26-474983: beg($42,529.01) + add($54,272.19) + sub($-43,047.32) + chg($74.00) = $53,830.88 != ending $53,827.88
+2026-03-01 08:06:37,651 WARNING:     - Account Z31-859340: holdings sum $4.48 != ending value $100.17 (diff=$95.69)
+2026-03-01 08:06:37,651 INFO: Parsing Statement6302025.pdf
+2026-03-01 08:06:38,606 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:38,611 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-06-30.yaml
+2026-03-01 08:06:38,611 WARNING:   Validation: FAILED
+2026-03-01 08:06:38,611 WARNING:     - Portfolio income $100.46 != sum of account income $105.66
+2026-03-01 08:06:38,611 WARNING:     - Account X86-610887: beg($252.52) + add($0.00) + sub($-252.52) + chg($0.02) = $-813,308.14 != ending $0.02
+2026-03-01 08:06:38,611 INFO: Parsing Statement7312025.pdf
+2026-03-01 08:06:39,451 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:39,456 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-07-31.yaml
+2026-03-01 08:06:39,456 WARNING:   Validation: FAILED
+2026-03-01 08:06:39,456 WARNING:     - Portfolio income $62.73 != sum of account income $64.19
+2026-03-01 08:06:39,456 INFO: Parsing Statement8312025.pdf
+2026-03-01 08:06:40,361 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:40,366 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-08-31.yaml
+2026-03-01 08:06:40,367 WARNING:   Validation: FAILED
+2026-03-01 08:06:40,367 WARNING:     - Portfolio income $33.66 != sum of account income $35.12
+2026-03-01 08:06:40,367 WARNING:     - Account Z26-474983: holdings sum $173.44 != ending value $4,108.30 (diff=$3,934.86)
+2026-03-01 08:06:40,367 INFO: Parsing Statement9302025.pdf
+2026-03-01 08:06:41,343 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:41,348 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-09-30.yaml
+2026-03-01 08:06:41,348 WARNING:   Validation: FAILED
+2026-03-01 08:06:41,348 WARNING:     - Portfolio income $26.59 != sum of account income $28.05
+2026-03-01 08:06:41,349 INFO: Parsing Statement10312025.pdf
+2026-03-01 08:06:42,248 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:42,253 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-10-31.yaml
+2026-03-01 08:06:42,253 WARNING:   Validation: FAILED
+2026-03-01 08:06:42,253 WARNING:     - Portfolio income $48.10 != sum of account income $49.56
+2026-03-01 08:06:42,253 INFO: Parsing Statement11302025.pdf
+2026-03-01 08:06:43,157 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:43,162 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-11-30.yaml
+2026-03-01 08:06:43,162 WARNING:   Validation: FAILED
+2026-03-01 08:06:43,162 WARNING:     - Portfolio income $89.68 != sum of account income $91.14
+2026-03-01 08:06:43,162 INFO: Parsing Statement12312025.pdf
+2026-03-01 08:06:44,236 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:44,241 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-12-31.yaml
+2026-03-01 08:06:44,241 WARNING:   Validation: FAILED
+2026-03-01 08:06:44,241 WARNING:     - Account Z31-859340: holdings sum $10,007.19 != ending value $10,030.20 (diff=$23.01)
+2026-03-01 08:06:44,241 INFO: Parsing Statement1312026.pdf
+2026-03-01 08:06:45,174 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:06:45,179 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2026-01-31.yaml
+2026-03-01 08:06:45,179 INFO:   Validation: PASSED
+2026-03-01 08:08:25,910 INFO: Parsing Statement1312025.pdf
+2026-03-01 08:08:26,899 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:26,905 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-01-31.yaml
+2026-03-01 08:08:26,905 INFO:   Validation: PASSED
+2026-03-01 08:08:26,905 INFO: Parsing Statement2282025.pdf
+2026-03-01 08:08:27,901 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:27,907 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-02-28.yaml
+2026-03-01 08:08:27,907 INFO:   Validation: PASSED
+2026-03-01 08:08:27,907 INFO: Parsing Statement3312025.pdf
+2026-03-01 08:08:29,051 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:29,056 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-03-31.yaml
+2026-03-01 08:08:29,058 INFO:   Validation: PASSED
+2026-03-01 08:08:29,058 INFO: Parsing Statement4302025.pdf
+2026-03-01 08:08:30,073 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:30,079 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-04-30.yaml
+2026-03-01 08:08:30,079 WARNING:   Validation: FAILED
+2026-03-01 08:08:30,079 WARNING:     - Account X86-610887: holdings sum $1,044,276.85 != ending value $1,045,258.03 (diff=$981.18)
+2026-03-01 08:08:30,079 WARNING:     - Account Z06-592753: holdings sum $17,251.10 != ending value $17,263.10 (diff=$12.00)
+2026-03-01 08:08:30,079 WARNING:     - Account Z08-759437: holdings sum $17,230.13 != ending value $17,239.54 (diff=$9.41)
+2026-03-01 08:08:30,079 INFO: Parsing Statement5312025.pdf
+2026-03-01 08:08:31,039 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:31,045 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-05-31.yaml
+2026-03-01 08:08:31,045 WARNING:   Validation: FAILED
+2026-03-01 08:08:31,045 WARNING:     - Account Z31-859340: holdings sum $4.48 != ending value $100.17 (diff=$95.69)
+2026-03-01 08:08:31,045 INFO: Parsing Statement6302025.pdf
+2026-03-01 08:08:31,995 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:32,000 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-06-30.yaml
+2026-03-01 08:08:32,000 INFO:   Validation: PASSED
+2026-03-01 08:08:32,000 INFO: Parsing Statement7312025.pdf
+2026-03-01 08:08:32,852 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:32,856 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-07-31.yaml
+2026-03-01 08:08:32,857 INFO:   Validation: PASSED
+2026-03-01 08:08:32,857 INFO: Parsing Statement8312025.pdf
+2026-03-01 08:08:33,756 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:33,761 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-08-31.yaml
+2026-03-01 08:08:33,761 WARNING:   Validation: FAILED
+2026-03-01 08:08:33,761 WARNING:     - Account Z26-474983: holdings sum $173.44 != ending value $4,108.30 (diff=$3,934.86)
+2026-03-01 08:08:33,761 INFO: Parsing Statement9302025.pdf
+2026-03-01 08:08:34,730 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:34,735 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-09-30.yaml
+2026-03-01 08:08:34,735 INFO:   Validation: PASSED
+2026-03-01 08:08:34,735 INFO: Parsing Statement10312025.pdf
+2026-03-01 08:08:35,622 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:35,627 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-10-31.yaml
+2026-03-01 08:08:35,627 INFO:   Validation: PASSED
+2026-03-01 08:08:35,627 INFO: Parsing Statement11302025.pdf
+2026-03-01 08:08:36,532 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:36,537 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-11-30.yaml
+2026-03-01 08:08:36,538 INFO:   Validation: PASSED
+2026-03-01 08:08:36,538 INFO: Parsing Statement12312025.pdf
+2026-03-01 08:08:37,604 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:37,609 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-12-31.yaml
+2026-03-01 08:08:37,609 WARNING:   Validation: FAILED
+2026-03-01 08:08:37,609 WARNING:     - Account Z31-859340: holdings sum $10,007.19 != ending value $10,030.20 (diff=$23.01)
+2026-03-01 08:08:37,609 INFO: Parsing Statement1312026.pdf
+2026-03-01 08:08:38,552 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:08:38,556 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2026-01-31.yaml
+2026-03-01 08:08:38,557 INFO:   Validation: PASSED
+2026-03-01 08:09:57,630 INFO: Parsing Statement1312025.pdf
+2026-03-01 08:09:58,660 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:09:58,666 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-01-31.yaml
+2026-03-01 08:09:58,666 WARNING:   Validation: FAILED
+2026-03-01 08:09:58,666 WARNING:     - Account X86-610887: holdings sum $714,080.40 != ending value $1,111,824.09 (diff=$397,743.69)
+2026-03-01 08:09:58,666 WARNING:     - Account 249-729024: holdings sum $0.16 != ending value $3.27 (diff=$3.11)
+2026-03-01 08:09:58,666 WARNING:     - Account 249-733354: holdings sum $-6.66 != ending value $6,993.34 (diff=$7,000.00)
+2026-03-01 08:09:58,666 WARNING:     - Account 413-189729: holdings sum $678.31 != ending value $2,254.31 (diff=$1,576.00)
+2026-03-01 08:09:58,666 WARNING:     - Account Z06-592753: holdings sum $16,202.37 != ending value $22,850.59 (diff=$6,648.22)
+2026-03-01 08:09:58,666 WARNING:     - Account Z08-759437: holdings sum $16,582.66 != ending value $22,829.79 (diff=$6,247.13)
+2026-03-01 08:09:58,666 WARNING:     - Account 231-574209: holdings sum $20,848.03 != ending value $60,897.45 (diff=$40,049.42)
+2026-03-01 08:09:58,666 INFO: Parsing Statement2282025.pdf
+2026-03-01 08:09:59,661 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:09:59,666 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-02-28.yaml
+2026-03-01 08:09:59,666 WARNING:   Validation: FAILED
+2026-03-01 08:09:59,666 WARNING:     - Account X86-610887: holdings sum $748,619.50 != ending value $1,141,936.97 (diff=$393,317.47)
+2026-03-01 08:09:59,666 WARNING:     - Account 249-729024: holdings sum $0.16 != ending value $3.28 (diff=$3.12)
+2026-03-01 08:09:59,666 WARNING:     - Account 249-733354: holdings sum $-136.59 != ending value $6,863.41 (diff=$7,000.00)
+2026-03-01 08:09:59,666 WARNING:     - Account 413-189729: holdings sum $635.72 != ending value $2,211.72 (diff=$1,576.00)
+2026-03-01 08:09:59,666 WARNING:     - Account Z06-592753: holdings sum $12,424.42 != ending value $19,073.01 (diff=$6,648.59)
+2026-03-01 08:09:59,666 WARNING:     - Account Z08-759437: holdings sum $12,804.72 != ending value $19,052.15 (diff=$6,247.43)
+2026-03-01 08:09:59,666 WARNING:     - Account 231-574209: holdings sum $19,718.62 != ending value $59,773.32 (diff=$40,054.70)
+2026-03-01 08:09:59,666 INFO: Parsing Statement3312025.pdf
+2026-03-01 08:10:00,826 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:00,832 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-03-31.yaml
+2026-03-01 08:10:00,832 WARNING:   Validation: FAILED
+2026-03-01 08:10:00,832 WARNING:     - Account X86-610887: holdings sum $643,836.05 != ending value $1,037,153.52 (diff=$393,317.47)
+2026-03-01 08:10:00,832 WARNING:     - Account 249-733354: holdings sum $-641.57 != ending value $14,362.54 (diff=$15,004.11)
+2026-03-01 08:10:00,832 WARNING:     - Account 413-189729: holdings sum $504.70 != ending value $2,080.70 (diff=$1,576.00)
+2026-03-01 08:10:00,832 WARNING:     - Account Z06-592753: holdings sum $10,358.34 != ending value $17,007.33 (diff=$6,648.99)
+2026-03-01 08:10:00,832 WARNING:     - Account Z08-759437: holdings sum $10,738.66 != ending value $16,986.40 (diff=$6,247.74)
+2026-03-01 08:10:00,832 WARNING:     - Account 231-574209: holdings sum $16,240.35 != ending value $56,300.85 (diff=$40,060.50)
+2026-03-01 08:10:00,832 INFO: Parsing Statement4302025.pdf
+2026-03-01 08:10:01,849 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:01,855 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-04-30.yaml
+2026-03-01 08:10:01,855 WARNING:   Validation: FAILED
+2026-03-01 08:10:01,855 WARNING:     - Account X86-610887: holdings sum $635,716.68 != ending value $1,045,258.03 (diff=$409,541.35)
+2026-03-01 08:10:01,855 WARNING:     - Account 249-733354: holdings sum $-745.23 != ending value $14,259.72 (diff=$15,004.95)
+2026-03-01 08:10:01,855 WARNING:     - Account 413-189729: holdings sum $490.49 != ending value $2,066.49 (diff=$1,576.00)
+2026-03-01 08:10:01,855 WARNING:     - Account Z06-592753: holdings sum $10,598.58 != ending value $17,263.10 (diff=$6,664.52)
+2026-03-01 08:10:01,855 WARNING:     - Account Z08-759437: holdings sum $10,979.52 != ending value $17,239.54 (diff=$6,260.02)
+2026-03-01 08:10:01,855 WARNING:     - Account 231-574209: holdings sum $15,895.45 != ending value $55,965.19 (diff=$40,069.74)
+2026-03-01 08:10:01,855 INFO: Parsing Statement5312025.pdf
+2026-03-01 08:10:02,812 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:02,817 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-05-31.yaml
+2026-03-01 08:10:02,817 WARNING:   Validation: FAILED
+2026-03-01 08:10:02,817 WARNING:     - Account Z31-859340: holdings sum $4.48 != ending value $100.17 (diff=$95.69)
+2026-03-01 08:10:02,817 WARNING:     - Account 413-189729: holdings sum $622.83 != ending value $2,198.83 (diff=$1,576.00)
+2026-03-01 08:10:02,817 WARNING:     - Account Z06-592753: holdings sum $13,432.66 != ending value $20,086.47 (diff=$6,653.81)
+2026-03-01 08:10:02,817 WARNING:     - Account Z08-759437: holdings sum $13,809.77 != ending value $20,061.40 (diff=$6,251.63)
+2026-03-01 08:10:02,817 WARNING:     - Account 231-574209: holdings sum $19,403.92 != ending value $59,542.18 (diff=$40,138.26)
+2026-03-01 08:10:02,817 INFO: Parsing Statement6302025.pdf
+2026-03-01 08:10:03,768 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:03,773 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-06-30.yaml
+2026-03-01 08:10:03,773 WARNING:   Validation: FAILED
+2026-03-01 08:10:03,773 WARNING:     - Account Z31-859340: holdings sum $4.41 != ending value $100.49 (diff=$96.08)
+2026-03-01 08:10:03,773 WARNING:     - Account 413-189729: holdings sum $735.48 != ending value $2,311.48 (diff=$1,576.00)
+2026-03-01 08:10:03,773 WARNING:     - Account Z06-592753: holdings sum $13,771.88 != ending value $20,425.69 (diff=$6,653.81)
+2026-03-01 08:10:03,773 WARNING:     - Account Z08-759437: holdings sum $14,147.70 != ending value $20,399.33 (diff=$6,251.63)
+2026-03-01 08:10:03,773 WARNING:     - Account 231-574209: holdings sum $22,900.58 != ending value $75,922.23 (diff=$53,021.65)
+2026-03-01 08:10:03,773 INFO: Parsing Statement7312025.pdf
+2026-03-01 08:10:04,619 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:04,624 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-07-31.yaml
+2026-03-01 08:10:04,624 WARNING:   Validation: FAILED
+2026-03-01 08:10:04,624 WARNING:     - Account Z31-859340: holdings sum $4.34 != ending value $100.83 (diff=$96.49)
+2026-03-01 08:10:04,624 WARNING:     - Account 413-189729: holdings sum $788.15 != ending value $2,364.15 (diff=$1,576.00)
+2026-03-01 08:10:04,624 WARNING:     - Account Z06-592753: holdings sum $14,542.39 != ending value $21,188.90 (diff=$6,646.51)
+2026-03-01 08:10:04,624 WARNING:     - Account Z08-759437: holdings sum $14,917.71 != ending value $21,161.87 (diff=$6,244.16)
+2026-03-01 08:10:04,624 WARNING:     - Account 231-574209: holdings sum $24,582.73 != ending value $77,865.13 (diff=$53,282.40)
+2026-03-01 08:10:04,624 INFO: Parsing Statement8312025.pdf
+2026-03-01 08:10:05,527 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:05,532 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-08-31.yaml
+2026-03-01 08:10:05,532 WARNING:   Validation: FAILED
+2026-03-01 08:10:05,532 WARNING:     - Account Z26-474983: holdings sum $173.44 != ending value $4,108.30 (diff=$3,934.86)
+2026-03-01 08:10:05,532 WARNING:     - Account Z31-859340: holdings sum $4.32 != ending value $102.25 (diff=$97.93)
+2026-03-01 08:10:05,532 WARNING:     - Account 413-189729: holdings sum $841.89 != ending value $2,417.89 (diff=$1,576.00)
+2026-03-01 08:10:05,532 WARNING:     - Account Z06-592753: holdings sum $14,835.70 != ending value $21,482.59 (diff=$6,646.89)
+2026-03-01 08:10:05,532 WARNING:     - Account Z08-759437: holdings sum $15,210.41 != ending value $21,454.95 (diff=$6,244.54)
+2026-03-01 08:10:05,532 WARNING:     - Account 231-574209: holdings sum $25,945.34 != ending value $79,862.58 (diff=$53,917.24)
+2026-03-01 08:10:05,532 INFO: Parsing Statement9302025.pdf
+2026-03-01 08:10:06,503 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:06,508 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-09-30.yaml
+2026-03-01 08:10:06,508 WARNING:   Validation: FAILED
+2026-03-01 08:10:06,508 WARNING:     - Account Z26-474983: holdings sum $726.83 != ending value $17,569.98 (diff=$16,843.15)
+2026-03-01 08:10:06,508 WARNING:     - Account Z31-859340: holdings sum $4.24 != ending value $102.58 (diff=$98.34)
+2026-03-01 08:10:06,508 WARNING:     - Account 413-189729: holdings sum $925.37 != ending value $2,501.37 (diff=$1,576.00)
+2026-03-01 08:10:06,508 WARNING:     - Account Z06-592753: holdings sum $17,063.69 != ending value $23,710.93 (diff=$6,647.24)
+2026-03-01 08:10:06,508 WARNING:     - Account Z08-759437: holdings sum $17,437.44 != ending value $23,682.33 (diff=$6,244.89)
+2026-03-01 08:10:06,508 WARNING:     - Account 231-574209: holdings sum $29,000.56 != ending value $83,831.68 (diff=$54,831.12)
+2026-03-01 08:10:06,508 INFO: Parsing Statement10312025.pdf
+2026-03-01 08:10:07,399 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:07,403 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-10-31.yaml
+2026-03-01 08:10:07,403 WARNING:   Validation: FAILED
+2026-03-01 08:10:07,403 WARNING:     - Account Z26-474983: holdings sum $444.19 != ending value $10,935.19 (diff=$10,491.00)
+2026-03-01 08:10:07,404 WARNING:     - Account Z31-859340: holdings sum $4.18 != ending value $102.91 (diff=$98.73)
+2026-03-01 08:10:07,404 WARNING:     - Account 413-189729: holdings sum $980.34 != ending value $2,556.34 (diff=$1,576.00)
+2026-03-01 08:10:07,404 WARNING:     - Account Z06-592753: holdings sum $18,755.85 != ending value $25,403.56 (diff=$6,647.71)
+2026-03-01 08:10:07,404 WARNING:     - Account Z08-759437: holdings sum $19,128.98 != ending value $25,374.34 (diff=$6,245.36)
+2026-03-01 08:10:07,404 WARNING:     - Account 231-574209: holdings sum $31,225.52 != ending value $86,649.33 (diff=$55,423.81)
+2026-03-01 08:10:07,404 INFO: Parsing Statement11302025.pdf
+2026-03-01 08:10:08,308 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:08,313 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-11-30.yaml
+2026-03-01 08:10:08,313 WARNING:   Validation: FAILED
+2026-03-01 08:10:08,313 WARNING:     - Account Z26-474983: holdings sum $3,016.91 != ending value $75,439.74 (diff=$72,422.83)
+2026-03-01 08:10:08,313 WARNING:     - Account Z31-859340: holdings sum $4.13 != ending value $103.22 (diff=$99.09)
+2026-03-01 08:10:08,313 WARNING:     - Account 413-189729: holdings sum $984.41 != ending value $2,560.41 (diff=$1,576.00)
+2026-03-01 08:10:08,313 WARNING:     - Account Z06-592753: holdings sum $17,311.73 != ending value $23,959.76 (diff=$6,648.03)
+2026-03-01 08:10:08,313 WARNING:     - Account Z08-759437: holdings sum $17,684.81 != ending value $23,930.49 (diff=$6,245.68)
+2026-03-01 08:10:08,313 WARNING:     - Account 231-574209: holdings sum $31,149.66 != ending value $86,844.59 (diff=$55,694.93)
+2026-03-01 08:10:08,313 INFO: Parsing Statement12312025.pdf
+2026-03-01 08:10:09,374 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:09,379 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-12-31.yaml
+2026-03-01 08:10:09,379 WARNING:   Validation: FAILED
+2026-03-01 08:10:09,379 WARNING:     - Account Z26-474983: holdings sum $1,372.42 != ending value $34,825.13 (diff=$33,452.71)
+2026-03-01 08:10:09,379 WARNING:     - Account Z31-859340: holdings sum $49.48 != ending value $10,030.20 (diff=$9,980.72)
+2026-03-01 08:10:09,379 WARNING:     - Account 413-189729: holdings sum $984.27 != ending value $2,560.27 (diff=$1,576.00)
+2026-03-01 08:10:09,379 WARNING:     - Account Z06-592753: holdings sum $17,766.71 != ending value $24,416.48 (diff=$6,649.77)
+2026-03-01 08:10:09,379 WARNING:     - Account Z08-759437: holdings sum $18,140.16 != ending value $24,387.30 (diff=$6,247.14)
+2026-03-01 08:10:09,379 WARNING:     - Account 231-574209: holdings sum $30,304.11 != ending value $87,480.79 (diff=$57,176.68)
+2026-03-01 08:10:09,379 INFO: Parsing Statement1312026.pdf
+2026-03-01 08:10:10,317 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:10,322 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2026-01-31.yaml
+2026-03-01 08:10:10,322 WARNING:   Validation: FAILED
+2026-03-01 08:10:10,322 WARNING:     - Account Z26-474983: holdings sum $397.88 != ending value $10,256.86 (diff=$9,858.98)
+2026-03-01 08:10:10,322 WARNING:     - Account Z31-859340: holdings sum $764.94 != ending value $10,156.64 (diff=$9,391.70)
+2026-03-01 08:10:10,322 WARNING:     - Account 413-189729: holdings sum $1,024.14 != ending value $2,600.14 (diff=$1,576.00)
+2026-03-01 08:10:10,322 WARNING:     - Account Z06-592753: holdings sum $17,780.98 != ending value $24,431.06 (diff=$6,650.08)
+2026-03-01 08:10:10,322 WARNING:     - Account Z08-759437: holdings sum $18,153.98 != ending value $24,401.43 (diff=$6,247.45)
+2026-03-01 08:10:10,322 WARNING:     - Account 231-574209: holdings sum $31,586.76 != ending value $88,763.52 (diff=$57,176.76)
+2026-03-01 08:10:57,165 INFO: Parsing Statement1312025.pdf
+2026-03-01 08:10:58,131 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:58,136 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-01-31.yaml
+2026-03-01 08:10:58,137 WARNING:   Validation: FAILED
+2026-03-01 08:10:58,137 WARNING:     - Account X86-610887: holdings sum $714,080.40 != ending value $1,111,824.09 (diff=$397,743.69)
+2026-03-01 08:10:58,137 WARNING:     - Account 249-729024: holdings sum $0.16 != ending value $3.27 (diff=$3.11)
+2026-03-01 08:10:58,137 WARNING:     - Account 249-733354: holdings sum $-6.66 != ending value $6,993.34 (diff=$7,000.00)
+2026-03-01 08:10:58,137 WARNING:     - Account 413-189729: holdings sum $678.31 != ending value $2,254.31 (diff=$1,576.00)
+2026-03-01 08:10:58,137 WARNING:     - Account Z06-592753: holdings sum $16,202.37 != ending value $22,850.59 (diff=$6,648.22)
+2026-03-01 08:10:58,137 WARNING:     - Account Z08-759437: holdings sum $16,582.66 != ending value $22,829.79 (diff=$6,247.13)
+2026-03-01 08:10:58,137 WARNING:     - Account 231-574209: holdings sum $20,848.03 != ending value $60,897.45 (diff=$40,049.42)
+2026-03-01 08:10:58,137 INFO: Parsing Statement2282025.pdf
+2026-03-01 08:10:59,160 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:10:59,165 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-02-28.yaml
+2026-03-01 08:10:59,165 WARNING:   Validation: FAILED
+2026-03-01 08:10:59,165 WARNING:     - Account X86-610887: holdings sum $748,619.50 != ending value $1,141,936.97 (diff=$393,317.47)
+2026-03-01 08:10:59,165 WARNING:     - Account 249-729024: holdings sum $0.16 != ending value $3.28 (diff=$3.12)
+2026-03-01 08:10:59,165 WARNING:     - Account 249-733354: holdings sum $-136.59 != ending value $6,863.41 (diff=$7,000.00)
+2026-03-01 08:10:59,165 WARNING:     - Account 413-189729: holdings sum $635.72 != ending value $2,211.72 (diff=$1,576.00)
+2026-03-01 08:10:59,165 WARNING:     - Account Z06-592753: holdings sum $12,424.42 != ending value $19,073.01 (diff=$6,648.59)
+2026-03-01 08:10:59,165 WARNING:     - Account Z08-759437: holdings sum $12,804.72 != ending value $19,052.15 (diff=$6,247.43)
+2026-03-01 08:10:59,165 WARNING:     - Account 231-574209: holdings sum $19,718.62 != ending value $59,773.32 (diff=$40,054.70)
+2026-03-01 08:10:59,165 INFO: Parsing Statement3312025.pdf
+2026-03-01 08:11:00,309 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:00,314 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-03-31.yaml
+2026-03-01 08:11:00,315 WARNING:   Validation: FAILED
+2026-03-01 08:11:00,315 WARNING:     - Account X86-610887: holdings sum $643,836.05 != ending value $1,037,153.52 (diff=$393,317.47)
+2026-03-01 08:11:00,315 WARNING:     - Account 249-733354: holdings sum $-640.74 != ending value $14,362.54 (diff=$15,003.28)
+2026-03-01 08:11:00,315 WARNING:     - Account 413-189729: holdings sum $504.70 != ending value $2,080.70 (diff=$1,576.00)
+2026-03-01 08:11:00,315 WARNING:     - Account Z06-592753: holdings sum $10,358.34 != ending value $17,007.33 (diff=$6,648.99)
+2026-03-01 08:11:00,315 WARNING:     - Account Z08-759437: holdings sum $10,738.66 != ending value $16,986.40 (diff=$6,247.74)
+2026-03-01 08:11:00,315 WARNING:     - Account 231-574209: holdings sum $16,240.35 != ending value $56,300.85 (diff=$40,060.50)
+2026-03-01 08:11:00,315 INFO: Parsing Statement4302025.pdf
+2026-03-01 08:11:01,325 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:01,330 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-04-30.yaml
+2026-03-01 08:11:01,331 WARNING:   Validation: FAILED
+2026-03-01 08:11:01,331 WARNING:     - Account X86-610887: holdings sum $646,563.23 != ending value $1,045,258.03 (diff=$398,694.80)
+2026-03-01 08:11:01,331 WARNING:     - Account 249-733354: holdings sum $-745.23 != ending value $14,259.72 (diff=$15,004.95)
+2026-03-01 08:11:01,331 WARNING:     - Account 413-189729: holdings sum $490.49 != ending value $2,066.49 (diff=$1,576.00)
+2026-03-01 08:11:01,331 WARNING:     - Account Z06-592753: holdings sum $10,709.04 != ending value $17,263.10 (diff=$6,554.06)
+2026-03-01 08:11:01,331 WARNING:     - Account Z08-759437: holdings sum $11,066.65 != ending value $17,239.54 (diff=$6,172.89)
+2026-03-01 08:11:01,331 WARNING:     - Account 231-574209: holdings sum $15,895.45 != ending value $55,965.19 (diff=$40,069.74)
+2026-03-01 08:11:01,331 INFO: Parsing Statement5312025.pdf
+2026-03-01 08:11:02,292 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:02,297 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-05-31.yaml
+2026-03-01 08:11:02,297 WARNING:   Validation: FAILED
+2026-03-01 08:11:02,297 WARNING:     - Account 413-189729: holdings sum $622.83 != ending value $2,198.83 (diff=$1,576.00)
+2026-03-01 08:11:02,297 WARNING:     - Account Z06-592753: holdings sum $13,432.66 != ending value $20,086.47 (diff=$6,653.81)
+2026-03-01 08:11:02,297 WARNING:     - Account Z08-759437: holdings sum $13,809.77 != ending value $20,061.40 (diff=$6,251.63)
+2026-03-01 08:11:02,297 WARNING:     - Account 231-574209: holdings sum $19,403.92 != ending value $59,542.18 (diff=$40,138.26)
+2026-03-01 08:11:02,297 INFO: Parsing Statement6302025.pdf
+2026-03-01 08:11:03,219 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:03,224 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-06-30.yaml
+2026-03-01 08:11:03,224 WARNING:   Validation: FAILED
+2026-03-01 08:11:03,224 WARNING:     - Account Z31-859340: holdings sum $4.41 != ending value $100.49 (diff=$96.08)
+2026-03-01 08:11:03,224 WARNING:     - Account 413-189729: holdings sum $735.48 != ending value $2,311.48 (diff=$1,576.00)
+2026-03-01 08:11:03,224 WARNING:     - Account Z06-592753: holdings sum $13,771.88 != ending value $20,425.69 (diff=$6,653.81)
+2026-03-01 08:11:03,224 WARNING:     - Account Z08-759437: holdings sum $14,147.70 != ending value $20,399.33 (diff=$6,251.63)
+2026-03-01 08:11:03,224 WARNING:     - Account 231-574209: holdings sum $22,900.58 != ending value $75,922.23 (diff=$53,021.65)
+2026-03-01 08:11:03,224 INFO: Parsing Statement7312025.pdf
+2026-03-01 08:11:04,099 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:04,104 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-07-31.yaml
+2026-03-01 08:11:04,104 WARNING:   Validation: FAILED
+2026-03-01 08:11:04,104 WARNING:     - Account Z31-859340: holdings sum $4.34 != ending value $100.83 (diff=$96.49)
+2026-03-01 08:11:04,104 WARNING:     - Account 413-189729: holdings sum $788.15 != ending value $2,364.15 (diff=$1,576.00)
+2026-03-01 08:11:04,104 WARNING:     - Account Z06-592753: holdings sum $14,542.39 != ending value $21,188.90 (diff=$6,646.51)
+2026-03-01 08:11:04,104 WARNING:     - Account Z08-759437: holdings sum $14,917.71 != ending value $21,161.87 (diff=$6,244.16)
+2026-03-01 08:11:04,104 WARNING:     - Account 231-574209: holdings sum $24,582.73 != ending value $77,865.13 (diff=$53,282.40)
+2026-03-01 08:11:04,104 INFO: Parsing Statement8312025.pdf
+2026-03-01 08:11:04,999 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:05,004 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-08-31.yaml
+2026-03-01 08:11:05,004 WARNING:   Validation: FAILED
+2026-03-01 08:11:05,004 WARNING:     - Account Z31-859340: holdings sum $4.32 != ending value $102.25 (diff=$97.93)
+2026-03-01 08:11:05,004 WARNING:     - Account 413-189729: holdings sum $841.89 != ending value $2,417.89 (diff=$1,576.00)
+2026-03-01 08:11:05,004 WARNING:     - Account Z06-592753: holdings sum $14,835.70 != ending value $21,482.59 (diff=$6,646.89)
+2026-03-01 08:11:05,004 WARNING:     - Account Z08-759437: holdings sum $15,210.41 != ending value $21,454.95 (diff=$6,244.54)
+2026-03-01 08:11:05,005 WARNING:     - Account 231-574209: holdings sum $25,945.34 != ending value $79,862.58 (diff=$53,917.24)
+2026-03-01 08:11:05,005 INFO: Parsing Statement9302025.pdf
+2026-03-01 08:11:05,982 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:05,987 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-09-30.yaml
+2026-03-01 08:11:05,987 WARNING:   Validation: FAILED
+2026-03-01 08:11:05,987 WARNING:     - Account Z26-474983: holdings sum $726.83 != ending value $17,569.98 (diff=$16,843.15)
+2026-03-01 08:11:05,987 WARNING:     - Account Z31-859340: holdings sum $4.24 != ending value $102.58 (diff=$98.34)
+2026-03-01 08:11:05,987 WARNING:     - Account 413-189729: holdings sum $925.37 != ending value $2,501.37 (diff=$1,576.00)
+2026-03-01 08:11:05,987 WARNING:     - Account Z06-592753: holdings sum $17,063.69 != ending value $23,710.93 (diff=$6,647.24)
+2026-03-01 08:11:05,987 WARNING:     - Account Z08-759437: holdings sum $17,437.44 != ending value $23,682.33 (diff=$6,244.89)
+2026-03-01 08:11:05,987 WARNING:     - Account 231-574209: holdings sum $29,000.56 != ending value $83,831.68 (diff=$54,831.12)
+2026-03-01 08:11:05,987 INFO: Parsing Statement10312025.pdf
+2026-03-01 08:11:06,880 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:06,885 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-10-31.yaml
+2026-03-01 08:11:06,885 WARNING:   Validation: FAILED
+2026-03-01 08:11:06,885 WARNING:     - Account Z26-474983: holdings sum $444.19 != ending value $10,935.19 (diff=$10,491.00)
+2026-03-01 08:11:06,885 WARNING:     - Account Z31-859340: holdings sum $4.18 != ending value $102.91 (diff=$98.73)
+2026-03-01 08:11:06,885 WARNING:     - Account 413-189729: holdings sum $980.34 != ending value $2,556.34 (diff=$1,576.00)
+2026-03-01 08:11:06,885 WARNING:     - Account Z06-592753: holdings sum $18,755.85 != ending value $25,403.56 (diff=$6,647.71)
+2026-03-01 08:11:06,885 WARNING:     - Account Z08-759437: holdings sum $19,128.98 != ending value $25,374.34 (diff=$6,245.36)
+2026-03-01 08:11:06,885 WARNING:     - Account 231-574209: holdings sum $31,225.52 != ending value $86,649.33 (diff=$55,423.81)
+2026-03-01 08:11:06,885 INFO: Parsing Statement11302025.pdf
+2026-03-01 08:11:07,783 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:07,788 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-11-30.yaml
+2026-03-01 08:11:07,788 WARNING:   Validation: FAILED
+2026-03-01 08:11:07,788 WARNING:     - Account Z26-474983: holdings sum $3,016.91 != ending value $75,439.74 (diff=$72,422.83)
+2026-03-01 08:11:07,788 WARNING:     - Account Z31-859340: holdings sum $4.13 != ending value $103.22 (diff=$99.09)
+2026-03-01 08:11:07,788 WARNING:     - Account 413-189729: holdings sum $984.41 != ending value $2,560.41 (diff=$1,576.00)
+2026-03-01 08:11:07,788 WARNING:     - Account Z06-592753: holdings sum $17,311.73 != ending value $23,959.76 (diff=$6,648.03)
+2026-03-01 08:11:07,788 WARNING:     - Account Z08-759437: holdings sum $17,684.81 != ending value $23,930.49 (diff=$6,245.68)
+2026-03-01 08:11:07,789 WARNING:     - Account 231-574209: holdings sum $31,149.66 != ending value $86,844.59 (diff=$55,694.93)
+2026-03-01 08:11:07,789 INFO: Parsing Statement12312025.pdf
+2026-03-01 08:11:08,865 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:08,870 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-12-31.yaml
+2026-03-01 08:11:08,870 WARNING:   Validation: FAILED
+2026-03-01 08:11:08,870 WARNING:     - Account Z26-474983: holdings sum $1,372.42 != ending value $34,825.13 (diff=$33,452.71)
+2026-03-01 08:11:08,870 WARNING:     - Account Z31-859340: holdings sum $9,438.28 != ending value $10,030.20 (diff=$591.92)
+2026-03-01 08:11:08,870 WARNING:     - Account 413-189729: holdings sum $984.27 != ending value $2,560.27 (diff=$1,576.00)
+2026-03-01 08:11:08,870 WARNING:     - Account Z06-592753: holdings sum $17,766.71 != ending value $24,416.48 (diff=$6,649.77)
+2026-03-01 08:11:08,870 WARNING:     - Account Z08-759437: holdings sum $18,140.16 != ending value $24,387.30 (diff=$6,247.14)
+2026-03-01 08:11:08,870 WARNING:     - Account 231-574209: holdings sum $30,304.11 != ending value $87,480.79 (diff=$57,176.68)
+2026-03-01 08:11:08,870 INFO: Parsing Statement1312026.pdf
+2026-03-01 08:11:09,802 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:09,807 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2026-01-31.yaml
+2026-03-01 08:11:09,807 WARNING:   Validation: FAILED
+2026-03-01 08:11:09,807 WARNING:     - Account Z26-474983: holdings sum $397.88 != ending value $10,256.86 (diff=$9,858.98)
+2026-03-01 08:11:09,807 WARNING:     - Account Z31-859340: holdings sum $764.94 != ending value $10,156.64 (diff=$9,391.70)
+2026-03-01 08:11:09,807 WARNING:     - Account 413-189729: holdings sum $1,024.14 != ending value $2,600.14 (diff=$1,576.00)
+2026-03-01 08:11:09,807 WARNING:     - Account Z06-592753: holdings sum $17,780.98 != ending value $24,431.06 (diff=$6,650.08)
+2026-03-01 08:11:09,807 WARNING:     - Account Z08-759437: holdings sum $18,153.98 != ending value $24,401.43 (diff=$6,247.45)
+2026-03-01 08:11:09,807 WARNING:     - Account 231-574209: holdings sum $31,586.76 != ending value $88,763.52 (diff=$57,176.76)
+2026-03-01 08:11:44,259 INFO: Parsing Statement1312025.pdf
+2026-03-01 08:11:45,251 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:45,256 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-01-31.yaml
+2026-03-01 08:11:45,257 INFO:   Validation: PASSED
+2026-03-01 08:11:45,257 INFO: Parsing Statement2282025.pdf
+2026-03-01 08:11:46,289 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:46,295 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-02-28.yaml
+2026-03-01 08:11:46,295 INFO:   Validation: PASSED
+2026-03-01 08:11:46,295 INFO: Parsing Statement3312025.pdf
+2026-03-01 08:11:47,448 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:47,454 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-03-31.yaml
+2026-03-01 08:11:47,454 INFO:   Validation: PASSED
+2026-03-01 08:11:47,454 INFO: Parsing Statement4302025.pdf
+2026-03-01 08:11:48,476 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:48,482 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-04-30.yaml
+2026-03-01 08:11:48,482 WARNING:   Validation: FAILED
+2026-03-01 08:11:48,482 WARNING:     - Account X86-610887: holdings sum $1,034,847.30 != ending value $1,045,258.03 (diff=$10,410.73)
+2026-03-01 08:11:48,482 WARNING:     - Account Z06-592753: holdings sum $17,152.08 != ending value $17,263.10 (diff=$111.02)
+2026-03-01 08:11:48,482 WARNING:     - Account Z08-759437: holdings sum $17,151.96 != ending value $17,239.54 (diff=$87.58)
+2026-03-01 08:11:48,482 INFO: Parsing Statement5312025.pdf
+2026-03-01 08:11:49,458 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:49,464 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-05-31.yaml
+2026-03-01 08:11:49,464 INFO:   Validation: PASSED
+2026-03-01 08:11:49,464 INFO: Parsing Statement6302025.pdf
+2026-03-01 08:11:50,414 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:50,419 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-06-30.yaml
+2026-03-01 08:11:50,420 INFO:   Validation: PASSED
+2026-03-01 08:11:50,420 INFO: Parsing Statement7312025.pdf
+2026-03-01 08:11:51,284 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:51,289 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-07-31.yaml
+2026-03-01 08:11:51,289 INFO:   Validation: PASSED
+2026-03-01 08:11:51,289 INFO: Parsing Statement8312025.pdf
+2026-03-01 08:11:52,215 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:52,220 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-08-31.yaml
+2026-03-01 08:11:52,220 INFO:   Validation: PASSED
+2026-03-01 08:11:52,221 INFO: Parsing Statement9302025.pdf
+2026-03-01 08:11:53,198 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:53,203 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-09-30.yaml
+2026-03-01 08:11:53,203 INFO:   Validation: PASSED
+2026-03-01 08:11:53,203 INFO: Parsing Statement10312025.pdf
+2026-03-01 08:11:54,097 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:54,102 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-10-31.yaml
+2026-03-01 08:11:54,102 INFO:   Validation: PASSED
+2026-03-01 08:11:54,102 INFO: Parsing Statement11302025.pdf
+2026-03-01 08:11:55,004 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:55,009 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-11-30.yaml
+2026-03-01 08:11:55,009 INFO:   Validation: PASSED
+2026-03-01 08:11:55,009 INFO: Parsing Statement12312025.pdf
+2026-03-01 08:11:56,091 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:56,097 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-12-31.yaml
+2026-03-01 08:11:56,097 WARNING:   Validation: FAILED
+2026-03-01 08:11:56,097 WARNING:     - Account Z31-859340: holdings sum $646.20 != ending value $10,030.20 (diff=$9,384.00)
+2026-03-01 08:11:56,097 INFO: Parsing Statement1312026.pdf
+2026-03-01 08:11:57,041 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:11:57,046 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2026-01-31.yaml
+2026-03-01 08:11:57,046 INFO:   Validation: PASSED
+2026-03-01 08:12:02,253 INFO: Parsing Statement1312025.pdf
+2026-03-01 08:12:03,240 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:03,245 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-01-31.yaml
+2026-03-01 08:12:03,246 INFO:   Validation: PASSED
+2026-03-01 08:12:03,246 INFO: Parsing Statement2282025.pdf
+2026-03-01 08:12:04,254 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:04,259 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-02-28.yaml
+2026-03-01 08:12:04,260 INFO:   Validation: PASSED
+2026-03-01 08:12:04,260 INFO: Parsing Statement3312025.pdf
+2026-03-01 08:12:05,445 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:05,451 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-03-31.yaml
+2026-03-01 08:12:05,452 INFO:   Validation: PASSED
+2026-03-01 08:12:05,452 INFO: Parsing Statement4302025.pdf
+2026-03-01 08:12:06,494 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:06,500 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-04-30.yaml
+2026-03-01 08:12:06,501 WARNING:   Validation: FAILED
+2026-03-01 08:12:06,501 WARNING:     - Account X86-610887: holdings sum $1,034,847.30 != ending value $1,045,258.03 (diff=$10,410.73)
+2026-03-01 08:12:06,501 WARNING:     - Account Z06-592753: holdings sum $17,152.08 != ending value $17,263.10 (diff=$111.02)
+2026-03-01 08:12:06,501 WARNING:     - Account Z08-759437: holdings sum $17,151.96 != ending value $17,239.54 (diff=$87.58)
+2026-03-01 08:12:06,501 INFO: Parsing Statement5312025.pdf
+2026-03-01 08:12:07,479 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:07,484 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-05-31.yaml
+2026-03-01 08:12:07,484 INFO:   Validation: PASSED
+2026-03-01 08:12:07,484 INFO: Parsing Statement6302025.pdf
+2026-03-01 08:12:08,419 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:08,424 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-06-30.yaml
+2026-03-01 08:12:08,424 INFO:   Validation: PASSED
+2026-03-01 08:12:08,424 INFO: Parsing Statement7312025.pdf
+2026-03-01 08:12:09,280 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:09,285 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-07-31.yaml
+2026-03-01 08:12:09,285 INFO:   Validation: PASSED
+2026-03-01 08:12:09,285 INFO: Parsing Statement8312025.pdf
+2026-03-01 08:12:10,201 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:10,206 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-08-31.yaml
+2026-03-01 08:12:10,207 INFO:   Validation: PASSED
+2026-03-01 08:12:10,207 INFO: Parsing Statement9302025.pdf
+2026-03-01 08:12:11,210 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:11,215 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-09-30.yaml
+2026-03-01 08:12:11,215 INFO:   Validation: PASSED
+2026-03-01 08:12:11,215 INFO: Parsing Statement10312025.pdf
+2026-03-01 08:12:12,122 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:12,127 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-10-31.yaml
+2026-03-01 08:12:12,127 INFO:   Validation: PASSED
+2026-03-01 08:12:12,127 INFO: Parsing Statement11302025.pdf
+2026-03-01 08:12:13,036 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:13,041 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-11-30.yaml
+2026-03-01 08:12:13,042 INFO:   Validation: PASSED
+2026-03-01 08:12:13,042 INFO: Parsing Statement12312025.pdf
+2026-03-01 08:12:14,098 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:14,103 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-12-31.yaml
+2026-03-01 08:12:14,103 WARNING:   Validation: FAILED
+2026-03-01 08:12:14,103 WARNING:     - Account Z31-859340: holdings sum $646.20 != ending value $10,030.20 (diff=$9,384.00)
+2026-03-01 08:12:14,103 INFO: Parsing Statement1312026.pdf
+2026-03-01 08:12:15,046 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:12:15,051 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2026-01-31.yaml
+2026-03-01 08:12:15,051 INFO:   Validation: PASSED
+2026-03-01 08:13:07,386 INFO: Parsing Statement1312025.pdf
+2026-03-01 08:13:08,364 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:08,370 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-01-31.yaml
+2026-03-01 08:13:08,371 INFO:   Validation: PASSED
+2026-03-01 08:13:08,371 INFO: Parsing Statement2282025.pdf
+2026-03-01 08:13:09,398 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:09,404 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-02-28.yaml
+2026-03-01 08:13:09,405 INFO:   Validation: PASSED
+2026-03-01 08:13:09,405 INFO: Parsing Statement3312025.pdf
+2026-03-01 08:13:10,570 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:10,576 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-03-31.yaml
+2026-03-01 08:13:10,576 INFO:   Validation: PASSED
+2026-03-01 08:13:10,576 INFO: Parsing Statement4302025.pdf
+2026-03-01 08:13:11,606 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:11,612 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-04-30.yaml
+2026-03-01 08:13:11,612 INFO:   Validation: PASSED
+2026-03-01 08:13:11,612 INFO: Parsing Statement5312025.pdf
+2026-03-01 08:13:12,578 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:12,583 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-05-31.yaml
+2026-03-01 08:13:12,584 INFO:   Validation: PASSED
+2026-03-01 08:13:12,584 INFO: Parsing Statement6302025.pdf
+2026-03-01 08:13:13,509 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:13,514 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-06-30.yaml
+2026-03-01 08:13:13,514 INFO:   Validation: PASSED
+2026-03-01 08:13:13,514 INFO: Parsing Statement7312025.pdf
+2026-03-01 08:13:14,389 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:14,394 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-07-31.yaml
+2026-03-01 08:13:14,394 INFO:   Validation: PASSED
+2026-03-01 08:13:14,394 INFO: Parsing Statement8312025.pdf
+2026-03-01 08:13:15,307 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:15,311 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-08-31.yaml
+2026-03-01 08:13:15,312 INFO:   Validation: PASSED
+2026-03-01 08:13:15,312 INFO: Parsing Statement9302025.pdf
+2026-03-01 08:13:16,289 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:16,294 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-09-30.yaml
+2026-03-01 08:13:16,294 INFO:   Validation: PASSED
+2026-03-01 08:13:16,294 INFO: Parsing Statement10312025.pdf
+2026-03-01 08:13:17,190 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:17,195 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-10-31.yaml
+2026-03-01 08:13:17,196 INFO:   Validation: PASSED
+2026-03-01 08:13:17,196 INFO: Parsing Statement11302025.pdf
+2026-03-01 08:13:18,108 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:18,113 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-11-30.yaml
+2026-03-01 08:13:18,113 INFO:   Validation: PASSED
+2026-03-01 08:13:18,113 INFO: Parsing Statement12312025.pdf
+2026-03-01 08:13:19,183 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:19,188 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-12-31.yaml
+2026-03-01 08:13:19,189 INFO:   Validation: PASSED
+2026-03-01 08:13:19,189 INFO: Parsing Statement1312026.pdf
+2026-03-01 08:13:20,157 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 08:13:20,162 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2026-01-31.yaml
+2026-03-01 08:13:20,162 INFO:   Validation: PASSED
+2026-03-01 09:21:17,724 INFO: Parsing Statement1312025.pdf
+2026-03-01 09:21:18,739 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:21:18,740 INFO:   CMA activity: 31 transactions parsed
+2026-03-01 09:22:07,794 INFO: Parsing Statement1312025.pdf
+2026-03-01 09:22:08,801 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:22:08,802 INFO:   CMA activity: 31 transactions parsed
+2026-03-01 09:22:21,724 INFO: Parsing Statement10312025.pdf
+2026-03-01 09:22:22,588 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:22:22,589 INFO:   CMA activity: 32 transactions parsed
+2026-03-01 09:22:35,619 INFO: Parsing Statement12312025.pdf
+2026-03-01 09:22:36,634 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:22:36,635 INFO:   CMA activity: 55 transactions parsed
+2026-03-01 09:23:22,666 INFO: Parsing Statement5312025.pdf
+2026-03-01 09:23:23,583 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:23,584 INFO:   CMA activity: 56 transactions parsed
+2026-03-01 09:23:45,727 INFO: Parsing Statement10312025.pdf
+2026-03-01 09:23:46,588 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:46,590 INFO:   CMA activity: 32 transactions parsed
+2026-03-01 09:23:46,590 INFO: Parsing Statement11302025.pdf
+2026-03-01 09:23:47,486 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:47,486 INFO:   CMA activity: 35 transactions parsed
+2026-03-01 09:23:47,487 INFO: Parsing Statement12312025.pdf
+2026-03-01 09:23:48,546 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:48,546 INFO:   CMA activity: 55 transactions parsed
+2026-03-01 09:23:48,547 INFO: Parsing Statement1312025.pdf
+2026-03-01 09:23:49,593 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:49,593 INFO:   CMA activity: 31 transactions parsed
+2026-03-01 09:23:49,594 INFO: Parsing Statement2282025.pdf
+2026-03-01 09:23:50,600 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:50,600 INFO:   CMA activity: 24 transactions parsed
+2026-03-01 09:23:50,601 INFO: Parsing Statement3312025.pdf
+2026-03-01 09:23:51,789 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:51,790 INFO:   CMA activity: 46 transactions parsed
+2026-03-01 09:23:51,790 INFO: Parsing Statement4302025.pdf
+2026-03-01 09:23:52,877 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:52,877 INFO:   CMA activity: 32 transactions parsed
+2026-03-01 09:23:52,878 INFO: Parsing Statement5312025.pdf
+2026-03-01 09:23:53,853 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:53,853 INFO:   CMA activity: 56 transactions parsed
+2026-03-01 09:23:53,854 INFO: Parsing Statement6302025.pdf
+2026-03-01 09:23:54,799 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:54,799 INFO:   CMA activity: 35 transactions parsed
+2026-03-01 09:23:54,800 INFO: Parsing Statement7312025.pdf
+2026-03-01 09:23:55,685 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:55,685 INFO:   CMA activity: 24 transactions parsed
+2026-03-01 09:23:55,685 INFO: Parsing Statement8312025.pdf
+2026-03-01 09:23:56,600 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:56,601 INFO:   CMA activity: 40 transactions parsed
+2026-03-01 09:23:56,601 INFO: Parsing Statement9302025.pdf
+2026-03-01 09:23:57,620 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:23:57,621 INFO:   CMA activity: 38 transactions parsed
+2026-03-01 09:24:23,943 INFO: Parsing Statement10312025.pdf
+2026-03-01 09:24:24,800 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:24,801 INFO:   CMA activity: 32 transactions parsed
+2026-03-01 09:24:24,802 INFO: Parsing Statement11302025.pdf
+2026-03-01 09:24:25,692 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:25,693 INFO:   CMA activity: 35 transactions parsed
+2026-03-01 09:24:25,694 INFO: Parsing Statement12312025.pdf
+2026-03-01 09:24:26,762 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:26,762 INFO:   CMA activity: 55 transactions parsed
+2026-03-01 09:24:26,763 INFO: Parsing Statement1312025.pdf
+2026-03-01 09:24:27,810 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:27,810 INFO:   CMA activity: 31 transactions parsed
+2026-03-01 09:24:27,811 INFO: Parsing Statement2282025.pdf
+2026-03-01 09:24:28,842 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:28,842 INFO:   CMA activity: 24 transactions parsed
+2026-03-01 09:24:28,843 INFO: Parsing Statement3312025.pdf
+2026-03-01 09:24:30,026 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:30,026 INFO:   CMA activity: 46 transactions parsed
+2026-03-01 09:24:30,027 INFO: Parsing Statement4302025.pdf
+2026-03-01 09:24:31,099 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:31,100 INFO:   CMA activity: 32 transactions parsed
+2026-03-01 09:24:31,101 INFO: Parsing Statement5312025.pdf
+2026-03-01 09:24:32,072 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:32,072 INFO:   CMA activity: 56 transactions parsed
+2026-03-01 09:24:32,073 INFO: Parsing Statement6302025.pdf
+2026-03-01 09:24:33,011 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:33,012 INFO:   CMA activity: 35 transactions parsed
+2026-03-01 09:24:33,012 INFO: Parsing Statement7312025.pdf
+2026-03-01 09:24:33,893 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:33,894 INFO:   CMA activity: 24 transactions parsed
+2026-03-01 09:24:33,894 INFO: Parsing Statement8312025.pdf
+2026-03-01 09:24:34,822 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:34,822 INFO:   CMA activity: 40 transactions parsed
+2026-03-01 09:24:34,823 INFO: Parsing Statement9302025.pdf
+2026-03-01 09:24:35,838 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:35,838 INFO:   CMA activity: 38 transactions parsed
+2026-03-01 09:24:45,043 INFO: Parsing Statement10312025.pdf
+2026-03-01 09:24:45,902 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:45,903 INFO:   CMA activity: 32 transactions parsed
+2026-03-01 09:24:45,903 INFO: Parsing Statement11302025.pdf
+2026-03-01 09:24:46,783 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:46,784 INFO:   CMA activity: 35 transactions parsed
+2026-03-01 09:24:46,784 INFO: Parsing Statement12312025.pdf
+2026-03-01 09:24:47,858 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:47,859 INFO:   CMA activity: 55 transactions parsed
+2026-03-01 09:24:47,859 INFO: Parsing Statement1312025.pdf
+2026-03-01 09:24:48,905 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:48,905 INFO:   CMA activity: 31 transactions parsed
+2026-03-01 09:24:48,906 INFO: Parsing Statement2282025.pdf
+2026-03-01 09:24:49,929 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:49,930 INFO:   CMA activity: 24 transactions parsed
+2026-03-01 09:24:49,930 INFO: Parsing Statement3312025.pdf
+2026-03-01 09:24:51,103 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:51,103 INFO:   CMA activity: 46 transactions parsed
+2026-03-01 09:24:51,104 INFO: Parsing Statement4302025.pdf
+2026-03-01 09:24:52,222 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:52,223 INFO:   CMA activity: 32 transactions parsed
+2026-03-01 09:24:52,223 INFO: Parsing Statement5312025.pdf
+2026-03-01 09:24:53,126 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:53,127 INFO:   CMA activity: 56 transactions parsed
+2026-03-01 09:24:53,127 INFO: Parsing Statement6302025.pdf
+2026-03-01 09:24:54,132 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:54,133 INFO:   CMA activity: 35 transactions parsed
+2026-03-01 09:24:54,133 INFO: Parsing Statement7312025.pdf
+2026-03-01 09:24:54,968 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:54,968 INFO:   CMA activity: 24 transactions parsed
+2026-03-01 09:24:54,969 INFO: Parsing Statement8312025.pdf
+2026-03-01 09:24:55,929 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:55,930 INFO:   CMA activity: 40 transactions parsed
+2026-03-01 09:24:55,930 INFO: Parsing Statement9302025.pdf
+2026-03-01 09:24:56,927 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:24:56,928 INFO:   CMA activity: 38 transactions parsed
+2026-03-01 09:25:11,017 INFO: Parsing Statement10312025.pdf
+2026-03-01 09:25:11,891 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:25:11,892 INFO:   CMA activity: 32 transactions parsed
+2026-03-01 09:25:11,892 INFO: Parsing Statement11302025.pdf
+2026-03-01 09:25:12,777 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:25:12,778 INFO:   CMA activity: 35 transactions parsed
+2026-03-01 09:25:12,778 INFO: Parsing Statement12312025.pdf
+2026-03-01 09:25:13,863 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:25:13,863 INFO:   CMA activity: 55 transactions parsed
+2026-03-01 09:25:13,864 INFO: Parsing Statement1312025.pdf
+2026-03-01 09:25:14,901 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:25:14,902 INFO:   CMA activity: 31 transactions parsed
+2026-03-01 09:25:14,903 INFO: Parsing Statement2282025.pdf
+2026-03-01 09:25:15,931 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:25:15,931 INFO:   CMA activity: 24 transactions parsed
+2026-03-01 09:25:15,932 INFO: Parsing Statement3312025.pdf
+2026-03-01 09:25:17,116 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:25:17,117 INFO:   CMA activity: 46 transactions parsed
+2026-03-01 09:25:17,118 INFO: Parsing Statement4302025.pdf
+2026-03-01 09:25:18,241 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:25:18,242 INFO:   CMA activity: 32 transactions parsed
+2026-03-01 09:25:18,242 INFO: Parsing Statement5312025.pdf
+2026-03-01 09:25:19,161 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:25:19,162 INFO:   CMA activity: 56 transactions parsed
+2026-03-01 09:25:19,162 INFO: Parsing Statement6302025.pdf
+2026-03-01 09:25:20,190 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:25:20,190 INFO:   CMA activity: 35 transactions parsed
+2026-03-01 09:25:20,191 INFO: Parsing Statement7312025.pdf
+2026-03-01 09:25:21,039 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:25:21,039 INFO:   CMA activity: 24 transactions parsed
+2026-03-01 09:25:21,040 INFO: Parsing Statement8312025.pdf
+2026-03-01 09:25:22,008 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:25:22,008 INFO:   CMA activity: 40 transactions parsed
+2026-03-01 09:25:22,009 INFO: Parsing Statement9302025.pdf
+2026-03-01 09:25:23,021 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:25:23,021 INFO:   CMA activity: 38 transactions parsed
+2026-03-01 09:26:00,866 INFO: Parsing Statement1312025.pdf
+2026-03-01 09:26:01,856 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:01,857 INFO:   CMA activity: 31 transactions parsed
+2026-03-01 09:26:01,865 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-01-31.yaml
+2026-03-01 09:26:01,866 INFO:   Validation: PASSED
+2026-03-01 09:26:01,866 INFO: Parsing Statement2282025.pdf
+2026-03-01 09:26:02,889 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:02,890 INFO:   CMA activity: 24 transactions parsed
+2026-03-01 09:26:02,898 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-02-28.yaml
+2026-03-01 09:26:02,898 INFO:   Validation: PASSED
+2026-03-01 09:26:02,898 INFO: Parsing Statement3312025.pdf
+2026-03-01 09:26:04,082 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:04,083 INFO:   CMA activity: 46 transactions parsed
+2026-03-01 09:26:04,093 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-03-31.yaml
+2026-03-01 09:26:04,094 INFO:   Validation: PASSED
+2026-03-01 09:26:04,094 INFO: Parsing Statement4302025.pdf
+2026-03-01 09:26:05,149 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', '249-729024', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:05,150 INFO:   CMA activity: 32 transactions parsed
+2026-03-01 09:26:05,159 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-04-30.yaml
+2026-03-01 09:26:05,159 INFO:   Validation: PASSED
+2026-03-01 09:26:05,159 INFO: Parsing Statement5312025.pdf
+2026-03-01 09:26:06,126 INFO:   Found 8 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '249-733354', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:06,127 INFO:   CMA activity: 56 transactions parsed
+2026-03-01 09:26:06,138 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-05-31.yaml
+2026-03-01 09:26:06,138 INFO:   Validation: PASSED
+2026-03-01 09:26:06,138 INFO: Parsing Statement6302025.pdf
+2026-03-01 09:26:07,108 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:07,109 INFO:   CMA activity: 35 transactions parsed
+2026-03-01 09:26:07,117 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-06-30.yaml
+2026-03-01 09:26:07,118 INFO:   Validation: PASSED
+2026-03-01 09:26:07,118 INFO: Parsing Statement7312025.pdf
+2026-03-01 09:26:07,959 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:07,960 INFO:   CMA activity: 24 transactions parsed
+2026-03-01 09:26:07,967 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-07-31.yaml
+2026-03-01 09:26:07,968 INFO:   Validation: PASSED
+2026-03-01 09:26:07,968 INFO: Parsing Statement8312025.pdf
+2026-03-01 09:26:08,926 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:08,927 INFO:   CMA activity: 40 transactions parsed
+2026-03-01 09:26:08,936 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-08-31.yaml
+2026-03-01 09:26:08,937 INFO:   Validation: PASSED
+2026-03-01 09:26:08,937 INFO: Parsing Statement9302025.pdf
+2026-03-01 09:26:09,957 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:09,957 INFO:   CMA activity: 38 transactions parsed
+2026-03-01 09:26:09,966 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-09-30.yaml
+2026-03-01 09:26:09,966 INFO:   Validation: PASSED
+2026-03-01 09:26:09,966 INFO: Parsing Statement10312025.pdf
+2026-03-01 09:26:10,827 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:10,828 INFO:   CMA activity: 32 transactions parsed
+2026-03-01 09:26:10,836 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-10-31.yaml
+2026-03-01 09:26:10,837 INFO:   Validation: PASSED
+2026-03-01 09:26:10,837 INFO: Parsing Statement11302025.pdf
+2026-03-01 09:26:11,791 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:11,792 INFO:   CMA activity: 35 transactions parsed
+2026-03-01 09:26:11,801 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-11-30.yaml
+2026-03-01 09:26:11,801 INFO:   Validation: PASSED
+2026-03-01 09:26:11,801 INFO: Parsing Statement12312025.pdf
+2026-03-01 09:26:12,911 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:12,912 INFO:   CMA activity: 55 transactions parsed
+2026-03-01 09:26:12,923 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2025-12-31.yaml
+2026-03-01 09:26:12,923 INFO:   Validation: PASSED
+2026-03-01 09:26:12,923 INFO: Parsing Statement1312026.pdf
+2026-03-01 09:26:13,844 INFO:   Found 7 account sections: ['X86-610887', 'Z26-474983', 'Z31-859340', '413-189729', 'Z06-592753', 'Z08-759437', '231-574209']
+2026-03-01 09:26:13,845 INFO:   CMA activity: 33 transactions parsed
+2026-03-01 09:26:13,852 INFO:   Written: /Users/ychen2/Obsidian/Finance/fidelity-accounts/2026-01-31.yaml
+2026-03-01 09:26:13,853 INFO:   Validation: PASSED

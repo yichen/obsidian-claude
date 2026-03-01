@@ -1,0 +1,656 @@
+{
+  "version": 1,
+  "last_run": "2026-02-28T11:05:43",
+  "employers": {
+    "salesforce": {
+      "files_scanned": {
+        "2025.pdf": {
+          "scanned_at": "2026-02-28T11:05:31",
+          "payslips_found": 33,
+          "new": 33,
+          "duplicates": 0
+        },
+        "2026-01-15.pdf": {
+          "scanned_at": "2026-02-28T11:05:31",
+          "payslips_found": 1,
+          "new": 1,
+          "duplicates": 0
+        },
+        "2026-01-31.pdf": {
+          "scanned_at": "2026-02-28T11:05:31",
+          "payslips_found": 1,
+          "new": 1,
+          "duplicates": 0
+        },
+        "2026-02-15.pdf": {
+          "scanned_at": "2026-02-28T11:05:31",
+          "payslips_found": 1,
+          "new": 1,
+          "duplicates": 0
+        },
+        "2026-02-28-2.pdf": {
+          "scanned_at": "2026-02-28T11:05:31",
+          "payslips_found": 1,
+          "new": 1,
+          "duplicates": 0
+        },
+        "2026-02-28.pdf": {
+          "scanned_at": "2026-02-28T11:05:31",
+          "payslips_found": 1,
+          "new": 1,
+          "duplicates": 0
+        }
+      },
+      "payslips": {
+        "2025-01-15|2025-01-01|2025-01-15|11766.67": {
+          "output_file": "2025-01-15.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            1,
+            2
+          ],
+          "pay_type": "salary",
+          "gross_pay": 11766.67,
+          "net_pay": 0.0,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-01-31|2025-01-16|2025-01-31|13337.98": {
+          "output_file": "2025-01-31.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            3,
+            4
+          ],
+          "pay_type": "salary",
+          "gross_pay": 13337.98,
+          "net_pay": 5918.85,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-02-14|2025-02-01|2025-02-15|11666.67": {
+          "output_file": "2025-02-14.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            5,
+            6
+          ],
+          "pay_type": "salary",
+          "gross_pay": 11666.67,
+          "net_pay": 5143.12,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-02-28|2025-02-16|2025-02-28|11666.67": {
+          "output_file": "2025-02-28.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            7,
+            8
+          ],
+          "pay_type": "salary",
+          "gross_pay": 11666.67,
+          "net_pay": 5869.27,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-02-24|2025-02-16|2025-02-28|145915.8": {
+          "output_file": "2025-02-24.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            9,
+            10
+          ],
+          "pay_type": "rsu",
+          "gross_pay": 145915.8,
+          "net_pay": 0.0,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-03-14|2025-03-01|2025-03-15|11666.67": {
+          "output_file": "2025-03-14.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            11,
+            12
+          ],
+          "pay_type": "salary",
+          "gross_pay": 11666.67,
+          "net_pay": 6281.73,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-03-31|2025-03-16|2025-03-31|11666.67": {
+          "output_file": "2025-03-31.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            13,
+            14
+          ],
+          "pay_type": "salary",
+          "gross_pay": 11666.67,
+          "net_pay": 7836.32,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-04-15|2025-04-01|2025-04-15|12250.0": {
+          "output_file": "2025-04-15.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            15,
+            16
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 8190.3,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-04-15|2025-04-01|2025-04-30|50400.0": {
+          "output_file": "2025-04-15-2.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            17,
+            18
+          ],
+          "pay_type": "bonus",
+          "gross_pay": 50400.0,
+          "net_pay": 37795.97,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-04-30|2025-04-16|2025-04-30|12250.0": {
+          "output_file": "2025-04-30.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            19,
+            20
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 8190.3,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-05-15|2025-05-01|2025-05-15|12250.0": {
+          "output_file": "2025-05-15.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            21,
+            22
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 7857.1,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-05-30|2025-05-16|2025-05-31|12250.0": {
+          "output_file": "2025-05-30.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            23,
+            24
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 7857.11,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-05-23|2025-06-01|2025-06-15|33443.56": {
+          "output_file": "2025-05-23.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            25,
+            26
+          ],
+          "pay_type": "rsu",
+          "gross_pay": 33443.56,
+          "net_pay": 0.0,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-06-13|2025-06-01|2025-06-15|12250.0": {
+          "output_file": "2025-06-13.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            27,
+            28
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 1619.7,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-06-30|2025-06-16|2025-06-30|12250.0": {
+          "output_file": "2025-06-30.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            29,
+            30
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 1828.23,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-07-15|2025-07-01|2025-07-15|12250.0": {
+          "output_file": "2025-07-15.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            31,
+            32
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 1652.13,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-07-31|2025-07-16|2025-07-31|12250.0": {
+          "output_file": "2025-07-31.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            33,
+            34
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 5903.38,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-08-15|2025-08-01|2025-08-15|12250.0": {
+          "output_file": "2025-08-15.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            35,
+            36
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 3907.89,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-08-29|2025-08-16|2025-08-31|12250.0": {
+          "output_file": "2025-08-29.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            37,
+            38
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 4307.9,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-08-21|2025-08-16|2025-08-31|0.0": {
+          "output_file": "2025-08-21.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            39,
+            40
+          ],
+          "pay_type": "void",
+          "gross_pay": 0.0,
+          "net_pay": 0.0,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-08-25|2025-08-16|2025-08-31|29298.22": {
+          "output_file": "2025-08-25.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            41,
+            42
+          ],
+          "pay_type": "rsu",
+          "gross_pay": 29298.22,
+          "net_pay": 0.0,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-09-15|2025-09-01|2025-09-15|12250.0": {
+          "output_file": "2025-09-15.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            43,
+            44
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 5745.4,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-09-30|2025-09-01|2025-09-30|14586.85": {
+          "output_file": "2025-09-30.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            45,
+            46
+          ],
+          "pay_type": "bonus",
+          "gross_pay": 14586.85,
+          "net_pay": 0.0,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-09-30|2025-09-16|2025-09-30|12250.0": {
+          "output_file": "2025-09-30-2.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            47,
+            48
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 232.9,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-09-25|2025-09-16|2025-09-30|0.0": {
+          "output_file": "2025-09-25.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            49,
+            50
+          ],
+          "pay_type": "salary",
+          "gross_pay": 0.0,
+          "net_pay": 0.0,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-10-15|2025-10-01|2025-10-15|12250.0": {
+          "output_file": "2025-10-15.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            51,
+            52
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 3767.43,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-10-31|2025-10-16|2025-10-31|12250.0": {
+          "output_file": "2025-10-31.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            53,
+            54
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 8807.89,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-11-14|2025-11-01|2025-11-15|12250.0": {
+          "output_file": "2025-11-14.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            55,
+            56
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 8807.9,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-11-28|2025-11-16|2025-11-30|12250.0": {
+          "output_file": "2025-11-28.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            57,
+            58
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 8807.91,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-12-15|2025-12-01|2025-12-15|12250.0": {
+          "output_file": "2025-12-15.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            59,
+            60
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 5470.4,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-11-24|2025-12-01|2025-12-15|26798.98": {
+          "output_file": "2025-11-24.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            61,
+            62
+          ],
+          "pay_type": "rsu",
+          "gross_pay": 26798.98,
+          "net_pay": 0.0,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-12-31|2025-12-16|2025-12-31|12514.63": {
+          "output_file": "2025-12-31.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            63,
+            64
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12514.63,
+          "net_pay": 5874.34,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2025-12-31|2025-12-16|2025-12-31|13408.81": {
+          "output_file": "2025-12-31-2.yaml",
+          "source_file": "2025.pdf",
+          "source_pages": [
+            65,
+            66
+          ],
+          "pay_type": "salary",
+          "gross_pay": 13408.81,
+          "net_pay": 0.0,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2026-01-15|2026-01-01|2026-01-15|12250.0": {
+          "output_file": "2026-01-15.yaml",
+          "source_file": "2026-01-15.pdf",
+          "source_pages": [
+            1,
+            2
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 2032.54,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2026-01-30|2026-01-16|2026-01-31|12250.0": {
+          "output_file": "2026-01-30.yaml",
+          "source_file": "2026-01-31.pdf",
+          "source_pages": [
+            1,
+            2
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 2732.55,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2026-02-13|2026-02-01|2026-02-15|12341.0": {
+          "output_file": "2026-02-13.yaml",
+          "source_file": "2026-02-15.pdf",
+          "source_pages": [
+            1,
+            2
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12341.0,
+          "net_pay": 5233.99,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2026-02-27|2026-02-16|2026-02-28|12250.0": {
+          "output_file": "2026-02-27.yaml",
+          "source_file": "2026-02-28-2.pdf",
+          "source_pages": [
+            1,
+            2
+          ],
+          "pay_type": "salary",
+          "gross_pay": 12250.0,
+          "net_pay": 5582.56,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2026-02-23|2026-02-16|2026-02-28|21848.88": {
+          "output_file": "2026-02-23.yaml",
+          "source_file": "2026-02-28.pdf",
+          "source_pages": [
+            1,
+            2
+          ],
+          "pay_type": "rsu",
+          "gross_pay": 21848.88,
+          "net_pay": 0.0,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        }
+      }
+    },
+    "servicetitan": {
+      "files_scanned": {
+        "2025-12-14.pdf": {
+          "scanned_at": "2026-02-28T11:05:31",
+          "payslips_found": 1,
+          "new": 1,
+          "duplicates": 0
+        },
+        "2025-12-28.pdf": {
+          "scanned_at": "2026-02-28T11:05:31",
+          "payslips_found": 1,
+          "new": 1,
+          "duplicates": 0
+        },
+        "2026-01-11.pdf": {
+          "scanned_at": "2026-02-28T11:05:32",
+          "payslips_found": 1,
+          "new": 1,
+          "duplicates": 0
+        },
+        "2026-01-25.pdf": {
+          "scanned_at": "2026-02-28T11:05:32",
+          "payslips_found": 1,
+          "new": 1,
+          "duplicates": 0
+        },
+        "2026-02-08.pdf": {
+          "scanned_at": "2026-02-28T11:05:32",
+          "payslips_found": 1,
+          "new": 1,
+          "duplicates": 0
+        },
+        "2026-02-22.pdf": {
+          "scanned_at": "2026-02-28T11:05:32",
+          "payslips_found": 1,
+          "new": 1,
+          "duplicates": 0
+        }
+      },
+      "payslips": {
+        "2025-12-19|2025-12-01|2025-12-14|9615.39": {
+          "output_file": "2025-12-19.yaml",
+          "source_file": "2025-12-14.pdf",
+          "source_pages": [
+            1
+          ],
+          "pay_type": "salary",
+          "gross_pay": 9615.39,
+          "net_pay": 1857.06,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2026-01-02|2025-12-15|2025-12-28|9615.39": {
+          "output_file": "2026-01-02.yaml",
+          "source_file": "2025-12-28.pdf",
+          "source_pages": [
+            1
+          ],
+          "pay_type": "salary",
+          "gross_pay": 9615.39,
+          "net_pay": 1968.06,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:31"
+        },
+        "2026-01-16|2025-12-29|2026-01-11|9615.39": {
+          "output_file": "2026-01-16.yaml",
+          "source_file": "2026-01-11.pdf",
+          "source_pages": [
+            1
+          ],
+          "pay_type": "salary",
+          "gross_pay": 9615.39,
+          "net_pay": 4868.04,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:32"
+        },
+        "2026-01-30|2026-01-12|2026-01-25|9615.39": {
+          "output_file": "2026-01-30.yaml",
+          "source_file": "2026-01-25.pdf",
+          "source_pages": [
+            1
+          ],
+          "pay_type": "salary",
+          "gross_pay": 9615.39,
+          "net_pay": 4838.58,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:32"
+        },
+        "2026-02-13|2026-01-26|2026-02-08|9615.39": {
+          "output_file": "2026-02-13.yaml",
+          "source_file": "2026-02-08.pdf",
+          "source_pages": [
+            1
+          ],
+          "pay_type": "salary",
+          "gross_pay": 9615.39,
+          "net_pay": 4868.06,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:32"
+        },
+        "2026-02-27|2026-02-09|2026-02-22|9615.39": {
+          "output_file": "2026-02-27.yaml",
+          "source_file": "2026-02-22.pdf",
+          "source_pages": [
+            1
+          ],
+          "pay_type": "salary",
+          "gross_pay": 9615.39,
+          "net_pay": 4868.05,
+          "validation_passed": true,
+          "processed_at": "2026-02-28T11:05:32"
+        }
+      }
+    }
+  }
+}

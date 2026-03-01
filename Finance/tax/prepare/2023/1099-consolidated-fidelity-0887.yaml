@@ -1,0 +1,74 @@
+form_type: 1099-CONSOLIDATED
+tax_year: 2023
+institution: Fidelity
+format: fidelity
+recipient:
+  name: Yi Chen
+  ssn_last4: '2622'
+account_number: X86-610887
+forms:
+  1099-DIV:
+    1a_total_ordinary_dividends: 533.71
+    1b_qualified_dividends: 532.37
+    2a_total_capital_gain_dist: 0.00
+    4_fed_tax_withheld: 0.00
+    5_section_199a_dividends: 1.34
+    7_foreign_tax_paid: 0.00
+  1099-INT:
+    1_interest_income: 3921.73
+    4_fed_tax_withheld: 0.00
+  1099-B:
+    short_term:
+      proceeds: 35671.67
+      cost_basis: 41780.94
+      market_discount: 0.00
+      wash_sales: 124.84
+      gain_loss: -6109.27
+      fed_withheld: 0.00
+    long_term:
+      proceeds: 395457.96
+      cost_basis: 139934.90
+      market_discount: 0.00
+      wash_sales: 0.00
+      gain_loss: 255523.06
+      fed_withheld: 0.00
+    total:
+      proceeds: 431129.63
+      cost_basis: 181715.84
+      market_discount: 0.00
+      wash_sales: 124.84
+      gain_loss: 249413.79
+      fed_withheld: 0.00
+validation:
+  checks_passed: false
+  mismatches:
+  - '1099-B short_term: gain/loss (-6109.27) != proceeds (35671.67) - basis (41780.94)
+    + wash (124.84) = -5984.43'
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+  pages:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
+  - 20
+  - 21
+  - 22
+  - 23
+  - 24
+  processed_at: '2026-02-28T21:34:34'

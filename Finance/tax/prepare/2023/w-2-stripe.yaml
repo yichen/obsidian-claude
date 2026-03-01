@@ -1,0 +1,43 @@
+form_type: W-2
+tax_year: 2023
+employer:
+  name: Stripe
+  ein: 27-0465600
+employee:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_wages: 620019.38
+  2_fed_tax_withheld: 169778.80
+  3_ss_wages: 160200.00
+  4_ss_tax_withheld: 9932.40
+  5_medicare_wages: 640557.92
+  6_medicare_tax_withheld: 13253.11
+  '12':
+  - code: C
+    amount: 990.00
+    description: Group-term life insurance over $50K
+  - code: D
+    amount: 20538.54
+    description: 401(k) elective deferrals
+  - code: W
+    amount: 7749.96
+    description: HSA employer contributions
+  - code: DD
+    amount: 24817.20
+    description: Health coverage cost (employer + employee)
+  '13':
+    retirement_plan: true
+    statutory_employee: false
+    third_party_sick_pay: false
+  15_state: WA
+  16_state_wages: 0.00
+  17_state_tax: 0.00
+validation:
+  checks_passed: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/Stripe_W-2_Form_2023_Chen_2024_01_25_15_54_20_-0800_W-2_ESS.pdf
+  pages:
+  - 1
+  processed_at: '2026-02-28T21:34:36'

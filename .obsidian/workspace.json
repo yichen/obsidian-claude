@@ -1,19 +1,19 @@
 {
   "main": {
-    "id": "15e4eb4bed559581",
+    "id": "b5543c2b15e11752",
     "type": "split",
     "children": [
       {
-        "id": "37bb4fa43bcbfd41",
+        "id": "a002fe72cd1eafab",
         "type": "tabs",
         "children": [
           {
-            "id": "91c973de3984f8c3",
+            "id": "54297b07a570ec5a",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Trips/2025/2025-11-11 Great Wolf Lodge with kids.md",
+                "file": "Life/Daily/2026/02/2026-02-27.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -28,37 +28,24 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "2025-11-11 Great Wolf Lodge with kids"
-            }
-          },
-          {
-            "id": "196dc9cb681dc3df",
-            "type": "leaf",
-            "state": {
-              "type": "release-notes",
-              "state": {
-                "currentVersion": "1.11.7"
-              },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.11.7"
+              "title": "2026-02-27"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "vertical"
   },
   "left": {
-    "id": "5252706452ef2776",
+    "id": "b7a71a1dda7ab961",
     "type": "split",
     "children": [
       {
-        "id": "379253caa6d2f464",
+        "id": "3a59f34cf731d87e",
         "type": "tabs",
         "children": [
           {
-            "id": "ca05f0aeb7469d68",
+            "id": "06077be195cc1739",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -71,12 +58,12 @@
             }
           },
           {
-            "id": "313e3aa8d0aaeb43",
+            "id": "e368429b786c8055",
             "type": "leaf",
             "state": {
               "type": "search",
               "state": {
-                "query": "#drding",
+                "query": "",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -88,7 +75,7 @@
             }
           },
           {
-            "id": "0750434ad6c43556",
+            "id": "01432aba3eefdbd8",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -101,22 +88,23 @@
       }
     ],
     "direction": "horizontal",
-    "width": 496.5
+    "width": 363.5
   },
   "right": {
-    "id": "ae30f84dcdfaa3f7",
+    "id": "a3c87c1a76ef3126",
     "type": "split",
     "children": [
       {
-        "id": "869219a95f489af4",
+        "id": "5e00fe24967600f9",
         "type": "tabs",
         "children": [
           {
-            "id": "2f9ce9d01ce4a021",
+            "id": "cccce8996163403b",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
+                "file": "Children/Checklist-For-Support-Ruby.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -126,15 +114,16 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks"
+              "title": "Backlinks for Checklist-For-Support-Ruby"
             }
           },
           {
-            "id": "458098b14165ff93",
+            "id": "c5521abda4205fa1",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
+                "file": "Health/Yi's Mental Health Theraphy with Dr. Ding.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
@@ -143,7 +132,7 @@
             }
           },
           {
-            "id": "8a2e5720600a701a",
+            "id": "b259fee8c269ea26",
             "type": "leaf",
             "state": {
               "type": "tag",
@@ -156,17 +145,19 @@
             }
           },
           {
-            "id": "3dbcc91344f59033",
+            "id": "54ad152ab6d992ae",
             "type": "leaf",
             "state": {
               "type": "outline",
-              "state": {},
+              "state": {
+                "file": "0 - Daily TODO List.md"
+              },
               "icon": "lucide-list",
-              "title": "Outline"
+              "title": "Outline of 0 - Daily TODO List"
             }
           },
           {
-            "id": "93f1998c9659adb8",
+            "id": "f6689827e557b657",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -178,12 +169,22 @@
               "icon": "lucide-ghost",
               "title": "all-properties"
             }
+          },
+          {
+            "id": "bd2bd9773a831ee6",
+            "type": "leaf",
+            "state": {
+              "type": "calendar",
+              "state": {},
+              "icon": "calendar-with-checkmark",
+              "title": "Calendar"
+            }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 300,
+    "width": 200,
     "collapsed": true
   },
   "left-ribbon": {
@@ -194,25 +195,27 @@
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
       "templates:Insert template": false,
-      "command-palette:Open command palette": false
+      "command-palette:Open command palette": false,
+      "terminal:Open terminal": false
     }
   },
-  "active": "196dc9cb681dc3df",
+  "active": "06077be195cc1739",
   "lastOpenFiles": [
+    "Scripts/ninja-quest-calendar.sh",
+    "Scripts/__pycache__/update_events.cpython-313.pyc",
+    "Dating/events.md.backup",
     "Trips/2026/2026-04-13_17 Spring Break with Kids/Itinerary.md",
     "Finance/activity-log.md",
+    "Finance/finance.db-wal",
+    "Finance/finance.db-shm",
+    "Finance/categorization_rules.json",
     "memory/2026-03-01.md",
     "Trips/2026/2026-04-13_17 Spring Break with Kids/Reservations.md",
-    "Finance/fidelity-accounts",
-    "Finance/credit-card/bofa-atmos-7982",
-    "Projects",
-    "Scripts/venv/lib/python3.14/site-packages/iniconfig-2.3.0.dist-info/licenses",
-    "Scripts/venv/lib/python3.14/site-packages/pygments-2.19.2.dist-info/licenses",
-    "Scripts/venv/lib/python3.14/site-packages/pytest-9.0.2.dist-info/licenses",
-    "Scripts/venv/lib/python3.14/site-packages/pluggy-1.6.0.dist-info/licenses",
-    "Scripts/venv/lib/python3.14/site-packages/pygments/formatters/__pycache__",
-    "Scripts/venv/lib/python3.14/site-packages/_pytest/assertion/__pycache__",
-    "Scripts/venv/lib/python3.14/site-packages/pygments/filters/__pycache__",
+    "Finance/fidelity-accounts/processing_log.json",
+    "Finance/fidelity-accounts/2026-01-31.yaml",
+    "Finance/fidelity-accounts/2025-12-31.yaml",
+    "Finance/fidelity-accounts/2025-11-30.yaml",
+    "Finance/fidelity-accounts/2025-10-31.yaml",
     "memory/topics/spec-learnings.md",
     "Finance/tax/instruction.md",
     "memory/2026-02-28.md",
@@ -220,30 +223,31 @@
     "Finance/reports/2025-food-breakdown.png",
     "Finance/reports/2025-subcategory-breakdown.png",
     "Finance/reports/2025-monthly-stacked.png",
-    "Finance/reports/monthly-spending-trend.png",
     "Finance/reports/top-subcategories.png",
     "Finance/reports/category-breakdown.png",
+    "Finance/reports/monthly-spending-trend.png",
     "Finance/reports/yearly-spending-by-category.png",
-    "memory/2026-02-27.md",
     "Finance/reports/monthly-spending-by-category-2025.png",
-    "Scripts/venv/lib/python3.14/site-packages/matplotlib/mpl-data/images/matplotlib.svg",
-    "Scripts/venv/lib/python3.14/site-packages/pyparsing/ai/best_practices.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy/random/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/matplotlib/mpl-data/sample_data/logo2.png",
     "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
     "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
     "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/pypdfium2-5.5.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/libjpeg_turbo.md",
-    "Scripts/venv/lib/python3.14/site-packages/pip/_vendor/idna/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/pip-25.3.dist-info/licenses/src/pip/_vendor/idna/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy/random/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/pyparsing/ai/best_practices.md",
+    "Health/Yi's Mental Health Therapy with Dr. Ding.md",
     "Life/Daily/2026/02/2026-02-27.md",
-    "Trips/2026/2026-06_07 [PLAN] Solo Workation - Iceland vs Guatemala/Travel Agent - Domestic Backup.md",
     "Life/Daily/2026/02/2026-02-26.md",
-    "Trips/2026/2026-12 [PLAN] Solo Trip - Guatemala/notes.md"
+    "Trips/2026/2026-12 [PLAN] Solo Trip - Guatemala/notes.md",
+    "Trips/2026/2026-06_07 [PLAN] Solo Workation - Iceland vs Guatemala/notes.md",
+    "memory/2026-02-26.md",
+    "memory/MEMORY.md",
+    "Untitled 1.canvas",
+    "Untitled.canvas"
   ]
 }

@@ -1,0 +1,28 @@
+form_type: 1099-R
+tax_year: 2022
+payer:
+  name: State Farm Life Insurance
+  tin: 37-0533090
+recipient:
+  name: Yi Chen
+  ssn_last4: '2622'
+plan_type: Roth IRA
+boxes:
+  1_gross_distribution: 0.00
+  2a_taxable_amount: 0.00
+  2b_taxable_not_determined: false
+  2b_total_distribution: false
+  3_capital_gain: 0.00
+  4_fed_tax_withheld: 0.00
+  5_employee_contributions: 0.00
+  6_net_unrealized_appreciation: 0.00
+  7_distribution_code: W
+  7_ira_sep_simple: false
+validation:
+  taxable_le_gross: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-statefarm-lifeinsurance-1099r.pdf
+  pages:
+  - 1
+  processed_at: '2026-02-28T21:34:37'
