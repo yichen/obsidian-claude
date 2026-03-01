@@ -56,6 +56,19 @@ Run `categorize`. Then run `uncategorized` to show what's left. For each group o
 ### If `$ARGUMENTS` is "review":
 Run `uncategorized`. Present the top uncategorized descriptions in a table with counts and totals. For each, suggest a category. Let the user confirm or correct. Use `add-rule` to persist.
 
+### Tax Completeness Guard
+
+**Before answering any tax-related question** (income, withholding, refund, AGI, dividends, interest, capital gains, etc.):
+
+1. Run `Scripts/venv/bin/python3 .claude/scripts/ingest_tax.py --scan --year <year>` for the relevant tax year
+2. Check the output for "NEW" entries that are **supported** forms (not skip/unsupported)
+3. **If any unprocessed supported forms exist** → **STOP** and tell the user:
+   > "There are unprocessed tax documents for [year]. Run `/ingest-tax` first to parse them before I can give accurate numbers."
+4. **If unsupported forms exist** → **WARN** with the list and ask if they contain relevant data
+5. Only proceed with the tax query after confirming all relevant forms are ingested
+
+This prevents answering tax questions with incomplete data (e.g., estimated investment income when 1099s haven't been parsed).
+
 ### If `$ARGUMENTS` is a spending question:
 Translate the question into SQL and run it via `query`. Key schema details:
 

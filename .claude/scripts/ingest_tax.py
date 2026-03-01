@@ -1313,13 +1313,21 @@ def parse_1099r(pdf_path: Path, tax_year: int) -> dict:
             if distribution_code:
                 break
 
-    # IRA/SEP/SIMPLE checkbox — check 2-3 lines around the code area
+    # IRA/SEP/SIMPLE checkbox — check lines around the code area
+    # The X mark may be on the same line as the distribution code (e.g., "2    X $  %"),
+    # not necessarily on a line containing "IRA" or "SEP"
     ira_sep_simple = False
     if "box7" in label_lines:
-        for i in range(label_lines["box7"], min(label_lines["box7"] + 4, len(lines))):
+        for i in range(label_lines["box7"], min(label_lines["box7"] + 5, len(lines))):
             line = lines[i]
-            if "IRA" in line or "SEP" in line or "SIMPLE" in line:
-                if "X" in line:
+            # Method 1: X on same line as IRA/SEP/SIMPLE label
+            if ("IRA" in line or "SEP" in line or "SIMPLE" in line) and "X" in line:
+                ira_sep_simple = True
+                break
+            # Method 2: X on the distribution code line (after the code char)
+            if i > label_lines["box7"] and distribution_code:
+                # Pattern: code letter, then X (e.g., "2    X" or "G    X")
+                if re.search(rf"\b{re.escape(distribution_code)}\s+X\b", line):
                     ira_sep_simple = True
                     break
 
@@ -1345,6 +1353,18 @@ def parse_1099r(pdf_path: Path, tax_year: int) -> dict:
     if boxes.get(1) and boxes.get("2a"):
         if boxes["2a"] > boxes[1]:
             mismatches.append(f"Box 2a ({boxes['2a']}) > Box 1 ({boxes[1]})")
+
+    # Code G (rollover): taxable amount should be 0
+    if distribution_code == "G" and boxes.get("2a", 0) > 0:
+        mismatches.append(f"Code G (rollover) but Box 2a taxable = {boxes['2a']} (expected 0)")
+
+    # Code 2 (early distribution, exception): should have IRA/SEP/SIMPLE checked
+    if distribution_code == "2" and not ira_sep_simple:
+        mismatches.append("Code 2 (early distribution, exception) but IRA/SEP/SIMPLE not checked")
+
+    # Box 5 (employee contributions) <= Box 1 (gross)
+    if boxes.get(5, 0) > boxes.get(1, 0) + 0.01 and boxes.get(1, 0) > 0:
+        mismatches.append(f"Box 5 ({boxes[5]}) > Box 1 ({boxes[1]}): employee contributions exceed gross")
 
     result = {
         "form_type": "1099-R",
@@ -2564,6 +2584,402 @@ def parse_schedule_h(pdf_path: Path, tax_year: int) -> dict:
 
 
 # ---------------------------------------------------------------------------
+# Consolidated 1099 Parser (Fidelity & Morgan Stanley)
+# ---------------------------------------------------------------------------
+
+def _detect_1099_consolidated_format(text: str) -> str:
+    """Detect whether consolidated 1099 is Fidelity or Morgan Stanley format."""
+    text_upper = text.upper()
+    if "MORGAN STANLEY" in text_upper or "MSSB" in text_upper:
+        return "morgan_stanley"
+    if "FIDELITY" in text_upper or "NATIONAL FINANCIAL SERVICES" in text_upper:
+        return "fidelity"
+    return "unknown"
+
+
+def _parse_fidelity_1099_div(text: str) -> dict:
+    """Extract 1099-DIV summary from Fidelity consolidated statement.
+
+    Format: dotted-leader lines like:
+      1a Total Ordinary Dividends...274.97
+    """
+    div = {}
+    patterns = [
+        ("1a_total_ordinary_dividends", r"1a\s+Total Ordinary Dividends[.\s]+([\d,]+\.\d{2})"),
+        ("1b_qualified_dividends", r"1b\s+Qualified Dividends[.\s]+([\d,]+\.\d{2})"),
+        ("2a_total_capital_gain_dist", r"2a\s+Total Capital Gain Distributions[.\s]+([\d,]+\.\d{2})"),
+        ("4_fed_tax_withheld", r"4\s+Federal Income Tax Withheld[.\s]+([\d,]+\.\d{2})"),
+        ("5_section_199a_dividends", r"5\s+Section 199A Dividends[.\s]+([\d,]+\.\d{2})"),
+        ("7_foreign_tax_paid", r"7\s+Foreign Tax Paid[.\s]+([\d,]+\.\d{2})"),
+    ]
+    for key, pattern in patterns:
+        m = re.search(pattern, text)
+        if m:
+            div[key] = parse_amount(m.group(1))
+    return div
+
+
+def _parse_fidelity_1099_int(text: str) -> dict:
+    """Extract 1099-INT summary from Fidelity consolidated statement."""
+    int_data = {}
+    patterns = [
+        ("1_interest_income", r"(?:Form 1099-INT|1099-INT).*?1\s+Interest Income[.\s]+([\d,]+\.\d{2})"),
+        ("4_fed_tax_withheld", r"(?:Form 1099-INT|1099-INT).*?4\s+Federal Income Tax Withheld[.\s]+([\d,]+\.\d{2})"),
+    ]
+    # Use DOTALL for multi-line matching since INT section follows DIV
+    for key, pattern in patterns:
+        m = re.search(pattern, text, re.DOTALL)
+        if m:
+            int_data[key] = parse_amount(m.group(1))
+
+    # Fallback: search for INT-specific patterns without context
+    if "1_interest_income" not in int_data:
+        # Find the 1099-INT section and extract from there
+        int_start = text.find("1099-INT")
+        if int_start >= 0:
+            int_text = text[int_start:]
+            m = re.search(r"1\s+Interest Income[.\s]+([\d,]+\.\d{2})", int_text)
+            if m:
+                int_data["1_interest_income"] = parse_amount(m.group(1))
+            m = re.search(r"4\s+Federal Income Tax Withheld[.\s]+([\d,]+\.\d{2})", int_text)
+            if m:
+                int_data["4_fed_tax_withheld"] = parse_amount(m.group(1))
+    return int_data
+
+
+def _parse_fidelity_1099_b(text: str) -> dict:
+    """Extract 1099-B summary from Fidelity consolidated statement.
+
+    The summary table has rows like:
+      Short-termtransactionsforwhichbasisisreportedtotheIRS 0.00 0.00 0.00 0.00 0.00 0.00
+    Columns: Proceeds, CostBasis, MarketDiscount, WashSales, Gain/Loss, FedTaxWithheld
+    """
+    b_data = {
+        "short_term": {"proceeds": 0.0, "cost_basis": 0.0, "market_discount": 0.0,
+                       "wash_sales": 0.0, "gain_loss": 0.0, "fed_withheld": 0.0},
+        "long_term": {"proceeds": 0.0, "cost_basis": 0.0, "market_discount": 0.0,
+                      "wash_sales": 0.0, "gain_loss": 0.0, "fed_withheld": 0.0},
+        "total": {"proceeds": 0.0, "cost_basis": 0.0, "market_discount": 0.0,
+                  "wash_sales": 0.0, "gain_loss": 0.0, "fed_withheld": 0.0},
+    }
+
+    lines = text.split("\n")
+    for line in lines:
+        # Extract 6 amounts from summary lines
+        amounts = re.findall(r"(-?[\d,]+\.\d{2})", line)
+        if len(amounts) < 6:
+            continue
+
+        line_lower = line.lower().replace(" ", "")
+        vals = [parse_amount(a) for a in amounts[:6]]
+
+        if "short-term" in line_lower and "reported" in line_lower:
+            b_data["short_term"]["proceeds"] += vals[0]
+            b_data["short_term"]["cost_basis"] += vals[1]
+            b_data["short_term"]["market_discount"] += vals[2]
+            b_data["short_term"]["wash_sales"] += vals[3]
+            b_data["short_term"]["gain_loss"] += vals[4]
+            b_data["short_term"]["fed_withheld"] += vals[5]
+        elif "short-term" in line_lower and "notreported" in line_lower:
+            b_data["short_term"]["proceeds"] += vals[0]
+            b_data["short_term"]["cost_basis"] += vals[1]
+            b_data["short_term"]["market_discount"] += vals[2]
+            b_data["short_term"]["wash_sales"] += vals[3]
+            b_data["short_term"]["gain_loss"] += vals[4]
+            b_data["short_term"]["fed_withheld"] += vals[5]
+        elif "long-term" in line_lower and "reported" in line_lower:
+            b_data["long_term"]["proceeds"] += vals[0]
+            b_data["long_term"]["cost_basis"] += vals[1]
+            b_data["long_term"]["market_discount"] += vals[2]
+            b_data["long_term"]["wash_sales"] += vals[3]
+            b_data["long_term"]["gain_loss"] += vals[4]
+            b_data["long_term"]["fed_withheld"] += vals[5]
+        elif "long-term" in line_lower and "notreported" in line_lower:
+            b_data["long_term"]["proceeds"] += vals[0]
+            b_data["long_term"]["cost_basis"] += vals[1]
+            b_data["long_term"]["market_discount"] += vals[2]
+            b_data["long_term"]["wash_sales"] += vals[3]
+            b_data["long_term"]["gain_loss"] += vals[4]
+            b_data["long_term"]["fed_withheld"] += vals[5]
+
+    # Also check for the total row (no label, just 6 numbers indented)
+    # Compute totals from short+long
+    for key in ["proceeds", "cost_basis", "market_discount", "wash_sales", "gain_loss", "fed_withheld"]:
+        b_data["total"][key] = round(b_data["short_term"][key] + b_data["long_term"][key], 2)
+
+    return b_data
+
+
+def _parse_fidelity_1099_misc(text: str) -> dict:
+    """Extract 1099-MISC summary from Fidelity consolidated statement."""
+    misc = {}
+    m = re.search(r"3\s+Other Income[.\s]+([\d,]+\.\d{2})", text)
+    if m:
+        misc["3_other_income"] = parse_amount(m.group(1))
+    m = re.search(r"8\s+Substitute Payments[.\s]+([\d,]+\.\d{2})", text)
+    if m:
+        misc["8_substitute_payments"] = parse_amount(m.group(1))
+    return misc
+
+
+def _parse_ms_1099_div(text: str) -> dict:
+    """Extract 1099-DIV from Morgan Stanley consolidated statement.
+
+    Format: BOX format like:
+      1a. TOTAL ORDINARY DIVIDENDS  $131.86
+    """
+    div = {}
+    patterns = [
+        ("1a_total_ordinary_dividends", r"1a\.\s*TOTAL ORDINARY DIVIDENDS\s+\$([\d,]+\.\d{2})"),
+        ("1b_qualified_dividends", r"1b\.\s*QUALIFIED DIVIDENDS\s+\$([\d,]+\.\d{2})"),
+        ("2a_total_capital_gain_dist", r"2a\.\s*TOTAL CAPITAL GAIN DISTRIBUTIONS\s+\$([\d,]+\.\d{2})"),
+        ("4_fed_tax_withheld", r"4\.\s*FEDERAL INCOME TAX WITHHELD\s+\$([\d,]+\.\d{2})"),
+        ("5_section_199a_dividends", r"5\.\s*SECTION 199A DIVIDENDS\s+\$([\d,]+\.\d{2})"),
+        ("7_foreign_tax_paid", r"7\.\s*FOREIGN TAX PAID\s+\$([\d,]+\.\d{2})"),
+    ]
+    for key, pattern in patterns:
+        m = re.search(pattern, text, re.IGNORECASE)
+        if m:
+            div[key] = parse_amount(m.group(1))
+    return div
+
+
+def _parse_ms_1099_int(text: str) -> dict:
+    """Extract 1099-INT from Morgan Stanley consolidated statement."""
+    int_data = {}
+    # Find 1099-INT section
+    int_start = text.upper().find("FORM 1099-INT")
+    if int_start < 0:
+        return int_data
+    int_text = text[int_start:]
+
+    patterns = [
+        ("1_interest_income", r"1\.\s*INTEREST INCOME\s+\$([\d,]+\.\d{2})"),
+        ("4_fed_tax_withheld", r"4\.\s*FEDERAL INCOME TAX WITHHELD\s+\$([\d,]+\.\d{2})"),
+    ]
+    for key, pattern in patterns:
+        m = re.search(pattern, int_text, re.IGNORECASE)
+        if m:
+            int_data[key] = parse_amount(m.group(1))
+    return int_data
+
+
+def _parse_ms_1099_b(text: str) -> dict:
+    """Extract 1099-B summary from Morgan Stanley consolidated statement.
+
+    Page 3 has high-level 1099-B numbers:
+      1d. PROCEEDS  $248,709.67
+    Page 6 has detailed summary with Box A/B/D/E rows.
+    """
+    b_data = {
+        "short_term": {"proceeds": 0.0, "cost_basis": 0.0, "market_discount": 0.0,
+                       "wash_sales": 0.0, "gain_loss": 0.0},
+        "long_term": {"proceeds": 0.0, "cost_basis": 0.0, "market_discount": 0.0,
+                      "wash_sales": 0.0, "gain_loss": 0.0},
+        "total": {"proceeds": 0.0, "cost_basis": 0.0, "market_discount": 0.0,
+                  "wash_sales": 0.0, "gain_loss": 0.0},
+    }
+
+    lines = text.split("\n")
+    for line in lines:
+        line_stripped = line.strip()
+
+        # Total Short-Term and Total Long-Term rows
+        # Format: Total Short - Term  $248,709.67 $244,397.42 $0.00 $0.00 $4,312.25
+        amounts = re.findall(r"\$?\(?([\d,]+\.\d{2})\)?", line_stripped)
+
+        if re.search(r"Total\s+Short\s*-?\s*Term", line_stripped, re.IGNORECASE) and len(amounts) >= 5:
+            vals = [parse_amount(a) for a in amounts[:5]]
+            # Check for parenthesized negative
+            for i, a in enumerate(re.finditer(r"\([\d,]+\.\d{2}\)", line_stripped)):
+                if i < 5:
+                    idx = len(re.findall(r"\$?\(?([\d,]+\.\d{2})\)?", line_stripped[:a.start()]))
+                    if idx < 5:
+                        vals[idx] = -vals[idx]
+            b_data["short_term"] = {
+                "proceeds": vals[0], "cost_basis": vals[1],
+                "market_discount": vals[2], "wash_sales": vals[3],
+                "gain_loss": vals[4],
+            }
+        elif re.search(r"Total\s+Long\s*-?\s*Term", line_stripped, re.IGNORECASE) and len(amounts) >= 5:
+            vals = [parse_amount(a) for a in amounts[:5]]
+            for i, a in enumerate(re.finditer(r"\([\d,]+\.\d{2}\)", line_stripped)):
+                if i < 5:
+                    idx = len(re.findall(r"\$?\(?([\d,]+\.\d{2})\)?", line_stripped[:a.start()]))
+                    if idx < 5:
+                        vals[idx] = -vals[idx]
+            b_data["long_term"] = {
+                "proceeds": vals[0], "cost_basis": vals[1],
+                "market_discount": vals[2], "wash_sales": vals[3],
+                "gain_loss": vals[4],
+            }
+
+    # Compute totals
+    for key in ["proceeds", "cost_basis", "market_discount", "wash_sales", "gain_loss"]:
+        b_data["total"][key] = round(b_data["short_term"][key] + b_data["long_term"][key], 2)
+
+    return b_data
+
+
+def _parse_ms_1099_misc(text: str) -> dict:
+    """Extract 1099-MISC from Morgan Stanley consolidated statement."""
+    misc = {}
+    m = re.search(r"3\.\s*OTHER INCOME\s+\$([\d,]+\.\d{2})", text, re.IGNORECASE)
+    if m:
+        misc["3_other_income"] = parse_amount(m.group(1))
+    m = re.search(r"8\.\s*SUBSTITUTE PAYMENTS.*?\$([\d,]+\.\d{2})", text, re.IGNORECASE)
+    if m:
+        misc["8_substitute_payments"] = parse_amount(m.group(1))
+    return misc
+
+
+def parse_1099_consolidated(pdf_path: Path, tax_year: int) -> dict:
+    """Parse a consolidated Form 1099 (Fidelity or Morgan Stanley).
+
+    Extracts summary-level data from:
+    - 1099-DIV (dividends)
+    - 1099-INT (interest)
+    - 1099-B (broker transactions)
+    - 1099-MISC (miscellaneous income)
+    """
+    with pdfplumber.open(pdf_path) as pdf:
+        num_pages = len(pdf.pages)
+        full_text = ""
+        for page in pdf.pages:
+            full_text += (page.extract_text(layout=True) or "") + "\n"
+
+    fmt = _detect_1099_consolidated_format(full_text)
+
+    # Extract account info
+    account_number = ""
+    recipient_ssn_last4 = ""
+    institution = ""
+
+    m = re.search(r"Account\s*No\.?\s*([\w-]+\d+)", full_text)
+    if m:
+        account_number = m.group(1).strip()
+    if not account_number:
+        m = re.search(r"Account\s*Number\s*:?\s*([\d\s]+)", full_text)
+        if m:
+            account_number = m.group(1).strip()
+
+    ssn_m = re.search(r"(?:\*{3}-\*{2}-|XXX-XX-)(\d{4})", full_text, re.IGNORECASE)
+    if ssn_m:
+        recipient_ssn_last4 = ssn_m.group(1)
+
+    # Detect recipient name (could be Yi Chen or child UTMA)
+    recipient_name = ""
+    name_m = re.search(r"(YI\s+CHEN|LAURENCE\s+CHEN|RUBY\s+CHEN)", full_text)
+    if name_m:
+        # Normalize whitespace (layout text may have newlines embedded)
+        recipient_name = re.sub(r"\s+", " ", name_m.group(1)).strip().title()
+
+    if fmt == "fidelity":
+        institution = "Fidelity"
+        div = _parse_fidelity_1099_div(full_text)
+        int_data = _parse_fidelity_1099_int(full_text)
+        b_data = _parse_fidelity_1099_b(full_text)
+        misc = _parse_fidelity_1099_misc(full_text)
+    elif fmt == "morgan_stanley":
+        institution = "Morgan Stanley"
+        div = _parse_ms_1099_div(full_text)
+        int_data = _parse_ms_1099_int(full_text)
+        b_data = _parse_ms_1099_b(full_text)
+        misc = _parse_ms_1099_misc(full_text)
+    else:
+        raise ValueError(f"Unknown consolidated 1099 format for {pdf_path.name}")
+
+    # --- Validation ---
+    mismatches = []
+
+    # 1099-DIV: qualified <= total ordinary
+    if div.get("1b_qualified_dividends", 0) > div.get("1a_total_ordinary_dividends", 0) + 0.01:
+        mismatches.append(
+            f"1099-DIV: qualified ({div['1b_qualified_dividends']}) > "
+            f"total ordinary ({div['1a_total_ordinary_dividends']})"
+        )
+
+    # 1099-DIV: cap gain distributions >= 0
+    if div.get("2a_total_capital_gain_dist", 0) < 0:
+        mismatches.append(f"1099-DIV: cap gain distributions ({div['2a_total_capital_gain_dist']}) < 0")
+
+    # 1099-INT: interest >= 0
+    if int_data.get("1_interest_income", 0) < 0:
+        mismatches.append(f"1099-INT: interest ({int_data['1_interest_income']}) < 0")
+
+    # 1099-INT: fed withheld <= interest
+    if int_data.get("4_fed_tax_withheld", 0) > int_data.get("1_interest_income", 0) + 0.01:
+        mismatches.append(
+            f"1099-INT: fed withheld ({int_data['4_fed_tax_withheld']}) > "
+            f"interest ({int_data['1_interest_income']})"
+        )
+
+    # 1099-B: proceeds - basis = gain/loss for each category (±$0.01)
+    for term in ["short_term", "long_term"]:
+        p = b_data[term]["proceeds"]
+        c = b_data[term]["cost_basis"]
+        w = b_data[term].get("wash_sales", 0)
+        g = b_data[term]["gain_loss"]
+        if p > 0 or c > 0:
+            expected = round(p - c + w, 2)
+            if abs(g - expected) > 0.02:
+                mismatches.append(
+                    f"1099-B {term}: gain/loss ({g}) != proceeds ({p}) - basis ({c}) + wash ({w}) = {expected}"
+                )
+
+    # 1099-B: totals = sum of short + long
+    for key in ["proceeds", "cost_basis", "gain_loss"]:
+        expected_total = round(b_data["short_term"][key] + b_data["long_term"][key], 2)
+        actual_total = b_data["total"][key]
+        if abs(actual_total - expected_total) > 0.02:
+            mismatches.append(
+                f"1099-B total {key} ({actual_total}) != short ({b_data['short_term'][key]}) + long ({b_data['long_term'][key]})"
+            )
+
+    # 1099-MISC: substitute payments reduce qualified dividends
+    sub_pay = misc.get("8_substitute_payments", 0)
+    if sub_pay > 0 and div.get("1b_qualified_dividends", 0) > 0:
+        mismatches.append(
+            f"1099-MISC: substitute payments ({sub_pay}) > 0 — may reduce qualified dividends"
+        )
+
+    # Build result
+    result = {
+        "form_type": "1099-CONSOLIDATED",
+        "tax_year": tax_year,
+        "institution": institution,
+        "format": fmt,
+        "recipient": {
+            "name": recipient_name or "Yi Chen",
+            "ssn_last4": recipient_ssn_last4,
+        },
+        "account_number": account_number,
+        "forms": {},
+        "validation": {
+            "checks_passed": len(mismatches) == 0,
+            "mismatches": mismatches,
+        },
+        "source": {
+            "file": str(pdf_path),
+            "pages": list(range(1, num_pages + 1)),
+            "processed_at": datetime.now().isoformat(timespec="seconds"),
+        },
+    }
+
+    # Add sub-forms only if they have data
+    if div:
+        result["forms"]["1099-DIV"] = div
+    if int_data:
+        result["forms"]["1099-INT"] = int_data
+    if any(b_data["total"][k] != 0 for k in ["proceeds", "cost_basis", "gain_loss"]):
+        result["forms"]["1099-B"] = b_data
+    if any(v != 0 for v in misc.values()):
+        result["forms"]["1099-MISC"] = misc
+
+    return result
+
+
+# ---------------------------------------------------------------------------
 # Form 1040 Parser (Filed Tax Returns from Archive)
 # ---------------------------------------------------------------------------
 
@@ -2758,6 +3174,37 @@ def parse_1040(pdf_path: Path, tax_year: int) -> dict:
     if cover_refund and overpaid and abs(cover_refund - overpaid) > 1:
         mismatches.append(f"Cover letter refund (${cover_refund}) != line 34 (${overpaid})")
 
+    # Taxable income = AGI - deductions (±$1)
+    if summary.get("adjusted_gross_income") and summary.get("deductions") and summary.get("taxable_income"):
+        expected_taxable = summary["adjusted_gross_income"] - summary["deductions"]
+        if abs(summary["taxable_income"] - expected_taxable) > 1:
+            mismatches.append(
+                f"Taxable income ({summary['taxable_income']}) != AGI ({summary['adjusted_gross_income']}) "
+                f"- deductions ({summary['deductions']}) = {expected_taxable}"
+            )
+
+    # Refund/owed ≈ total_payments - total_tax
+    # Tolerance: $2000 to account for underpayment penalties (Form 2210),
+    # additional credits, or other adjustments not captured in our summary fields
+    if summary.get("total_payments") and summary.get("total_tax"):
+        expected_result = round(summary["total_payments"] - summary["total_tax"], 2)
+        actual_result = summary.get("refund_or_owed", 0)
+        # refund_or_owed is positive=owed, negative=refund
+        # expected_result > 0 means overpaid (refund), so actual should be negative
+        expected_signed = -expected_result  # Convert to our sign convention
+        if abs(actual_result - expected_signed) > 2000:
+            mismatches.append(
+                f"Refund/owed ({actual_result}) differs significantly from "
+                f"-(total_payments ({summary['total_payments']}) - total_tax ({summary['total_tax']})) = {expected_signed}"
+            )
+
+    # Total withholding <= total payments
+    if summary.get("total_withholding") and summary.get("total_payments"):
+        if summary["total_withholding"] > summary["total_payments"] + 1:
+            mismatches.append(
+                f"Total withholding ({summary['total_withholding']}) > total payments ({summary['total_payments']})"
+            )
+
     result = {
         "form_type": "1040",
         "tax_year": tax_year,
@@ -2839,7 +3286,7 @@ def process_archive_pdf(pdf_path: Path, year: int) -> dict:
 # Main Processing
 # ---------------------------------------------------------------------------
 
-SUPPORTED_FORMS = {"W-2", "1099-R", "1098", "1099-INT", "5498-SA", "5498", "1099-SA", "Schedule-H"}
+SUPPORTED_FORMS = {"W-2", "1099-R", "1098", "1099-INT", "5498-SA", "5498", "1099-SA", "Schedule-H", "1099-CONSOLIDATED"}
 SKIP_FORMS = {"1095-C", "3922"}  # Informational only, not needed for tax filing
 
 # Filename patterns that are NOT tax forms (vehicle registrations, etc.)
@@ -2889,6 +3336,8 @@ def process_pdf(pdf_path: Path, year: int) -> dict:
         data = parse_1099sa(pdf_path, year)
     elif form_type == "Schedule-H":
         data = parse_schedule_h(pdf_path, year)
+    elif form_type == "1099-CONSOLIDATED":
+        data = parse_1099_consolidated(pdf_path, year)
     else:
         return {"status": "skipped", "reason": f"no_parser_for_{form_type}"}
 
@@ -3008,6 +3457,17 @@ def _make_output_slug(form_type: str, data: dict, pdf_path: Path) -> str:
             slug = re.sub(r"[^a-z0-9]", "-", emp_name.lower()).strip("-")
             slug = re.sub(r"-+", "-", slug)
             parts.append(slug[:30])
+    elif form_type == "1099-CONSOLIDATED":
+        institution = data.get("institution", "")
+        if institution:
+            slug = re.sub(r"[^a-z0-9]", "-", institution.lower()).strip("-")
+            slug = re.sub(r"-+", "-", slug)
+            parts.append(slug[:30])
+        acct = data.get("account_number", "")
+        if acct:
+            # Use last 4 digits for uniqueness
+            digits = re.sub(r"[^0-9]", "", acct)
+            parts.append(digits[-4:] if len(digits) >= 4 else digits)
 
     return "-".join(parts)
 

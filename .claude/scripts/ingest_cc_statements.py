@@ -7,6 +7,7 @@ Supported cards:
   - Apple Card
   - Chase Prime (1158), Sapphire (2341), Freedom (1350)
   - Fidelity Rewards, Fidelity Credit Card
+  - Bank of America Atmos Rewards (7982)
 """
 
 import argparse
@@ -32,7 +33,7 @@ except ImportError:
 # Script lives at .claude/scripts/ — Obsidian root is two levels up
 SCRIPT_DIR = Path(__file__).parent.resolve()
 OBSIDIAN_ROOT = SCRIPT_DIR.parent.parent
-SOURCE_ROOT = Path.home() / "Dropbox" / "0-FinancialStatements" / "credit-cardss"
+SOURCE_ROOT = Path.home() / "Dropbox" / "0-FinancialStatements" / "credit-cards"
 OUTPUT_ROOT = OBSIDIAN_ROOT / "Finance" / "credit-card"
 LOG_FILE = OUTPUT_ROOT / "ingest.log"
 PROCESSING_LOG_PATH = OUTPUT_ROOT / "processing_log.json"
@@ -112,19 +113,19 @@ CARD_CONFIGS = {
         parser_class="ChaseParser",
         has_year_subfolders=True,
     ),
-    "fidelity-rewards": CardConfig(
-        name="fidelity-rewards",
-        source_dir="fidelity-rewards",
-        filename_pattern=r"(\d{4}-\d{2}-\d{2})\.pdf$",
-        parser_class="FidelityParser",
-        has_year_subfolders=True,
-    ),
     "fidelity-credit-card": CardConfig(
         name="fidelity-credit-card",
         source_dir="fidelity-credit-card",
-        filename_pattern=r"(\d{4}-\d{2}-\d{2})\.pdf$",
+        filename_pattern=r"^(\d{4}-\d{2}-\d{2}).*\.pdf$",
         parser_class="FidelityParser",
-        has_year_subfolders=False,
+        has_year_subfolders=True,
+    ),
+    "bofa-atmos-7982": CardConfig(
+        name="bofa-atmos-7982",
+        source_dir="bank-of-america-atmos-rewards",
+        filename_pattern=r"eStmt_(\d{4}-\d{2}-\d{2})\.pdf$",
+        parser_class="BankOfAmericaParser",
+        has_year_subfolders=True,
     ),
 }
 
@@ -228,6 +229,14 @@ class BaseParser(ABC):
         """
         ...
 
+    def extract_balance_summary(self, text: str) -> dict | None:
+        """Extract previous_balance and new_balance from statement text.
+
+        Returns {"previous_balance": float, "new_balance": float} or None.
+        Used for post-import DB validation: previous_balance + sum(txns) = new_balance.
+        """
+        return None  # Override in subclasses
+
     def _extract_full_text(self, **extract_kwargs) -> str:
         text_parts = []
         with pdfplumber.open(self.pdf_path) as pdf:
@@ -267,6 +276,16 @@ class ChaseParser(BaseParser):
         if not match:
             raise ValueError(f"Cannot parse statement date from: {self.pdf_path.name}")
         return datetime.strptime(match.group(1), "%Y%m%d").date()
+
+    def extract_balance_summary(self, text: str) -> dict | None:
+        prev = re.search(r"Previous Balance\s+\$?([\d,]+\.\d{2})", text)
+        new = re.search(r"New Balance\s+\$?([\d,]+\.\d{2})", text)
+        if prev and new:
+            return {
+                "previous_balance": float(prev.group(1).replace(",", "")),
+                "new_balance": float(new.group(1).replace(",", "")),
+            }
+        return None
 
     def _extract_expected_totals(self, text: str) -> dict:
         """Extract expected totals from Account Summary for validation."""
@@ -397,6 +416,34 @@ class AppleCardParser(BaseParser):
     )
     # Payment: date desc -$amount
     PAY_RE = re.compile(r"^(\d{2}/\d{2}/\d{4})\s+(.+?)\s+(-?\$[\d,.]+)$")
+
+    def extract_balance_summary(self, text: str) -> dict | None:
+        prev = re.search(r"Previous Monthly Balance\s+\$?([\d,]+\.\d{2})", text)
+        # Apple uses "minimum payment balance of $X" for new balance
+        new = re.search(
+            r"minimum payment balance of \$?([\d,]+\.\d{2})", text
+        )
+        if not new:
+            # Fallback: Apple Card transactions amount
+            new = re.search(
+                r"Apple Card transactions\s+\$?([\d,]+\.\d{2})", text
+            )
+        # Monthly Installments (device plans) affect balance but aren't
+        # in the regular transaction section — must be accounted for
+        installments = re.search(
+            r"Apple Card Monthly Installments\s+\$?([\d,]+\.\d{2})", text
+        )
+        if prev and new:
+            result = {
+                "previous_balance": float(prev.group(1).replace(",", "")),
+                "new_balance": float(new.group(1).replace(",", "")),
+            }
+            if installments:
+                result["installments"] = float(
+                    installments.group(1).replace(",", "")
+                )
+            return result
+        return None
 
     def __init__(self, pdf_path: Path, config: CardConfig):
         super().__init__(pdf_path, config)
@@ -563,6 +610,27 @@ class FidelityParser(BaseParser):
         self._expected_debits: float | None = None
         self._expected_interest: float | None = None
         self._expected_fees: float | None = None
+
+    def extract_balance_summary(self, text: str) -> dict | None:
+        # "Previous Balance + $2,856.09" or "Previous Balance - $4,444.97CR"
+        prev = re.search(
+            r"Previous Balance\s*[+-]?\s*\$?([\d,]+\.\d{2})(CR)?", text
+        )
+        new = re.search(r"New Balance\s*=\s*\$?([\d,]+\.\d{2})(CR)?", text)
+        if prev and new:
+            prev_val = float(prev.group(1).replace(",", ""))
+            if prev.group(2) == "CR" or (
+                "Previous Balance -" in text.split("Previous Balance")[1][:20]
+            ):
+                prev_val = -prev_val
+            new_val = float(new.group(1).replace(",", ""))
+            if new.group(2) == "CR":
+                new_val = -new_val
+            return {
+                "previous_balance": prev_val,
+                "new_balance": new_val,
+            }
+        return None
 
     def extract_statement_date(self) -> date:
         match = re.search(r"(\d{4}-\d{2}-\d{2})", self.pdf_path.name)
@@ -740,11 +808,203 @@ class FidelityParser(BaseParser):
         return max(mismatches, key=lambda x: x[0])
 
 
+class BankOfAmericaParser(BaseParser):
+    """Parser for Bank of America credit card statements (Atmos Rewards).
+
+    Transaction format: MM/DD MM/DD Description RefNum 7982 Amount
+    - Payments section: amounts are negative in PDF
+    - Purchases section: amounts are positive in PDF
+    - Fees: positive, may lack separate refnum
+    - Interest: positive, no refnum or account number
+    - Sign convention: negate all raw amounts (charges->negative, payments->positive)
+    """
+
+    # Standard transaction: date date desc refnum 7982 amount
+    TX_RE = re.compile(
+        r"^(\d{2}/\d{2})\s+\d{2}/\d{2}\s+(.+?)\s+\d{3,5}\s+7982\s+([-]?[\d,]+\.\d{2})\s*$"
+    )
+    # Fee-style: date date desc 7982 amount (no separate refnum)
+    FEE_RE = re.compile(
+        r"^(\d{2}/\d{2})\s+\d{2}/\d{2}\s+(.+?)\s+7982\s+([-]?[\d,]+\.\d{2})\s*$"
+    )
+    # Interest-style: date date desc amount (no refnum, no account)
+    INT_RE = re.compile(
+        r"^(\d{2}/\d{2})\s+\d{2}/\d{2}\s+(.+?)\s+([-]?[\d,]+\.\d{2})\s*$"
+    )
+
+    def extract_balance_summary(self, text: str) -> dict | None:
+        prev = re.search(r"Previous Balance\s+\$?([\d,]+\.\d{2})", text)
+        # BofA uses "New Balance Total" which can be negative (credit)
+        new = re.search(r"New Balance Total\s+[-]?\$?([\d,]+\.\d{2})", text)
+        if prev and new:
+            prev_val = float(prev.group(1).replace(",", ""))
+            new_val = float(new.group(1).replace(",", ""))
+            # Check for negative/credit balance
+            new_match = re.search(r"New Balance Total\s+(-)\$?[\d,]+\.\d{2}", text)
+            if new_match:
+                new_val = -new_val
+            return {
+                "previous_balance": prev_val,
+                "new_balance": new_val,
+            }
+        return None
+
+    def __init__(self, pdf_path: Path, config: CardConfig):
+        super().__init__(pdf_path, config)
+        self._expected_purchases: float | None = None
+        self._expected_payments: float | None = None
+        self._expected_fees: float | None = None
+        self._expected_interest: float | None = None
+
+    def extract_statement_date(self) -> date:
+        match = re.search(r"eStmt_(\d{4}-\d{2}-\d{2})\.pdf", self.pdf_path.name)
+        if not match:
+            raise ValueError(f"Cannot parse statement date from: {self.pdf_path.name}")
+        return datetime.strptime(match.group(1), "%Y-%m-%d").date()
+
+    def extract_transactions(self, text: str | None = None) -> tuple[list[Transaction], list[str]]:
+        if text is None:
+            text = self._extract_full_text()
+        stmt_date = self.extract_statement_date()
+        transactions = []
+        warnings = []
+
+        # Reset expected totals
+        self._expected_purchases = None
+        self._expected_payments = None
+        self._expected_fees = None
+        self._expected_interest = None
+
+        # Extract expected totals from page 1 summary (first occurrence in text)
+        m = re.search(r"Purchases and Adjustments\s+[-]?\$?([\d,]+\.\d{2})", text)
+        if m:
+            self._expected_purchases = float(m.group(1).replace(",", ""))
+        m = re.search(r"Payments and Other Credits\s+[-]?\$?([\d,]+\.\d{2})", text)
+        if m:
+            self._expected_payments = float(m.group(1).replace(",", ""))
+        m = re.search(r"Fees Charged\s+\$?([\d,]+\.\d{2})", text)
+        if m:
+            self._expected_fees = float(m.group(1).replace(",", ""))
+        m = re.search(r"Interest Charged\s+\$?([\d,]+\.\d{2})", text)
+        if m:
+            self._expected_interest = float(m.group(1).replace(",", ""))
+
+        section = None
+        in_transactions = False
+
+        for line in text.split("\n"):
+            line = line.strip()
+
+            # Detect start of Transactions area (page 3+)
+            if line in ("Transactions", "Transactions Continued"):
+                in_transactions = True
+                continue
+
+            if not in_transactions:
+                continue
+
+            # Stop markers
+            if "Year-to-Date" in line or "Interest Charge Calculation" in line:
+                in_transactions = False
+                section = None
+                continue
+
+            # Section detection (these appear WITHOUT amounts, unlike page 1 summary)
+            if line == "Payments and Other Credits":
+                section = "payments"
+                continue
+            elif line == "Purchases and Adjustments":
+                section = "purchases"
+                continue
+            elif line == "Fees":
+                section = "fees"
+                continue
+            elif line == "Interest Charged":
+                section = "interest"
+                continue
+
+            # Skip headers, totals, continuation markers
+            if line.startswith("TOTAL") or line.startswith("Transaction") or line.startswith("Date"):
+                continue
+            if line.startswith("continued") or line.startswith("Page "):
+                continue
+
+            if section is None:
+                continue
+
+            # Skip zero-amount interest placeholders
+            if section == "interest" and line.endswith("0.00"):
+                continue
+
+            # Try matching patterns in order of specificity
+            m = self.TX_RE.match(line)
+            if not m:
+                m = self.FEE_RE.match(line)
+            if not m:
+                m = self.INT_RE.match(line)
+            if not m:
+                continue
+
+            date_str = m.group(1)
+            desc = m.group(2).strip()
+            raw_amount = float(m.group(3).replace(",", ""))
+
+            tx_month, tx_day = int(date_str[:2]), int(date_str[3:5])
+            year = self._infer_year(tx_month, stmt_date)
+
+            try:
+                tx_date = date(year, tx_month, tx_day)
+            except ValueError:
+                warnings.append(
+                    f"Invalid date {year}-{tx_month:02d}-{tx_day:02d} in {self.pdf_path.name}"
+                )
+                continue
+
+            # Negate all raw amounts: purchases positive->negative, payments negative->positive
+            csv_amount = round(-raw_amount, 2)
+            transactions.append(
+                Transaction(date=tx_date, description=desc, amount=csv_amount)
+            )
+
+        return transactions, warnings
+
+    def compute_mismatch(self, transactions: list[Transaction]) -> tuple[float, float]:
+        mismatches = []
+
+        # Total charges: purchases + fees + interest (all negative in CSV)
+        expected_charges = (
+            (self._expected_purchases or 0)
+            + (self._expected_fees or 0)
+            + (self._expected_interest or 0)
+        )
+        if expected_charges > 0:
+            actual_charges = round(
+                sum(-t.amount for t in transactions if t.amount < 0), 2
+            )
+            mismatches.append(
+                (abs(actual_charges - expected_charges), expected_charges)
+            )
+
+        # Total payments/credits (positive in CSV)
+        if self._expected_payments is not None and self._expected_payments > 0:
+            actual_payments = round(
+                sum(t.amount for t in transactions if t.amount > 0), 2
+            )
+            mismatches.append(
+                (abs(actual_payments - self._expected_payments), self._expected_payments)
+            )
+
+        if not mismatches:
+            return (0.0, 0.0)
+        return max(mismatches, key=lambda x: x[0])
+
+
 # --- Parser Registry ---
 PARSER_CLASSES = {
     "ChaseParser": ChaseParser,
     "AppleCardParser": AppleCardParser,
     "FidelityParser": FidelityParser,
+    "BankOfAmericaParser": BankOfAmericaParser,
 }
 
 
@@ -867,7 +1127,175 @@ def generate_mismatch_warnings(parser: BaseParser, transactions: list[Transactio
                     f"vs expected ${parser._expected_interest:.2f}"
                 )
 
+    elif isinstance(parser, BankOfAmericaParser):
+        expected_charges = (
+            (parser._expected_purchases or 0)
+            + (parser._expected_fees or 0)
+            + (parser._expected_interest or 0)
+        )
+        if expected_charges > 0:
+            actual_charges = round(
+                sum(-t.amount for t in transactions if t.amount < 0), 2
+            )
+            if abs(actual_charges - expected_charges) > 0.02:
+                warnings.append(
+                    f"Charges total mismatch: parsed ${actual_charges:.2f} "
+                    f"vs expected ${expected_charges:.2f} "
+                    f"(purchases=${parser._expected_purchases or 0:.2f} "
+                    f"+ fees=${parser._expected_fees or 0:.2f} "
+                    f"+ interest=${parser._expected_interest or 0:.2f})"
+                )
+        if parser._expected_payments is not None and parser._expected_payments > 0:
+            actual_payments = round(
+                sum(t.amount for t in transactions if t.amount > 0), 2
+            )
+            if abs(actual_payments - parser._expected_payments) > 0.02:
+                warnings.append(
+                    f"Payment total mismatch: parsed ${actual_payments:.2f} "
+                    f"vs expected ${parser._expected_payments:.2f}"
+                )
+
     return warnings
+
+
+# --- Balance Verification ---
+def verify_all_balances(
+    processing_log: dict, card_filter: Optional[str] = None
+) -> list[dict]:
+    """Verify balance consistency across all processed statements.
+
+    For each statement with balance_summary data:
+      1. Per-statement check: previous_balance - sum(CSV txns) + installments = new_balance
+      2. Chain check: each statement's previous_balance = prior statement's new_balance
+
+    Reads transaction sums from the output CSVs (not DB), so this works
+    immediately after ingestion without needing a DB import.
+
+    Returns list of error dicts. Empty list = all checks passed.
+    """
+    errors = []
+
+    for card_name, card_data in sorted(processing_log.get("cards", {}).items()):
+        if card_filter and card_name != card_filter:
+            continue
+
+        # Collect statements with balance data, sorted by date
+        statements = []
+        for filename, result in sorted(card_data.get("processed", {}).items()):
+            balance = result.get("balance_summary")
+            if not balance:
+                continue
+            # Read CSV to get transaction sum
+            csv_path = OUTPUT_ROOT / card_name / result["output_csv"]
+            csv_sum = 0.0
+            if csv_path.exists():
+                import csv as csv_mod
+
+                with open(csv_path) as f:
+                    for row in csv_mod.DictReader(f):
+                        csv_sum += float(row["amount"])
+                csv_sum = round(csv_sum, 2)
+
+            installments = balance.get("installments", 0)
+            expected_new = round(
+                balance["previous_balance"] - csv_sum + installments, 2
+            )
+            diff = abs(expected_new - balance["new_balance"])
+
+            statements.append({
+                "source_file": f"{card_name}/{result['output_csv']}",
+                "statement_date": result["statement_date"],
+                "previous_balance": balance["previous_balance"],
+                "new_balance": balance["new_balance"],
+                "installments": installments,
+                "csv_sum": csv_sum,
+                "computed_new": expected_new,
+            })
+
+            if diff > 3.0:
+                errors.append({
+                    "type": "balance_mismatch",
+                    "source_file": f"{card_name}/{result['output_csv']}",
+                    "previous_balance": balance["previous_balance"],
+                    "csv_sum": csv_sum,
+                    "computed_new": expected_new,
+                    "pdf_new_balance": balance["new_balance"],
+                    "diff": diff,
+                })
+
+        # Chain check
+        statements.sort(key=lambda s: s["statement_date"])
+        for i in range(1, len(statements)):
+            prev_new = statements[i - 1]["new_balance"]
+            curr_prev = statements[i]["previous_balance"]
+            diff = abs(prev_new - curr_prev)
+            if diff > 0.01:
+                errors.append({
+                    "type": "chain_break",
+                    "statement": statements[i]["source_file"],
+                    "expected_previous": prev_new,
+                    "actual_previous": curr_prev,
+                    "diff": diff,
+                })
+
+    return errors
+
+
+# --- Gap Detection ---
+def detect_gaps(card_filter: Optional[str] = None) -> int:
+    """Check for missing monthly statements (gaps in the sequence).
+
+    Returns the total number of missing months across all cards.
+    """
+    total_missing = 0
+
+    for card_name, config in CARD_CONFIGS.items():
+        if card_filter and card_name != card_filter:
+            continue
+
+        all_pdfs = discover_pdfs(config)
+        if len(all_pdfs) < 2:
+            continue
+
+        # Extract statement dates from filenames (no PDF read needed)
+        parser_cls = PARSER_CLASSES[config.parser_class]
+        stmt_months: set[tuple[int, int]] = set()
+        for pdf_path, filename in all_pdfs:
+            try:
+                parser = parser_cls(pdf_path, config)
+                stmt_date = parser.extract_statement_date()
+                stmt_months.add((stmt_date.year, stmt_date.month))
+            except ValueError:
+                continue
+
+        if len(stmt_months) < 2:
+            continue
+
+        sorted_months = sorted(stmt_months)
+        first_y, first_m = sorted_months[0]
+        last_y, last_m = sorted_months[-1]
+
+        # Generate all expected months from first to last
+        expected: set[tuple[int, int]] = set()
+        y, m = first_y, first_m
+        while (y, m) <= (last_y, last_m):
+            expected.add((y, m))
+            m += 1
+            if m > 12:
+                m = 1
+                y += 1
+
+        missing = sorted(expected - stmt_months)
+        if missing:
+            total_missing += len(missing)
+            logger.warning(
+                f"\033[31m  {card_name}: {len(missing)} MISSING statement(s) "
+                f"(range {first_y}-{first_m:02d} to {last_y}-{last_m:02d}):\033[0m"
+            )
+            for y, m in missing:
+                logger.warning(f"\033[31m    -> {y}-{m:02d}\033[0m")
+
+    return total_missing
 
 
 # --- Main Processing ---
@@ -957,6 +1385,28 @@ def process_pdf(pdf_path: Path, config: CardConfig) -> dict:
     total_charges = round(sum(-t.amount for t in transactions if t.amount < 0), 2)
     total_credits = round(sum(t.amount for t in transactions if t.amount > 0), 2)
 
+    # Extract balance summary from PDF for post-import DB validation
+    balance_summary = parser.extract_balance_summary(best_text)
+
+    # Self-check: verify balance equation against parsed transactions
+    # Credit card balance = what you owe. Payments (positive in CSV) reduce it,
+    # charges (negative in CSV) increase it. So: new = previous - sum(txns)
+    # Apple Card: installments are charged to balance but not in transaction list
+    if balance_summary:
+        txn_sum = round(sum(t.amount for t in transactions), 2)
+        installments = balance_summary.get("installments", 0)
+        expected_new = round(
+            balance_summary["previous_balance"] - txn_sum + installments, 2
+        )
+        balance_diff = abs(expected_new - balance_summary["new_balance"])
+        if balance_diff > 3.0:  # allow small PDF text extraction rounding
+            warnings.append(
+                f"Balance check: previous({balance_summary['previous_balance']}) "
+                f"- txns({txn_sum}) + installments({installments}) "
+                f"= {expected_new}, expected new_balance={balance_summary['new_balance']} "
+                f"(diff=${balance_diff:.2f})"
+            )
+
     # Build verification block
     verification = {
         "mismatch": round(best_mismatch, 2),
@@ -965,7 +1415,7 @@ def process_pdf(pdf_path: Path, config: CardConfig) -> dict:
         "extraction_settings": best_settings,
     }
 
-    return {
+    result = {
         "statement_date": stmt_date.isoformat(),
         "output_csv": f"{stmt_date.isoformat()}.csv",
         "transaction_count": len(transactions),
@@ -976,6 +1426,10 @@ def process_pdf(pdf_path: Path, config: CardConfig) -> dict:
         "status": "success",
         "warnings": warnings,
     }
+    if balance_summary:
+        result["balance_summary"] = balance_summary
+
+    return result
 
 
 def run_scan(card_filter: Optional[str] = None, force: bool = False):
@@ -1010,6 +1464,17 @@ def run_scan(card_filter: Optional[str] = None, force: bool = False):
             logger.info(status)
 
     logger.info(f"\n  Total: {total_new} new / {total_all} total PDFs")
+
+    # Gap detection
+    logger.info("\n  Checking for missing statements...")
+    gap_count = detect_gaps(card_filter=card_filter)
+    if gap_count == 0:
+        logger.info("  No gaps found.")
+    else:
+        logger.warning(
+            f"\033[31m  {gap_count} missing statement(s) detected! "
+            f"Check source PDFs in {SOURCE_ROOT}\033[0m"
+        )
 
 
 def run_ingest(
@@ -1087,6 +1552,139 @@ def run_ingest(
         f"\n  Done: {total_success} succeeded, {total_errors} errors, {total_warnings} warnings"
     )
 
+    # Gap detection after ingestion
+    logger.info("\n  Checking for missing statements...")
+    gap_count = detect_gaps(card_filter=card_filter)
+    if gap_count == 0:
+        logger.info("  No gaps found.")
+    else:
+        logger.warning(
+            f"\033[31m  {gap_count} missing statement(s) detected! "
+            f"Check source PDFs in {SOURCE_ROOT}\033[0m"
+        )
+
+    # Balance verification across all processed statements
+    logger.info("\n  Verifying statement balances...")
+    balance_errors = verify_all_balances(processing_log, card_filter=card_filter)
+    if not balance_errors:
+        logger.info("  \033[32mAll balance checks passed.\033[0m")
+    else:
+        for err in balance_errors:
+            if err["type"] == "balance_mismatch":
+                logger.warning(
+                    f"\033[31m  BALANCE MISMATCH {err['source_file']}: "
+                    f"prev({err['previous_balance']}) - txns + installments "
+                    f"= {err['computed_new']}, expected {err['pdf_new_balance']} "
+                    f"(diff=${err['diff']:.2f})\033[0m"
+                )
+            elif err["type"] == "chain_break":
+                logger.warning(
+                    f"\033[31m  CHAIN BREAK at {err['statement']}: "
+                    f"prior new_balance={err['expected_previous']} != "
+                    f"this previous_balance={err['actual_previous']} "
+                    f"(diff=${err['diff']:.2f})\033[0m"
+                )
+        logger.warning(
+            f"\033[31m  {len(balance_errors)} balance issue(s) found!\033[0m"
+        )
+
+
+# --- Year-End Reconciliation ---
+def parse_year_end_total(pdf_path: Path) -> tuple[int | None, float | None]:
+    """Parse year and total spent from a year-end summary PDF.
+    Returns (year, total_spent) or (None, None) if unparseable.
+    """
+    with pdfplumber.open(pdf_path) as pdf:
+        for page in pdf.pages[:2]:
+            text = page.extract_text()
+            if not text:
+                continue
+            year_match = re.search(r"(\d{4}) year-end summary", text)
+            # Amount may be on same line or next line after "Total spent"
+            total_match = re.search(
+                r"Total spent[\s\S]*?\$([\d,]+\.\d{2})", text
+            )
+            if year_match and total_match:
+                return (
+                    int(year_match.group(1)),
+                    float(total_match.group(1).replace(",", "")),
+                )
+    return None, None
+
+
+def run_reconcile(card_filter: Optional[str] = None):
+    """Reconcile year-end summaries against ingested CSVs."""
+    found_any = False
+
+    for card_name, config in CARD_CONFIGS.items():
+        if card_filter and card_name != card_filter:
+            continue
+
+        source_dir = SOURCE_ROOT / config.source_dir
+        if not source_dir.exists():
+            continue
+
+        # Find YearEndSummary PDFs
+        year_end_pdfs = sorted(source_dir.rglob("YearEndSummary*.pdf"))
+        if not year_end_pdfs:
+            continue
+
+        found_any = True
+        for ye_pdf in year_end_pdfs:
+            summary_year, ye_total = parse_year_end_total(ye_pdf)
+            if summary_year is None or ye_total is None:
+                logger.warning(f"  Could not parse year-end total from {ye_pdf.name}")
+                continue
+
+            # Read all CSVs for this card and sum charges for the summary year
+            csv_dir = OUTPUT_ROOT / card_name
+            if not csv_dir.exists():
+                logger.warning(f"  No CSV directory found for {card_name}")
+                continue
+
+            csv_total = 0.0
+            tx_count = 0
+            for csv_file in sorted(csv_dir.glob("*.csv")):
+                with open(csv_file) as f:
+                    reader = csv.DictReader(f)
+                    for row in reader:
+                        tx_date = datetime.strptime(row["date"], "%Y-%m-%d").date()
+                        if tx_date.year != summary_year:
+                            continue
+                        amount = float(row["amount"])
+                        desc = row["description"].upper()
+                        # Year-end "Total spent" = purchases net of refunds,
+                        # excluding card payments, fees, and interest
+                        if "INTEREST CHARGED" in desc:
+                            continue
+                        if "ANNUAL FEE" in desc or "LATE FEE" in desc:
+                            continue
+                        if amount > 0 and "PAYMENT" in desc:
+                            continue  # skip actual card payments
+                        if amount < 0:
+                            csv_total += abs(amount)  # charge
+                        else:
+                            csv_total -= amount  # refund/credit reduces total
+                        tx_count += 1
+
+            csv_total = round(csv_total, 2)
+            diff = round(abs(csv_total - ye_total), 2)
+
+            if diff <= 0.02:
+                logger.info(
+                    f"  {card_name} {summary_year}: MATCH — "
+                    f"year-end ${ye_total:,.2f} = CSV ${csv_total:,.2f} ({tx_count} txns)"
+                )
+            else:
+                logger.warning(
+                    f"  {card_name} {summary_year}: MISMATCH — "
+                    f"year-end ${ye_total:,.2f} vs CSV ${csv_total:,.2f} "
+                    f"(diff ${diff:.2f}, {tx_count} txns)"
+                )
+
+    if not found_any:
+        logger.info("  No year-end summary PDFs found for any card.")
+
 
 # --- CLI ---
 def main():
@@ -1097,6 +1695,11 @@ def main():
     group = parser.add_mutually_exclusive_group(required=True)
     group.add_argument("--scan", action="store_true", help="Show new PDFs (no processing)")
     group.add_argument("--run", action="store_true", help="Process new PDFs")
+    group.add_argument(
+        "--reconcile",
+        action="store_true",
+        help="Reconcile year-end summaries against ingested CSVs",
+    )
 
     parser.add_argument(
         "--card",
@@ -1128,6 +1731,8 @@ def main():
         run_ingest(
             card_filter=args.card, force=args.force, skip_errors=args.skip_errors
         )
+    elif args.reconcile:
+        run_reconcile(card_filter=args.card)
 
 
 if __name__ == "__main__":

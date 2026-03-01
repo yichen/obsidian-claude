@@ -18,6 +18,8 @@ CSV_ROOT = VAULT_ROOT / "Finance" / "credit-card"
 AMAZON_CSV_ROOT = Path.home() / "Dropbox" / "0-FinancialStatements" / "amazon"
 PAYSLIP_ROOT = VAULT_ROOT / "Finance" / "payslips"
 TAX_ROOT = VAULT_ROOT / "Finance" / "tax"
+FIDELITY_ROOT = VAULT_ROOT / "Finance" / "fidelity-accounts"
+RULES_BACKUP_PATH = VAULT_ROOT / "Finance" / "categorization_rules.json"
 
 # ---------------------------------------------------------------------------
 # Schema
@@ -177,6 +179,87 @@ CREATE INDEX IF NOT EXISTS idx_tax_doc_type ON tax_documents(form_type);
 CREATE INDEX IF NOT EXISTS idx_tax_doc_folder ON tax_documents(source_folder);
 CREATE INDEX IF NOT EXISTS idx_tax_items_doc ON tax_line_items(doc_id);
 CREATE INDEX IF NOT EXISTS idx_tax_items_box ON tax_line_items(box_name);
+
+CREATE TABLE IF NOT EXISTS fidelity_accounts (
+    id INTEGER PRIMARY KEY,
+    account_number TEXT UNIQUE NOT NULL,
+    account_name TEXT,
+    account_type TEXT NOT NULL,
+    tax_status TEXT NOT NULL,
+    beneficiary TEXT NOT NULL,
+    first_seen TEXT,
+    last_seen TEXT
+);
+
+CREATE TABLE IF NOT EXISTS fidelity_portfolio_snapshots (
+    id INTEGER PRIMARY KEY,
+    statement_date TEXT UNIQUE NOT NULL,
+    beginning_value REAL,
+    ending_value REAL,
+    additions REAL,
+    subtractions REAL,
+    change_in_investment_value REAL,
+    income_taxable REAL,
+    income_tax_deferred REAL,
+    income_tax_free REAL,
+    income_total REAL,
+    source_file TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS fidelity_monthly_snapshots (
+    id INTEGER PRIMARY KEY,
+    account_id INTEGER NOT NULL REFERENCES fidelity_accounts(id),
+    statement_date TEXT NOT NULL,
+    beginning_value REAL,
+    ending_value REAL,
+    additions REAL,
+    subtractions REAL,
+    change_in_investment_value REAL,
+    deposits REAL,
+    withdrawals REAL,
+    exchanges_in REAL,
+    exchanges_out REAL,
+    transfers_between_fidelity REAL,
+    income_dividends REAL,
+    income_interest REAL,
+    income_total REAL,
+    source_file TEXT NOT NULL,
+    UNIQUE(account_id, statement_date)
+);
+
+CREATE TABLE IF NOT EXISTS fidelity_holdings (
+    id INTEGER PRIMARY KEY,
+    snapshot_id INTEGER NOT NULL REFERENCES fidelity_monthly_snapshots(id),
+    symbol TEXT,
+    description TEXT,
+    asset_class TEXT,
+    quantity REAL,
+    price REAL,
+    market_value REAL NOT NULL,
+    cost_basis REAL,
+    unrealized_gain_loss REAL
+);
+
+CREATE INDEX IF NOT EXISTS idx_fidelity_snap_date ON fidelity_monthly_snapshots(statement_date);
+CREATE INDEX IF NOT EXISTS idx_fidelity_snap_acct ON fidelity_monthly_snapshots(account_id);
+CREATE INDEX IF NOT EXISTS idx_fidelity_hold_snap ON fidelity_holdings(snapshot_id);
+CREATE INDEX IF NOT EXISTS idx_fidelity_port_date ON fidelity_portfolio_snapshots(statement_date);
+
+CREATE TABLE IF NOT EXISTS fidelity_cma_transactions (
+    id INTEGER PRIMARY KEY,
+    date TEXT NOT NULL,
+    type TEXT NOT NULL,
+    description TEXT NOT NULL,
+    amount REAL NOT NULL,
+    payee TEXT,
+    category TEXT,
+    is_transfer INTEGER DEFAULT 0,
+    source_file TEXT NOT NULL,
+    source_row INTEGER NOT NULL,
+    UNIQUE(source_file, source_row)
+);
+CREATE INDEX IF NOT EXISTS idx_cma_txn_date ON fidelity_cma_transactions(date);
+CREATE INDEX IF NOT EXISTS idx_cma_txn_cat ON fidelity_cma_transactions(category);
 """
 
 # ---------------------------------------------------------------------------
@@ -188,8 +271,8 @@ ACCOUNTS = [
     ("chase-prime-1158", "Chase Prime"),
     ("chase-sapphire-2341", "Chase Sapphire"),
     ("chase-freedom-1350", "Chase Freedom"),
-    ("fidelity-rewards", "Fidelity Rewards"),
     ("fidelity-credit-card", "Fidelity Credit Card"),
+    ("bofa-atmos-7982", "BofA Atmos Rewards"),
 ]
 
 # (name, parent_name_or_None)
@@ -586,12 +669,120 @@ def get_db():
 
 
 def backup_db():
-    """Create a .bak copy of the database before destructive operations."""
+    """Create a .bak copy of the database and export rules before destructive operations."""
     if DB_PATH.exists():
         bak = DB_PATH.with_suffix(".db.bak")
         shutil.copy2(DB_PATH, bak)
         size_kb = bak.stat().st_size / 1024
         print(f"Backup: {bak.name} ({size_kb:.0f} KB)")
+        # Auto-export categorization rules
+        _export_rules(quiet=True)
+
+
+def _export_rules(quiet=False):
+    """Export categorization rules to JSON for disaster recovery.
+
+    The JSON file syncs via Obsidian Sync, so rules survive even if the
+    DB is deleted or corrupted. Use cmd_restore_rules() to reimport.
+    """
+    if not DB_PATH.exists():
+        return
+    conn = sqlite3.connect(DB_PATH)
+    rows = conn.execute("""
+        SELECT cr.pattern, cr.pattern_type, cr.priority, cr.source,
+               c.name as category_name,
+               pc.name as parent_category_name
+        FROM categorization_rules cr
+        JOIN categories c ON c.id = cr.category_id
+        LEFT JOIN categories pc ON pc.id = c.parent_id
+        ORDER BY cr.priority, cr.pattern
+    """).fetchall()
+    conn.close()
+
+    rules = []
+    for pattern, ptype, priority, source, cat, parent_cat in rows:
+        rules.append({
+            "pattern": pattern,
+            "pattern_type": ptype,
+            "priority": priority,
+            "source": source,
+            "category": cat,
+            "parent_category": parent_cat,
+        })
+
+    with open(RULES_BACKUP_PATH, "w") as f:
+        json.dump({"exported_at": __import__("datetime").datetime.now().isoformat(),
+                    "count": len(rules), "rules": rules}, f, indent=2)
+
+    if not quiet:
+        print(f"Exported {len(rules)} rules to {RULES_BACKUP_PATH.name}")
+
+
+def cmd_backup_rules():
+    """Export categorization rules to JSON."""
+    _export_rules(quiet=False)
+
+
+def cmd_restore_rules():
+    """Restore categorization rules from JSON backup.
+
+    Rebuilds from scratch: init must have run first (categories must exist).
+    Skips rules whose category doesn't exist in the DB.
+    """
+    if not RULES_BACKUP_PATH.exists():
+        print(f"No backup found at {RULES_BACKUP_PATH}")
+        sys.exit(1)
+
+    with open(RULES_BACKUP_PATH) as f:
+        data = json.load(f)
+
+    rules = data.get("rules", [])
+    print(f"Restoring from {RULES_BACKUP_PATH.name} ({data.get('count', '?')} rules, exported {data.get('exported_at', '?')})")
+
+    conn = get_db()
+    conn.executescript(SCHEMA)
+
+    restored = 0
+    skipped = 0
+    for r in rules:
+        cat_name = r["category"]
+        parent_name = r.get("parent_category")
+
+        # Find category id
+        if parent_name:
+            row = conn.execute(
+                """SELECT c.id FROM categories c
+                   JOIN categories pc ON pc.id = c.parent_id
+                   WHERE c.name = ? AND pc.name = ?""",
+                (cat_name, parent_name),
+            ).fetchone()
+        else:
+            row = conn.execute(
+                "SELECT id FROM categories WHERE name = ? AND parent_id IS NULL",
+                (cat_name,),
+            ).fetchone()
+
+        if not row:
+            skipped += 1
+            continue
+
+        cat_id = row[0]
+        conn.execute(
+            """INSERT OR REPLACE INTO categorization_rules
+               (pattern, pattern_type, category_id, priority, source)
+               VALUES (?, ?, ?, ?, ?)""",
+            (r["pattern"], r.get("pattern_type", "keyword"),
+             cat_id, r.get("priority", 100), r.get("source", "manual")),
+        )
+        restored += 1
+
+    conn.commit()
+    conn.close()
+    print(json.dumps({
+        "restored": restored,
+        "skipped_missing_category": skipped,
+        "total_in_backup": len(rules),
+    }, indent=2))
 
 
 # ---------------------------------------------------------------------------
@@ -644,6 +835,103 @@ def cmd_init():
     conn.commit()
     conn.close()
     print("Database initialized.")
+
+
+def validate_balances(card_filter: str | None = None) -> list[dict]:
+    """Validate DB transactions against PDF balance summaries.
+
+    Reads balance_summary from processing_log.json, then for each statement:
+      previous_balance + sum(all DB txns for that source_file) should = new_balance
+
+    Also performs chain validation: each statement's previous_balance should equal
+    the prior statement's new_balance.
+
+    Returns list of error dicts. Empty list = all checks passed.
+    """
+    log_path = CSV_ROOT / "processing_log.json"
+    if not log_path.exists():
+        return []
+
+    with open(log_path) as f:
+        processing_log = json.load(f)
+
+    conn = get_db()
+    errors = []
+
+    for card_name, card_data in sorted(processing_log.get("cards", {}).items()):
+        if card_filter and card_name != card_filter:
+            continue
+
+        # Collect statements with balance data, sorted by date
+        statements = []
+        for filename, result in sorted(card_data.get("processed", {}).items()):
+            balance = result.get("balance_summary")
+            if not balance:
+                continue
+            source_file = f"{card_name}/{result['output_csv']}"
+            stmt = {
+                "source_file": source_file,
+                "statement_date": result["statement_date"],
+                "previous_balance": balance["previous_balance"],
+                "new_balance": balance["new_balance"],
+            }
+            if "installments" in balance:
+                stmt["installments"] = balance["installments"]
+            statements.append(stmt)
+
+        # Sort by statement date
+        statements.sort(key=lambda s: s["statement_date"])
+
+        # Check each statement: previous_balance + sum(txns) = new_balance
+        for s in statements:
+            row = conn.execute(
+                "SELECT ROUND(SUM(amount), 2) FROM transactions WHERE source_file = ?",
+                (s["source_file"],),
+            ).fetchone()
+            db_sum = row[0] if row[0] is not None else 0
+
+            # Credit card: new_balance = previous_balance - sum(txns) + installments
+            # Payments (positive) reduce balance, charges (negative) increase it
+            # Apple Card installments are charged to balance but not in transactions
+            installments = s.get("installments", 0)
+            expected_new = round(s["previous_balance"] - db_sum + installments, 2)
+            diff = abs(expected_new - s["new_balance"])
+            if diff > 3.0:  # allow small PDF text extraction rounding
+                errors.append({
+                    "type": "balance_mismatch",
+                    "source_file": s["source_file"],
+                    "previous_balance": s["previous_balance"],
+                    "db_txn_sum": db_sum,
+                    "computed_new_balance": expected_new,
+                    "pdf_new_balance": s["new_balance"],
+                    "diff": round(diff, 2),
+                })
+
+        # Chain check: previous_balance[n] should = new_balance[n-1]
+        for i in range(1, len(statements)):
+            prev_new = statements[i - 1]["new_balance"]
+            curr_prev = statements[i]["previous_balance"]
+            diff = abs(prev_new - curr_prev)
+            if diff > 0.01:
+                errors.append({
+                    "type": "chain_break",
+                    "statement": statements[i]["source_file"],
+                    "expected_previous": prev_new,
+                    "actual_previous": curr_prev,
+                    "diff": round(diff, 2),
+                })
+
+    conn.close()
+    return errors
+
+
+def cmd_validate():
+    """Run balance validation and print results."""
+    errors = validate_balances()
+    if not errors:
+        print(json.dumps({"status": "ok", "message": "All balance checks passed"}, indent=2))
+    else:
+        print(json.dumps({"status": "errors", "errors": errors}, indent=2))
 
 
 def cmd_import():
@@ -727,12 +1015,18 @@ def cmd_import():
     conn.commit()
     conn.close()
 
+    # Run balance validation after import
+    balance_errors = validate_balances()
+
     total_txn = _count_transactions()
-    print(json.dumps({
+    result = {
         "files_imported": files_imported,
         "new_transactions": total_new,
         "total_transactions": total_txn,
-    }, indent=2))
+    }
+    if balance_errors:
+        result["balance_validation_errors"] = balance_errors
+    print(json.dumps(result, indent=2))
 
 
 def _parse_money(val):
@@ -1097,6 +1391,9 @@ def cmd_import_tax():
                 elif form_type == "1040":
                     payer_name = data.get("taxpayer", {}).get("name", "")
                     payer_tin = ""
+                elif form_type == "1099-CONSOLIDATED":
+                    payer_name = data.get("institution", "")
+                    payer_tin = ""
 
                 recipient_ssn = ""
                 for key in ["employee", "recipient", "borrower", "taxpayer"]:
@@ -1206,13 +1503,233 @@ def _extract_tax_line_items(data: dict, form_type: str) -> list:
             if isinstance(val, (int, float)):
                 items.append((f"income.{key}", float(val), None, None))
 
+    # Extract from 'forms' dict (1099-CONSOLIDATED)
+    forms = data.get("forms", {})
+    if isinstance(forms, dict) and form_type == "1099-CONSOLIDATED":
+        for sub_form, sub_data in forms.items():
+            if isinstance(sub_data, dict):
+                for key, val in sub_data.items():
+                    box_key = f"{sub_form}.{key}"
+                    if isinstance(val, (int, float)):
+                        items.append((box_key, float(val), None, None))
+                    elif isinstance(val, str):
+                        items.append((box_key, None, val, None))
+                    elif isinstance(val, dict):
+                        # Nested dict like 1099-B short_term/long_term/total
+                        for subkey, subval in val.items():
+                            deep_key = f"{box_key}.{subkey}"
+                            if isinstance(subval, (int, float)):
+                                items.append((deep_key, float(subval), None, None))
+
     # Extract plan_type, account_number as text items
-    for text_field in ["plan_type", "account_number", "loan_number", "property_address"]:
+    for text_field in ["plan_type", "account_number", "loan_number", "property_address",
+                       "institution", "format"]:
         val = data.get(text_field)
         if val:
             items.append((text_field, None, str(val), None))
 
     return items
+
+
+def cmd_import_fidelity():
+    """Import Fidelity account YAML files into the database (idempotent)."""
+    backup_db()
+    conn = get_db()
+    conn.executescript(SCHEMA)
+
+    new_snapshots = 0
+    new_holdings = 0
+    skipped = 0
+
+    yaml_files = sorted(FIDELITY_ROOT.glob("*.yaml"))
+    if not yaml_files:
+        print("No Fidelity YAML files found.")
+        return
+
+    for yaml_file in yaml_files:
+        with open(yaml_file, encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+        if not data:
+            continue
+
+        stmt_date = data.get("statement_date", "")
+        source_file = data.get("source", {}).get("file", yaml_file.name)
+
+        # Upsert portfolio snapshot
+        existing = conn.execute(
+            "SELECT id FROM fidelity_portfolio_snapshots WHERE statement_date=?",
+            (stmt_date,)
+        ).fetchone()
+        if existing:
+            skipped += 1
+            continue
+
+        portfolio = data.get("portfolio", {})
+        income = data.get("income_summary", {})
+        conn.execute(
+            """INSERT INTO fidelity_portfolio_snapshots
+               (statement_date, beginning_value, ending_value, additions,
+                subtractions, change_in_investment_value,
+                income_taxable, income_tax_deferred, income_tax_free,
+                income_total, source_file)
+               VALUES (?,?,?,?,?,?,?,?,?,?,?)""",
+            (
+                stmt_date,
+                portfolio.get("beginning_value"),
+                portfolio.get("ending_value"),
+                portfolio.get("additions"),
+                portfolio.get("subtractions"),
+                portfolio.get("change_in_investment_value"),
+                income.get("taxable", {}).get("total"),
+                income.get("tax_deferred", {}).get("total"),
+                income.get("tax_free", {}).get("total"),
+                income.get("grand_total"),
+                source_file,
+            ),
+        )
+
+        # Process each account
+        for acct in data.get("accounts", []):
+            acct_num = acct.get("account_number", "")
+            if not acct_num:
+                continue
+
+            # Upsert account record
+            existing_acct = conn.execute(
+                "SELECT id FROM fidelity_accounts WHERE account_number=?",
+                (acct_num,)
+            ).fetchone()
+
+            if existing_acct:
+                acct_id = existing_acct[0]
+                conn.execute(
+                    "UPDATE fidelity_accounts SET last_seen=? WHERE id=?",
+                    (stmt_date, acct_id),
+                )
+            else:
+                conn.execute(
+                    """INSERT INTO fidelity_accounts
+                       (account_number, account_name, account_type,
+                        tax_status, beneficiary, first_seen, last_seen)
+                       VALUES (?,?,?,?,?,?,?)""",
+                    (
+                        acct_num,
+                        acct.get("account_name", ""),
+                        acct.get("account_type", "unknown"),
+                        acct.get("tax_status", "taxable"),
+                        acct.get("beneficiary", "Yi"),
+                        stmt_date,
+                        stmt_date,
+                    ),
+                )
+                acct_id = conn.execute(
+                    "SELECT id FROM fidelity_accounts WHERE account_number=?",
+                    (acct_num,)
+                ).fetchone()[0]
+
+            # Insert monthly snapshot
+            summary = acct.get("summary", {})
+            acct_income = acct.get("income", {})
+            conn.execute(
+                """INSERT OR IGNORE INTO fidelity_monthly_snapshots
+                   (account_id, statement_date, beginning_value, ending_value,
+                    additions, subtractions, change_in_investment_value,
+                    deposits, withdrawals, exchanges_in, exchanges_out,
+                    transfers_between_fidelity,
+                    income_dividends, income_interest, income_total,
+                    source_file)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (
+                    acct_id, stmt_date,
+                    summary.get("beginning_value"),
+                    summary.get("ending_value"),
+                    summary.get("additions"),
+                    summary.get("subtractions"),
+                    summary.get("change_in_investment_value"),
+                    summary.get("deposits"),
+                    summary.get("withdrawals"),
+                    summary.get("exchanges_in"),
+                    summary.get("exchanges_out"),
+                    summary.get("transfers_between_fidelity"),
+                    acct_income.get("dividends"),
+                    acct_income.get("interest"),
+                    acct_income.get("total"),
+                    source_file,
+                ),
+            )
+
+            snap_id = conn.execute(
+                """SELECT id FROM fidelity_monthly_snapshots
+                   WHERE account_id=? AND statement_date=?""",
+                (acct_id, stmt_date),
+            ).fetchone()[0]
+            new_snapshots += 1
+
+            # Insert holdings
+            for h in acct.get("holdings", []):
+                conn.execute(
+                    """INSERT INTO fidelity_holdings
+                       (snapshot_id, symbol, description, asset_class,
+                        quantity, price, market_value,
+                        cost_basis, unrealized_gain_loss)
+                       VALUES (?,?,?,?,?,?,?,?,?)""",
+                    (
+                        snap_id,
+                        h.get("symbol"),
+                        h.get("description"),
+                        h.get("asset_class"),
+                        h.get("quantity"),
+                        h.get("price"),
+                        h.get("market_value"),
+                        h.get("cost_basis"),
+                        h.get("unrealized_gain_loss"),
+                    ),
+                )
+                new_holdings += 1
+
+    # Second pass: import CMA activity transactions (independent of snapshot skip)
+    new_cma_txns = 0
+    for yaml_file in yaml_files:
+        with open(yaml_file, encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+        if not data:
+            continue
+        source_file = data.get("source", {}).get("file", yaml_file.name)
+        for acct in data.get("accounts", []):
+            activity = acct.get("activity")
+            if not activity:
+                continue
+            for i, txn in enumerate(activity):
+                try:
+                    conn.execute(
+                        """INSERT OR IGNORE INTO fidelity_cma_transactions
+                           (date, type, description, amount, payee, category,
+                            is_transfer, source_file, source_row)
+                           VALUES (?,?,?,?,?,?,?,?,?)""",
+                        (
+                            txn.get("date"),
+                            txn.get("type"),
+                            txn.get("description"),
+                            txn.get("amount"),
+                            txn.get("payee"),
+                            txn.get("category"),
+                            1 if txn.get("is_transfer") else 0,
+                            source_file,
+                            i,
+                        ),
+                    )
+                    if conn.execute("SELECT changes()").fetchone()[0] > 0:
+                        new_cma_txns += 1
+                except Exception:
+                    pass
+
+    conn.commit()
+    print(json.dumps({
+        "new_snapshots": new_snapshots,
+        "new_holdings": new_holdings,
+        "new_cma_transactions": new_cma_txns,
+        "skipped_existing": skipped,
+    }, indent=2))
 
 
 def cmd_status():
@@ -1547,9 +2064,10 @@ def _apply_single_rule(conn, pattern, cat_id):
 def main():
     if len(sys.argv) < 2:
         print("Usage: finance_db.py <command> [args]")
-        print("Commands: init, import, import-amazon, import-payslips, import-tax, status, categorize, categorize-amazon,")
+        print("Commands: init, import, import-amazon, import-payslips, import-tax, import-fidelity, status, categorize, categorize-amazon,")
         print("          uncategorized, add-rule <pattern> <category>,")
-        print("          set-category <id> <category> [--create-rule], query <sql>")
+        print("          set-category <id> <category> [--create-rule], query <sql>,")
+        print("          backup-rules, restore-rules")
         sys.exit(1)
 
     cmd = sys.argv[1]
@@ -1564,6 +2082,8 @@ def main():
         cmd_import_payslips()
     elif cmd == "import-tax":
         cmd_import_tax()
+    elif cmd == "import-fidelity":
+        cmd_import_fidelity()
     elif cmd == "status":
         cmd_status()
     elif cmd == "categorize":
@@ -1583,6 +2103,12 @@ def main():
             sys.exit(1)
         create_rule = "--create-rule" in sys.argv
         cmd_set_category(sys.argv[2], sys.argv[3], create_rule)
+    elif cmd == "validate":
+        cmd_validate()
+    elif cmd == "backup-rules":
+        cmd_backup_rules()
+    elif cmd == "restore-rules":
+        cmd_restore_rules()
     elif cmd == "query":
         if len(sys.argv) < 3:
             print("Usage: finance_db.py query <sql>")
