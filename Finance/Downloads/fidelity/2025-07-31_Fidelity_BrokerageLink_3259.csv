@@ -1,0 +1,18 @@
+Account Type,Account,Beginning mkt Value,Change in Investment,Ending mkt Value,Short Balance,Ending Net Value,Dividends This Period,Dividends Year to Date,Interest This Year,Interest Year to Date,Total This Period,Total Year to Date
+BrokerageLink,652903259,182798.71,3825.32,44324.16,,,,,,,79.53,848.89
+ 
+
+Symbol/CUSIP,Description,Quantity,Price,Beginning Value,Ending Value,Cost Basis
+ 
+
+652903259 
+Stocks 
+AMZN,AMAZON.COM INC ,68.00000,234.11000,61429.20,15919.48,10451.58
+NVDA,NVIDIA CORPORATION COM ,50.02000,177.87000,7902.18,8897.05,2091.14
+TSLA,TESLA INC COM ,40.00000,308.27000,12706.40,12330.80,10469.99
+Subtotal of Stocks,,,,,37147.33,23012.71,,,, 
+
+652903259 
+Core Account 
+FDRXX,FIDELITY GOVERNMENT CASH RESERVES ,7176.83000,1.00000,32359.59,7176.83,not applicable
+Subtotal of Core Account,,,,,7176.83,,,,,

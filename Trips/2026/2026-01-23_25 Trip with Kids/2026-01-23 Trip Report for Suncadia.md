@@ -1,0 +1,5 @@
+
+- Eventually I decided to go to Suncadia with kids.
+- We spent a lot of time in the swimming pools, and the kids loved it.
+- I was very stressed for 3 consecutive days until Friday after we checked in at Suncadia Lodge. We went to the heated pool outside of the lodge and it immediately made me feel relaxed. The next day we again played in the fitness center indoor pool for 2 hours in the morning, where I mostly stayed in the hot tub. In the afternoon we went for a hike to the fish shed, and then the swimming pool again. I bought two new youth swimming goggles for the kids
+- Lessons Learned: I should pack slippers next time we visit Suncadia. The lodge does not have slippers, and it takes a long time for the kids to put on shoes when we were trying to return to the hotel from the outdoor pool.

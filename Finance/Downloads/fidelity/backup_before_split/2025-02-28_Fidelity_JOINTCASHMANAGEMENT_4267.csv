@@ -1,0 +1,17 @@
+Account Type,Account,Beginning mkt Value,Change in Investment,Ending mkt Value,Short Balance,Ending Net Value,Dividends This Period,Dividends Year to Date,Interest This Year,Interest Year to Date,Total This Period,Total Year to Date
+JOINT CASH MANAGEMENT,X91954267,61.67,0.10,61.77,,,,,0.10,0.21,0.10,0.21
+JOINT BROKERAGE,X94666649,133.35,0.41,133.76,,,0.41,0.86,,,0.41,0.86
+ 
+
+Symbol/CUSIP,Description,Quantity,Price,Beginning Value,Ending Value,Cost Basis
+,,,, 
+
+X91954267 
+Core Account 
+QIMHQ,FDIC INSURED DEPOSIT AT JP MORGAN BK NOT COVERED BY SIPC ,61.77000,1.00000,61.67,61.77,
+Subtotal of Core Account,,,,,61.77,,,,,,,,,, 
+
+X94666649 
+Core Account 
+SPAXX,FIDELITY GOVERNMENT MONEY MARKET ,133.76000,1.00000,133.35,133.76,
+Subtotal of Core Account,,,,,133.76,,,,,

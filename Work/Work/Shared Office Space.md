@@ -1,0 +1,5 @@
+- [Issaquah White Board](http://www.meadowcreekbusinesscenter.com/business-solutions/shared-office-space/shared-office/)
+	- $350/month shared desk full time
+	- 10 minutes drive from home
+	- [hot desk](http://www.meadowcreekbusinesscenter.com/business-solutions/shared-office-space/shared-desk/)
+		- $30/day, $160/8 day, $90/4 day, $200/12 day

@@ -1,0 +1,249 @@
+{
+  "main": {
+    "id": "15e4eb4bed559581",
+    "type": "split",
+    "children": [
+      {
+        "id": "37bb4fa43bcbfd41",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "91c973de3984f8c3",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Trips/2025/2025-11-11 Great Wolf Lodge with kids.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
+              },
+              "icon": "lucide-file",
+              "title": "2025-11-11 Great Wolf Lodge with kids"
+            }
+          },
+          {
+            "id": "196dc9cb681dc3df",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.11.7"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.11.7"
+            }
+          }
+        ],
+        "currentTab": 1
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "5252706452ef2776",
+    "type": "split",
+    "children": [
+      {
+        "id": "379253caa6d2f464",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ca05f0aeb7469d68",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "313e3aa8d0aaeb43",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "#drding",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "0750434ad6c43556",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 496.5
+  },
+  "right": {
+    "id": "ae30f84dcdfaa3f7",
+    "type": "split",
+    "children": [
+      {
+        "id": "869219a95f489af4",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "2f9ce9d01ce4a021",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks"
+            }
+          },
+          {
+            "id": "458098b14165ff93",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "lucide-ghost",
+              "title": "outgoing-link"
+            }
+          },
+          {
+            "id": "8a2e5720600a701a",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "3dbcc91344f59033",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {},
+              "icon": "lucide-list",
+              "title": "Outline"
+            }
+          },
+          {
+            "id": "93f1998c9659adb8",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-ghost",
+              "title": "all-properties"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "daily-notes:Open today's daily note": false,
+      "bases:Create new base": false,
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false
+    }
+  },
+  "active": "196dc9cb681dc3df",
+  "lastOpenFiles": [
+    "Trips/2026/2026-04-13_17 Spring Break with Kids/Itinerary.md",
+    "Finance/activity-log.md",
+    "memory/2026-03-01.md",
+    "Trips/2026/2026-04-13_17 Spring Break with Kids/Reservations.md",
+    "Finance/fidelity-accounts",
+    "Finance/credit-card/bofa-atmos-7982",
+    "Projects",
+    "Scripts/venv/lib/python3.14/site-packages/iniconfig-2.3.0.dist-info/licenses",
+    "Scripts/venv/lib/python3.14/site-packages/pygments-2.19.2.dist-info/licenses",
+    "Scripts/venv/lib/python3.14/site-packages/pytest-9.0.2.dist-info/licenses",
+    "Scripts/venv/lib/python3.14/site-packages/pluggy-1.6.0.dist-info/licenses",
+    "Scripts/venv/lib/python3.14/site-packages/pygments/formatters/__pycache__",
+    "Scripts/venv/lib/python3.14/site-packages/_pytest/assertion/__pycache__",
+    "Scripts/venv/lib/python3.14/site-packages/pygments/filters/__pycache__",
+    "memory/topics/spec-learnings.md",
+    "Finance/tax/instruction.md",
+    "memory/2026-02-28.md",
+    "Finance/reports/2025-shopping-breakdown.png",
+    "Finance/reports/2025-food-breakdown.png",
+    "Finance/reports/2025-subcategory-breakdown.png",
+    "Finance/reports/2025-monthly-stacked.png",
+    "Finance/reports/monthly-spending-trend.png",
+    "Finance/reports/top-subcategories.png",
+    "Finance/reports/category-breakdown.png",
+    "Finance/reports/yearly-spending-by-category.png",
+    "memory/2026-02-27.md",
+    "Finance/reports/monthly-spending-by-category-2025.png",
+    "Scripts/venv/lib/python3.14/site-packages/matplotlib/mpl-data/images/matplotlib.svg",
+    "Scripts/venv/lib/python3.14/site-packages/pyparsing/ai/best_practices.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy/random/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/pypdfium2-5.5.0.dist-info/licenses/data/darwin_arm64/BUILD_LICENSES/libjpeg_turbo.md",
+    "Scripts/venv/lib/python3.14/site-packages/pip/_vendor/idna/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/pip-25.3.dist-info/licenses/src/pip/_vendor/idna/LICENSE.md",
+    "Life/Daily/2026/02/2026-02-27.md",
+    "Trips/2026/2026-06_07 [PLAN] Solo Workation - Iceland vs Guatemala/Travel Agent - Domestic Backup.md",
+    "Life/Daily/2026/02/2026-02-26.md",
+    "Trips/2026/2026-12 [PLAN] Solo Trip - Guatemala/notes.md"
+  ]
+}

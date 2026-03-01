@@ -1,0 +1,1325 @@
+{
+  "BrokerageLink Roth_3260": {
+    "account_type": "BrokerageLink Roth",
+    "consistency_issues": [],
+    "files": [
+      {
+        "beginning_balance": 90371.89,
+        "date": "2025-01-31",
+        "ending_balance": 86690.78,
+        "filename": "2025-01-31_Fidelity_BrokerageLinkRoth_3260.csv"
+      },
+      {
+        "beginning_balance": 86690.78,
+        "date": "2025-02-28",
+        "ending_balance": 87652.56,
+        "filename": "2025-02-28_Fidelity_BrokerageLinkRoth_3260.csv"
+      },
+      {
+        "beginning_balance": 87652.56,
+        "date": "2025-03-31",
+        "ending_balance": 83400.73,
+        "filename": "2025-03-31_Fidelity_BrokerageLinkRoth_3260.csv"
+      },
+      {
+        "beginning_balance": 83400.73,
+        "date": "2025-04-30",
+        "ending_balance": 81644.37,
+        "filename": "2025-04-30_Fidelity_BrokerageLinkRoth_3260.csv"
+      },
+      {
+        "beginning_balance": 81644.37,
+        "date": "2025-05-31",
+        "ending_balance": 82943.72,
+        "filename": "2025-05-31_Fidelity_BrokerageLinkRoth_3260.csv"
+      },
+      {
+        "beginning_balance": 82943.72,
+        "date": "2025-06-30",
+        "ending_balance": 86102.02,
+        "filename": "2025-06-30_Fidelity_BrokerageLinkRoth_3260.csv"
+      },
+      {
+        "beginning_balance": 86102.02,
+        "date": "2025-07-31",
+        "ending_balance": 15866.26,
+        "filename": "2025-07-31_Fidelity_BrokerageLinkRoth_3260.csv"
+      },
+      {
+        "beginning_balance": 15866.26,
+        "date": "2025-08-31",
+        "ending_balance": 16679.73,
+        "filename": "2025-08-31_Fidelity_BrokerageLinkRoth_3260.csv"
+      },
+      {
+        "beginning_balance": 16679.73,
+        "date": "2025-09-30",
+        "ending_balance": 20423.02,
+        "filename": "2025-09-30_Fidelity_BrokerageLinkRoth_3260.csv"
+      },
+      {
+        "beginning_balance": 20423.02,
+        "date": "2025-10-31",
+        "ending_balance": 19976.01,
+        "filename": "2025-10-31_Fidelity_BrokerageLinkRoth_3260.csv"
+      }
+    ],
+    "last4": "3260",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-01-31_Fidelity_BrokerageLinkRoth_3260.csv"
+      ],
+      "2025-02-28": [
+        "2025-02-28_Fidelity_BrokerageLinkRoth_3260.csv"
+      ],
+      "2025-03-31": [
+        "2025-03-31_Fidelity_BrokerageLinkRoth_3260.csv"
+      ],
+      "2025-04-30": [
+        "2025-04-30_Fidelity_BrokerageLinkRoth_3260.csv"
+      ],
+      "2025-05-31": [
+        "2025-05-31_Fidelity_BrokerageLinkRoth_3260.csv"
+      ],
+      "2025-06-30": [
+        "2025-06-30_Fidelity_BrokerageLinkRoth_3260.csv"
+      ],
+      "2025-07-31": [
+        "2025-07-31_Fidelity_BrokerageLinkRoth_3260.csv"
+      ],
+      "2025-08-31": [
+        "2025-08-31_Fidelity_BrokerageLinkRoth_3260.csv"
+      ],
+      "2025-09-30": [
+        "2025-09-30_Fidelity_BrokerageLinkRoth_3260.csv"
+      ],
+      "2025-10-31": [
+        "2025-10-31_Fidelity_BrokerageLinkRoth_3260.csv"
+      ]
+    }
+  },
+  "BrokerageLink_3259": {
+    "account_type": "BrokerageLink",
+    "consistency_issues": [
+      {
+        "file": "2025-03-31_Fidelity_BrokerageLink_3259.csv",
+        "file_beginning": 175385.24,
+        "file_date": "2025-03-31",
+        "message": "2025-03-31_Fidelity_BrokerageLink_3259.csv covers months 2025-01-31, 2025-02-28 (first file in sequence, no previous file to verify against)",
+        "months_covered": [
+          "2025-01-31",
+          "2025-02-28"
+        ],
+        "status": "consistent",
+        "type": "multi_month_file_from_start"
+      },
+      {
+        "difference": 0.0,
+        "file": "2025-06-30_Fidelity_BrokerageLink_3259.csv",
+        "file_beginning": 161667.6,
+        "file_date": "2025-06-30",
+        "message": "2025-06-30_Fidelity_BrokerageLink_3259.csv covers months 2025-05-31 (beginning 161,667.60 matches 2025-04-30_Fidelity_BrokerageLink_3259.csv ending 161,667.60)",
+        "months_covered": [
+          "2025-05-31",
+          "2025-04-30"
+        ],
+        "prev_date": "2025-04-30",
+        "prev_ending": 161667.6,
+        "prev_file": "2025-04-30_Fidelity_BrokerageLink_3259.csv",
+        "status": "consistent",
+        "type": "multi_month_file"
+      },
+      {
+        "difference": 0.0,
+        "file": "2025-06-30_Fidelity_BrokerageLink_3259.csv",
+        "file_beginning": 161667.6,
+        "file_date": "2025-06-30",
+        "message": "If 2025-05-31, 2025-04-30 are in 2025-06-30_Fidelity_BrokerageLink_3259.csv, then 2025-04-30_Fidelity_BrokerageLink_3259.csv ending (161,667.60) should equal 2025-06-30_Fidelity_BrokerageLink_3259.csv beginning (161,667.60)",
+        "months_covered": [
+          "2025-05-31",
+          "2025-04-30"
+        ],
+        "prev_date": "2025-04-30",
+        "prev_ending": 161667.6,
+        "prev_file": "2025-04-30_Fidelity_BrokerageLink_3259.csv",
+        "status": "consistent",
+        "type": "multi_month_file"
+      }
+    ],
+    "files": [
+      {
+        "beginning_balance": 175385.24,
+        "date": "2025-03-31",
+        "ending_balance": 162669.54,
+        "filename": "2025-03-31_Fidelity_BrokerageLink_3259.csv"
+      },
+      {
+        "beginning_balance": 162669.54,
+        "date": "2025-04-30",
+        "ending_balance": 161667.6,
+        "filename": "2025-04-30_Fidelity_BrokerageLink_3259.csv"
+      },
+      {
+        "beginning_balance": 161667.6,
+        "date": "2025-06-30",
+        "ending_balance": 182798.71,
+        "filename": "2025-06-30_Fidelity_BrokerageLink_3259.csv"
+      },
+      {
+        "beginning_balance": 182798.71,
+        "date": "2025-07-31",
+        "ending_balance": 44324.16,
+        "filename": "2025-07-31_Fidelity_BrokerageLink_3259.csv"
+      },
+      {
+        "beginning_balance": 44324.16,
+        "date": "2025-08-31",
+        "ending_balance": 44845.99,
+        "filename": "2025-08-31_Fidelity_BrokerageLink_3259.csv"
+      },
+      {
+        "beginning_balance": 44845.99,
+        "date": "2025-09-30",
+        "ending_balance": 45128.41,
+        "filename": "2025-09-30_Fidelity_BrokerageLink_3259.csv"
+      },
+      {
+        "beginning_balance": 45128.41,
+        "date": "2025-10-31",
+        "ending_balance": 47975.38,
+        "filename": "2025-10-31_Fidelity_BrokerageLink_3259.csv"
+      }
+    ],
+    "last4": "3259",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-03-31_Fidelity_BrokerageLink_3259.csv"
+      ],
+      "2025-02-28": [
+        "2025-03-31_Fidelity_BrokerageLink_3259.csv"
+      ],
+      "2025-03-31": [
+        "2025-03-31_Fidelity_BrokerageLink_3259.csv"
+      ],
+      "2025-04-30": [
+        "2025-04-30_Fidelity_BrokerageLink_3259.csv",
+        "2025-06-30_Fidelity_BrokerageLink_3259.csv"
+      ],
+      "2025-05-31": [
+        "2025-06-30_Fidelity_BrokerageLink_3259.csv"
+      ],
+      "2025-06-30": [
+        "2025-06-30_Fidelity_BrokerageLink_3259.csv"
+      ],
+      "2025-07-31": [
+        "2025-07-31_Fidelity_BrokerageLink_3259.csv"
+      ],
+      "2025-08-31": [
+        "2025-08-31_Fidelity_BrokerageLink_3259.csv"
+      ],
+      "2025-09-30": [
+        "2025-09-30_Fidelity_BrokerageLink_3259.csv"
+      ],
+      "2025-10-31": [
+        "2025-10-31_Fidelity_BrokerageLink_3259.csv"
+      ]
+    }
+  },
+  "BrokerageLink_4671": {
+    "account_type": "BrokerageLink",
+    "consistency_issues": [
+      {
+        "file": "2025-03-31_Fidelity_BrokerageLink_4671.csv",
+        "file_beginning": 12306.7,
+        "file_date": "2025-03-31",
+        "message": "2025-03-31_Fidelity_BrokerageLink_4671.csv covers months 2025-01-31, 2025-02-28 (first file in sequence, no previous file to verify against)",
+        "months_covered": [
+          "2025-01-31",
+          "2025-02-28"
+        ],
+        "status": "consistent",
+        "type": "multi_month_file_from_start"
+      },
+      {
+        "difference": 4306.949999999999,
+        "file": "2025-07-31_Fidelity_BrokerageLink_4671.csv",
+        "file_beginning": 14336.97,
+        "file_date": "2025-07-31",
+        "message": "If 2025-05-31, 2025-06-30, 2025-04-30 are in 2025-07-31_Fidelity_BrokerageLink_4671.csv, then 2025-04-30_Fidelity_BrokerageLink_4671.csv ending (10,030.02) should equal 2025-07-31_Fidelity_BrokerageLink_4671.csv beginning (14,336.97)",
+        "months_covered": [
+          "2025-05-31",
+          "2025-06-30",
+          "2025-04-30"
+        ],
+        "prev_date": "2025-04-30",
+        "prev_ending": 10030.02,
+        "prev_file": "2025-04-30_Fidelity_BrokerageLink_4671.csv",
+        "status": "inconsistent",
+        "type": "multi_month_file"
+      },
+      {
+        "difference": 0.0,
+        "file": "2025-09-30_Fidelity_BrokerageLink_4671.csv",
+        "file_beginning": 16128.2,
+        "file_date": "2025-09-30",
+        "message": "2025-09-30_Fidelity_BrokerageLink_4671.csv covers months 2025-08-31 (beginning 16,128.20 matches 2025-07-31_Fidelity_BrokerageLink_4671.csv ending 16,128.20)",
+        "months_covered": [
+          "2025-08-31",
+          "2025-07-31"
+        ],
+        "prev_date": "2025-07-31",
+        "prev_ending": 16128.2,
+        "prev_file": "2025-07-31_Fidelity_BrokerageLink_4671.csv",
+        "status": "consistent",
+        "type": "multi_month_file"
+      },
+      {
+        "difference": 0.0,
+        "file": "2025-09-30_Fidelity_BrokerageLink_4671.csv",
+        "file_beginning": 16128.2,
+        "file_date": "2025-09-30",
+        "message": "If 2025-08-31, 2025-07-31 are in 2025-09-30_Fidelity_BrokerageLink_4671.csv, then 2025-07-31_Fidelity_BrokerageLink_4671.csv ending (16,128.20) should equal 2025-09-30_Fidelity_BrokerageLink_4671.csv beginning (16,128.20)",
+        "months_covered": [
+          "2025-08-31",
+          "2025-07-31"
+        ],
+        "prev_date": "2025-07-31",
+        "prev_ending": 16128.2,
+        "prev_file": "2025-07-31_Fidelity_BrokerageLink_4671.csv",
+        "status": "consistent",
+        "type": "multi_month_file"
+      }
+    ],
+    "files": [
+      {
+        "beginning_balance": 12306.7,
+        "date": "2025-03-31",
+        "ending_balance": 9976.43,
+        "filename": "2025-03-31_Fidelity_BrokerageLink_4671.csv"
+      },
+      {
+        "beginning_balance": 9976.43,
+        "date": "2025-04-30",
+        "ending_balance": 10030.02,
+        "filename": "2025-04-30_Fidelity_BrokerageLink_4671.csv"
+      },
+      {
+        "beginning_balance": 14336.97,
+        "date": "2025-07-31",
+        "ending_balance": 16128.2,
+        "filename": "2025-07-31_Fidelity_BrokerageLink_4671.csv"
+      },
+      {
+        "beginning_balance": 16128.2,
+        "date": "2025-09-30",
+        "ending_balance": 16913.17,
+        "filename": "2025-09-30_Fidelity_BrokerageLink_4671.csv"
+      },
+      {
+        "beginning_balance": 16913.17,
+        "date": "2025-10-31",
+        "ending_balance": 18347.0,
+        "filename": "2025-10-31_Fidelity_BrokerageLink_4671.csv"
+      }
+    ],
+    "last4": "4671",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-03-31_Fidelity_BrokerageLink_4671.csv"
+      ],
+      "2025-02-28": [
+        "2025-03-31_Fidelity_BrokerageLink_4671.csv"
+      ],
+      "2025-03-31": [
+        "2025-03-31_Fidelity_BrokerageLink_4671.csv"
+      ],
+      "2025-04-30": [
+        "2025-04-30_Fidelity_BrokerageLink_4671.csv",
+        "2025-07-31_Fidelity_BrokerageLink_4671.csv"
+      ],
+      "2025-05-31": [
+        "2025-07-31_Fidelity_BrokerageLink_4671.csv"
+      ],
+      "2025-06-30": [
+        "2025-07-31_Fidelity_BrokerageLink_4671.csv"
+      ],
+      "2025-07-31": [
+        "2025-07-31_Fidelity_BrokerageLink_4671.csv",
+        "2025-09-30_Fidelity_BrokerageLink_4671.csv"
+      ],
+      "2025-08-31": [
+        "2025-09-30_Fidelity_BrokerageLink_4671.csv"
+      ],
+      "2025-09-30": [
+        "2025-09-30_Fidelity_BrokerageLink_4671.csv"
+      ],
+      "2025-10-31": [
+        "2025-10-31_Fidelity_BrokerageLink_4671.csv"
+      ]
+    }
+  },
+  "Frozen Laurence UTMA_9437": {
+    "account_type": "Frozen Laurence UTMA",
+    "consistency_issues": [],
+    "files": [
+      {
+        "beginning_balance": 22036.02,
+        "date": "2025-01-31",
+        "ending_balance": 22829.79,
+        "filename": "2025-01-31_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      },
+      {
+        "beginning_balance": 22829.79,
+        "date": "2025-02-28",
+        "ending_balance": 19052.15,
+        "filename": "2025-02-28_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      },
+      {
+        "beginning_balance": 19052.15,
+        "date": "2025-03-31",
+        "ending_balance": 16986.4,
+        "filename": "2025-03-31_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      },
+      {
+        "beginning_balance": 16986.4,
+        "date": "2025-04-30",
+        "ending_balance": 17239.54,
+        "filename": "2025-04-30_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      },
+      {
+        "beginning_balance": 17239.54,
+        "date": "2025-05-31",
+        "ending_balance": 20061.4,
+        "filename": "2025-05-31_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      },
+      {
+        "beginning_balance": 20061.4,
+        "date": "2025-06-30",
+        "ending_balance": 20399.33,
+        "filename": "2025-06-30_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      },
+      {
+        "beginning_balance": 20399.33,
+        "date": "2025-07-31",
+        "ending_balance": 21161.87,
+        "filename": "2025-07-31_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      },
+      {
+        "beginning_balance": 21161.87,
+        "date": "2025-08-31",
+        "ending_balance": 21454.95,
+        "filename": "2025-08-31_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      },
+      {
+        "beginning_balance": 21454.95,
+        "date": "2025-09-30",
+        "ending_balance": 23682.33,
+        "filename": "2025-09-30_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      },
+      {
+        "beginning_balance": 23682.33,
+        "date": "2025-10-31",
+        "ending_balance": 25374.34,
+        "filename": "2025-10-31_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      }
+    ],
+    "last4": "9437",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-01-31_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      ],
+      "2025-02-28": [
+        "2025-02-28_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      ],
+      "2025-03-31": [
+        "2025-03-31_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      ],
+      "2025-04-30": [
+        "2025-04-30_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      ],
+      "2025-05-31": [
+        "2025-05-31_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      ],
+      "2025-06-30": [
+        "2025-06-30_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      ],
+      "2025-07-31": [
+        "2025-07-31_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      ],
+      "2025-08-31": [
+        "2025-08-31_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      ],
+      "2025-09-30": [
+        "2025-09-30_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      ],
+      "2025-10-31": [
+        "2025-10-31_Fidelity_FrozenLaurenceUTMA_9437.csv"
+      ]
+    }
+  },
+  "Frozen Ruby 529_9165": {
+    "account_type": "Frozen Ruby 529",
+    "consistency_issues": [
+      {
+        "file": "2025-06-30_Fidelity_FrozenRuby529_9165.csv",
+        "file_beginning": 18004.6,
+        "file_date": "2025-06-30",
+        "message": "2025-06-30_Fidelity_FrozenRuby529_9165.csv covers months 2025-01-31, 2025-02-28, 2025-03-31, 2025-04-30, 2025-05-31 (first file in sequence, no previous file to verify against)",
+        "months_covered": [
+          "2025-01-31",
+          "2025-02-28",
+          "2025-03-31",
+          "2025-04-30",
+          "2025-05-31"
+        ],
+        "status": "consistent",
+        "type": "multi_month_file_from_start"
+      },
+      {
+        "difference": 0.0,
+        "file": "2025-09-30_Fidelity_FrozenRuby529_9165.csv",
+        "file_beginning": 20087.12,
+        "file_date": "2025-09-30",
+        "message": "2025-09-30_Fidelity_FrozenRuby529_9165.csv covers months 2025-07-31, 2025-08-31 (beginning 20,087.12 matches 2025-06-30_Fidelity_FrozenRuby529_9165.csv ending 20,087.12)",
+        "months_covered": [
+          "2025-07-31",
+          "2025-08-31",
+          "2025-06-30"
+        ],
+        "prev_date": "2025-06-30",
+        "prev_ending": 20087.12,
+        "prev_file": "2025-06-30_Fidelity_FrozenRuby529_9165.csv",
+        "status": "consistent",
+        "type": "multi_month_file"
+      },
+      {
+        "difference": 0.0,
+        "file": "2025-09-30_Fidelity_FrozenRuby529_9165.csv",
+        "file_beginning": 20087.12,
+        "file_date": "2025-09-30",
+        "message": "If 2025-07-31, 2025-08-31, 2025-06-30 are in 2025-09-30_Fidelity_FrozenRuby529_9165.csv, then 2025-06-30_Fidelity_FrozenRuby529_9165.csv ending (20,087.12) should equal 2025-09-30_Fidelity_FrozenRuby529_9165.csv beginning (20,087.12)",
+        "months_covered": [
+          "2025-07-31",
+          "2025-08-31",
+          "2025-06-30"
+        ],
+        "prev_date": "2025-06-30",
+        "prev_ending": 20087.12,
+        "prev_file": "2025-06-30_Fidelity_FrozenRuby529_9165.csv",
+        "status": "consistent",
+        "type": "multi_month_file"
+      }
+    ],
+    "files": [
+      {
+        "beginning_balance": 18004.6,
+        "date": "2025-06-30",
+        "ending_balance": 20087.12,
+        "filename": "2025-06-30_Fidelity_FrozenRuby529_9165.csv"
+      },
+      {
+        "beginning_balance": 20087.12,
+        "date": "2025-09-30",
+        "ending_balance": 21664.38,
+        "filename": "2025-09-30_Fidelity_FrozenRuby529_9165.csv"
+      }
+    ],
+    "last4": "9165",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-06-30_Fidelity_FrozenRuby529_9165.csv"
+      ],
+      "2025-02-28": [
+        "2025-06-30_Fidelity_FrozenRuby529_9165.csv"
+      ],
+      "2025-03-31": [
+        "2025-06-30_Fidelity_FrozenRuby529_9165.csv"
+      ],
+      "2025-04-30": [
+        "2025-06-30_Fidelity_FrozenRuby529_9165.csv"
+      ],
+      "2025-05-31": [
+        "2025-06-30_Fidelity_FrozenRuby529_9165.csv"
+      ],
+      "2025-06-30": [
+        "2025-06-30_Fidelity_FrozenRuby529_9165.csv",
+        "2025-09-30_Fidelity_FrozenRuby529_9165.csv"
+      ],
+      "2025-07-31": [
+        "2025-09-30_Fidelity_FrozenRuby529_9165.csv"
+      ],
+      "2025-08-31": [
+        "2025-09-30_Fidelity_FrozenRuby529_9165.csv"
+      ],
+      "2025-09-30": [
+        "2025-09-30_Fidelity_FrozenRuby529_9165.csv"
+      ]
+    }
+  },
+  "Frozen Ruby UTMA_2753": {
+    "account_type": "Frozen Ruby UTMA",
+    "consistency_issues": [],
+    "files": [
+      {
+        "beginning_balance": 22056.73,
+        "date": "2025-01-31",
+        "ending_balance": 22850.59,
+        "filename": "2025-01-31_Fidelity_FrozenRubyUTMA_2753.csv"
+      },
+      {
+        "beginning_balance": 22850.59,
+        "date": "2025-02-28",
+        "ending_balance": 19073.01,
+        "filename": "2025-02-28_Fidelity_FrozenRubyUTMA_2753.csv"
+      },
+      {
+        "beginning_balance": 19073.01,
+        "date": "2025-03-31",
+        "ending_balance": 17007.33,
+        "filename": "2025-03-31_Fidelity_FrozenRubyUTMA_2753.csv"
+      },
+      {
+        "beginning_balance": 17007.33,
+        "date": "2025-04-30",
+        "ending_balance": 17263.1,
+        "filename": "2025-04-30_Fidelity_FrozenRubyUTMA_2753.csv"
+      },
+      {
+        "beginning_balance": 17263.1,
+        "date": "2025-05-31",
+        "ending_balance": 20086.47,
+        "filename": "2025-05-31_Fidelity_FrozenRubyUTMA_2753.csv"
+      },
+      {
+        "beginning_balance": 20086.47,
+        "date": "2025-06-30",
+        "ending_balance": 20425.69,
+        "filename": "2025-06-30_Fidelity_FrozenRubyUTMA_2753.csv"
+      },
+      {
+        "beginning_balance": 20425.69,
+        "date": "2025-07-31",
+        "ending_balance": 21188.9,
+        "filename": "2025-07-31_Fidelity_FrozenRubyUTMA_2753.csv"
+      },
+      {
+        "beginning_balance": 21188.9,
+        "date": "2025-08-31",
+        "ending_balance": 21482.59,
+        "filename": "2025-08-31_Fidelity_FrozenRubyUTMA_2753.csv"
+      },
+      {
+        "beginning_balance": 21482.59,
+        "date": "2025-09-30",
+        "ending_balance": 23710.93,
+        "filename": "2025-09-30_Fidelity_FrozenRubyUTMA_2753.csv"
+      },
+      {
+        "beginning_balance": 23710.93,
+        "date": "2025-10-31",
+        "ending_balance": 25403.56,
+        "filename": "2025-10-31_Fidelity_FrozenRubyUTMA_2753.csv"
+      }
+    ],
+    "last4": "2753",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-01-31_Fidelity_FrozenRubyUTMA_2753.csv"
+      ],
+      "2025-02-28": [
+        "2025-02-28_Fidelity_FrozenRubyUTMA_2753.csv"
+      ],
+      "2025-03-31": [
+        "2025-03-31_Fidelity_FrozenRubyUTMA_2753.csv"
+      ],
+      "2025-04-30": [
+        "2025-04-30_Fidelity_FrozenRubyUTMA_2753.csv"
+      ],
+      "2025-05-31": [
+        "2025-05-31_Fidelity_FrozenRubyUTMA_2753.csv"
+      ],
+      "2025-06-30": [
+        "2025-06-30_Fidelity_FrozenRubyUTMA_2753.csv"
+      ],
+      "2025-07-31": [
+        "2025-07-31_Fidelity_FrozenRubyUTMA_2753.csv"
+      ],
+      "2025-08-31": [
+        "2025-08-31_Fidelity_FrozenRubyUTMA_2753.csv"
+      ],
+      "2025-09-30": [
+        "2025-09-30_Fidelity_FrozenRubyUTMA_2753.csv"
+      ],
+      "2025-10-31": [
+        "2025-10-31_Fidelity_FrozenRubyUTMA_2753.csv"
+      ]
+    }
+  },
+  "JOINT BROKERAGE_6649": {
+    "account_type": "JOINT BROKERAGE",
+    "consistency_issues": [],
+    "files": [
+      {
+        "beginning_balance": 132.9,
+        "date": "2025-01-31",
+        "ending_balance": 133.35,
+        "filename": "2025-01-31_Fidelity_JOINTBROKERAGE_6649.csv"
+      },
+      {
+        "beginning_balance": 133.35,
+        "date": "2025-02-28",
+        "ending_balance": 133.76,
+        "filename": "2025-02-28_Fidelity_JOINTBROKERAGE_6649.csv"
+      },
+      {
+        "beginning_balance": 133.76,
+        "date": "2025-03-31",
+        "ending_balance": 134.21,
+        "filename": "2025-03-31_Fidelity_JOINTBROKERAGE_6649.csv"
+      },
+      {
+        "beginning_balance": 134.21,
+        "date": "2025-04-30",
+        "ending_balance": 134.65,
+        "filename": "2025-04-30_Fidelity_JOINTBROKERAGE_6649.csv"
+      },
+      {
+        "beginning_balance": 134.65,
+        "date": "2025-05-31",
+        "ending_balance": 0.16,
+        "filename": "2025-05-31_Fidelity_JOINTBROKERAGE_6649.csv"
+      },
+      {
+        "beginning_balance": 0.16,
+        "date": "2025-06-30",
+        "ending_balance": 0.0,
+        "filename": "2025-06-30_Fidelity_JOINTBROKERAGE_6649.csv"
+      }
+    ],
+    "last4": "6649",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-01-31_Fidelity_JOINTBROKERAGE_6649.csv"
+      ],
+      "2025-02-28": [
+        "2025-02-28_Fidelity_JOINTBROKERAGE_6649.csv"
+      ],
+      "2025-03-31": [
+        "2025-03-31_Fidelity_JOINTBROKERAGE_6649.csv"
+      ],
+      "2025-04-30": [
+        "2025-04-30_Fidelity_JOINTBROKERAGE_6649.csv"
+      ],
+      "2025-05-31": [
+        "2025-05-31_Fidelity_JOINTBROKERAGE_6649.csv"
+      ],
+      "2025-06-30": [
+        "2025-06-30_Fidelity_JOINTBROKERAGE_6649.csv"
+      ]
+    }
+  },
+  "ROTH IRA_3354": {
+    "account_type": "ROTH IRA",
+    "consistency_issues": [],
+    "files": [
+      {
+        "beginning_balance": 6786.77,
+        "date": "2025-01-31",
+        "ending_balance": 6993.34,
+        "filename": "2025-01-31_Fidelity_ROTHIRA_3354.csv"
+      },
+      {
+        "beginning_balance": 6993.34,
+        "date": "2025-02-28",
+        "ending_balance": 6863.41,
+        "filename": "2025-02-28_Fidelity_ROTHIRA_3354.csv"
+      },
+      {
+        "beginning_balance": 6863.41,
+        "date": "2025-03-31",
+        "ending_balance": 14362.54,
+        "filename": "2025-03-31_Fidelity_ROTHIRA_3354.csv"
+      },
+      {
+        "beginning_balance": 14362.54,
+        "date": "2025-04-30",
+        "ending_balance": 14259.72,
+        "filename": "2025-04-30_Fidelity_ROTHIRA_3354.csv"
+      },
+      {
+        "beginning_balance": 14259.72,
+        "date": "2025-05-31",
+        "ending_balance": 0.0,
+        "filename": "2025-05-31_Fidelity_ROTHIRA_3354.csv"
+      }
+    ],
+    "last4": "3354",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-01-31_Fidelity_ROTHIRA_3354.csv"
+      ],
+      "2025-02-28": [
+        "2025-02-28_Fidelity_ROTHIRA_3354.csv"
+      ],
+      "2025-03-31": [
+        "2025-03-31_Fidelity_ROTHIRA_3354.csv"
+      ],
+      "2025-04-30": [
+        "2025-04-30_Fidelity_ROTHIRA_3354.csv"
+      ],
+      "2025-05-31": [
+        "2025-05-31_Fidelity_ROTHIRA_3354.csv"
+      ]
+    }
+  },
+  "Self-Employed 401K_9729": {
+    "account_type": "Self-Employed 401K",
+    "consistency_issues": [],
+    "files": [
+      {
+        "beginning_balance": 2187.31,
+        "date": "2025-01-31",
+        "ending_balance": 2254.31,
+        "filename": "2025-01-31_Fidelity_Self_Employed401K_9729.csv"
+      },
+      {
+        "beginning_balance": 2254.31,
+        "date": "2025-02-28",
+        "ending_balance": 2211.72,
+        "filename": "2025-02-28_Fidelity_Self_Employed401K_9729.csv"
+      },
+      {
+        "beginning_balance": 2211.72,
+        "date": "2025-03-31",
+        "ending_balance": 2080.7,
+        "filename": "2025-03-31_Fidelity_Self_Employed401K_9729.csv"
+      },
+      {
+        "beginning_balance": 2080.7,
+        "date": "2025-04-30",
+        "ending_balance": 2066.49,
+        "filename": "2025-04-30_Fidelity_Self_Employed401K_9729.csv"
+      },
+      {
+        "beginning_balance": 2066.49,
+        "date": "2025-05-31",
+        "ending_balance": 2198.83,
+        "filename": "2025-05-31_Fidelity_Self_Employed401K_9729.csv"
+      },
+      {
+        "beginning_balance": 2198.83,
+        "date": "2025-06-30",
+        "ending_balance": 2311.48,
+        "filename": "2025-06-30_Fidelity_Self_Employed401K_9729.csv"
+      },
+      {
+        "beginning_balance": 2311.48,
+        "date": "2025-07-31",
+        "ending_balance": 2364.15,
+        "filename": "2025-07-31_Fidelity_Self_Employed401K_9729.csv"
+      },
+      {
+        "beginning_balance": 2364.15,
+        "date": "2025-08-31",
+        "ending_balance": 2417.89,
+        "filename": "2025-08-31_Fidelity_Self_Employed401K_9729.csv"
+      },
+      {
+        "beginning_balance": 2417.89,
+        "date": "2025-09-30",
+        "ending_balance": 2501.37,
+        "filename": "2025-09-30_Fidelity_Self_Employed401K_9729.csv"
+      },
+      {
+        "beginning_balance": 2501.37,
+        "date": "2025-10-31",
+        "ending_balance": 2556.34,
+        "filename": "2025-10-31_Fidelity_Self_Employed401K_9729.csv"
+      }
+    ],
+    "last4": "9729",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-01-31_Fidelity_Self_Employed401K_9729.csv"
+      ],
+      "2025-02-28": [
+        "2025-02-28_Fidelity_Self_Employed401K_9729.csv"
+      ],
+      "2025-03-31": [
+        "2025-03-31_Fidelity_Self_Employed401K_9729.csv"
+      ],
+      "2025-04-30": [
+        "2025-04-30_Fidelity_Self_Employed401K_9729.csv"
+      ],
+      "2025-05-31": [
+        "2025-05-31_Fidelity_Self_Employed401K_9729.csv"
+      ],
+      "2025-06-30": [
+        "2025-06-30_Fidelity_Self_Employed401K_9729.csv"
+      ],
+      "2025-07-31": [
+        "2025-07-31_Fidelity_Self_Employed401K_9729.csv"
+      ],
+      "2025-08-31": [
+        "2025-08-31_Fidelity_Self_Employed401K_9729.csv"
+      ],
+      "2025-09-30": [
+        "2025-09-30_Fidelity_Self_Employed401K_9729.csv"
+      ],
+      "2025-10-31": [
+        "2025-10-31_Fidelity_Self_Employed401K_9729.csv"
+      ]
+    }
+  },
+  "Traditional IRA_9024": {
+    "account_type": "Traditional IRA",
+    "consistency_issues": [],
+    "files": [
+      {
+        "beginning_balance": 3.26,
+        "date": "2025-01-31",
+        "ending_balance": 3.27,
+        "filename": "2025-01-31_Fidelity_TraditionalIRA_9024.csv"
+      },
+      {
+        "beginning_balance": 3.27,
+        "date": "2025-02-28",
+        "ending_balance": 3.28,
+        "filename": "2025-02-28_Fidelity_TraditionalIRA_9024.csv"
+      },
+      {
+        "beginning_balance": 3.28,
+        "date": "2025-03-31",
+        "ending_balance": 0.88,
+        "filename": "2025-03-31_Fidelity_TraditionalIRA_9024.csv"
+      },
+      {
+        "beginning_balance": 0.88,
+        "date": "2025-04-30",
+        "ending_balance": 0.0,
+        "filename": "2025-04-30_Fidelity_TraditionalIRA_9024.csv"
+      }
+    ],
+    "last4": "9024",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-01-31_Fidelity_TraditionalIRA_9024.csv"
+      ],
+      "2025-02-28": [
+        "2025-02-28_Fidelity_TraditionalIRA_9024.csv"
+      ],
+      "2025-03-31": [
+        "2025-03-31_Fidelity_TraditionalIRA_9024.csv"
+      ],
+      "2025-04-30": [
+        "2025-04-30_Fidelity_TraditionalIRA_9024.csv"
+      ]
+    }
+  },
+  "YI CHEN INDIVIDUAL - TOD_0887": {
+    "account_type": "YI CHEN INDIVIDUAL - TOD",
+    "consistency_issues": [
+      {
+        "difference": 0.0,
+        "file": "2025-09-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv",
+        "file_beginning": 0.0,
+        "file_date": "2025-09-30",
+        "message": "2025-09-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv covers months 2025-08-31 (beginning 0.00 matches 2025-07-31_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv ending 0.00)",
+        "months_covered": [
+          "2025-08-31",
+          "2025-07-31"
+        ],
+        "prev_date": "2025-07-31",
+        "prev_ending": 0.0,
+        "prev_file": "2025-07-31_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv",
+        "status": "consistent",
+        "type": "multi_month_file"
+      },
+      {
+        "difference": 0.0,
+        "file": "2025-09-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv",
+        "file_beginning": 0.0,
+        "file_date": "2025-09-30",
+        "message": "If 2025-08-31, 2025-07-31 are in 2025-09-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv, then 2025-07-31_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv ending (0.00) should equal 2025-09-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv beginning (0.00)",
+        "months_covered": [
+          "2025-08-31",
+          "2025-07-31"
+        ],
+        "prev_date": "2025-07-31",
+        "prev_ending": 0.0,
+        "prev_file": "2025-07-31_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv",
+        "status": "consistent",
+        "type": "multi_month_file"
+      }
+    ],
+    "files": [
+      {
+        "beginning_balance": 1097903.17,
+        "date": "2025-01-31",
+        "ending_balance": 1111824.09,
+        "filename": "2025-01-31_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      },
+      {
+        "beginning_balance": 1111824.09,
+        "date": "2025-02-28",
+        "ending_balance": 1141936.97,
+        "filename": "2025-02-28_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      },
+      {
+        "beginning_balance": 1141936.97,
+        "date": "2025-03-31",
+        "ending_balance": 1037153.52,
+        "filename": "2025-03-31_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      },
+      {
+        "beginning_balance": 1037153.52,
+        "date": "2025-04-30",
+        "ending_balance": 1045258.03,
+        "filename": "2025-04-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      },
+      {
+        "beginning_balance": 1045258.03,
+        "date": "2025-05-31",
+        "ending_balance": 252.52,
+        "filename": "2025-05-31_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      },
+      {
+        "beginning_balance": 252.52,
+        "date": "2025-06-30",
+        "ending_balance": 0.02,
+        "filename": "2025-06-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      },
+      {
+        "beginning_balance": 0.02,
+        "date": "2025-07-31",
+        "ending_balance": 0.0,
+        "filename": "2025-07-31_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      },
+      {
+        "beginning_balance": 0.0,
+        "date": "2025-09-30",
+        "ending_balance": 0.0,
+        "filename": "2025-09-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      }
+    ],
+    "last4": "0887",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-01-31_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      ],
+      "2025-02-28": [
+        "2025-02-28_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      ],
+      "2025-03-31": [
+        "2025-03-31_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      ],
+      "2025-04-30": [
+        "2025-04-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      ],
+      "2025-05-31": [
+        "2025-05-31_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      ],
+      "2025-06-30": [
+        "2025-06-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      ],
+      "2025-07-31": [
+        "2025-07-31_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv",
+        "2025-09-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      ],
+      "2025-08-31": [
+        "2025-09-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      ],
+      "2025-09-30": [
+        "2025-09-30_Fidelity_YICHENINDIVIDUAL_TOD_0887.csv"
+      ]
+    }
+  },
+  "YI CHEN ROTH IRA_8097": {
+    "account_type": "YI CHEN ROTH IRA",
+    "consistency_issues": [],
+    "files": [
+      {
+        "beginning_balance": 818294.79,
+        "date": "2025-01-31",
+        "ending_balance": 809879.61,
+        "filename": "2025-01-31_Fidelity_YICHENROTHIRA_8097.csv"
+      },
+      {
+        "beginning_balance": 809879.61,
+        "date": "2025-02-28",
+        "ending_balance": 791061.79,
+        "filename": "2025-02-28_Fidelity_YICHENROTHIRA_8097.csv"
+      },
+      {
+        "beginning_balance": 791061.79,
+        "date": "2025-03-31",
+        "ending_balance": 737296.38,
+        "filename": "2025-03-31_Fidelity_YICHENROTHIRA_8097.csv"
+      },
+      {
+        "beginning_balance": 737296.38,
+        "date": "2025-04-30",
+        "ending_balance": 730733.0,
+        "filename": "2025-04-30_Fidelity_YICHENROTHIRA_8097.csv"
+      },
+      {
+        "beginning_balance": 730733.0,
+        "date": "2025-05-31",
+        "ending_balance": 779976.07,
+        "filename": "2025-05-31_Fidelity_YICHENROTHIRA_8097.csv"
+      },
+      {
+        "beginning_balance": 779976.07,
+        "date": "2025-06-30",
+        "ending_balance": 811514.91,
+        "filename": "2025-06-30_Fidelity_YICHENROTHIRA_8097.csv"
+      },
+      {
+        "beginning_balance": 811514.91,
+        "date": "2025-07-31",
+        "ending_balance": 840579.4,
+        "filename": "2025-07-31_Fidelity_YICHENROTHIRA_8097.csv"
+      },
+      {
+        "beginning_balance": 840579.4,
+        "date": "2025-08-31",
+        "ending_balance": 877039.32,
+        "filename": "2025-08-31_Fidelity_YICHENROTHIRA_8097.csv"
+      },
+      {
+        "beginning_balance": 877039.32,
+        "date": "2025-09-30",
+        "ending_balance": 931752.87,
+        "filename": "2025-09-30_Fidelity_YICHENROTHIRA_8097.csv"
+      },
+      {
+        "beginning_balance": 931752.87,
+        "date": "2025-10-31",
+        "ending_balance": 970891.81,
+        "filename": "2025-10-31_Fidelity_YICHENROTHIRA_8097.csv"
+      }
+    ],
+    "last4": "8097",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-01-31_Fidelity_YICHENROTHIRA_8097.csv"
+      ],
+      "2025-02-28": [
+        "2025-02-28_Fidelity_YICHENROTHIRA_8097.csv"
+      ],
+      "2025-03-31": [
+        "2025-03-31_Fidelity_YICHENROTHIRA_8097.csv"
+      ],
+      "2025-04-30": [
+        "2025-04-30_Fidelity_YICHENROTHIRA_8097.csv"
+      ],
+      "2025-05-31": [
+        "2025-05-31_Fidelity_YICHENROTHIRA_8097.csv"
+      ],
+      "2025-06-30": [
+        "2025-06-30_Fidelity_YICHENROTHIRA_8097.csv"
+      ],
+      "2025-07-31": [
+        "2025-07-31_Fidelity_YICHENROTHIRA_8097.csv"
+      ],
+      "2025-08-31": [
+        "2025-08-31_Fidelity_YICHENROTHIRA_8097.csv"
+      ],
+      "2025-09-30": [
+        "2025-09-30_Fidelity_YICHENROTHIRA_8097.csv"
+      ],
+      "2025-10-31": [
+        "2025-10-31_Fidelity_YICHENROTHIRA_8097.csv"
+      ]
+    }
+  },
+  "Yi Chen Invest 2025_9340": {
+    "account_type": "Yi Chen Invest 2025",
+    "consistency_issues": [
+      {
+        "file": "2025-05-31_Fidelity_YiChenInvest2025_9340.csv",
+        "file_beginning": 0.0,
+        "file_date": "2025-05-31",
+        "message": "2025-05-31_Fidelity_YiChenInvest2025_9340.csv covers months 2025-01-31, 2025-02-28, 2025-03-31, 2025-04-30 (first file in sequence, no previous file to verify against)",
+        "months_covered": [
+          "2025-01-31",
+          "2025-02-28",
+          "2025-03-31",
+          "2025-04-30"
+        ],
+        "status": "consistent",
+        "type": "multi_month_file_from_start"
+      }
+    ],
+    "files": [
+      {
+        "beginning_balance": 0.0,
+        "date": "2025-05-31",
+        "ending_balance": 100.17,
+        "filename": "2025-05-31_Fidelity_YiChenInvest2025_9340.csv"
+      },
+      {
+        "beginning_balance": 100.17,
+        "date": "2025-06-30",
+        "ending_balance": 100.49,
+        "filename": "2025-06-30_Fidelity_YiChenInvest2025_9340.csv"
+      },
+      {
+        "beginning_balance": 100.49,
+        "date": "2025-07-31",
+        "ending_balance": 100.83,
+        "filename": "2025-07-31_Fidelity_YiChenInvest2025_9340.csv"
+      },
+      {
+        "beginning_balance": 100.83,
+        "date": "2025-08-31",
+        "ending_balance": 102.25,
+        "filename": "2025-08-31_Fidelity_YiChenInvest2025_9340.csv"
+      },
+      {
+        "beginning_balance": 102.25,
+        "date": "2025-09-30",
+        "ending_balance": 102.58,
+        "filename": "2025-09-30_Fidelity_YiChenInvest2025_9340.csv"
+      },
+      {
+        "beginning_balance": 102.58,
+        "date": "2025-10-31",
+        "ending_balance": 102.91,
+        "filename": "2025-10-31_Fidelity_YiChenInvest2025_9340.csv"
+      }
+    ],
+    "last4": "9340",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-05-31_Fidelity_YiChenInvest2025_9340.csv"
+      ],
+      "2025-02-28": [
+        "2025-05-31_Fidelity_YiChenInvest2025_9340.csv"
+      ],
+      "2025-03-31": [
+        "2025-05-31_Fidelity_YiChenInvest2025_9340.csv"
+      ],
+      "2025-04-30": [
+        "2025-05-31_Fidelity_YiChenInvest2025_9340.csv"
+      ],
+      "2025-05-31": [
+        "2025-05-31_Fidelity_YiChenInvest2025_9340.csv"
+      ],
+      "2025-06-30": [
+        "2025-06-30_Fidelity_YiChenInvest2025_9340.csv"
+      ],
+      "2025-07-31": [
+        "2025-07-31_Fidelity_YiChenInvest2025_9340.csv"
+      ],
+      "2025-08-31": [
+        "2025-08-31_Fidelity_YiChenInvest2025_9340.csv"
+      ],
+      "2025-09-30": [
+        "2025-09-30_Fidelity_YiChenInvest2025_9340.csv"
+      ],
+      "2025-10-31": [
+        "2025-10-31_Fidelity_YiChenInvest2025_9340.csv"
+      ]
+    }
+  },
+  "Yi's Individual CMA_4983": {
+    "account_type": "Yi's Individual CMA",
+    "consistency_issues": [],
+    "files": [
+      {
+        "beginning_balance": 42547.67,
+        "date": "2025-01-31",
+        "ending_balance": 20258.03,
+        "filename": "2025-01-31_Fidelity_Yi'sIndividualCMA_4983.csv"
+      },
+      {
+        "beginning_balance": 20258.03,
+        "date": "2025-02-28",
+        "ending_balance": 16985.84,
+        "filename": "2025-02-28_Fidelity_Yi'sIndividualCMA_4983.csv"
+      },
+      {
+        "beginning_balance": 16985.84,
+        "date": "2025-03-31",
+        "ending_balance": 17976.27,
+        "filename": "2025-03-31_Fidelity_Yi'sIndividualCMA_4983.csv"
+      },
+      {
+        "beginning_balance": 17976.27,
+        "date": "2025-04-30",
+        "ending_balance": 42529.01,
+        "filename": "2025-04-30_Fidelity_Yi'sIndividualCMA_4983.csv"
+      },
+      {
+        "beginning_balance": 42529.01,
+        "date": "2025-05-31",
+        "ending_balance": 53827.88,
+        "filename": "2025-05-31_Fidelity_Yi'sIndividualCMA_4983.csv"
+      },
+      {
+        "beginning_balance": 53827.88,
+        "date": "2025-06-30",
+        "ending_balance": 40164.39,
+        "filename": "2025-06-30_Fidelity_Yi'sIndividualCMA_4983.csv"
+      },
+      {
+        "beginning_balance": 40164.39,
+        "date": "2025-07-31",
+        "ending_balance": 21049.65,
+        "filename": "2025-07-31_Fidelity_Yi'sIndividualCMA_4983.csv"
+      },
+      {
+        "beginning_balance": 21049.65,
+        "date": "2025-08-31",
+        "ending_balance": 4108.3,
+        "filename": "2025-08-31_Fidelity_Yi'sIndividualCMA_4983.csv"
+      },
+      {
+        "beginning_balance": 4108.3,
+        "date": "2025-09-30",
+        "ending_balance": 17569.98,
+        "filename": "2025-09-30_Fidelity_Yi'sIndividualCMA_4983.csv"
+      },
+      {
+        "beginning_balance": 17569.98,
+        "date": "2025-10-31",
+        "ending_balance": 10935.19,
+        "filename": "2025-10-31_Fidelity_Yi'sIndividualCMA_4983.csv"
+      }
+    ],
+    "last4": "4983",
+    "month_to_files": {
+      "2025-01-31": [
+        "2025-01-31_Fidelity_Yi'sIndividualCMA_4983.csv"
+      ],
+      "2025-02-28": [
+        "2025-02-28_Fidelity_Yi'sIndividualCMA_4983.csv"
+      ],
+      "2025-03-31": [
+        "2025-03-31_Fidelity_Yi'sIndividualCMA_4983.csv"
+      ],
+      "2025-04-30": [
+        "2025-04-30_Fidelity_Yi'sIndividualCMA_4983.csv"
+      ],
+      "2025-05-31": [
+        "2025-05-31_Fidelity_Yi'sIndividualCMA_4983.csv"
+      ],
+      "2025-06-30": [
+        "2025-06-30_Fidelity_Yi'sIndividualCMA_4983.csv"
+      ],
+      "2025-07-31": [
+        "2025-07-31_Fidelity_Yi'sIndividualCMA_4983.csv"
+      ],
+      "2025-08-31": [
+        "2025-08-31_Fidelity_Yi'sIndividualCMA_4983.csv"
+      ],
+      "2025-09-30": [
+        "2025-09-30_Fidelity_Yi'sIndividualCMA_4983.csv"
+      ],
+      "2025-10-31": [
+        "2025-10-31_Fidelity_Yi'sIndividualCMA_4983.csv"
+      ]
+    }
+  }
+}

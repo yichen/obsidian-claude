@@ -1,0 +1,26 @@
+# Cursor Rules for Obsidian Vault
+
+## Primary Instruction File
+
+**ALWAYS read `/Users/chen.y/Obsidian/CLAUDE.md` FIRST before starting any task or answering any question.**
+
+The `CLAUDE.md` file at the root of this vault is the **SINGLE SOURCE OF TRUTH** for:
+- Project context and structure
+- Key information and preferences
+- Search strategies and workflows
+- Folder-specific instructions (via references to subfolder CLAUDE.md files)
+
+## Workflow
+
+1. **Always start by reading** `CLAUDE.md` to understand context
+2. **Reference subfolder instructions** when working in specific directories:
+   - `Trips/CLAUDE.md` for travel-related queries
+   - `Children/CLAUDE.md` for children-related queries
+3. **Do not maintain duplicate context files** - only use the CLAUDE.md files
+
+## Key Principles
+
+- Use `CLAUDE.md` as the entry point for all context
+- Follow the search strategies outlined in `CLAUDE.md`
+- Respect the folder structure and organization patterns described in `CLAUDE.md`
+

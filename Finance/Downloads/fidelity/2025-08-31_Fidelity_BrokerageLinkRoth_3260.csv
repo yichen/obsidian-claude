@@ -1,0 +1,17 @@
+Account Type,Account,Beginning mkt Value,Change in Investment,Ending mkt Value,Short Balance,Ending Net Value,Dividends This Period,Dividends Year to Date,Interest This Year,Interest Year to Date,Total This Period,Total Year to Date
+BrokerageLink Roth,652903260,15866.26,813.47,16679.73,,,,,,,13.46,730.34
+ 
+
+Symbol/CUSIP,Description,Quantity,Price,Beginning Value,Ending Value,Cost Basis
+ 
+
+652903260 
+Stocks 
+BABA,ALIBABA GROUP HOLDING LTD SPON ADS EACH REP 8 ORD SHS ,60.29900,135.00000,7273.86,8140.36,7498.10
+NVDA,NVIDIA CORPORATION COM ,20.00300,174.18000,3557.93,3484.12,2378.80
+Subtotal of Stocks,,,,,11624.48,9876.90,,,, 
+
+652903260 
+Core Account 
+FDRXX,FIDELITY GOVERNMENT CASH RESERVES ,5055.25000,1.00000,129.37,5055.25,not applicable
+Subtotal of Core Account,,,,,5055.25,,,,,

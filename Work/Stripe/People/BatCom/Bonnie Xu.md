@@ -1,0 +1,4 @@
+- Joined June 2021
+- Ex-Google, Ex-Facebook
+- Questions to ask:
+	- I saw your response to some question mentioned using Sentry to exceptions. How does Sentry work? Do we push all exceptions to Sentry? Can Sentry provide an API to allow us to aggregate?

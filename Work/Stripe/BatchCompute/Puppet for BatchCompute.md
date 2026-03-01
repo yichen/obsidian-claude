@@ -1,0 +1,2 @@
+- [Puppet for Stripe](https://confluence.corp.stripe.com/display/OS/Puppet)
+- 

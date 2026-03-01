@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.alltrails.com)",
+      "WebFetch(domain:www.google.com)",
+      "WebFetch(domain:www.hawaii-guide.com)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

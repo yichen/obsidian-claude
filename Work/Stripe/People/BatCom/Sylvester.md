@@ -1,0 +1,2 @@
+- What has Yashiyah been working on lately?
+	- [BATCOM-1672](https://jira.corp.stripe.com/browse/BATCOM-1672): right now we only pass a subset of metrics to spark.application_history, spark.task_history, spark.stage_history, and spark.job_history. It would be great if we can pass in all of them.

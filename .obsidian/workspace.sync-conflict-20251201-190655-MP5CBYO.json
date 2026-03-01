@@ -1,0 +1,228 @@
+{
+  "main": {
+    "id": "d31f1cddb85cad4f",
+    "type": "split",
+    "children": [
+      {
+        "id": "6ceb0a8a9f6ef684",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "0aa4e549e95ee9b6",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Health/2025/2025-09-05-ER-leg-pain.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2025-09-05-ER-leg-pain"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "930fb5c8d2b214a4",
+    "type": "split",
+    "children": [
+      {
+        "id": "b3405c7c187584e6",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "6b6b02e53a252442",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false
+              },
+              "icon": "lucide-folder-closed",
+              "title": "Files"
+            }
+          },
+          {
+            "id": "c86951c9b72b3bf4",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "Search"
+            }
+          },
+          {
+            "id": "d1e21899c066e2cb",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {},
+              "icon": "lucide-bookmark",
+              "title": "Bookmarks"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "ffb002689de07149",
+    "type": "split",
+    "children": [
+      {
+        "id": "82b3570080173ccc",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "ec64d1848a640af7",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "file": "Health/2025/2025-09-05-ER-leg-pain.md",
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "Backlinks for 2025-09-05-ER-leg-pain"
+            }
+          },
+          {
+            "id": "df7873559e86af34",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "file": "Health/2025/2025-09-05-ER-leg-pain.md",
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "Outgoing links from 2025-09-05-ER-leg-pain"
+            }
+          },
+          {
+            "id": "a5ae4914c66651c5",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "Tags"
+            }
+          },
+          {
+            "id": "e1b9615946b5f142",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "All properties"
+            }
+          },
+          {
+            "id": "8903b5c2c777f1ba",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "file": "Health/2025/2025-09-05-ER-leg-pain.md",
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline of 2025-09-05-ER-leg-pain"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:Open quick switcher": false,
+      "graph:Open graph view": false,
+      "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
+      "templates:Insert template": false,
+      "command-palette:Open command palette": false,
+      "bases:Create new base": false
+    }
+  },
+  "active": "0aa4e549e95ee9b6",
+  "lastOpenFiles": [
+    "Health/2025/2025-09-08-follow-up-Dr-Li-Wang.md",
+    "Health/2025/2025-10-06-physical-therapy.md",
+    "Dating/events.md",
+    "Trips/PLAN/2025-11-26 Joshua Tree Workation.md",
+    "Trips/FUTURE/2025-11-28 Deception Pass Cabin Camping.md",
+    "Trips/FUTURE/Solo Workation Brainstorm.md",
+    "Life/Journal.md",
+    "Archive/Career2025/ServiceTitan.md",
+    "Archive/Career2025/2025-08-21_Tecton.md",
+    "Archive/Career2025/Notes.md",
+    "Archive/Career2025/2025-10-07_Vercel.md",
+    "Archive/Career2025/2025-06-05_Stack AV.md",
+    "Archive/Career2025/2025-09-02_Canals.md",
+    "Archive/Career2025/2025-08-19_Motional.md",
+    "Archive/Career2025/2025-06-09_OpenAI.md",
+    "Archive/Career2025/2025-09-29_Microsoft.md",
+    "Archive/Career2025/2025-09-11_Vesta.md",
+    "Archive/Career2025/2025-09-18_SoFi.md",
+    "Archive/Career2025/Docker Principle Engineer.md",
+    "Archive/Career2025/2025-06-05_Epic Games.md",
+    "Archive/Career2025/2025-07-16_Anthropic.md",
+    "Archive/Career2025/2025-07-14_Tesla.md",
+    "Archive/Career2025/2025-07-22_Shopify.md",
+    "Archive/Career2025/2025-10-15 Microsoft.md",
+    "Archive/Career2025/2025-09-09_Databricks.md",
+    "Archive/Career2025/2025-09-02_Uber.md",
+    "Archive/Career2025",
+    "Finance/Downloads/fidelity/backup_before_split",
+    "Finance/Downloads/fidelity",
+    "Finance/Downloads",
+    "Scripts/__pycache__",
+    "Scripts/venv/lib/python3.13/site-packages/bs4/__pycache__",
+    "Scripts/venv/lib/python3.13/site-packages/idna/__pycache__",
+    "Scripts/venv/lib/python3.13/site-packages/idna",
+    "Scripts/venv/lib/python3.13/site-packages/geopy/__pycache__",
+    "Scripts/venv/lib/python3.13/site-packages/certifi/__pycache__",
+    "Scripts/venv/lib/python3.13/site-packages/playwright/driver/package/lib/server/chromium/appIcon.png",
+    "Scripts/venv/lib/python3.13/site-packages/playwright/driver/package/lib/vite/traceViewer/playwright-logo.svg",
+    "Scripts/venv/lib/python3.13/site-packages/playwright/driver/package/lib/vite/recorder/playwright-logo.svg"
+  ]
+}

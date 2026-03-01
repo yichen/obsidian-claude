@@ -1,0 +1,3 @@
+- Prejoin data sets. If multiple data pipelines do the same joins, we might as well pre-join them, reduce the number of duplicate/wasted join operations in Spark. See [linkedin work](https://engineering.linkedin.com/blog/2021/evolving-linkedin-s-analytics-tech-stack)
+	- To do this, we probably should collect join data (by instrument SparkListener for SparkSQL events)
+- Tuning for spark shuffle partitions to reduce spill to disk.
