@@ -1,34 +1,20 @@
 {
   "main": {
-    "id": "b5543c2b15e11752",
+    "id": "a62e09cf32f7553a",
     "type": "split",
     "children": [
       {
-        "id": "a002fe72cd1eafab",
+        "id": "ebe24c34c2456fcf",
         "type": "tabs",
         "children": [
           {
-            "id": "54297b07a570ec5a",
+            "id": "af709038981b6908",
             "type": "leaf",
             "state": {
-              "type": "markdown",
-              "state": {
-                "file": "Life/Daily/2026/02/2026-02-27.md",
-                "mode": "source",
-                "source": false,
-                "backlinks": true,
-                "backlinkOpts": {
-                  "collapseAll": false,
-                  "extraContext": false,
-                  "sortOrder": "alphabetical",
-                  "showSearch": false,
-                  "searchQuery": "",
-                  "backlinkCollapsed": false,
-                  "unlinkedCollapsed": true
-                }
-              },
+              "type": "empty",
+              "state": {},
               "icon": "lucide-file",
-              "title": "2026-02-27"
+              "title": "New tab"
             }
           }
         ]
@@ -37,15 +23,15 @@
     "direction": "vertical"
   },
   "left": {
-    "id": "b7a71a1dda7ab961",
+    "id": "1bdb677d115ba323",
     "type": "split",
     "children": [
       {
-        "id": "3a59f34cf731d87e",
+        "id": "ee2a7a02830c1f66",
         "type": "tabs",
         "children": [
           {
-            "id": "06077be195cc1739",
+            "id": "d8042fa5081a158f",
             "type": "leaf",
             "state": {
               "type": "file-explorer",
@@ -58,7 +44,7 @@
             }
           },
           {
-            "id": "e368429b786c8055",
+            "id": "578cdad7b6c93132",
             "type": "leaf",
             "state": {
               "type": "search",
@@ -75,7 +61,7 @@
             }
           },
           {
-            "id": "01432aba3eefdbd8",
+            "id": "ba833e0578ba908b",
             "type": "leaf",
             "state": {
               "type": "bookmarks",
@@ -88,23 +74,22 @@
       }
     ],
     "direction": "horizontal",
-    "width": 363.5
+    "width": 300
   },
   "right": {
-    "id": "a3c87c1a76ef3126",
+    "id": "cbc62040c4cd83f0",
     "type": "split",
     "children": [
       {
-        "id": "5e00fe24967600f9",
+        "id": "da19c2765b83c925",
         "type": "tabs",
         "children": [
           {
-            "id": "cccce8996163403b",
+            "id": "7b2a0472579d910e",
             "type": "leaf",
             "state": {
               "type": "backlink",
               "state": {
-                "file": "Children/Checklist-For-Support-Ruby.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -114,50 +99,39 @@
                 "unlinkedCollapsed": true
               },
               "icon": "links-coming-in",
-              "title": "Backlinks for Checklist-For-Support-Ruby"
+              "title": "Backlinks"
             }
           },
           {
-            "id": "c5521abda4205fa1",
+            "id": "ad9cc118dfdceca5",
             "type": "leaf",
             "state": {
               "type": "outgoing-link",
               "state": {
-                "file": "Health/Yi's Mental Health Theraphy with Dr. Ding.md",
                 "linksCollapsed": false,
                 "unlinkedCollapsed": true
               },
-              "icon": "lucide-ghost",
-              "title": "outgoing-link"
+              "icon": "links-going-out",
+              "title": "Outgoing links"
             }
           },
           {
-            "id": "b259fee8c269ea26",
+            "id": "a124eabeba970898",
             "type": "leaf",
             "state": {
               "type": "tag",
               "state": {
                 "sortOrder": "frequency",
-                "useHierarchy": true
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
               },
               "icon": "lucide-tags",
               "title": "Tags"
             }
           },
           {
-            "id": "54ad152ab6d992ae",
-            "type": "leaf",
-            "state": {
-              "type": "outline",
-              "state": {
-                "file": "0 - Daily TODO List.md"
-              },
-              "icon": "lucide-list",
-              "title": "Outline of 0 - Daily TODO List"
-            }
-          },
-          {
-            "id": "f6689827e557b657",
+            "id": "2b1a2f713d750a60",
             "type": "leaf",
             "state": {
               "type": "all-properties",
@@ -166,88 +140,89 @@
                 "showSearch": false,
                 "searchQuery": ""
               },
-              "icon": "lucide-ghost",
-              "title": "all-properties"
+              "icon": "lucide-archive",
+              "title": "All properties"
             }
           },
           {
-            "id": "bd2bd9773a831ee6",
+            "id": "e8710acd51a8783c",
             "type": "leaf",
             "state": {
-              "type": "calendar",
-              "state": {},
-              "icon": "calendar-with-checkmark",
-              "title": "Calendar"
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "Outline"
             }
           }
         ]
       }
     ],
     "direction": "horizontal",
-    "width": 200,
+    "width": 300,
     "collapsed": true
   },
   "left-ribbon": {
     "hiddenItems": {
-      "daily-notes:Open today's daily note": false,
-      "bases:Create new base": false,
       "switcher:Open quick switcher": false,
       "graph:Open graph view": false,
       "canvas:Create new canvas": false,
+      "daily-notes:Open today's daily note": false,
       "templates:Insert template": false,
       "command-palette:Open command palette": false,
-      "terminal:Open terminal": false
+      "bases:Create new base": false
     }
   },
-  "active": "06077be195cc1739",
+  "active": "af709038981b6908",
   "lastOpenFiles": [
-    "Projects/1_selling-rental/spec.md",
     "Projects/1_selling-rental/instruction.md",
+    "Projects/1_selling-rental/spec.md",
     "Projects/1_selling-rental",
-    "Projects/untitled folder",
-    "Finance/finance.db-wal",
-    "Finance/finance.db-shm",
+    "Health/Yi's Mental Health, Anxiety, SAD.md",
+    "Dating/events.md",
+    "memory/2026-03-01.md",
+    "memory/MEMORY.md",
     "Finance/Planning/2026-03-01_Cash-Flow-Analysis-and-Rental-Sale-Decision.md",
-    "Finance/Planning/2026-03-01-Cash-Flow-Analysis-and-Rental-Sale-Decision.md",
-    "Finance/Planning/2026-03-01_Cash-Flow-Analysis-&-Rental-Sale-Decision.md",
-    "Finance/Planning/2026-03-01-Cash-Flow-Analysis-&-Rental-Sale-Decision.md",
-    "Finance/Planning/2026-03-01 Cash Flow Analysis & Rental Sale Decision.md",
+    "Finance/CLAUDE.md",
+    "CLAUDE.md",
+    "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Itinerary.md",
     "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Reservations.md",
     "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Plan.md",
-    "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Itinerary.md",
     "Trips/2026/2026-04-13_17-Spring-Break-with-Kids",
-    "Finance/becu/processing_log.json",
-    "Finance/becu/2026-02.yaml",
-    "Finance/becu/2026-01.yaml",
-    "Finance/becu/2025-12.yaml",
-    "Finance/becu/2025-11.yaml",
+    "Finance/becu",
+    "Children/Laurence.md",
+    "Finance/sofi-loan",
     "Life/Daily/2026/03/2026-03-01.md",
-    "Trips/2026/2026-04-13_17 Spring Break with Kids/Itinerary.md",
+    "Life/Daily/2026/03",
     "Finance/activity-log.md",
-    "memory/2026-03-01.md",
-    "Trips/2026/2026-04-13_17 Spring Break with Kids/Reservations.md",
+    "Finance/fidelity-accounts",
+    "Finance/credit-card/bofa-atmos-7982",
+    "Projects",
+    "Scripts/venv/lib/python3.14/site-packages/iniconfig-2.3.0.dist-info/licenses",
+    "Scripts/venv/lib/python3.14/site-packages/pygments-2.19.2.dist-info/licenses",
+    "memory/2026-02-28.md",
     "memory/topics/spec-learnings.md",
     "Finance/tax/instruction.md",
-    "memory/2026-02-28.md",
     "Finance/reports/2025-shopping-breakdown.png",
     "Finance/reports/2025-food-breakdown.png",
     "Finance/reports/2025-subcategory-breakdown.png",
     "Finance/reports/2025-monthly-stacked.png",
+    "Finance/reports/monthly-spending-trend.png",
     "Finance/reports/top-subcategories.png",
     "Finance/reports/category-breakdown.png",
-    "Finance/reports/monthly-spending-trend.png",
     "Finance/reports/yearly-spending-by-category.png",
-    "Finance/reports/monthly-spending-by-category-2025.png",
-    "Scripts/venv/lib/python3.14/site-packages/matplotlib/mpl-data/sample_data/logo2.png",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
+    "memory/2026-02-27.md",
+    "Scripts/venv/lib/python3.14/site-packages/matplotlib/mpl-data/images/matplotlib.svg",
+    "Scripts/venv/lib/python3.14/site-packages/matplotlib/mpl-data/sample_data/grace_hopper.jpg",
+    "Scripts/venv/lib/python3.14/site-packages/pyparsing/ai/best_practices.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy/random/LICENSE.md",
     "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
     "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/fft/pocketfft/LICENSE.md",
-    "Untitled 1.canvas",
-    "Untitled.canvas"
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
+    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/philox/LICENSE.md"
   ]
 }
