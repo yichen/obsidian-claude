@@ -1,0 +1,132 @@
+## Find out all current staff engineers in Data Platform, and what they are working on.
+
+- borovsky (Dmitry Borovsky) - Batch Compute
+- chiconato (Carlos Chiconato) - Async Processing
+	- Event Bas team (EM: Mohamed Dehbaoui)
+	- Ex-Amazon
+	- SOKRs
+		- Q2 2022: Event Bus private beta
+		- Q3 2022: building event bus
+- dannylane (Danny Lane)
+	- Access and Attribution Team (EM: Jeremiah Lee)
+	- Shipped
+		- $3m/year saved on S3 costs
+		- AWS SQS for Stripe Next / Horizon services
+		- s3-authz-srv integrated with CIA
+		- Horizon services inte
+- dars (Sufian Dar) - Reporting Data Warehouse
+	- Reporting Data Warehouse (EM: Anthony Voellm / Smruti Patel)
+- emancebo (Edward Mancebo)
+	- Reporting Data Warehouse
+- gaonkar (Shravan Gaonkar)
+	- Data Ingestion team (EM: Archana Ramachandran)
+		- Data Archiver
+	- Shipped
+		- Event Bus Schema Evolution
+		- Mugatu Cost Per Transaction reduced by 50%
+		- Consolidated EED pipeline resulting in annual savings of 60k
+
+- gaurav (Gaurav Mittal)
+	- Reducing the risk of data exposure
+	- Hadoop customer data security
+	- Spark fast fail connection patch for unresponsive hosts.
+	- Databricks Notebooks Alpha
+- holcombe (Dave Holcombe)
+	- Report to Charles Dannaker
+- jganoff (Jordan Ganoff)
+	- Report to Smruti Patel
+	- Shipped
+		- Stripe Next Event Enrichment System in QA
+		- Event Bus Schema Evolution Guide
+		- Even Bus API
+		- Data Tech Roadmap
+		- SOX/Ocean 2021
+- jluna (Joaquin Luna)
+	- Data Platform Optimization Team (EM: Smruti Patel)
+	- Shipped
+		- Incremental Everything Q2 Rollout
+- johnwulf (John Wulf)
+	- Event Enrichment Team (EM: Bowen Zhang)
+	- Shipped
+		- RDP Lightning adoption and Pinot GA
+		- Strip Next Event Enrichment System in QA
+		- Reporting Data Platform saved 8 hours of User Activity Report delivery
+		- Reporting Data Platform saved $92100/month with Hadoop capacity reduction
+- jonbender (Jonathan Bender)
+	- Data Platform Optimization Team (EM: Smruti Patel)
+	- Shipped
+		- Initial Spark 3 support for data jobs
+		- JVM Monorepo
+		- Diorama Python runtime
+- joshua (Josh Marcus)
+	- Data Productivity Team (EM: Richard Pinales / Smruti Patel )
+	- Shipped
+		- Databricks alpha
+		- Hubble No-Code pipelines beta
+		- 
+- lrao (Lakshmi Gururaja Rao)
+	- Stream Analytics (EM: Dennis Daniel / Avinash Bhat / Smruti Patel)
+- mikemintz (Mike Mintz)
+	- Streaming Platform Team (EM: Avinash Bhat)
+	- Shipped
+		- AWS Attribution and Target Change Process
+		- Native KproxySource support in Flink
+		- Amazon SQS
+		- Stripe saves $5million a year by using cheaper disks
+- mollyo (Molly O'Connor)
+	- Data Productivity Team (EM: Richard Pinales)
+	- Ex-Google
+	- Shipped
+		- Databricks alpha
+		- Initial Spark 3 support
+		- Databricks Notebooks Alpha
+- msmar (Mikhail Smarshchok)
+	- Financial Data Team (EM: Sharjeel Sohail)
+- pb (Paul Baumgart)
+	- Report to Smruti Patel
+- ritesh (Ritesh Kumar)
+	- Search Team (EM: Derek Leung / Charles Dannaker)
+	- Ex-Microsoft
+	- Shipped
+		- Disaster Recovery
+		- Reduced Splunk daily log volume by 24%
+		- Data Tech Roadmap
+		- Elasticsearch stateful hosts lifecycling every 30 days.
+- saiarrabolu (Sai Sankalp Arrabolu)
+	- Data Orchestration (EM: Jim Ruppert / Charles Dannaker)
+	- Joined in July 2022, when his child is only 2 months old.
+	- Lives in Kirkland, worked at Microsoft for 13 years.
+	- Was initially hired for Batcom team, but Natasha told her that Airflow team is resource stressed.
+- sdavis (Shawn Davis)
+	- Report to Smruti Patel
+	- Ex-Amazon
+	- Shipped
+		- Stripe Next Event Enrichment System
+		- Event Bus Schema Evolution
+- sesh (Seshadri Mahalingam) - Data Productivity
+	- Data Productivity (EM: Richard Pinales)
+	- Shipped
+		- Databricks Notebooks 
+- shahar (Shahar Cizer Kobrinsky)
+	- Stream Infrastrucdture (EM: Patrick McBryde / Avinash Bhat / Smruti Patel)
+	- Shipped
+		- Kproxy Distributed Rate Limiting
+		- Internal Audit of Ledger Kafka publishes
+		- Network Edge Wizard
+- tgooch (Ted Gooch)
+	- Schema and Query team (EM: Tamar Ben-Shachar / Charles Dannaker)
+	- Shipped
+- xiang (Xiang Zhang)
+	- Stream Compute Team (EM: Avinash Bhat / Smruti Patel)
+	- Shipped
+		- Preventing Incompactible State changes for Flink apps
+		- Improve Rollback and manual regular deployment workflow of Flink apps
+- xton (Christon DeWan)
+	- Schema and Query Team (EM: Tamar Ben-Shachar)
+	- Shipped
+		- Faster, safer schema-sharing
+		- Aamazon SQS
+		- Data Catalog in Alpha
+		- Event Bus Schema Evolution
+		- Initial Spark 3 support
+- yichen (Yi Chen)

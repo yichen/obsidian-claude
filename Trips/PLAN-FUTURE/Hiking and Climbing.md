@@ -1,0 +1,10 @@
+
+
+- Mt. Adams
+	- [FB](https://www.facebook.com/groups/washingtonhikersandclimbers/posts/3657114841181503/?comment_id=3659909280902059)
+		- I would love to do it again![😁](https://static.xx.fbcdn.net/images/emoji.php/v9/tee/2/16/1f601.png) I just did it couple weeks ago July 8th and did it in one day with co-workers. Im still recovering on minor injuries during the Climbed, I was trying to put my microspike( didn't use my crampons) back on I step in a mushy snow and fell into a hole hip deep full force so I got a big scrape on my butt cheeks lol so painful but didn't felt it when it happened coz it was so cold cheeks was numb![😁](https://static.xx.fbcdn.net/images/emoji.php/v9/tee/2/16/1f601.png) we glissade moslty the entire way going down and made my scrape worse but didn't realized how bad it was untill I got back to the hotel. I was reading some trip reports yesterday and saw somebody posted a pictures with a big cracks/criveses at Pikers peak were one of my co-worker took a nap while waiting for me and another friend to get back to from the true summit. I did't used my crampons the 3 of us just used microspike but bring it with you. You do need a permit for $15 if you are going on weekends, $10 on weekdays and its good for 3days most people spend the night at lunch counter.
+		- [fs.usda.gov](https://www.fs.usda.gov/recarea/giffordpinchot/recarea/?recid=80023)
+			- A Mt. Adams Climbing Pass is required from May to September.
+		- [mountainiers.org](https://www.mountaineers.org/activities/routes-places/mount-adams-south-spur#:~:text=Mount%20Adams%20via%20the%20South,commonly%20done%20in%20two%20days.)
+			- 14 mile snow scramble to the summit, with 6600 feet of elevation gain, commonly done in two days.
+			- This climb is best done with as much snow on the route as possible, so plan your trip as soon as the road is open.

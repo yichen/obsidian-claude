@@ -1,0 +1,6 @@
+- Get clients algined with the benefits of the new system
+- Write clear step-by-step instructions
+- Provide automated tooling wherer possible.
+- Make it easy for clients to find help
+- Utilize decision frameworks
+- Track project progress

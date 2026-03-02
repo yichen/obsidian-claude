@@ -1,0 +1,5 @@
+- It turns out I tolerate SUFLAVE fine. Looks like I can drink it without any issue.
+- I had zero memory or awareness of the procedure. I woke up in the recovery room and felt groggy for a bit. I worried that my rectum may feel sore, but it turns out it was not the case. 
+- Checked in at 8AM, woke up around 9:30AM and left hospital at 10:00AM. I used the Around The Sound Transportation service to pick me up and send me home. I think it was $70 for the pick up and $50 for the drop-off. The drop-off is not required, but still more reliable than a Uber.
+- Since I have low risk, the next exam is in 10 years. 
+- I am surprised that with 7-day restrictive diet, when I cannot take any supplements, I was able to sleep well for 4 nights (2 nights in Pasea Hotel at Huntington Beach, 2 nights after returning home). Also, I did not take zytec for 7 days in a row and I did not have the allergy symptoms. 

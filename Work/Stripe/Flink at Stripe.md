@@ -1,0 +1,207 @@
+
+#stripe/flink  #flink
+
+- Stripe support multiple versions of Flink. Support both Java and Scala API, only run streaming jobs (no batch jobs), and only use the DataStream API.
+- We use checkpoints and savepoints, writing both to S3
+- We use the shaded Hadoop S3 filesystem (flink-s3-fs-hadoop) to read and write on S3
+- We use the Standalone Cluster deployment style
+	- We run multiple clusters, each cluster is its own host set.
+	- We run one Flink app per cluster.
+	- We do not use yarn, docker, or any other deployments.
+	- We plan to ultimately use the Kubernetes deployment.
+- We use the High Availability master. This is configured with Zookeeper and S3 to store master state.
+- We use FlinkKafkaConsumer and FlinkKafkaProducer to talk to Kafka
+	- This supports exactly-once semantics with Flink checkpointing and Kafka transactions, but only some Flink jobs enable exactly-once.
+	- FlinkKafkaConsumer will publish exactly-once to a topic. However, to consume exactly-once, your Kafka consumer must set "isolation.level=read_committed". Otherwise your consumer will see uncommitted messages from aborted transactions.
+- Flink jobs don't talk to external services yet, except Kafka, S3 and Mongo
+- No autoscaling. You will need to size your job's parallelism and the flinktaskmanager hosts together (using ASG).
+- Flink supports incremental checkpointing, but no incremental savepoints. For a job that has 10TB state but only generate 10MB of new state every minute, taking a checkpoint every minute means writing 10MB to S3, while taking a savepoint means writing 10TB to S3.
+- The checkpointing interval becomes the lower-bound for max lag. If you have a job that writes a checkpoint every minute, the exactly-once semantics introduce an additional one-minute to the max lag. If you want a low-latency exactly-once Flink app, it follows that you'd need a small checkpointing interval, which may need extra work to test, tune, and possibly a backend that is better than S3.
+
+
+Alerts:
+- Application has not successfully checkpointed in over 2 hours. 
+	- The cause could be application is crashlooping, 
+	- or checkpointing failure, 
+	- or checkpointing an unusually large state, 
+	- or underprivisoined, so it is trying to checkpoint while handling large load.
+- Checkpoints taking longer than 40 minutes.
+	- the application is catching up from failing behind, or there is a lot of backpressure.
+	- checkpointing an unusual large amount of state.
+	- under provisioned, checkpointing while handling large load.
+	- high checkpoint timeout.
+- Checkpoints not being triggered for over 2 hours (the number of running checkpoints is 0 for over 2 hours)
+	- Is the job running?
+	- Are the master healthy?
+	- Are taskmanagers healthy?
+	- Is the master able to communicate with S3?
+- Flink app X is falling behind Kafka source for topic Y
+- Job has zero throughput (there have been no records outputted from any operator in a flink job for at least 5 minutes)
+	- The flink cluster is completely down.
+	- the Flink job is failing and restarting over and over.
+	- Flink job is stuck in the canceling state.
+- No data on Flink job restart rate (flink job has no restart metric or when it is crash looping)
+- Flink metaspace usage above threshold
+	- Increase taskmanager.memory.jvm-metaspace.size
+- Flink OOM Detector not clearing zookeeper path
+- Job in running state after issueing stop from deploy
+	- JVM is not responsive
+	- Existing flink bug
+- Flink app has at least one host with disk > 80% full
+	- The app state is growing large and needs bigger disks
+
+
+## Flink related Incidents
+- Flink DLQ (Dead Letter Queue) integration for vnext-tagging may result in dropped messages if sink fails a batch request
+- Unscheduled balance
+- After a Kafka broker was replaced by an automated process, Flink apps and other clients began to report timeout errors. The replacement broker failed to join the cluster. 
+- Flink apps deploys are failing because of incompatible kafka config change.
+- Flink applications are sporadically crashlooping after ZK quorum disruptions
+- A flink app went into retry loop sending the same events to eventbus at high volume. This starved the eventbus poller pods. Noisy neighbor impat spread to a lot of monster subscriptions.
+- A flink app is falling behind since it failed to scale up parallelism during deployment, and got rolled back, and got stuck on roll back deployment.
+- Flink TMs seeing frequent restarts across the fleet
+- The Ledger Enrichment Flink app is crash looping because of an poison pill incoming transaction. 
+- Flink apps seeing an increase in OOM: unable to create new native thread. 
+- Ledger Deduplicator flink app is consistently failing to checkpoint.
+- Ledger Flink app is crash looping because of a BSON deserialization exception.
+
+
+### Flink team's shipmail summary
+- All Cash Data Flink apps are now auto-deployed
+	- For regulatory requirements, calculation each day has to be close to exact in order to not be considered under or over safeguarding. Violations need to be reported to the regulatory authorities and have consequences.
+	- To ensure high accuracy of the calculations we run two copies of each flink app (primary and secondary mode), and rollout our changes to secondary first, valiate and then proceed to primary.
+	- We want this to be auto deployed as a compliance requirement also to minimize human errors. Ensure that changes did not make it to production through the primary app without going through the strict validation cycle that we currently enforce in secondary. This required some customization of the deployment process for our flink apps.
+- Granular Identify for Flink Apps
+	- Each flink app now has their own service identity which improves the developer productivity, security and reliability posture. This feature is requested by 5 teams to reduce their compliance toil.
+	- Before: all Flink apps (~80) shared the same identity (flinktaskmanager, flinkmaster), a singular IAM role that had reached the limit of policies which could be attached to it and one LDAP group that would authorize users to deploy all flink apps.
+	- After:
+		- Flink apps can now only be deployed by the application owners and have per-app LDAP groups
+		- Flink app only have read-write access to s3 prefix they need to access rather than all of stripe-data
+		- Kafka/Envoy/CIA enforce per-app ACL's rather than allowing entire fleet access
+		- Flink apps have per app kproxy/envoy throtles
+		- Flink apps by default don't have an IAM role but can create one specific to the app.
+- Lower downtime for Flink Applications
+	- Reduced max downtime from a max of 240 seconds to max of 27 seconds, and P90 downtime from 35 seconds to 13 seconds. 
+	- The largest cause of platform-induced downtime for Flink applications is deploys. Deploys are orchestrated via two separate calls: (1) to stop the old job on the old cluster, and (2) to submit the job to the new cluster. In between these two calls there is no job running, which causes higher latencies during a deployment.
+	- What we did: we (1) generate a job's Job Graph before stopping the old job and (2) avoid uploading application jars during job submission. Before we would generate the Job Graph while the job was not running. When jobs get complex, generating Job Graphs can take tens of seconds or even minutes, resulting in a large amount of additional downtime during deploys.
+- PyFlink UDFs alpha release
+	- You can now write custom Python UDFs.
+	- Use cases in Machine Learning and Data Science, due to unique Python packages like numpy, pandas, and scikit-learn that aren't available on JVM. It has been hard to run Python in a real time data processing pipeline.
+	- Flink runs a Python Worker alongside the Java Operator using Py4j, which helps ensure that repeated calls to a UDF don't incur repeated from-scratch calls to the interpreter. 
+	- What we did
+		- Configured Bazel to allow Python to run alongside the JVM
+		- Tinkered with Flink configurations to programmatically discover Python packages supplied by Bazel, and thus allow for scalable UDFs with a large number of files and dependencies.
+		- Benchmarked the performance of Python UDFs compared to Scala UDFs and the DataStream API
+		- Migrated the Authorization Observer Flink app to move its functionality into Flink using a Python UDF. Originally it spun up a Flask server alongside the Flink app, which communicates through HTTP requests to execute data science algorithms written in Python.
+- 95% reduction in data access latency in Hubble for Risk and Fraud investigation
+	- How: via the new Streaming Incremental Archiver, as part of the first milestone of Data Platform's Fresher Data and Realtime Datasets Initiative. 
+	- The new datasets are improving response time from hours to minutes to reduce financial losses due to fraud incidents.
+- Flink bootstrapping, backfill, and the iceberg source
+	- Flink applications can read data from Kafka archives or Iceberg tables and then seamlessly cut over to realtime Kproxy consumption. This enables a variety of bootstrapping and backfilling solutions using Spark and Flink as well as monitoring Iceberg datasets for changes in realtime.
+	- There is an unbounded Iceberg source for Iceberg tables written with Append. This allows a Flink apps to consume Iceberg changes.
+	- Kafka Archive Source is needed when you want to read and process historical Kafka data that is no longer available in the Kafka cluster due to the retention period. The archives have data in order per topic-partition-cluster, organized in 15-minute chunks, and contain Kafka offsets and published-at timestamps.
+	- Hybrid Source is a new source available in Flink 1.14. Allows users to sequentially chain together different sources and seamlessly cutover from one source to another. This enables applications to process data from different storage systems, like Kafka and Iceberg, within the same Flink application without complicated handoff logic.
+	- What we did:
+		- a lot of work to allow us to leverage the open source Iceberg connector and Hybrid Source for Flink, created a Kafka Archive source from scratch.
+- All Flink apps are now on hot-standby deployment
+	- Improved the P90 availability of Flink apps from 99% to 99.9% (p50 from 99.7% to 99.99%). Reduced the max e2e latency from 13.5 minutes to 2.5 minutes.
+	- What we did
+		- add standby Flink cluster in Flink deployment to reduce app downtime.
+			- Before hot-standby, a flink app couldn't be kept live while waiting for the new Flink cluster to spin up. To reduce the downtime, worked with deploy team to support Flink's custom stages in B/G deployment infra. The Flink app on the existing cluster is kept live until the new cluster is ready. 
+		- Enhanced Flink infra to allow two Flink clusters running simultaneously and safely.
+			- Enhanced the HA of Flink to isolate the clusters and corresponding app metadata by enabling S3HA to support multi-cluster per app and adding unique cluster ID to differentiate clusters.
+			- Enhanced the Flink deployment workflow to coordinate the deployment that involves two isolated clusters.
+- Shepherd Streaming Developer Launch
+	- Users can prototype streaming features using the Shepherd ML feature computation platform to: 
+		- Define their streaming ML features
+		- Backfill and generate training datasets
+		- Schedule jobs for these features so that they can be computed and served online
+	- Shepherd:
+		- Definition of features using an intuitive Python/SQL DSL
+		- Ability to quickly prototype and generate point-in-time correct training datasets.
+		- Ability to deploy feature computation and serving jobs
+		- Feature sharing, discovery, observability and alerting
+	- What we did
+		- real-time compute and aggregation: streaming jobs that read events from Kafka and compute keyed, windowed feature aggregations that are written to an online feature store (Memento).
+		- Building a multi-tenant flink application
+			- Discover feature groups to run.
+			- Build the Flink DAG: within the application, we build a generic Flink operator DAG per assigned feature group.
+			- Automatic scaling of the Flink application: the application sizing configuration is updated by our tooling in response to the creation or deletion of feature groups by users.
+- Upgraded Flink from 1.13 to 1.16 (May 2023)
+- Flink application owners can now author integration tests by following the guide.
+	- It can be challenging to test the end-to-end correctness of an application before releasing new changes to production. It is time-consuming and repetitive to generate synthetic data in QA and then manually check that correct data was published from the Flink application. Because of this, some teams run secondary copies of their entire Flink application in production that they release new features to first. 
+	- What we did
+		- Published a guide that outlines how to write integration test for an application that will run in CI and on your laptop/devbox. 
+		- Autoscales the integration test cluster.
+		- Dynamically wraps S3 and Kafka sources to allow test authors to enqueue test events.
+		- Allows test authors to inspect the events that are passed between intermediate operators in the application
+		- Enables test authors to advance the event time by either forcing watermark emission or manually advancing watermarks to a custom time.
+		- Allows test authors to launch the integration test cluster on their laptops and view the web UI in the browser.
+- Functional testing with Flink and Kafka now available (March 2023)
+	- You can now write and debug functional tests for your services, including integration between Horizon servers, Flink apps, and real Kafka streams. A single end-to-end test case of your service can be done in under 1 minute on your laptop instead of hours on QA.
+	- What we did
+		- We created a prototype integration of Flink apps and Kafka streams into the Horizon testing stack. Added 11k lines of code to infra and test spaces, written 10 test cases 
+- Load test and improve performance of your Flink app
+	- We published documentation to help users load test their Flink applications and analyze the performance of their Flink application to increase overall throughput and reduce end to end lag. 
+- Flink on Shared MSP (2022)
+	- Stream Compute has migrated all eligible Flink applications from a host-based setup to Shared MSP. Only apps with extremely large stage and apps requiring restart management are on host-based Flink for now
+- Autoscaling for Flink Apps (Jul 2022)
+	- Flink apps are now able to autoscale resources based on modifiable detectors through SignalFX. This allows apps to increase/decrease task managers allocated as its workload varies through its lifecycle.
+	- What we did: implemented an autoscaling mechanism based on workload. Three main components:
+		- SignalFX detectors + autoscale-srv: the detectors serves as triggers for scale up and down. Once triggered, autoscale-srv will either allocate or deallocate resources (TaskManagers) based on the signal
+		- Autoscaling Supervisor: the job needs to redeploy to make use of the newly introduced sources (TaskManagers). The Autoscaling Supervisor monitors the Flink app and determine when to redeploy the job.
+		- Dynamic Resource Allocation
+- Preventing incompatible state changes for Flink Apps
+	- Incompatible changes to Flink apps can be caught in CI instead of production.
+	- Problem: Backwards incompatible modifications to state are detected in runtime and result in the application crashlooping.
+	- Solution: we implemented a check in CI that runs on branches that validates that a Flink application can restore state from a savepoint captured using application code on master. This ensures that modifications in a branch are state comptible with the same application code on master and prevents state incompatible changes from being merged and deployed to production environment.
+		- The CI job checks out master and runs each Flink app in an embedded Flink cluster, complete with embedded Kafka and kproxy services. Then, it stops the job with a savepoint, checks out the branch, and runs each Flink application again, restoring state from the captured savepoint. 
+- Deployed S3-HA checkpoint recovery optimization to solve unresponsive JMs in the Flink cluster.
+	- Fixed a bug to prevent Flink job master from crashlooping when there is a Zookeeper HML event..
+	- Whenever there is a Zookeeper HLM event, all the TaskManagers that are connected to that node error out, which causes a flink restart. After the first failure, each parallel component of the job will be recovered individually by the `RestartPipelineRegionFailoverStrategy`. Each of these pipelined regions then ask the CheckpointCoordinator to restore its state. This operation triggers a recovery of the latest completed checkpoints from S3 which occurs on every job restart until the job can be successfully restarted. For apps with large job graphs, this results in an alert that flink job is crashlooping and Flink UI not responsive (since the JobManager is busy restoring the same checkpoint over and over again)
+	- FLINK-19401 fixes Zookeeper HA, but at Stripe, we only use Zookeeper for leader election. We use S3-HA. 
+	- Tested the fix by terminate the Zookeeper instance with the most number of connections. Confirm from logs and splunk.
+	- S3-HA was enabled in Jun 2022. Apps are using S3 for state persistence and using Zookeeper for leader election. The motivation is to be one step closer to get rid of Zookeeper for Flink. This work was inspired by a [blog post](https://blog.ronlut.com/flink-job-cluster-on-kubernetes-file-based-high-availability/) from 2020.
+- Saved $135k/year by consolidating QA Flink Zookeepers onto shared clusters
+	- Flink applications use Zookeeper to elect a leader JobManager to coordinate the Flink cluster for high availability. Historically, we spun up a dedicated 5-node zookeeper cluster for each physical deployment of a Flink application (e.g. in each environment like qa-nw, qa-bom, prod-nw, prod-bom).
+	- Before getting rid of Zookeeper, consolidating onto a single shared cluster would be a low-effort and low-risk efficiency win in addition to reducing our fleet size considerably and making Flink onboarding simpler. 
+- Improvements to Flink rollback process (2022)
+	- Flink users can now choose the savepoint/checkpoint they want to use when deploying/rolling back a flink application in the AMP UI. Previously users had to splunk & construct the S3 path themselves which was error prone and time consuming, now users can choose the checkpoint details from the AMP UI.
+- Flink Canary System (2022)
+	- Introducing Flink Canary system to
+		- prevent incidents caused by data quality and throughput regressions by guarding rollouts of fleetwide changes
+		- Prevent Flink apps from incidents caused by regressions in Kproxy consuming by catching and alerting early.
+		- Save troubleshooting effort and alerting on data quality and throughput regressions.
+	- The system consists of the 3 Flink apps.
+		- Data quality canary app will read from a source Kafka topic and write to a sink topic. 
+		- Data quality validator app will compare the messages in source topic and destination topic, checking if there is any message being dropped. Number of dropped message metric is monitored by a dashboard.
+- Flink availability improvements using jemalloc (2021)
+	- By switching to jemalloc memory allocator, Stream compute was able to migrate all OS out of memory (OOMs) kills for Flink TaskManager processes, thereby improving overall Flink availability metrics by reducing average daily job downtime by 1.2 minutes per Flink app without changing any application code.
+	- Since 2020 after upgrading to Flink 1.10 we started seeing increasing OS OOM kills for Flink processes, and a single failure (on TM) could be followed by cascading OOM's leading to longer downtime. It was difficult to investigate because Flink lacks visibility into offheap memory usage used by RocksDB.
+	- We believe the root cause was memory fragmentation caused by design flaws in the way RocksDB uses the multithreaded implementation of malloc in glibs. Jemalloc has been designed to support multithreaded concurrent apps from scratch and specifically tries to prevent memory fragmentation.
+	- What we did.
+		- Stream compute implemented bash scripts to detect OOM on any single Flink process and then perform a coordinated restart of all Flink processes. This prevented cascading OOMs and reduced the occurence of job restarts.
+		- Tuning GLibC Malloc.
+		- Use jemalloc (Ruby infra has used jemalloc for a long time). After rollout, we noticed an elimination of OOM kills from about 20 a day to zero. 
+- Ledger-deduplicator Flink app p99 latency improved by 8x
+	- Collaborated with FinData team to improve p99 latency SLC from 90 minutes to 20 minutes. Reduced p99 latency by 8x. This will enable Ledger Search freshness to improve from 1+ hours to less than 30 minutes.
+	- This app powers all-time deduplication of ledger transactions by utilizing Flink's exactly-once semantics. It outputs deduplicated transactions to a Kafka topic that is ingested into Ledger Search. It maintains around 12TB of state for deduplication. Because of frequent app restarts and long recovery time, we were only able to support 90 minutes as p99 latency SLC.
+	- What we did
+		- Investigate the latency causes. They are frequent restarts due to OOM, ASG lifespan, deployments and manual restarts. The idea is figure out how to prevent unnecessary restarts and how to recover as soon as possible. Focused on memory leaks.
+		- To speed up app recovery:
+			- Rescaled the application by doubling the parallelism. This cut down the downloading and rebuilding time of the 12TB state from S3 from 27 minutes to 7 minutes.
+			- Reduced the checkpoint interval from 5 minutes to 1 minute without throughput impact, which reduced latency due to checkpointing in restarts from 10 minutes to 2 minutes.
+			- Reduced the retained number of checkpoints from 10 to 5, which saved another minute in downloading state metadata during startup.
+			- added grace period between host lifecycle events so the app has enough time to recover the state and catch up backed-up events.
+- Flink State Introspection (2021)
+	- We built a generalized state introspection tool for Flink, which allows users to inspect the state of a running Flink application. Users can now register their app's state as queryable and use an AMP UI to perform interactive K/V lokups into their state.
+	- What we did
+		- state-proxy is a HTTP service built on top of Flink's Queryable State feature. It runs on MSP and uses the Queryable State API to access the states of a running Flink application.
+- Applications can now independently upgrade to recent Flink versions
+	- We can now run multiple versions of Flink in production at the same time. This allows us to upgrade Flink applications gradually and at our own pace.
+	- Previously, Stripe can only run a single version of Flink at once. It was challenging to get all apps to compile on new versions of Flink since we had to work around every backwards incompatibility in one PR, some of which required major changes to code that takes days or weeks to fully port and test.
+	- What we did
+		- Zoolander (Stripe's code repository) does not allow specifying more than one version of the same dependency. The solution was to publish different versions of Flink dependencies under different artifact ID namespaces to allow for resolution of said newer versions.
+			- Write tooling to perform the artifact ID rewriting and artifactory uploading.
+			- split out the Flink apps from all being in one fat deploy jar into just one app per deploy jar
+		- Tested by upgrading one app to newer version of Flink, and upgrading the adhoc cluster to higher version of Flink.

@@ -1,0 +1,26 @@
+# --- IGNORE LIST ---
+# Ignore heavy/internal Obsidian noise
+.obsidian/workspace
+.obsidian/workspace.json
+.obsidian/cache/
+.obsidian/indexed-db/
+.obsidian/plugins/obsidian-git/
+
+# Machine-specific settings
+.claude/settings.local.json
+.claude/settings.local.sync-conflict-*
+
+# System files
+.DS_Store
+*.pyc
+__pycache__/
+
+# --- TRACK LIST ---
+# Explicitly track everything else (Notes, Folders, Attachments)
+!*
+!*/
+
+# Explicitly track your AI config
+!/.claude/
+!/.claude/**
+!/.gitignore

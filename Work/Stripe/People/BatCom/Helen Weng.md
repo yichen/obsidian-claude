@@ -1,0 +1,44 @@
+- joined in 2018
+- shipped
+	- V0 Spark Profiling Dashboard
+	- Hadoop cluster merge and preemption
+	- Consolidated EED pipeline
+	- Data Security prescreen
+	- Revenue data mart pipeline reliablity
+- Questions
+	- What's the current general workflow for our customer to debug a job? 
+		- In airflow log, there is a link to spark history log.
+		- They usually start with a notification that their job failed from airflow.
+		- Where do they go next? timberlake?
+	- When we talk about cluster efficiency (Indigo at 89%), how this efficiency number is calculated/tracked?
+		- calculated from app_history table. 
+		- iceberg.yarn
+		- hourly batch process to export ResourceManager data via API. We have plan to make streaming. 
+		- 
+	- Why cost are based on vcores not on memory consumption? Looks like we are already using the DominantResourceCalculator?
+		- I don't know. John Bender may know better. 
+		- Looks the vcores/memory ratio is fixed.
+	- I see we have yarn.app_history table for analize yarn apps. How is this table generated? Do we have a list of such metadata tables somewhere? 
+	- Who is working on that tool?
+		- me.
+	- What is the table for DAG column?
+		- airflow
+		- it has issues, not complete (but close enough), depends on meta data published.
+	- Why scale-up and down are not automated?
+		- trust based: we are cost conscious, that can disablize the cost.
+		- education for the users. 
+		- we haven't find a good solution: its hard to trust the users.
+	- what's the feedbacks for the Spark Profiling? How do you get those feedbacks from? From direct 1:1 with users, or from some team channels?
+		- What do you think is missing?
+		- For Hubble, can I embed a chart from hubble to another web app?
+			- Not allowed to embed and must be hosted.
+			- But Viz dashoard can be customized.
+			- Ask Gary 
+		- Timberlake for Spark, why people are not using it? How does it work?
+			- It's before my time, mostly 
+	- Current spark UI
+	- Do we have dedicated clusters?
+		- mostly no
+		- there is a snapshot cluster EBS that data ingestion team own and maintain.
+	- Any discussion with Kuberntes?
+		- Josh is the best person to talk about this.

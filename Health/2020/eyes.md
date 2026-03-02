@@ -1,0 +1,1 @@
+The July 2020 eye exam by Dr. Thomas Aller (in California) showed that I have esophoria.

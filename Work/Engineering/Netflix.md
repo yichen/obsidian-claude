@@ -1,0 +1,17 @@
+[Auto-Diagnosis and Remediation in Netflix Data Platform](https://netflixtechblog.com/auto-diagnosis-and-remediation-in-netflix-data-platform-5bcc52d853d1)
+
+- What's the problem?
+	- The data platform is built on top of several distributed systems, which is inevitable that these workloads run into failures periodically. Troubleshooting and root causing is not a trivial task.
+- Goal
+	- Troubleshooting failing and slow workloads and remediating them without human intervention wherever possible.
+- Solution
+	- Batch Pensive. If a workflowstep fails, Scheduler asks Pensive to diagnose the step's error. Pensive collects logs for the failed jobs launched by the step from the relevant data platform components and then extracts the stack traces. Pensive relies on a regular expression based rules engine that has been curated over time. The rules encode information about whether an error is due to a platform issue or a user bug and whether the error is transient or not. If a regular expression from one of the rules matches, then Pensive returns information about that error to the Scheduler. If the error is transient, Scheduler will retry that step with exponential backoff a few more times.
+	- The most critical part of Pensive is the set of rules used to classify an error. We need to evolve them as the platform evolves to ensure that the percentage of errors that Pensive cannot classify remains low. Initially the rules were added on an ad-hoc basis. We have now moved to a more systematic approach where unknown errors are fed into a Machine Learning process that performs clustering to propose new regular expressions for commonly occurring errors. We take the proposals to platform component owners to then come up with the classification of the error source and whether it is of transitory nature.
+	- By doing real-time analytics on the errors detected by Pensive using Apache Kafka and Apache Druid, we can quickly identify platform issues affecting many workflows. Once the individual diagnoses get stored in a Druid table, our monitoring and alerting system called Atlas does aggregations every minute and sends out alerts if there is a sudden increase in the number of failures due to platform errors. This has let to a dramatic reduction in the time it takes to detect issues in hardware or bugs in recently rolled out data platform software.
+	- Apache Flink powers real-time stream processing. Users expect platform issues to be detected and remediated by the Keystone team without any involvement from their end. Data in Kafka streams have a finite retention period, which adds time pressure for resolving the issues to avoid data loss. For every Flink job running as part of a Keystone pipeline, we monitor the metric indicating how far the Flink consumer lags behind the Kafka producer. If it crosses a threshold, Atlas sends a notification to Streaming Pensive.
+	- Streaming Pensive also has a rule engine to diagnose errors. In addition to logs, Streaming Pensive also has rules for checking various metric values for multple components in the Keystone pipeline.  The issue may occur in the source Kafka stream, the main Flink job, or the sinks to which the Flink job is writing data. Streaming Pensive diagnoses it and tries to remediate the issue automatically when it happens.
+
+
+
+
+[Titus, the Netflix container management platform](https://netflixtechblog.com/titus-the-netflix-container-management-platform-is-now-open-source-f868c9fb5436)
