@@ -1,0 +1,130 @@
+statement_month: 2025-12
+period_start: '2025-11-17'
+period_end: '2025-12-16'
+checking:
+  account_number: '3588947679'
+  beginning_balance: 3314.3
+  withdrawals_fees: -70272.71
+  deposits: 70680.53
+  dividends_interest: 1.52
+  ending_balance: 3723.64
+  apy: 0.37
+  average_daily_balance: 5417.12
+  ytd_dividends: 18.22
+  transactions:
+  - date: '2025-11-20'
+    amount: 40000.0
+    description: External Deposit Z264749831LJEG8 - MONEYLINE
+    type: deposit
+  - date: '2025-11-25'
+    amount: 800.0
+    description: External Deposit FID BKG SVC LLC - MONEYLINE
+    type: deposit
+  - date: '2025-12-04'
+    amount: 3000.0
+    description: External Deposit Z264749831MVKUI - MONEYLINE
+    type: deposit
+  - date: '2025-12-05'
+    amount: 1.52
+    description: Dividend/Interest
+    type: deposit
+  - date: '2025-12-08'
+    amount: 16830.53
+    description: External Deposit Z264749831N25T0 - MONEYLINE
+    type: deposit
+  - date: '2025-12-08'
+    amount: 10000.0
+    description: External Deposit Z264749831N3A44 - MONEYLINE
+    type: deposit
+  - date: '2025-12-09'
+    amount: 50.0
+    description: External Deposit MSPBNA E*TRADE SECURITIES - ACH TRNSFR
+    type: deposit
+  - date: '2025-11-21'
+    amount: -40000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-12-05'
+    amount: -897.79
+    description: External Withdrawal WELLS FARGO AUTO DIRECT DEBIT WEB - FEE & PMTS
+    type: withdrawal
+  - date: '2025-12-05'
+    amount: -2000.0
+    description: ATM Withdrawal BECU 22820 NE 8TH STREET , SSAMMAMISH WAUS Machine#
+      WA033544 Trace# 00000000000000004675
+    type: withdrawal
+  - date: '2025-12-08'
+    amount: -10000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-12-08'
+    amount: -10.0
+    description: NSF External Withdrawal (Paid)FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-12-08'
+    amount: -16830.5
+    description: Withdrawal Online Banking Transfer To 2019617868 CNS
+    type: withdrawal
+  - date: '2025-12-15'
+    amount: -1.76
+    description: Withdrawal Transfer to 2006395394
+    type: withdrawal
+  - date: '2025-12-15'
+    amount: -532.66
+    description: Withdrawal Transfer to 2019617876
+    type: withdrawal
+heloc:
+  account_number: '2019617876'
+  previous_balance: 116830.53
+  available_credit: 129999.97
+  credit_limit: 230000.0
+  new_balance: 100000.03
+  payments: -117363.16
+  other_credits: 0.0
+  advances: 100000.0
+  fees_charged: 0.0
+  interest_charged: 532.66
+  apr: 5.99
+  ytd_fees: 0.0
+  ytd_interest: 1610.83
+  minimum_payment: 386.22
+  payment_date: '2026-01-15'
+  total_interest_this_period: 532.66
+  transactions: []
+  sub_accounts:
+  - name: HE Variable Line of Credit
+    previous_balance: 116830.53
+    new_balance: 0.03
+    avg_daily_balance: 78448.05
+    apr: 5.99
+    transactions:
+    - date: '2025-12-07'
+      description: Principal Receipt
+      amount: -100000.0
+    - date: '2025-12-08'
+      description: Principal Receipt
+      amount: -16830.5
+    - date: '2025-12-15'
+      description: Regular Payment
+      amount: -532.66
+    interest_paid: 532.66
+  - name: HE Fixed Rate Advance
+    previous_balance: 0.0
+    new_balance: 100000.0
+    avg_daily_balance: 100000.0
+    apr: 6.99
+    transactions:
+    - date: '2025-12-07'
+      description: New Loan Disbursement
+      amount: 100000.0
+    interest_paid: 0.0
+validation:
+  checking_balance_ok: true
+  checking_txn_totals_ok: true
+  heloc_balance_ok: true
+  heloc_sub_balance_ok: true
+  heloc_sub_interest_ok: true
+  mismatches: []
+source:
+  file: BECU-Statement-16-Dec-2025.PDF
+  processed_at: '2026-03-01T18:16:00'

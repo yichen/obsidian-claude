@@ -1,0 +1,41 @@
+statement_month: 2025-05
+period_start: '2025-04-17'
+period_end: '2025-05-16'
+checking:
+  account_number: '3588947679'
+  beginning_balance: 1004.24
+  withdrawals_fees: -859.02
+  deposits: 800.0
+  dividends_interest: 1.72
+  ending_balance: 946.94
+  apy: 1.55
+  average_daily_balance: 1179.83
+  ytd_dividends: 6.57
+  transactions:
+  - date: '2025-04-25'
+    amount: 800.0
+    description: External Deposit FID BKG SVC LLC - MONEYLINE
+    type: deposit
+  - date: '2025-05-09'
+    amount: 1.72
+    description: Dividend/Interest
+    type: deposit
+  - date: '2025-05-01'
+    amount: -759.02
+    description: Withdrawal Transfer to 2019449378
+    type: withdrawal
+  - date: '2025-05-15'
+    amount: -100.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+heloc: null
+validation:
+  checking_balance_ok: true
+  checking_txn_totals_ok: true
+  heloc_balance_ok: null
+  heloc_sub_balance_ok: null
+  heloc_sub_interest_ok: null
+  mismatches: []
+source:
+  file: BECU-Statement-16-May-2025 (1).PDF
+  processed_at: '2026-03-01T18:15:59'

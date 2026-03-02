@@ -1,4 +1,4 @@
-> Last Updated: 2026-03-01 04:02:01
+> Last Updated: 2026-03-02 04:01:43
 
 
 
@@ -57,35 +57,7 @@
 
 
 
-## Mar 01, Sunday
 
-*   **[Latin] Salsa & Bachata @t La Rumba Social**
-    *   **Time:** March 1 @ 12:00 am - 4:00 am
-    *   **Loc:** Side Hustle: Taproom & Kitchen, 15 Lake st #201, Kirkland, WA, United States
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/15%20Lake%20st%20%23201%2C%20Kirkland%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/salsa-bachata-t-la-rumba-social/
-*   **[FB] Fort to Sea hike, Clatsop County**
-    *   **Time:** 8:30 AM
-    *   **Facebook Group:** 40+ Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/2417158918697270/
-*   **[FB] FULL**
-    *   **Time:** 12:30 PM
-    *   **Loc:** Des Moines, Washington
-    *   **Drive:** 45m (29.2 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Des%20Moines%2C%20Washington)
-    *   **Facebook Group:** 40+ Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/1587033452607069/
-*   **[Latin] Salsaymotion Sunset Social**
-    *   **Time:** March 1 @ 6:00 pm - 8:30 pm
-    *   **Loc:** Bravo Dance School, 13635 NE 8th St Suite 104, Bellevue, WA, United States
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/13635%20NE%208th%20St%20Suite%20104%2C%20Bellevue%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/salsaymotion-sunset-social-2/2026-03-01/
-*   **[Latin] eSOeS – Salsa/Bachata at Aria Ballroom every Sunday**
-    *   **Time:** March 1 @ 7:00 pm - 11:00 pm
-    *   **Loc:** Aria Ballroom, 15300 NE 95th St, Redmond, WA, United States
-    *   **Drive:** 27m (13.1 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/15300%20NE%2095th%20St%2C%20Redmond%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/esoes-salsa-bachata-at-aria-ballroom-every-sunday/2026-03-01/
 
 ## Mar 02, Monday
 
@@ -158,6 +130,18 @@
     *   **Drive:** 37m (22.7 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2040%20Westlake%20Ave%20N%2C%20Seattle%2C%20WA%2C%20United%20States)
     *   **Link:** https://golatindance.com/event/latin-night-at-seattle-harbor-2-2/2026-03-06/
+*   **[Latin] SALSA | BACHATA | ZOUK | KIZOMBA at Salsa Con Todo**
+    *   **Time:** March 6 @ 10:00 pm - 1:00 am
+    *   **Loc:** Salsa Con Todo Studio, 211 N 36th St, Seattle, WA, United States
+    *   **Drive:** 40m (24.9 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/211%20N%2036th%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/salsa-bachata-zouk-kizomba-at-salsa-con-todo/2026-03-06/
+*   **[FB] Winthrop Hot Air Balloon Round Up Weekend March 6th-8th**
+    *   **Loc:** Winthrop, Washington
+    *   **Drive:** 4h 47m (202.2 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Winthrop%2C%20Washington)
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/1162022429188687/
 
 ## Mar 07, Saturday
 
@@ -175,6 +159,11 @@
     *   **Time:** 10 AM
     *   **Facebook Group:** FB Group
     *   **Link:** https://www.facebook.com/events/777790328714703/
+*   **[Latin] Live Salsa Saturdays at Sea Monster Lounge**
+    *   **Time:** March 7 @ 7:00 pm - 9:00 pm
+    *   **Loc:** Sea Monster Lounge, 2202 N 45th S, Seattle, WA, United States
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2202%20N%2045th%20S%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/live-salsa-at-sea-monster-lounge-2-3/2026-03-07/
 
 ## Jun 08, Monday
 
@@ -457,4 +446,13 @@ Seattle
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Wallace%20Falls%20State%20Park%2C%2014503%20Wallace%20Lake%20Road%2C%20Gold%20Bar%2C%20WA%2098251)
     *   **Facebook Group:** FB Group
     *   **Link:** https://www.facebook.com/events/779463851414985/
+*   **[FB] Game Night- March**
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/1207448121599591/
+*   **[FB] Curling - Reservations are now sold out.**
+    *   **Loc:** Tacoma, Washington
+    *   **Drive:** 1h 3m (44.7 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Tacoma%2C%20Washington)
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/2952757638254385/
 ## Sources Checked

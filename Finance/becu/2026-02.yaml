@@ -1,0 +1,143 @@
+statement_month: 2026-02
+period_start: '2026-01-17'
+period_end: '2026-02-16'
+checking:
+  account_number: '3588947679'
+  beginning_balance: 6138.98
+  withdrawals_fees: -19998.27
+  deposits: 16800.0
+  dividends_interest: 1.91
+  ending_balance: 2942.62
+  apy: 0.37
+  average_daily_balance: 5430.2
+  ytd_dividends: 3.47
+  transactions:
+  - date: '2026-01-23'
+    amount: 1800.0
+    description: External Deposit FID BKG SVC LLC - MONEYLINE
+    type: deposit
+  - date: '2026-02-06'
+    amount: 2000.0
+    description: Deposit Online Banking Transfer from 2019617868 CNS
+    type: deposit
+  - date: '2026-02-06'
+    amount: 1.91
+    description: Dividend/Interest
+    type: deposit
+  - date: '2026-02-09'
+    amount: 5000.0
+    description: Deposit Online Banking Transfer from 2019617868 CNS
+    type: deposit
+  - date: '2026-02-12'
+    amount: 1000.0
+    description: External Deposit Z26474983 5EZUS - MONEYLINE
+    type: deposit
+  - date: '2026-02-13'
+    amount: 2000.0
+    description: External Deposit Z31859340 5H46M - MONEYLINE
+    type: deposit
+  - date: '2026-02-14'
+    amount: 5000.0
+    description: Deposit Online Banking Transfer from 2019617868 CNS
+    type: deposit
+  - date: '2026-01-23'
+    amount: -2000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2026-01-30'
+    amount: -1000.0
+    description: External Withdrawal WELLS FARGO AUTO - DRAFT
+    type: withdrawal
+  - date: '2026-02-09'
+    amount: -2000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2026-02-09'
+    amount: -3000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2026-02-10'
+    amount: -5000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2026-02-12'
+    amount: -998.27
+    description: Withdrawal Online Banking Transfer To 2019617876 MLN
+    type: withdrawal
+  - date: '2026-02-13'
+    amount: -1000.0
+    description: Withdrawal Online Banking Transfer To 2019617868 CNS
+    type: withdrawal
+  - date: '2026-02-16'
+    amount: -5000.0
+    description: Withdrawal Online Banking Transfer To 2019617868 CNS
+    type: withdrawal
+heloc:
+  account_number: '2019617876'
+  previous_balance: 145000.03
+  available_credit: 79096.14
+  credit_limit: 230000.0
+  new_balance: 150903.86
+  payments: -6998.27
+  other_credits: 0.0
+  advances: 12000.0
+  fees_charged: 0.0
+  interest_charged: 902.1
+  apr: 6.99
+  ytd_fees: 0.0
+  ytd_interest: 1288.32
+  minimum_payment: 1357.58
+  payment_date: '2026-03-15'
+  total_interest_this_period: 902.1
+  transactions: []
+  sub_accounts:
+  - name: HE Variable Line of Credit
+    previous_balance: 5000.03
+    new_balance: 10903.86
+    avg_daily_balance: 5000.03
+    transactions:
+    - date: '2026-02-06'
+      description: Principal Disbursement
+      amount: 2000.0
+    - date: '2026-02-09'
+      description: Principal Disbursement
+      amount: 5000.0
+    - date: '2026-02-12'
+      description: Regular Payment
+      amount: -100.0
+    - date: '2026-02-13'
+      description: Principal Receipt
+      amount: -1000.0
+    - date: '2026-02-14'
+      description: Principal Disbursement
+      amount: 5000.0
+    - date: '2026-02-16'
+      description: Principal Receipt
+      amount: -5000.0
+    interest_paid: 3.83
+  - name: HE Fixed Rate Advance
+    previous_balance: 100000.0
+    new_balance: 100000.0
+    avg_daily_balance: 100000.0
+    apr: 6.99
+    transactions:
+    - date: '2026-02-12'
+      description: Regular Payment
+      amount: -898.27
+    interest_paid: 898.27
+  - name: HE Fixed Rate Advance
+    previous_balance: 40000.0
+    new_balance: 40000.0
+    apr: 6.99
+    transactions: []
+    interest_paid: 0.0
+validation:
+  checking_balance_ok: true
+  checking_txn_totals_ok: true
+  heloc_balance_ok: true
+  heloc_sub_balance_ok: true
+  heloc_sub_interest_ok: true
+  mismatches: []
+source:
+  file: BECU-Statement-16-Feb-2026.PDF
+  processed_at: '2026-03-01T18:16:01'

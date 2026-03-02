@@ -1,0 +1,6 @@
+Washington State Law (RCW 59.18.650)
+For your specific situation — selling a single-family home with a month-to-month tenant — when the owner elects to sell a single-family residence, the landlord must provide at least 90 days' advance written notice of the date the tenant's possession is to end. Washington State Legislature
+There's an important condition attached: for the purposes of this law, an owner "elects to sell" when the owner makes reasonable attempts to sell the dwelling within 30 days after the tenant has vacated, including listing it for sale at a reasonable price with a realty agency or advertising it on the real estate multiple listing service. There is a rebuttable presumption that the owner did not intend to sell if those steps are not taken within 30 days after the tenant vacated. Washington State Legislature
+In plain terms: if you give the notice, you must actually follow through and list the house. You can't use "I'm selling" as a pretext.
+
+The strategic implication: You have to give 90 days notice before the tenant needs to be out. This actually gives you a window to have a quiet conversation with the renter first — offering him the chance to buy — without triggering the formal clock yet. Only once he declines (or doesn't respond) would you serve the formal written 90-day notice and proceed to market it.

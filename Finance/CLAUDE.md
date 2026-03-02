@@ -91,10 +91,47 @@
 - Monthly CMA cash flow: `SELECT strftime('%Y-%m', date) as month, SUM(CASE WHEN amount>0 THEN amount ELSE 0 END) as inflows, SUM(CASE WHEN amount<0 THEN amount ELSE 0 END) as outflows FROM fidelity_cma_transactions GROUP BY month ORDER BY month`
 - OFW costs: `SELECT strftime('%Y-%m', date) as month, SUM(amount) FROM fidelity_cma_transactions WHERE category LIKE 'Kids Cost%' GROUP BY month ORDER BY month`
 
+### SoFi Loan (`sofi_loan_statements` table)
+- **Source YAMLs**: `Finance/sofi-loan/YYYY-MM.yaml`
+- **Ingestion script**: `.claude/scripts/ingest_sofi_loan.py` — parses PDFs from `~/Dropbox/0-FinancialStatements/sofi-loan/`
+- **Slash command**: `/ingest-sofi` (scan, run, chain, reconcile)
+- **14 monthly statements** (Jan 2025 – Feb 2026)
+- **Account**: 0210879651-0000000034, Personal Line of Credit, $100K limit (draw period expired)
+- **Fixed payment**: $1,763.67/mo, balance declining from $62,990 → $41,356
+- **Import command**: `finance_db.py import-sofi`
+- **Dedup key**: `statement_month` (UNIQUE)
+- **Key fields**: statement_month, current_balance, principal, interest, fees, ytd_interest_paid, last_txn_date, last_txn_total
+- **Validation**: Intra-statement (payment = P+I+F), chain (balance continuity via last_txn_principal), YTD interest accumulation, CMA reconciliation (10-day date window for bank processing lag)
+
+**Key queries:**
+- Balance trajectory: `SELECT statement_month, current_balance FROM sofi_loan_statements ORDER BY statement_month`
+- Total interest paid: `SELECT SUM(interest) FROM sofi_loan_statements WHERE statement_month LIKE '2025%'`
+- Payoff projection: extrapolate from declining balance trend
+
+### BECU Checking + HELOC (`becu_checking_statements` + `becu_checking_transactions` + `becu_heloc_statements` tables)
+- **Source YAMLs**: `Finance/becu/YYYY-MM.yaml`
+- **Ingestion script**: `.claude/scripts/ingest_becu.py` — parses PDFs from `~/Dropbox/0-FinancialStatements/BECU/`
+- **Slash command**: `/ingest-becu` (scan, run, chain, reconcile)
+- **14 monthly statements** (Jan 2025 – Feb 2026), 118 checking transactions, 8 HELOC statements (Jul 2025+)
+- **Accounts**: Checking 3588947679, HELOC 2019617876 (opened Jul 2025, $230K credit limit)
+- **Statement period**: 17th-to-16th (non-calendar months)
+- **Import command**: `finance_db.py import-becu`
+- **Dedup key**: `statement_month` (UNIQUE on both checking + HELOC tables)
+- **Validation**: Intra-statement (balance equations, sub-account sums), chain (balance continuity, YTD interest accumulation, no gaps), CMA reconciliation
+- **HELOC sub-accounts**: Variable Line of Credit + up to 2 Fixed Rate Advances (Dec 2025+)
+- **HELOC timeline**: Jul 2025 opened ($36.5K), grew to $150.9K by Feb 2026; $100K fixed rate (Dec 2025), $40K fixed rate (Jan 2026)
+
+**Key queries:**
+- Checking balance trajectory: `SELECT statement_month, ending_balance FROM becu_checking_statements ORDER BY statement_month`
+- HELOC balance trajectory: `SELECT statement_month, new_balance, credit_limit, available_credit FROM becu_heloc_statements ORDER BY statement_month`
+- HELOC interest paid: `SELECT SUM(interest_charged) FROM becu_heloc_statements WHERE statement_month LIKE '2025%'`
+- Monthly checking activity: `SELECT s.statement_month, s.deposits, s.withdrawals_fees, COUNT(t.id) as txn_count FROM becu_checking_statements s LEFT JOIN becu_checking_transactions t ON t.statement_id=s.id GROUP BY s.statement_month`
+- MONEYLINE transfers (Fidelity↔BECU): `SELECT date, amount, description FROM becu_checking_transactions WHERE description LIKE '%MONEYLINE%' ORDER BY date`
+
 ## Backup & Recovery
 
 ### Automatic Backup
-Every import command (`import`, `import-amazon`, `import-payslips`, `import-tax`, `import-fidelity`) automatically:
+Every import command (`import`, `import-amazon`, `import-payslips`, `import-tax`, `import-fidelity`, `import-sofi`, `import-becu`) automatically:
 1. Creates `Finance/finance.db.bak` (full DB copy, overwritten each time)
 2. Exports all categorization rules to `Finance/categorization_rules.json`
 
@@ -109,6 +146,8 @@ The JSON file syncs via Obsidian Sync and is the **only irreplaceable data** —
 | `Finance/categorization_rules.json` | 751 categorization rules (auto-exported) | Yes |
 | `Finance/credit-card/processing_log.json` | CC PDF ingestion tracking | Yes |
 | `Finance/fidelity-accounts/processing_log.json` | Fidelity PDF ingestion tracking | Yes |
+| `Finance/sofi-loan/processing_log.json` | SoFi loan PDF ingestion tracking | Yes |
+| `Finance/becu/processing_log.json` | BECU PDF ingestion tracking | Yes |
 | `Finance/tax/processing_log.json` | Tax PDF ingestion tracking | Yes |
 
 ### Manual Commands
@@ -127,6 +166,8 @@ $PYTHON .claude/scripts/finance_db.py import-amazon       # Amazon orders
 $PYTHON .claude/scripts/finance_db.py import-payslips     # payslips
 $PYTHON .claude/scripts/finance_db.py import-tax          # tax documents
 $PYTHON .claude/scripts/finance_db.py import-fidelity     # Fidelity accounts + CMA txns
+$PYTHON .claude/scripts/finance_db.py import-sofi         # SoFi loan statements
+$PYTHON .claude/scripts/finance_db.py import-becu         # BECU checking + HELOC
 ```
 
 ### What's Reproducible vs. What's Not
@@ -138,6 +179,8 @@ $PYTHON .claude/scripts/finance_db.py import-fidelity     # Fidelity accounts + 
 | Payslips | ~1,000 | YAMLs in `Finance/payslips/` | Yes — `import-payslips` |
 | Tax documents | ~900 | YAMLs in `Finance/tax/` | Yes — `import-tax` |
 | Fidelity accounts + CMA | ~900 | YAMLs in `Finance/fidelity-accounts/` | Yes — `import-fidelity` |
+| SoFi loan statements | 14 | YAMLs in `Finance/sofi-loan/` | Yes — `import-sofi` |
+| BECU checking + HELOC | ~140 | YAMLs in `Finance/becu/` | Yes — `import-becu` |
 | Categories + accounts | ~100 | Seed data in Python script | Yes — `init` |
 | **Categorization rules** | **~750** | **`categorization_rules.json`** | **Only via `restore-rules`** |
 

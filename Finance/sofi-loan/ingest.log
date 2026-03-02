@@ -1,0 +1,151 @@
+2026-03-01 17:30:33,245 INFO SoFi Loan Statement Ingestion — 2026-03-01 17:30:33
+2026-03-01 17:30:33,245 INFO Source: /Users/ychen2/Dropbox/0-FinancialStatements/sofi-loan
+2026-03-01 17:30:33,245 INFO Found 14 statement PDFs
+
+2026-03-01 17:30:33,245 INFO   2025-01         NEW  Statement-01-2025_679894a3deec04041e1b8c4faf656750c35df69ccb01c.pdf
+2026-03-01 17:30:33,245 INFO   2025-02         NEW  Statement-02-2025_67bd7fd978cfc1d8ae0c0a5364f15a3a438e774c4f3cf.pdf
+2026-03-01 17:30:33,245 INFO   2025-03         NEW  Statement-03-2025_67e649c7a0951ff32fab0c7d43c4f0364b87e3b5308db.pdf
+2026-03-01 17:30:33,245 INFO   2025-04         NEW  Statement-04-2025_680ddaee0173e9116c05fd6a87b2aa2081b6f37053101.pdf
+2026-03-01 17:30:33,245 INFO   2025-05         NEW  Statement-05-2025_6836bb737ba742f803fd776f18b93dfc13230211e3602.pdf
+2026-03-01 17:30:33,245 INFO   2025-06         NEW  Statement-06-2025_685e48297e618e3bd077f9ce9f12e731956a0fa4e82a9.pdf
+2026-03-01 17:30:33,245 INFO   2025-07         NEW  Statement-07-2025_688724c0b9a158bbd0628e141d9ecf071d48ca00cc73c.pdf
+2026-03-01 17:30:33,245 INFO   2025-08         NEW  Statement-08-2025_68b003e89c4912e4a1673d01d01d7376aab2e8ca0f002.pdf
+2026-03-01 17:30:33,245 INFO   2025-09         NEW  Statement-09-2025_68d796ac4549edf07cab546baf2ecca88601159c27963.pdf
+2026-03-01 17:30:33,245 INFO   2025-10         NEW  Statement-10-2025_69007501a247ba72ebef1aecef90f90627c23d0ff3da7.pdf
+2026-03-01 17:30:33,245 INFO   2025-11         NEW  Statement-11-2025_6928133a4a2ee8307791ba0d15f8245251c880dda15df (1).pdf
+2026-03-01 17:30:33,246 INFO   2025-12         NEW  Statement-12-2025_6950ee48a0ca617f60976b5fee1437c076705e1ace469.pdf
+2026-03-01 17:30:33,246 INFO   2026-01         NEW  Statement-01-2026_6979d1de5ba67189e68be966241dca641c965766a98c0.pdf
+2026-03-01 17:30:33,246 INFO   2026-02         NEW  Statement-02-2026_699eb9f726669e68eed1bfa870e2f65cea7eb6c0dc49c.pdf
+2026-03-01 17:30:33,246 INFO 
+14 new / 14 total
+2026-03-01 17:30:37,018 INFO SoFi Loan Statement Ingestion — 2026-03-01 17:30:37
+2026-03-01 17:30:37,019 INFO Processing 14 PDFs...
+2026-03-01 17:30:37,019 INFO 
+--- 2025-01 (Statement-01-2025_679894a3deec04041e1b8c4faf656750c35df69ccb01c.pdf) ---
+2026-03-01 17:30:37,074 INFO   Written: 2025-01.yaml
+2026-03-01 17:30:37,075 INFO 
+--- 2025-02 (Statement-02-2025_67bd7fd978cfc1d8ae0c0a5364f15a3a438e774c4f3cf.pdf) ---
+2026-03-01 17:30:37,129 INFO   Written: 2025-02.yaml
+2026-03-01 17:30:37,129 INFO 
+--- 2025-03 (Statement-03-2025_67e649c7a0951ff32fab0c7d43c4f0364b87e3b5308db.pdf) ---
+2026-03-01 17:30:37,183 INFO   Written: 2025-03.yaml
+2026-03-01 17:30:37,184 INFO 
+--- 2025-04 (Statement-04-2025_680ddaee0173e9116c05fd6a87b2aa2081b6f37053101.pdf) ---
+2026-03-01 17:30:37,237 INFO   Written: 2025-04.yaml
+2026-03-01 17:30:37,238 INFO 
+--- 2025-05 (Statement-05-2025_6836bb737ba742f803fd776f18b93dfc13230211e3602.pdf) ---
+2026-03-01 17:30:37,291 INFO   Written: 2025-05.yaml
+2026-03-01 17:30:37,291 INFO 
+--- 2025-06 (Statement-06-2025_685e48297e618e3bd077f9ce9f12e731956a0fa4e82a9.pdf) ---
+2026-03-01 17:30:37,350 INFO   Written: 2025-06.yaml
+2026-03-01 17:30:37,351 INFO 
+--- 2025-07 (Statement-07-2025_688724c0b9a158bbd0628e141d9ecf071d48ca00cc73c.pdf) ---
+2026-03-01 17:30:37,407 INFO   Written: 2025-07.yaml
+2026-03-01 17:30:37,407 INFO 
+--- 2025-08 (Statement-08-2025_68b003e89c4912e4a1673d01d01d7376aab2e8ca0f002.pdf) ---
+2026-03-01 17:30:37,462 INFO   Written: 2025-08.yaml
+2026-03-01 17:30:37,462 INFO 
+--- 2025-09 (Statement-09-2025_68d796ac4549edf07cab546baf2ecca88601159c27963.pdf) ---
+2026-03-01 17:30:37,516 INFO   Written: 2025-09.yaml
+2026-03-01 17:30:37,516 INFO 
+--- 2025-10 (Statement-10-2025_69007501a247ba72ebef1aecef90f90627c23d0ff3da7.pdf) ---
+2026-03-01 17:30:37,572 INFO   Written: 2025-10.yaml
+2026-03-01 17:30:37,572 INFO 
+--- 2025-11 (Statement-11-2025_6928133a4a2ee8307791ba0d15f8245251c880dda15df (1).pdf) ---
+2026-03-01 17:30:37,627 INFO   Written: 2025-11.yaml
+2026-03-01 17:30:37,627 INFO 
+--- 2025-12 (Statement-12-2025_6950ee48a0ca617f60976b5fee1437c076705e1ace469.pdf) ---
+2026-03-01 17:30:37,684 INFO   Written: 2025-12.yaml
+2026-03-01 17:30:37,685 INFO 
+--- 2026-01 (Statement-01-2026_6979d1de5ba67189e68be966241dca641c965766a98c0.pdf) ---
+2026-03-01 17:30:37,740 INFO   Written: 2026-01.yaml
+2026-03-01 17:30:37,740 INFO 
+--- 2026-02 (Statement-02-2026_699eb9f726669e68eed1bfa870e2f65cea7eb6c0dc49c.pdf) ---
+2026-03-01 17:30:37,794 INFO   Written: 2026-02.yaml
+2026-03-01 17:30:37,794 INFO 
+Done: 14 processed, 0 errors
+2026-03-01 17:30:42,475 INFO SoFi Loan Statement Ingestion — 2026-03-01 17:30:42
+2026-03-01 17:30:42,486 INFO Chain validation FAILED:
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2025-02: prev_balance (62990.04) - principal (1657.78) = 61332.26 != current_balance (61346.74), diff=14.48
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2025-03: prev_balance (61346.74) - principal (1649.61) = 59697.13 != current_balance (59688.96), diff=8.17
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2025-04: prev_balance (59688.96) - principal (1656.34) = 58032.62 != current_balance (58039.35), diff=6.73
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2025-05: prev_balance (58039.35) - principal (1655.92) = 56383.43 != current_balance (56383.01), diff=0.42
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2025-06: prev_balance (56383.01) - principal (1662.46) = 54720.55 != current_balance (54727.09), diff=6.54
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2025-07: prev_balance (54727.09) - principal (1662.27) = 53064.82 != current_balance (53064.63), diff=0.19
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2025-08: prev_balance (53064.63) - principal (1665.44) = 51399.19 != current_balance (51402.36), diff=3.17
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2025-09: prev_balance (51402.36) - principal (1671.69) = 49730.67 != current_balance (49736.92), diff=6.25
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2025-10: prev_balance (49736.92) - principal (1671.82) = 48065.1 != current_balance (48065.23), diff=0.13
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2025-11: prev_balance (48065.23) - principal (1677.87) = 46387.36 != current_balance (46393.41), diff=6.05
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2025-12: prev_balance (46393.41) - principal (1678.22) = 44715.19 != current_balance (44715.54), diff=0.35
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2026-01: prev_balance (44715.54) - principal (1681.43) = 43034.11 != current_balance (43037.32), diff=3.21
+2026-03-01 17:30:42,487 WARNING   Balance chain break at 2026-02: prev_balance (43037.32) - principal (1692.29) = 41345.03 != current_balance (41355.89), diff=10.86
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2025-01: computed=120.37, reported=123.51
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2025-02: computed=226.26, reported=243.88
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2025-03: computed=340.32, reported=349.77
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2025-04: computed=447.65, reported=463.83
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2025-05: computed=555.4, reported=571.16
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2025-06: computed=656.61, reported=678.91
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2025-07: computed=758.01, reported=780.12
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2025-08: computed=856.24, reported=881.52
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2025-09: computed=948.22, reported=979.75
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2025-10: computed=1040.07, reported=1071.73
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2025-11: computed=1125.87, reported=1163.58
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2025-12: computed=1211.32, reported=1249.38
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2026-01: computed=82.24, reported=85.45
+2026-03-01 17:30:42,487 WARNING   YTD interest mismatch at 2026-02: computed=153.62, reported=167.69
+2026-03-01 17:32:02,016 INFO SoFi Loan Statement Ingestion — 2026-03-01 17:32:02
+2026-03-01 17:32:02,025 INFO Chain validation PASSED — all statements consistent
+2026-03-01 17:32:05,839 INFO SoFi Loan Statement Ingestion — 2026-03-01 17:32:05
+2026-03-01 17:32:05,857 INFO Reconciliation: 0 matched, 14 unmatched
+2026-03-01 17:32:05,857 INFO Reconciliation issues:
+2026-03-01 17:32:05,858 WARNING   2025-01: no CMA match for $1763.67 on 2025-01-12
+2026-03-01 17:32:05,858 WARNING   2025-02: no CMA match for $1763.67 on 2025-02-12
+2026-03-01 17:32:05,858 WARNING   2025-03: no CMA match for $1763.67 on 2025-03-12
+2026-03-01 17:32:05,858 WARNING   2025-04: no CMA match for $1763.67 on 2025-04-12
+2026-03-01 17:32:05,858 WARNING   2025-05: no CMA match for $1763.67 on 2025-05-12
+2026-03-01 17:32:05,858 WARNING   2025-06: no CMA match for $1763.67 on 2025-06-12
+2026-03-01 17:32:05,858 WARNING   2025-07: no CMA match for $1763.67 on 2025-07-12
+2026-03-01 17:32:05,858 WARNING   2025-08: no CMA match for $1763.67 on 2025-08-12
+2026-03-01 17:32:05,858 WARNING   2025-09: no CMA match for $1763.67 on 2025-09-12
+2026-03-01 17:32:05,858 WARNING   2025-10: no CMA match for $1763.67 on 2025-10-12
+2026-03-01 17:32:05,858 WARNING   2025-11: no CMA match for $1763.67 on 2025-11-12
+2026-03-01 17:32:05,858 WARNING   2025-12: no CMA match for $1763.67 on 2025-12-12
+2026-03-01 17:32:05,858 WARNING   2026-01: no CMA match for $1763.67 on 2026-01-12
+2026-03-01 17:32:05,858 WARNING   2026-02: no CMA match for $1763.67 on 2026-02-12
+2026-03-01 17:32:25,769 INFO SoFi Loan Statement Ingestion — 2026-03-01 17:32:25
+2026-03-01 17:32:25,772 DEBUG   2025-01: matched CMA txn on 2025-01-12
+2026-03-01 17:32:25,772 DEBUG   2025-02: matched CMA txn on 2025-02-12
+2026-03-01 17:32:25,773 DEBUG   2025-03: matched CMA txn on 2025-03-12
+2026-03-01 17:32:25,774 DEBUG   2025-04: matched CMA txn on 2025-04-12
+2026-03-01 17:32:25,774 DEBUG   2025-05: matched CMA txn on 2025-05-12
+2026-03-01 17:32:25,775 DEBUG   2025-06: matched CMA txn on 2025-06-12
+2026-03-01 17:32:25,776 DEBUG   2025-07: matched CMA txn on 2025-07-12
+2026-03-01 17:32:25,776 DEBUG   2025-08: matched CMA txn on 2025-08-12
+2026-03-01 17:32:25,777 DEBUG   2025-09: matched CMA txn on 2025-09-12
+2026-03-01 17:32:25,778 DEBUG   2025-10: matched CMA txn on 2025-10-12
+2026-03-01 17:32:25,779 DEBUG   2025-11: matched CMA txn on 2025-11-12
+2026-03-01 17:32:25,779 DEBUG   2025-12: matched CMA txn on 2025-12-12
+2026-03-01 17:32:25,780 DEBUG   2026-01: matched CMA txn on 2026-01-12
+2026-03-01 17:32:25,781 INFO Reconciliation: 13 matched, 1 unmatched
+2026-03-01 17:32:25,781 INFO Reconciliation issues:
+2026-03-01 17:32:25,781 WARNING   2026-02: no CMA match for $1763.67 on 2026-02-12
+2026-03-01 17:33:18,695 INFO SoFi Loan Statement Ingestion — 2026-03-01 17:33:18
+2026-03-01 17:33:18,695 INFO Source: /Users/ychen2/Dropbox/0-FinancialStatements/sofi-loan
+2026-03-01 17:33:18,695 INFO Found 14 statement PDFs
+
+2026-03-01 17:33:18,695 INFO   2025-01   processed  Statement-01-2025_679894a3deec04041e1b8c4faf656750c35df69ccb01c.pdf
+2026-03-01 17:33:18,695 INFO   2025-02   processed  Statement-02-2025_67bd7fd978cfc1d8ae0c0a5364f15a3a438e774c4f3cf.pdf
+2026-03-01 17:33:18,695 INFO   2025-03   processed  Statement-03-2025_67e649c7a0951ff32fab0c7d43c4f0364b87e3b5308db.pdf
+2026-03-01 17:33:18,695 INFO   2025-04   processed  Statement-04-2025_680ddaee0173e9116c05fd6a87b2aa2081b6f37053101.pdf
+2026-03-01 17:33:18,695 INFO   2025-05   processed  Statement-05-2025_6836bb737ba742f803fd776f18b93dfc13230211e3602.pdf
+2026-03-01 17:33:18,695 INFO   2025-06   processed  Statement-06-2025_685e48297e618e3bd077f9ce9f12e731956a0fa4e82a9.pdf
+2026-03-01 17:33:18,695 INFO   2025-07   processed  Statement-07-2025_688724c0b9a158bbd0628e141d9ecf071d48ca00cc73c.pdf
+2026-03-01 17:33:18,695 INFO   2025-08   processed  Statement-08-2025_68b003e89c4912e4a1673d01d01d7376aab2e8ca0f002.pdf
+2026-03-01 17:33:18,695 INFO   2025-09   processed  Statement-09-2025_68d796ac4549edf07cab546baf2ecca88601159c27963.pdf
+2026-03-01 17:33:18,695 INFO   2025-10   processed  Statement-10-2025_69007501a247ba72ebef1aecef90f90627c23d0ff3da7.pdf
+2026-03-01 17:33:18,696 INFO   2025-11   processed  Statement-11-2025_6928133a4a2ee8307791ba0d15f8245251c880dda15df (1).pdf
+2026-03-01 17:33:18,696 INFO   2025-12   processed  Statement-12-2025_6950ee48a0ca617f60976b5fee1437c076705e1ace469.pdf
+2026-03-01 17:33:18,696 INFO   2026-01   processed  Statement-01-2026_6979d1de5ba67189e68be966241dca641c965766a98c0.pdf
+2026-03-01 17:33:18,696 INFO   2026-02   processed  Statement-02-2026_699eb9f726669e68eed1bfa870e2f65cea7eb6c0dc49c.pdf
+2026-03-01 17:33:18,696 INFO 
+0 new / 14 total

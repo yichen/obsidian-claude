@@ -19,6 +19,8 @@ AMAZON_CSV_ROOT = Path.home() / "Dropbox" / "0-FinancialStatements" / "amazon"
 PAYSLIP_ROOT = VAULT_ROOT / "Finance" / "payslips"
 TAX_ROOT = VAULT_ROOT / "Finance" / "tax"
 FIDELITY_ROOT = VAULT_ROOT / "Finance" / "fidelity-accounts"
+SOFI_ROOT = VAULT_ROOT / "Finance" / "sofi-loan"
+BECU_ROOT = VAULT_ROOT / "Finance" / "becu"
 RULES_BACKUP_PATH = VAULT_ROOT / "Finance" / "categorization_rules.json"
 
 # ---------------------------------------------------------------------------
@@ -260,6 +262,79 @@ CREATE TABLE IF NOT EXISTS fidelity_cma_transactions (
 );
 CREATE INDEX IF NOT EXISTS idx_cma_txn_date ON fidelity_cma_transactions(date);
 CREATE INDEX IF NOT EXISTS idx_cma_txn_cat ON fidelity_cma_transactions(category);
+
+CREATE TABLE IF NOT EXISTS sofi_loan_statements (
+    id INTEGER PRIMARY KEY,
+    statement_month TEXT NOT NULL UNIQUE,
+    current_balance REAL NOT NULL,
+    credit_limit REAL,
+    payment_due REAL NOT NULL,
+    principal REAL NOT NULL,
+    interest REAL NOT NULL,
+    fees REAL DEFAULT 0,
+    ytd_interest_paid REAL,
+    last_txn_date TEXT,
+    last_txn_total REAL,
+    source_file TEXT NOT NULL,
+    processed_at TEXT
+);
+CREATE INDEX IF NOT EXISTS idx_sofi_stmt_month ON sofi_loan_statements(statement_month);
+
+CREATE TABLE IF NOT EXISTS becu_checking_statements (
+    id INTEGER PRIMARY KEY,
+    statement_month TEXT NOT NULL UNIQUE,
+    period_start TEXT,
+    period_end TEXT,
+    beginning_balance REAL NOT NULL,
+    withdrawals_fees REAL,
+    deposits REAL,
+    dividends_interest REAL,
+    ending_balance REAL NOT NULL,
+    apy REAL,
+    avg_daily_balance REAL,
+    ytd_dividends REAL,
+    num_deposits INTEGER,
+    num_withdrawals INTEGER,
+    source_file TEXT NOT NULL,
+    processed_at TEXT
+);
+
+CREATE TABLE IF NOT EXISTS becu_checking_transactions (
+    id INTEGER PRIMARY KEY,
+    statement_id INTEGER NOT NULL REFERENCES becu_checking_statements(id) ON DELETE CASCADE,
+    date TEXT NOT NULL,
+    amount REAL NOT NULL,
+    description TEXT NOT NULL,
+    type TEXT NOT NULL
+);
+
+CREATE TABLE IF NOT EXISTS becu_heloc_statements (
+    id INTEGER PRIMARY KEY,
+    statement_month TEXT NOT NULL UNIQUE,
+    period_start TEXT,
+    period_end TEXT,
+    previous_balance REAL NOT NULL,
+    payments REAL,
+    other_credits REAL,
+    advances REAL,
+    fees_charged REAL,
+    interest_charged REAL,
+    new_balance REAL NOT NULL,
+    credit_limit REAL,
+    available_credit REAL,
+    apr REAL,
+    ytd_interest REAL,
+    ytd_fees REAL,
+    minimum_payment REAL,
+    payment_date TEXT,
+    total_interest_this_period REAL,
+    source_file TEXT NOT NULL,
+    processed_at TEXT
+);
+
+CREATE INDEX IF NOT EXISTS idx_becu_check_month ON becu_checking_statements(statement_month);
+CREATE INDEX IF NOT EXISTS idx_becu_check_txn ON becu_checking_transactions(statement_id);
+CREATE INDEX IF NOT EXISTS idx_becu_heloc_month ON becu_heloc_statements(statement_month);
 """
 
 # ---------------------------------------------------------------------------
@@ -1732,6 +1807,197 @@ def cmd_import_fidelity():
     }, indent=2))
 
 
+def cmd_import_sofi():
+    """Import SoFi loan YAML files into the database (idempotent)."""
+    backup_db()
+    conn = get_db()
+    conn.executescript(SCHEMA)
+
+    new_stmts = 0
+    skipped = 0
+
+    yaml_files = sorted(SOFI_ROOT.glob("*.yaml"))
+    if not yaml_files:
+        print("No SoFi loan YAML files found.")
+        return
+
+    for yaml_file in yaml_files:
+        with open(yaml_file, encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+        if not data:
+            continue
+
+        stmt_month = data.get("statement_month", "")
+        source_file = data.get("source", {}).get("file", yaml_file.name)
+        breakdown = data.get("breakdown", {})
+        last_txn = data.get("last_transaction") or {}
+
+        try:
+            conn.execute(
+                """INSERT OR IGNORE INTO sofi_loan_statements
+                   (statement_month, current_balance, credit_limit, payment_due,
+                    principal, interest, fees, ytd_interest_paid,
+                    last_txn_date, last_txn_total, source_file, processed_at)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (
+                    stmt_month,
+                    data.get("current_balance"),
+                    data.get("credit_limit"),
+                    data.get("payment_due"),
+                    breakdown.get("principal"),
+                    breakdown.get("interest"),
+                    breakdown.get("fees", 0),
+                    data.get("ytd_interest_paid"),
+                    last_txn.get("date"),
+                    last_txn.get("total"),
+                    source_file,
+                    data.get("source", {}).get("processed_at"),
+                ),
+            )
+            if conn.execute("SELECT changes()").fetchone()[0] > 0:
+                new_stmts += 1
+            else:
+                skipped += 1
+        except sqlite3.IntegrityError:
+            skipped += 1
+
+    conn.commit()
+    print(json.dumps({
+        "new_statements": new_stmts,
+        "skipped_existing": skipped,
+    }, indent=2))
+
+
+def cmd_import_becu():
+    """Import BECU checking + HELOC YAML files into the database (idempotent)."""
+    backup_db()
+    conn = get_db()
+    conn.executescript(SCHEMA)
+
+    new_check = new_heloc = new_txns = skipped = 0
+
+    yaml_files = sorted(BECU_ROOT.glob("*.yaml"))
+    if not yaml_files:
+        print("No BECU YAML files found.")
+        return
+
+    for yaml_file in yaml_files:
+        with open(yaml_file, encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+        if not data:
+            continue
+
+        stmt_month = data.get("statement_month", "")
+        source_file = data.get("source", {}).get("file", yaml_file.name)
+        processed_at = data.get("source", {}).get("processed_at")
+        checking = data.get("checking", {})
+        heloc = data.get("heloc")
+
+        # --- Checking statement ---
+        txns = checking.get("transactions", [])
+        dep_count = sum(1 for t in txns if t.get("type") == "deposit")
+        wdl_count = sum(1 for t in txns if t.get("type") == "withdrawal")
+
+        try:
+            conn.execute(
+                """INSERT OR IGNORE INTO becu_checking_statements
+                   (statement_month, period_start, period_end,
+                    beginning_balance, withdrawals_fees, deposits,
+                    dividends_interest, ending_balance, apy,
+                    avg_daily_balance, ytd_dividends,
+                    num_deposits, num_withdrawals,
+                    source_file, processed_at)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (
+                    stmt_month,
+                    data.get("period_start"),
+                    data.get("period_end"),
+                    checking.get("beginning_balance"),
+                    checking.get("withdrawals_fees"),
+                    checking.get("deposits"),
+                    checking.get("dividends_interest"),
+                    checking.get("ending_balance"),
+                    checking.get("apy"),
+                    checking.get("average_daily_balance"),
+                    checking.get("ytd_dividends"),
+                    dep_count,
+                    wdl_count,
+                    source_file,
+                    processed_at,
+                ),
+            )
+            if conn.execute("SELECT changes()").fetchone()[0] > 0:
+                stmt_id = conn.execute(
+                    "SELECT id FROM becu_checking_statements WHERE statement_month=?",
+                    (stmt_month,),
+                ).fetchone()[0]
+                # Insert transactions
+                for txn in txns:
+                    conn.execute(
+                        """INSERT INTO becu_checking_transactions
+                           (statement_id, date, amount, description, type)
+                           VALUES (?,?,?,?,?)""",
+                        (stmt_id, txn["date"], txn["amount"],
+                         txn["description"], txn["type"]),
+                    )
+                    new_txns += 1
+                new_check += 1
+            else:
+                skipped += 1
+        except sqlite3.IntegrityError:
+            skipped += 1
+
+        # --- HELOC statement ---
+        if heloc:
+            try:
+                conn.execute(
+                    """INSERT OR IGNORE INTO becu_heloc_statements
+                       (statement_month, period_start, period_end,
+                        previous_balance, payments, other_credits,
+                        advances, fees_charged, interest_charged,
+                        new_balance, credit_limit, available_credit,
+                        apr, ytd_interest, ytd_fees,
+                        minimum_payment, payment_date,
+                        total_interest_this_period,
+                        source_file, processed_at)
+                       VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                    (
+                        stmt_month,
+                        data.get("period_start"),
+                        data.get("period_end"),
+                        heloc.get("previous_balance"),
+                        heloc.get("payments"),
+                        heloc.get("other_credits"),
+                        heloc.get("advances"),
+                        heloc.get("fees_charged"),
+                        heloc.get("interest_charged"),
+                        heloc.get("new_balance"),
+                        heloc.get("credit_limit"),
+                        heloc.get("available_credit"),
+                        heloc.get("apr"),
+                        heloc.get("ytd_interest"),
+                        heloc.get("ytd_fees"),
+                        heloc.get("minimum_payment"),
+                        heloc.get("payment_date"),
+                        heloc.get("total_interest_this_period"),
+                        source_file,
+                        processed_at,
+                    ),
+                )
+                if conn.execute("SELECT changes()").fetchone()[0] > 0:
+                    new_heloc += 1
+            except sqlite3.IntegrityError:
+                pass
+
+    conn.commit()
+    print(json.dumps({
+        "new_checking_statements": new_check,
+        "new_heloc_statements": new_heloc,
+        "new_checking_transactions": new_txns,
+        "skipped_existing": skipped,
+    }, indent=2))
+
+
 def cmd_status():
     """Print database statistics."""
     conn = get_db()
@@ -2064,8 +2330,8 @@ def _apply_single_rule(conn, pattern, cat_id):
 def main():
     if len(sys.argv) < 2:
         print("Usage: finance_db.py <command> [args]")
-        print("Commands: init, import, import-amazon, import-payslips, import-tax, import-fidelity, status, categorize, categorize-amazon,")
-        print("          uncategorized, add-rule <pattern> <category>,")
+        print("Commands: init, import, import-amazon, import-payslips, import-tax, import-fidelity, import-sofi, import-becu,")
+        print("          status, categorize, categorize-amazon, uncategorized, add-rule <pattern> <category>,")
         print("          set-category <id> <category> [--create-rule], query <sql>,")
         print("          backup-rules, restore-rules")
         sys.exit(1)
@@ -2084,6 +2350,10 @@ def main():
         cmd_import_tax()
     elif cmd == "import-fidelity":
         cmd_import_fidelity()
+    elif cmd == "import-sofi":
+        cmd_import_sofi()
+    elif cmd == "import-becu":
+        cmd_import_becu()
     elif cmd == "status":
         cmd_status()
     elif cmd == "categorize":

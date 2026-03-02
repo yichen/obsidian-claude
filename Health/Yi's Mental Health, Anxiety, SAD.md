@@ -1,7 +1,13 @@
+## 2026-03-02
+- **Sleep:** Took hydroxyzine PAM last night and slept just under seven hours, but REM was tiny—less than 10 minutes, same pattern I remember from past doses.
+
 #sad #sleep #fitness #mentalheal #health #allergy
 
 ## 2026-03-01
 - **Sleep:** Logged about 6.5 hours—right on the usual average—but felt let down that yesterday's relaxed post-jog glow didn't translate into deeper rest or the extra hour I'd hoped for.
+- **Meds:** Decided to take hydroxyzine PAM tonight after realizing I might need to sell the rental house for cash flow.
+- **Mood:** That possibility stirred up fresh anxiety about money and made me uneasy heading into the night.
+
 
 ## 2026-02-28
 - **Sleep:** Went to bed happy around midnight after the great date with Tingting, but woke up for the day at 4:30 a.m. After an hour of trying to doze I decided to get up and clean the bedroom, which was overdue by a month; spent about an hour decluttering and it felt productive instead of miserable like the old days of suffering through a four-hour night.

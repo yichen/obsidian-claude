@@ -1,3 +1,9 @@
+## 2026-03-01
+- **Behavior:** Sheri reported Laurence spent the day throwing things and even tossed a gallon of water that broke and flooded the floor.
+- **Possible Triggers:** She suspects his medication might be contributing, because the entire day felt unusually hard.
+- **Health:** He's been complaining about ear pain but still shows no fever.
+- **Plan:** I told Sheri we should document today’s behavior for Dr. Soong. During last week’s visit I mentioned we hadn’t seen clear improvement after doubling his medication, and Dr. Soong said we might need to switch meds but wants to continue this dose for another month or two.
+
 
 ## 2026-02-24
 - **Food:** Laurence likes peanut butter sandwiches only when they’re on white bread; whole wheat versions are a hard no.

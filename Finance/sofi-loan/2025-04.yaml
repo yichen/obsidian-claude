@@ -1,0 +1,28 @@
+statement_month: 2025-04
+account_number: 0210879651-0000000034
+account_type: Personal Line of Credit
+current_balance: 58039.35
+credit_limit: 100000.00
+payment_due: 1763.67
+past_due: 0.00
+total_payment_due: 1763.67
+due_date: '2025-05-12'
+breakdown:
+  principal: 1656.34
+  interest: 107.33
+  fees: 0.00
+ytd_interest_paid: 463.83
+last_transaction:
+  date: '2025-04-12'
+  principal: 1649.61
+  interest: 114.06
+  fees: 0.00
+  total: 1763.67
+validation:
+  principal_plus_interest_eq_payment: true
+  last_txn_total_eq_payment: true
+  last_txn_breakdown_ok: true
+  mismatches: []
+source:
+  file: Statement-04-2025_680ddaee0173e9116c05fd6a87b2aa2081b6f37053101.pdf
+  processed_at: '2026-03-01T17:30:37'

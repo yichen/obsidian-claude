@@ -21,32 +21,29 @@
 - **5,620 CC transactions** imported from 163 CSVs (Dec 2022 – Feb 2026, 6 cards)
 - **3,218 Amazon orders** imported from `~/Dropbox/0-FinancialStatements/amazon/*.csv` (2003–2026)
 - **44 payslips + 1,032 line items** from `Finance/payslips/<employer>/*.yaml` (Salesforce + ServiceTitan)
-- **100% CC transactions categorized**; Amazon orders 8% categorized (product names too specific for keyword rules)
+- **100% CC transactions categorized**; **Amazon orders 88% categorized** (2,830/3,218 via 10 rounds of keyword rules + manual review)
 - Dedup keys: transactions=`source_file + source_row`; amazon=`(order_id, asin)` + date watermark; payslips=`(employer, pay_date, period_start, period_end, gross_pay)`
 - `is_transfer=1` flags payments, ACH, interest — excluded from spending queries
-- Categories: 2-level hierarchy (~49 categories), top-level groups: Food & Drink, Shopping, Travel, Health & Wellness, Fees & Interest, etc.
-- Shopping subcategories include: Camping & Outdoor, Photography, Office (for hobby/work tracking)
-- `backup_db()` creates `.db.bak` + auto-exports `Finance/categorization_rules.json` (751+ rules) before every import
+- Categories: 2-level hierarchy (~59 categories), top-level groups: Food & Drink, Shopping, Travel, Health & Wellness, Fees & Interest, Kids & Family, etc.
+- **Amazon subcategories added (Mar 2026)**: Kids Books, Kids Toys and Games, Kids Food, Kids Gear, Baby and Infant, Tech and Electronics, Camping and Outdoor, Photography, Office, Supplements
+- `backup_db()` creates `.db.bak` + auto-exports `Finance/categorization_rules.json` (1,239 rules) before every import
 - `backup-rules` / `restore-rules` commands for manual export/import of categorization rules
-- **Full rebuild**: `init` → `restore-rules` → `import` → `categorize` → `import-amazon` → `import-payslips` → `import-tax` → `import-fidelity`
+- **Full rebuild**: `init` → `restore-rules` → `import` → `categorize` → `import-amazon` → `categorize-amazon` → `import-payslips` → `import-tax` → `import-fidelity` → `import-sofi` → `import-becu`
 - `finance_db.py validate` — post-import balance validation against PDF balance summaries
 - `/finance <question>` translates natural language to SQL queries — supports payslip/income/cash-flow queries
 - matplotlib installed in venv for chart generation to `Finance/reports/`
 - **Finance CLAUDE.md** at `Finance/CLAUDE.md` documents all data sources, schema, tax facts, query patterns; root CLAUDE.md routes to it
 
-### Spending Analysis Insights (2026-02-28)
-- **2025+ monthly avg**: $9,826/mo ($137.6K over 14 months); baseline without travel/legal: ~$5-6K/mo
-- **Travel is #1**: $40.6K ($3.1K/mo, 30% of spend) — Costco Travel ($15K), Chase Travel ($5.9K), Cathay Pacific ($4.5K)
-- **Legal dropped to zero**: $18K in 2025 (divorce), only $7 in 2026
-- **Shopping**: $20.5K — Amazon $8.4K (camping/tech gear), B&H Photo $3.7K, Costco.com $930
+### Spending Analysis Insights (2026-03-01, updated)
+- **2025 monthly avg**: ~$10K/mo CC spending
+- **Travel**: $2,178/mo (2025) — Costco Travel, Chase Travel, Cathay Pacific
+- **Legal**: $1,494/mo in 2025 — **eliminated** (divorce finalized, no more legal costs)
+- **Hobby spending (2025)**: $1,230/mo — Photography ($323: B&H $3.5K), Camping & Outdoor ($466: REI $2K, Oztent $1.2K), Tech & Electronics ($442: Anker Solix $3K, FlexiSpot $867)
+- **Amazon breakdown (now 88% categorized)**: Tech $239/mo, Camping $159/mo, Home Improvement $117/mo, Supplements $84/mo, Photography $71/mo, Kids (all) $129/mo
+- **Food**: Groceries $595/mo, Restaurants $456/mo (La Casita 28 visits), Fast Food $141/mo (MOD Pizza $55, McDonald's $44)
+- **Subscriptions**: $320/mo → ~$267/mo after cancellations (Windsurf, LeetCode, Quicken, Cursor). Apple billing $175/mo still needs audit.
 - **Food delivery eliminated**: was $900/mo in 2023, now $0 since Mar 2024
-- **Groceries are lean**: $536/mo, Costco ($3K) + QFC ($2.1K) + Trader Joe's ($852)
-- **Fast food modest**: $134/mo — MOD Pizza ($677), McDonald's ($696)
-- **Restaurants**: $401/mo — La Casita is go-to (28 visits, $30 avg)
-- **Subscriptions audit (Feb 2026)**: cancelled Quicken ($79/yr), LeetCode ($468/yr), confirmed Windsurf already cancelled ($1,560/yr), cancelled Cursor ($264/yr) = **$2,371/yr savings**
-- Neetcode was a lifetime purchase ($297 one-time), not a subscription
-- Apple billing is ~$165/mo ($2K/yr) — bundled charges, hard to audit from CC data, needs Apple ID review
-- **W8TECH_*SA** on Apple Card = Windsurf AI coding tool ($130/mo)
+- **W8TECH_*SA** on Apple Card = Windsurf AI coding tool ($130/mo) — cancelled
 
 ### W-4 Withholding & Tax Analysis (2026-02-28)
 - W-4 history stored as YAML: `Finance/payslips/<employer>/w4-history.yaml`
@@ -59,18 +56,46 @@
 - **Safe harbor strategy**: keep current withholding, re-evaluate in October, adjust W-4 or make Q4 payment; W-2 withholding counts as paid evenly across all quarters (unlike estimated payments)
 - 110% of prior year tax safe harbor: need ~$180-185K in total 2026 withholding
 
-### Cash Flow Crisis (2026-02-28)
-- **Only 31% of gross pay reaches the bank** — 32% taxes, 33% post-tax deductions, 4% pre-tax
-- Post-tax deductions: 401(k) after-tax ~$7K/mo, RSU offset ~$4.7K/mo, ESPP ~$3.4K/mo
-- Monthly fixed obligations ~$21.3K: spousal maintenance ($10K), mortgage ($6.7K), SoFi loan ($1.8K), child support ($1.3K), insurance ($550), HOA ($600), nanny ($350)
-- Net deposits ~$14.4K/mo vs obligations + CC spending ~$33K/mo = **~$19K/month structural deficit**
-- **HELOC draws: $155K net in 5 months** (Oct 2025 – Feb 2026)
-- Checking account data: `Finance/checking-accounts/fidelity-cma-4983/` (quarterly CSVs)
-- "TRANSFERRED FROM MINIMUM TRANSFER VS. Z31-859340-1" = automatic Fidelity margin/LOC sweep
-- "NSM DBAMR.COOP" = mortgage payments ($4,957 + $1,780 = $6,737/mo)
-- Rental income: $1,995/mo from "Apartments.c APTS Smoth"
-- **ESPP suspended** for next period (Jun 2026+): only $3,864/yr true benefit vs $40.8K/yr cash freed
-- User considering whether to also reduce after-tax 401(k) ($7K/mo = biggest discretionary lever)
+### Cash Flow Analysis (2026-03-01, updated)
+- **Full analysis saved to**: `Finance/Planning/2026-03-01-Cash-Flow-Analysis-and-Rental-Sale-Decision.md`
+- **Monthly take-home (Feb 2026)**: SF $10,817 + ST $9,736 + rental $1,995 = $22,548
+- **Monthly fixed obligations**: $23,833 (spousal $10K, primary mortgage $4,957, rental mortgage $1,780, SoFi $1,764, HELOC $1,358, child support $1,254, Tesla $1,000, rental HOA $620, insurance $550, kids ~$500, primary HOA $50)
+- **After-tax 401k**: already $0 at both employers (confirmed from Feb 2026 payslips)
+- **ESPP**: user stopped online Mar 2026, effective next paycheck (+$3,275/mo)
+- **Divorce legal**: $0 going forward (finalized, no more costs)
+- **Hobby freeze committed**: no more electronics/camping/photography purchases (+$1,230/mo)
+- **New CC baseline**: ~$2,723/mo (down from $5,500 after legal eliminated + hobby freeze + subscription cuts)
+- **Updated cash flow (Mar 2026+, post-ESPP)**: income $25,823 - fixed $23,833 - CC $2,723 = **-$733/mo** (near breakeven)
+- **No longer need to sell rental** for survival — rental sale becomes optional deleveraging
+- **HELOC**: $150,904 balance, 6.99%, $230K limit, $79K available — runway now ~19 months at -$733/mo (was ~Oct 2026)
+- **Two mortgages via Mr. Cooper**: primary $4,957/mo + rental $1,780/mo
+- **Tesla loan**: Wells Fargo, ~$45K balance, $1,000/mo via BECU auto-draft
+
+### Rental Property (2026-03-01)
+- **Address**: 2516 175th Ave NE
+- **Purchased**: 2005 for $320,000
+- **Rental since**: December 2014
+- **Mortgage**: Mr. Cooper, Conventional 30-Year, Loan 694006164, balance $219,493
+- **Estimated equity**: $702,507 (Mr. Cooper estimate), but poorly maintained → user estimates ~$760K sale, ~$500K net proceeds pre-tax
+- **Monthly P&L**: income $1,995 - mortgage $1,780 - HOA $620 = **-$405/mo cash-flow negative**
+- **Capital gains tax estimate** (if sold): ~$123,400 (depreciation recapture $25.1K + LTCG $79.4K + NIIT $18.9K)
+- **Net after tax**: ~$374K → pay off HELOC ($151K) + SoFi ($41K) + Tesla ($45K) = **$137K cash reserve**
+- **Post-sale cash flow (Jun 2026+)**: +$5,882/mo surplus; single-job runway 14-19 months with $137K reserve
+- Depreciation basis: building $240K (75% of $320K) / 27.5yr × 11.5yr = $100,400 recapture
+
+### BECU Statement Ingestion (2026-03-01)
+- Created `/ingest-becu` slash command + Python script at `.claude/scripts/ingest_becu.py`
+- Parses combined BECU statements (checking + HELOC) from `~/Dropbox/0-FinancialStatements/BECU/`
+- Output YAMLs: `Finance/becu/YYYY-MM.yaml`, processing log: `Finance/becu/processing_log.json`
+- **14 statements** (Jan 2025 – Feb 2026), **118 checking transactions**, **8 HELOC statements** (Jul 2025+)
+- DB tables: `becu_checking_statements`, `becu_checking_transactions`, `becu_heloc_statements`
+- **pdfminer column ordering is unpredictable**: Amount/Description columns may appear BEFORE Date columns depending on page layout. Parser extracts ALL dates, amounts, descriptions from transaction area and matches 1:1 by count; classifies by sign (positive=deposit, negative=withdrawal)
+- **HELOC summary parsing**: Labels and values may be interleaved OR labels-first-then-values. Use purely positional approach: first amount = previous_balance, last 3 = new/limit/available, middle: negative=payments, larger positive=advances, smaller=interest
+- **HELOC sub-accounts doubled by APR section**: "HE Variable Line of Credit" and "HE Fixed Rate Advance" appear in both APR rate listing AND detail sections. Filter by requiring `previous_balance` to exist.
+- **Sub-account interest assignment**: Collect ALL "TOTAL INTEREST PAID THIS PERIOD" values; first = overall total. Remove duplicates of overall until count matches sub-accounts, then assign in order.
+- **YTD fees/interest parsing**: Labels ("Total fees charged in YYYY" / "Total interest charged in YYYY") appear together, values follow. Take amounts[0]=fees, amounts[1]=interest after both labels.
+- Import command: `finance_db.py import-becu`
+- **Full rebuild** now includes: `import-becu` after `import-sofi`
 
 ### CMA Transaction Ingestion (2026-03-01)
 - Added `parse_cma_activity()` + `categorize_cma_transaction()` to `.claude/scripts/ingest_fidelity_accounts.py`
@@ -113,6 +138,20 @@
 - May need IRS Form 8332 for non-custodial parent years (Sheri is custodian in even years, Yi in odd years)
 - 2025 total spousal support paid: ~$95,000 ($5k/mo temp Jan-May + $10k/mo June-Dec)
 
+### Execute-Spec Command (2026-03-02)
+- Created `/execute-spec` slash command at `.claude/commands/execute-spec.md`
+- Reads a `spec.md` (produced by `/spec`), creates task list from Decomposition table, works through sub-tasks with constraint enforcement and escalation triggers
+- 5 phases: Load & Validate → Plan & Present → Execute → Verify → Report
+- Logs progress to `execution-log.md` in the same folder as spec — supports resume across sessions
+- User checkpoints every 3 tasks or after any Large-effort task
+
+### MetLife Legal Plan via Salesforce (2026-03-02)
+- **Benefit**: MetLife Legal Plan, post-tax deduction, $9.43/paycheck (~$227/year)
+- **Access**: [members.legalplans.com](https://members.legalplans.com) or call 1-800-821-6400
+- **Covers**: real estate transactions, will preparation, document review, family law — no copays, no claim forms, no usage limits
+- **Relevant to rental sale**: can use network attorney to review listing agreement, purchase contract, closing docs at no extra cost
+- Rate was $14.14/paycheck in Jan-Feb 2025, dropped to $9.43 from mid-Feb 2025
+
 ### LeetCode Practice Skill (2026-02-26)
 - Created `/leetcode` slash command at `.claude/commands/leetcode.md`
 - Logs daily practice to `Work/LeetCode/YYYY-MM-DD.md`
@@ -141,6 +180,8 @@
 - Chart outputs go to `Finance/reports/`
 - Timestamps in PST (America/Los_Angeles)
 - **Tax documents**: When parsing hits a WARNING state (values extracted but can't be automatically verified), ask user to manually review the source PDF rather than guessing. Human-in-the-loop for ambiguous tax data.
+- **File paths in output**: User runs Claude Code in **Warp terminal**, which auto-detects absolute file paths and makes them clickable. Markdown links do NOT render — just output bare absolute paths. **Spaces in paths break Warp's detection** — use hyphens instead of spaces in new directory/file names. Always output full absolute paths so Warp can detect them.
+- **Obsidian file naming**: Use hyphens instead of spaces. Avoid `&` and other special characters — they break Obsidian wiki-links. Use `and` instead of `&`.
 
 # Active Context
 
@@ -168,8 +209,12 @@
 - Car: Alamo intermediate (Toyota Corolla), Conf: 68668670
 - Extras: $141 Costco shop card, $100 F&B credit, waived resort fee, free valet
 
-### Cash Flow / HELOC Monitoring (2026-02-28) `(active)`
-- HELOC balance/limit unknown — need to check; determines urgency of cash flow fix
-- $40K tender offer expected next month — provides one-time cash relief
+### Rental Sale Spec Execution (2026-03-02) `(active)`
+- **Spec**: `Projects/1_selling-rental/spec.md` — 11 sub-tasks, 6 acceptance criteria
+- **Execution started** via `/execute-spec` — Phase 2 (plan presented, awaiting user approval)
+- **MetLife Legal Plan** covers real estate transaction review — use before cancelling the benefit
+- **Revised Mar 2026**: deficit -$733/mo (near breakeven), sale is optional deleveraging not survival
+- **HELOC runway**: $79K available / $733/mo = ~9 years — no longer urgent
+- **Remaining levers**: cut dining 50% (+$300), audit Apple subs (+$50-100) → would flip to positive
+- **Spousal maintenance ends ~late 2028**: +$10K/mo — everything becomes very comfortable
 - Re-evaluate withholding in October per safe harbor strategy
-- ESPP suspended starting next period (Jun 2026)

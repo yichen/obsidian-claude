@@ -8,6 +8,12 @@
 
 This is my personal Obsidian vault. As such, you'll find Obsidian-related hashtags and content throughout the files.
 
+## File & Directory Naming
+
+- **Never use spaces in new file or directory names.** Use hyphens instead (e.g., `Spring-Break-with-Kids` not `Spring Break with Kids`).
+- Reason: User runs Claude Code in Warp terminal, which auto-detects absolute file paths and makes them clickable — but spaces break path detection.
+- When outputting file paths, always use the **full absolute path** so Warp can detect and link them.
+
 ## Key Information
 
 - My twins are Laurence Martin Chen and Ruby Martin Chen. They were born on Nov 9, 2017.

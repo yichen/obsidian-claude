@@ -1,0 +1,41 @@
+statement_month: 2025-04
+period_start: '2025-03-17'
+period_end: '2025-04-16'
+checking:
+  account_number: '3588947679'
+  beginning_balance: 683.6
+  withdrawals_fees: -30000.0
+  deposits: 30319.03
+  dividends_interest: 1.61
+  ending_balance: 1004.24
+  apy: 0.37
+  average_daily_balance: 6706.43
+  ytd_dividends: 4.85
+  transactions:
+  - date: '2025-03-27'
+    amount: 319.03
+    description: External Deposit LENDINGCLUB BANK - LENDCLUB
+    type: deposit
+  - date: '2025-04-10'
+    amount: 30000.0
+    description: Descriptive Deposit Proceeds from Loan Account 2019449378
+    type: deposit
+  - date: '2025-04-11'
+    amount: 1.61
+    description: Dividend/Interest
+    type: deposit
+  - date: '2025-04-16'
+    amount: -30000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+heloc: null
+validation:
+  checking_balance_ok: true
+  checking_txn_totals_ok: true
+  heloc_balance_ok: null
+  heloc_sub_balance_ok: null
+  heloc_sub_interest_ok: null
+  mismatches: []
+source:
+  file: BECU-Statement-16-Apr-2025.PDF
+  processed_at: '2026-03-01T18:15:59'

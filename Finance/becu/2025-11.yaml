@@ -1,0 +1,133 @@
+statement_month: 2025-11
+period_start: '2025-10-17'
+period_end: '2025-11-16'
+checking:
+  account_number: '3588947679'
+  beginning_balance: 5865.0
+  withdrawals_fees: -28753.25
+  deposits: 26200.69
+  dividends_interest: 1.86
+  ending_balance: 3314.3
+  apy: 0.47
+  average_daily_balance: 3984.91
+  ytd_dividends: 16.7
+  transactions:
+  - date: '2025-10-24'
+    amount: 800.0
+    description: External Deposit FID BKG SVC LLC - MONEYLINE
+    type: deposit
+  - date: '2025-11-04'
+    amount: 5000.0
+    description: Deposit Online Banking Transfer from 2019617868 CNS
+    type: deposit
+  - date: '2025-11-06'
+    amount: 5000.0
+    description: Deposit Online Banking Transfer from 2019617868 CNS
+    type: deposit
+  - date: '2025-11-07'
+    amount: 5000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE (Rejected)
+    type: deposit
+  - date: '2025-11-07'
+    amount: 2400.69
+    description: Overdraft Protection Deposit
+    type: deposit
+  - date: '2025-11-07'
+    amount: 1.86
+    description: Dividend/Interest
+    type: deposit
+  - date: '2025-11-08'
+    amount: 3000.0
+    description: Deposit Online Banking Transfer from 2019617868 CNS
+    type: deposit
+  - date: '2025-11-10'
+    amount: 5000.0
+    description: Deposit Online Banking Transfer from 2019617868 CNS
+    type: deposit
+  - date: '2025-10-22'
+    amount: -2000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-10-29'
+    amount: -2000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-11-04'
+    amount: -2000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-11-05'
+    amount: -3000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-11-07'
+    amount: -10000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-11-07'
+    amount: -5000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-11-10'
+    amount: -2400.0
+    description: Withdrawal Online Banking Transfer To 2006395394 CNS
+    type: withdrawal
+  - date: '2025-11-10'
+    amount: -2000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-11-15'
+    amount: -353.25
+    description: Withdrawal Transfer to 2019617876
+    type: withdrawal
+heloc:
+  account_number: '2019617876'
+  previous_balance: 98830.53
+  available_credit: 113169.47
+  credit_limit: 230000.0
+  new_balance: 116830.53
+  payments: -353.25
+  other_credits: 0.0
+  advances: 18000.0
+  fees_charged: 0.0
+  interest_charged: 353.25
+  apr: 5.99
+  ytd_fees: 0.0
+  ytd_interest: 1078.17
+  minimum_payment: 532.66
+  payment_date: '2025-12-15'
+  total_interest_this_period: 353.25
+  transactions: []
+  sub_accounts:
+  - name: HE Variable Line of Credit
+    previous_balance: 98830.53
+    new_balance: 116830.53
+    avg_daily_balance: 104701.5
+    apr: 5.99
+    transactions:
+    - date: '2025-11-04'
+      description: Principal Disbursement
+      amount: 5000.0
+    - date: '2025-11-06'
+      description: Principal Disbursement
+      amount: 5000.0
+    - date: '2025-11-08'
+      description: Principal Disbursement
+      amount: 3000.0
+    - date: '2025-11-10'
+      description: Principal Disbursement
+      amount: 5000.0
+    - date: '2025-11-15'
+      description: Regular Payment
+      amount: -353.25
+    interest_paid: 353.25
+validation:
+  checking_balance_ok: true
+  checking_txn_totals_ok: true
+  heloc_balance_ok: true
+  heloc_sub_balance_ok: true
+  heloc_sub_interest_ok: true
+  mismatches: []
+source:
+  file: BECU-Statement-16-Nov-2025.PDF
+  processed_at: '2026-03-01T18:16:00'

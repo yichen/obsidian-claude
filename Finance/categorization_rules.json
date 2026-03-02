@@ -1,6 +1,6 @@
 {
-  "exported_at": "2026-03-01T09:33:15.897971",
-  "count": 751,
+  "exported_at": "2026-03-01T20:46:11.449210",
+  "count": 1239,
   "rules": [
     {
       "pattern": "ACH DEPOSIT",
@@ -59,11 +59,683 @@
       "parent_category": "Transfers"
     },
     {
+      "pattern": "Action Figure",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Amulet",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Annie Bunny",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Food",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Baby Bottle",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Baby Carrier",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Baby Food",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Baby Formula",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Baby Gate",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Baby Monitor",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Baby Wipe",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Baby-Sitters Club",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Babysitters Club",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Bad Guys",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Beyblade",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Beyblades",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Big Nate",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Board Game",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Booster Seat",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Burp Cloth",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Captain Underpants",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Car Seat",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Cat Kid Comic",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Coloring Book",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Crayola",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Dav Pilkey",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Diaper",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Diary of a",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Dog Man",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Dogman",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Elephant Piggie",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Enfamil",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Fairy Tales Tangle",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Fidget",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Fly Guy",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Fruit Snack",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Food",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Gerber",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Geronimo Stilton",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Goldfish Cracker",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Food",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Graco",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Graphic Novel",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Hank Zipzer",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Hasbro",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Heroes of Olympus",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Hot Wheels",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Huggies",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "I Survived",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
       "pattern": "IN *NUNA CATERING LLC 786-3767949 WA",
       "pattern_type": "keyword",
       "priority": 50,
       "source": "user_correction",
       "category": "Kids Education",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Infant",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Junie B Jones",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Kids Backpack",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Kids Headphone",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Kids Snack",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Food",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Kids Sunglasses",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Kids Water Bottle",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Kids Yogurt",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Food",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Kinetic Sand",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "LEGO",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Lunch Box",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Lunchbox",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Magic Tree House",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Magna-Tiles",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Melissa & Doug",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Minecraft",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Minecraft Handbook",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Mo Willems",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "National Geographic Kids",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Nerf",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Newborn",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Nintendo Switch",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Nursery",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Onesie",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Pacifier",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Pampers",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "PediaSure",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Food",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Pedialyte",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Food",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Percy Jackson",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Pete the Cat",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Play-Doh",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Playdough",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Plush Toy",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Pokemon",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Puzzle",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Raina Telgemeier",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Rick Riordan",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Rubik",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
       "parent_category": "Kids & Family"
     },
     {
@@ -73,6 +745,3246 @@
       "source": "user_correction",
       "category": "Car Maintenance",
       "parent_category": "Transportation"
+    },
+    {
+      "pattern": "Scholastic",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "School Supplies",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "School Supply",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Scooter",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Similac",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Sippy Cup",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Squirt Gun",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Squishmallow",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Star Wars Toy",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Stonyfield",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Food",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Stroller",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Stuffed Animal",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Swaddle",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Swim Goggle",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Swimming Goggle",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Teething",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Thomas Train",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Thomas the Train",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Toddler",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Toy Car",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Trading Card",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Transformers",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Water Gun",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Who Was",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Wimpy Kid",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Wings of Fire",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Books",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "iClever",
+      "pattern_type": "keyword",
+      "priority": 50,
+      "source": "amazon-categorize",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "365 Everyday",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "5-HTP",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "AB Wheel",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Fitness",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "ALTRA",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Adapter",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Air Filter",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "AirSense",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Medical",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Almond Breeze",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Amcrest",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Anker",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Anti Tip",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Apple AirTag",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Apple iPad",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Apple iPhone",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "AppleCare",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Software",
+      "parent_category": "Subscriptions"
+    },
+    {
+      "pattern": "Ashwagandha",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Aspirin",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pharmacy",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Atlas Protein Bar",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Avocado",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "B+W",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "BALEAF",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "BISSELL",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Baby Proof",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Babyganics",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Backpacking",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "BalanceFrom",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Fitness",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Banana",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Banlangen",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Bathroom Scale",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Bear Bell",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Bear Canister",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Bed Frame",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Belkin",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Ben Sherman",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "BenQ ScreenBar",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Berberine",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Bessey",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Bialetti",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Bicycle Bell",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Bird Feeder",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Bitzee",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Black & Decker",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Blue Diamond Almonds",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Bluetooth",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Bose QuietComfort",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Box Cutter",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Braun Series",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Brita",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "C-Clamp",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "CHANEL",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "CW-X",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Calvin Klein",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Camera Bag",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Camera Strap",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Camp Stove",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Camping",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Canon SELPHY",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Cantaloupe",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Carabiner",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Cascade",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Cat Food",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pet Care",
+      "parent_category": "Personal Care"
+    },
+    {
+      "pattern": "Celestial Seasonings",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "CeraVe",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Champion",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Charger",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Charging Cable",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Cheerios",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Chess",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Children's Place",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Chinese Character Practice",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Education",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Circular Saw",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Claritin",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pharmacy",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "CoQ10",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Coffee Bean",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Coffee Filter",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Coffee Grinder",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Cold Steel",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Coleman Propane",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Collagen",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Command",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Conditioner",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Cortisol Manager",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Coway",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Craftsman",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Creatine",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Crocs",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "DEWALT",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "DJI Action",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Dance Shoe",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Dave's Killer",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Ddrops",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Dino Nugget",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Food",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "DisplayPort",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Dog Barking",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pet Care",
+      "parent_category": "Personal Care"
+    },
+    {
+      "pattern": "Dometic",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Dongle",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Door Hook",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Double Sided Tape",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Dr. Brown",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Drano",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Dry Bag",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Duracell",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Ear Wax",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Medical",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Eberlestock",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Echo Dot",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Echo Show",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Eggo",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Electrolyte",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Energizer",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Espresso",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Estee Lauder",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Ethernet",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "ExOfficio",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Extension Cord",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Eye Mask",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "FEZIBO",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Office",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Felt Pad",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "First Alert",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Fish Oil",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Fiskars",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Flash Cards",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Education",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Flash Furniture",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Office",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Floor Lamp",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Foam Roller",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Fitness",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Folding Bracket",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Freud",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Frost King",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Fujifilm Instax",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Furinno",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "GL.iNet",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Gan Mao",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Garage Door",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Garden Hose",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Gillette",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Ginseng",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Glue Gun",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Godox",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Goji Berr",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Google Pixel",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Gorilla",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Green Tea",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Green Toys",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Gymnastics",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Activities",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "HDMI",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "HDMI Cable",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Happy Belly",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Hard Drive",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Headlamp",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Hiking",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Honeycrisp",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Horizon Organic",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Hoya",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Huckberry",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Hydro Flask",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Irwin Tools",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "J-B Weld",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "J.L. Childress",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Jarrow",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Jastore Kids",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Juicy Juice",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Food",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Justin's",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "K&F Concept",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "KIND",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "KODAK PIXPRO",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Kenneth Cole",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Kershaw",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Keurig",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Keyboard",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Kidde",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Kids Watch",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Kindle Paperwhite",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Kitty",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pet Care",
+      "parent_category": "Personal Care"
+    },
+    {
+      "pattern": "Kreg",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Kwikset",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "L-Theanine",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "LEUCHTTURM",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Office",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "La Sportiva",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Lactaid",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Ladera Granola",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Laptop Stand",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Large Hass Avocado",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Lasko",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Laundry Detergent",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Lavazza",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Leica",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Lens Cap",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Lens Hood",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Lens Pen",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Libman",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "LifeProof",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Light Bulb",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Lightning Cable",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Litter Genie",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pet Care",
+      "parent_category": "Personal Care"
+    },
+    {
+      "pattern": "Litter Refill",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pet Care",
+      "parent_category": "Personal Care"
+    },
+    {
+      "pattern": "Litter Scoop",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pet Care",
+      "parent_category": "Personal Care"
+    },
+    {
+      "pattern": "Loctite",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Logitech",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Lutron",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Lysol",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "MKE 400",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "MR.SIGA",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Madison Reed",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Magnesium",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Makeup Mirror",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Mandarins",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Master Lock",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Meditation Cushion",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Fitness",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Medline",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Medical",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Melatonin",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Memory Card",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Michael Kors",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "MicroSD",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Miele",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "MiniDV",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Minwax",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "MiraLAX",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pharmacy",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Monitor Mount",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Mott's",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Food",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Mouse Mover",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Mr. Beams",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Mr. Heater",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Multiplication",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Education",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Multivitamin",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Munchkin",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "NATIONAL GEOGRAPHIC",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "ND Filter",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "NOCO",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Car Maintenance",
+      "parent_category": "Transportation"
+    },
+    {
+      "pattern": "Nature Made",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Nature Valley",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Nature's Bakery",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Nature's Blend",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Navel Orange",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Neewer",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Nescafe",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Nespresso",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Netgear",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "New Balance",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Nikkor",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Nikon EN-EL",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Nite Ize",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Norelco",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "OMRON",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Medical",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "ORORO",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Omega-3",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Optimum Nutrition",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Oral-B",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Organic Valley",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Ortho Molecular",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "OurPets",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pet Care",
+      "parent_category": "Personal Care"
+    },
+    {
+      "pattern": "PB2",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "POP MART",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Panax Ginseng",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Paracord",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Park Tool",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Peak Design",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "PetSafe",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pet Care",
+      "parent_category": "Personal Care"
+    },
+    {
+      "pattern": "Philips Hue",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Philips Norelco",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Phone Case",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "PicassoTiles",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Picture Frame",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Piggy Bank",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Pilot Metropolitan",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Office",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Pistachios",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Planner",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Office",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "PlayStation",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Polarizer",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Pompeian",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Portolano",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Power Bank",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Power Strip",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Powerex",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Probiotic",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Protein Powder",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Pure Encapsulations",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Purina",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pet Care",
+      "parent_category": "Personal Care"
+    },
+    {
+      "pattern": "Pyrex",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Quakehold",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Quest Nutrition",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Rain Cover",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Raspberries",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Rayovac",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Reebok",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Reflectix",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Regalo",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Resqme",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Car Maintenance",
+      "parent_category": "Transportation"
+    },
+    {
+      "pattern": "Ricoh GR",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Ring",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Rubbermaid",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Rummikub",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Rust-Oleum",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Ryobi",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "SD Card",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "SSD",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Safety Glasses",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Salomon",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "San Francisco Bay Coffee",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "SanDisk",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Sandpaper",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Saucony",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Schwinn",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Screen Protector",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "SentrySafe",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Seventh Generation",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Shampoo",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Shelf Liner",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Skillmatics",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Sleeping Bag",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "SmartWool",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Snap Circuits",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Snow Tube",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Soccer Ball",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Solar Lights",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Stability Ball",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Fitness",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Standing Desk",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Office",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Stansport",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Strawberries",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Stud Finder",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Superfeet",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Swing-N-Slide",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Sylvania",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Synology",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "THE NORTH FACE",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "TP-Link",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Table Tennis",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Fitness",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Tegu",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Tent",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Terro",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Tesla Model Y",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Car Maintenance",
+      "parent_category": "Transportation"
+    },
+    {
+      "pattern": "Thermometer",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Medical",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Thinkbaby",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Baby and Infant",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Thule",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Car Maintenance",
+      "parent_category": "Transportation"
+    },
+    {
+      "pattern": "Tiffen",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Timex",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Tire Inflator",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Car Maintenance",
+      "parent_category": "Transportation"
+    },
+    {
+      "pattern": "Titebond",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Toilet Paper",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Tommy Hilfiger",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Toner Cartridge",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Office",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Toothpaste",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Tortilla Chips",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Training Wheels",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Trash Bag",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "Tree Swing",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Trekking Pole",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Tripod",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Turmeric",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "UPERFECT",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "USB Cable",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "USB-C",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "UV Filter",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Photography",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Under Cabinet",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "VASAGLE",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Vicks",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Medical",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Visual Timer",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Gear",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Vitamin C",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Vitamin D",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Vtech",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "WD Red",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "WEN ",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Watch Strap",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Water Balloon",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Water Filter",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Webcam",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Weruva",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pet Care",
+      "parent_category": "Personal Care"
+    },
+    {
+      "pattern": "Wet Ones",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Personal Care",
+      "parent_category": null
+    },
+    {
+      "pattern": "Wireless Mouse",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Wonder Workshop",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Kids Toys and Games",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Work Gloves",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "Yoga Mat",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Fitness",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Zinc",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-categorize",
+      "category": "Supplements",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "Zyrtec",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Pharmacy",
+      "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "adidas",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "bakerly",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "eufy",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "iOttie",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Car Maintenance",
+      "parent_category": "Transportation"
+    },
+    {
+      "pattern": "iRobot",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "simplehuman",
+      "pattern_type": "keyword",
+      "priority": 80,
+      "source": "amazon-review",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
     },
     {
       "pattern": "COSTCO TRAVEL",
@@ -1681,14 +5593,6 @@
       "source": "manual",
       "category": "Kids Activities",
       "parent_category": "Kids & Family"
-    },
-    {
-      "pattern": "Fjallraven",
-      "pattern_type": "keyword",
-      "priority": 100,
-      "source": "manual",
-      "category": "Clothing",
-      "parent_category": "Shopping"
     },
     {
       "pattern": "FlexiSpot",
