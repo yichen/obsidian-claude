@@ -2897,3 +2897,201 @@
 2026-03-01 09:30:18,418 WARNING [31m  BALANCE MISMATCH apple-card/2024-10-31.csv: prev(2237.76) - txns + installments = 324.0, expected 337.24 (diff=$13.24)[0m
 2026-03-01 09:30:18,418 WARNING [31m  CHAIN BREAK at apple-card/2024-05-31.csv: prior new_balance=264.46 != this previous_balance=1260.06 (diff=$995.60)[0m
 2026-03-01 09:30:18,418 WARNING [31m  2 balance issue(s) found![0m
+2026-03-03 05:59:54,960 INFO Credit Card Statement Ingestion — 2026-03-03 05:59:54
+2026-03-03 05:59:54,961 INFO 
+  Processing bofa-rewards-visa (13 PDFs)...
+2026-03-03 05:59:55,108 INFO     OK eStmt_2025-01-23.pdf -> 2025-01-23.csv (2 txns, charges=$4.23, credits=$4.23)
+2026-03-03 05:59:55,287 INFO     OK eStmt_2025-02-23.pdf -> 2025-02-23.csv (2 txns, charges=$4.23, credits=$4.23)
+2026-03-03 05:59:55,479 INFO     OK eStmt_2025-03-23.pdf -> 2025-03-23.csv (2 txns, charges=$4.23, credits=$4.23)
+2026-03-03 05:59:55,915 DEBUG Retry with {'x_tolerance': 1}: mismatch $34800.00 -> $34800.00
+2026-03-03 05:59:56,118 DEBUG Retry with {'layout': True}: mismatch $34800.00 -> $34800.00
+2026-03-03 05:59:56,339 DEBUG Retry with {'x_tolerance': 5}: mismatch $34800.00 -> $34800.00
+2026-03-03 05:59:56,339 INFO     OK eStmt_2025-04-23.pdf -> 2025-04-23.csv (9 txns, charges=$36196.23, credits=$14.23) [retried 3x, mismatch=$34800.00] [33m(1 warnings)[0m
+2026-03-03 05:59:56,339 WARNING        WARNING: Charges total mismatch: parsed $36196.23 vs expected $1396.23 (purchases=$4.23 + fees=$1392.00 + interest=$0.00)
+2026-03-03 05:59:56,601 INFO     OK eStmt_2025-05-23.pdf -> 2025-05-23.csv (3 txns, charges=$4.23, credits=$800.00)
+2026-03-03 05:59:56,801 INFO     OK eStmt_2025-06-23.pdf -> 2025-06-23.csv (3 txns, charges=$30.29, credits=$0.00)
+2026-03-03 05:59:56,999 INFO     OK eStmt_2025-07-23.pdf -> 2025-07-23.csv (2 txns, charges=$0.35, credits=$734.00)
+2026-03-03 05:59:57,199 INFO     OK eStmt_2025-08-23.pdf -> 2025-08-23.csv (2 txns, charges=$0.37, credits=$347.00)
+2026-03-03 05:59:57,400 INFO     OK eStmt_2025-09-23.pdf -> 2025-09-23.csv (2 txns, charges=$0.37, credits=$343.00)
+2026-03-03 05:59:57,599 INFO     OK eStmt_2025-10-23.pdf -> 2025-10-23.csv (2 txns, charges=$0.36, credits=$340.00)
+2026-03-03 05:59:57,799 INFO     OK eStmt_2025-12-23.pdf -> 2025-12-23.csv (2 txns, charges=$0.36, credits=$333.00)
+2026-03-03 05:59:58,004 INFO     OK eStmt_2026-01-23.pdf -> 2026-01-23.csv (2 txns, charges=$0.37, credits=$330.00)
+2026-03-03 05:59:58,304 INFO     OK eStmt_2026-02-23.pdf -> 2026-02-23.csv (2 txns, charges=$0.38, credits=$326.00)
+2026-03-03 05:59:58,307 INFO 
+  Done: 13 succeeded, 0 errors, 1 warnings
+2026-03-03 05:59:58,307 INFO 
+  Checking for missing statements...
+2026-03-03 05:59:58,308 WARNING [31m  bofa-rewards-visa: 1 MISSING statement(s) (range 2025-01 to 2026-02):[0m
+2026-03-03 05:59:58,308 WARNING [31m    -> 2025-11[0m
+2026-03-03 05:59:58,308 WARNING [31m  1 missing statement(s) detected! Check source PDFs in /Users/ychen2/Dropbox/0-FinancialStatements/credit-cards[0m
+2026-03-03 05:59:58,308 INFO 
+  Verifying statement balances...
+2026-03-03 05:59:58,309 WARNING [31m  CHAIN BREAK at bofa-rewards-visa/2025-12-23.csv: prior new_balance=33658.2 != this previous_balance=33322.57 (diff=$335.63)[0m
+2026-03-03 05:59:58,309 WARNING [31m  1 balance issue(s) found![0m
+2026-03-03 06:01:09,281 INFO Credit Card Statement Ingestion — 2026-03-03 06:01:09
+2026-03-03 06:01:09,281 INFO 
+  Processing bofa-rewards-visa (14 PDFs)...
+2026-03-03 06:01:09,565 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:09,709 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:09,852 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:09,852 INFO     OK eStmt_2025-01-23.pdf -> 2025-01-23.csv (2 txns, charges=$4.23, credits=$4.23) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:10,218 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:10,406 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:10,590 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:10,590 INFO     OK eStmt_2025-02-23.pdf -> 2025-02-23.csv (2 txns, charges=$4.23, credits=$4.23) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:11,002 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:11,216 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:11,410 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:11,411 INFO     OK eStmt_2025-03-23.pdf -> 2025-03-23.csv (2 txns, charges=$4.23, credits=$4.23) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:11,637 INFO     OK eStmt_2025-04-23.pdf -> 2025-04-23.csv (9 txns, charges=$36196.23, credits=$14.23) [33m(1 warnings)[0m
+2026-03-03 06:01:11,637 WARNING        WARNING: Charges total mismatch: parsed $36196.23 vs expected $1396.23 (purchases=$4.23 + fees=$1392.00 + interest=$0.00)
+2026-03-03 06:01:12,140 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:12,398 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:12,653 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:12,654 INFO     OK eStmt_2025-05-23.pdf -> 2025-05-23.csv (3 txns, charges=$4.23, credits=$800.00) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:13,059 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:13,265 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:13,467 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:13,467 INFO     OK eStmt_2025-06-23.pdf -> 2025-06-23.csv (3 txns, charges=$30.29, credits=$0.00) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:13,842 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:14,037 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:14,213 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:14,213 INFO     OK eStmt_2025-07-23.pdf -> 2025-07-23.csv (2 txns, charges=$0.35, credits=$734.00) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:14,610 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:14,813 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:14,995 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:14,995 INFO     OK eStmt_2025-08-23.pdf -> 2025-08-23.csv (2 txns, charges=$0.37, credits=$347.00) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:15,385 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:15,588 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:15,772 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:15,772 INFO     OK eStmt_2025-09-23.pdf -> 2025-09-23.csv (2 txns, charges=$0.37, credits=$343.00) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:16,173 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.90 -> $13.90
+2026-03-03 06:01:16,392 DEBUG Retry with {'layout': True}: mismatch $13.90 -> $13.90
+2026-03-03 06:01:16,588 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.90 -> $13.90
+2026-03-03 06:01:16,589 INFO     OK eStmt_2025-10-23.pdf -> 2025-10-23.csv (2 txns, charges=$0.36, credits=$340.00) [retried 3x, mismatch=$13.90]
+2026-03-03 06:01:16,982 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.65 -> $13.65
+2026-03-03 06:01:17,188 DEBUG Retry with {'layout': True}: mismatch $13.65 -> $13.65
+2026-03-03 06:01:17,379 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.65 -> $13.65
+2026-03-03 06:01:17,380 INFO     OK eStmt_2025-11-23.pdf -> 2025-11-23.csv (2 txns, charges=$0.37, credits=$336.00) [retried 3x, mismatch=$13.65]
+2026-03-03 06:01:17,751 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.65 -> $13.65
+2026-03-03 06:01:17,939 DEBUG Retry with {'layout': True}: mismatch $13.65 -> $13.65
+2026-03-03 06:01:18,126 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.65 -> $13.65
+2026-03-03 06:01:18,126 INFO     OK eStmt_2025-12-23.pdf -> 2025-12-23.csv (2 txns, charges=$0.36, credits=$333.00) [retried 3x, mismatch=$13.65]
+2026-03-03 06:01:18,520 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.40 -> $13.40
+2026-03-03 06:01:18,719 DEBUG Retry with {'layout': True}: mismatch $13.40 -> $13.40
+2026-03-03 06:01:18,901 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.40 -> $13.40
+2026-03-03 06:01:18,902 INFO     OK eStmt_2026-01-23.pdf -> 2026-01-23.csv (2 txns, charges=$0.37, credits=$330.00) [retried 3x, mismatch=$13.40]
+2026-03-03 06:01:19,513 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.40 -> $13.40
+2026-03-03 06:01:19,805 DEBUG Retry with {'layout': True}: mismatch $13.40 -> $13.40
+2026-03-03 06:01:20,094 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.40 -> $13.40
+2026-03-03 06:01:20,094 INFO     OK eStmt_2026-02-23.pdf -> 2026-02-23.csv (2 txns, charges=$0.38, credits=$326.00) [retried 3x, mismatch=$13.40]
+2026-03-03 06:01:20,095 INFO 
+  Done: 14 succeeded, 0 errors, 1 warnings
+2026-03-03 06:01:20,095 INFO 
+  Checking for missing statements...
+2026-03-03 06:01:20,095 INFO   No gaps found.
+2026-03-03 06:01:20,095 INFO 
+  Verifying statement balances...
+2026-03-03 06:01:20,096 INFO   [32mAll balance checks passed.[0m
+2026-03-03 06:02:37,191 INFO Credit Card Statement Ingestion — 2026-03-03 06:02:37
+2026-03-03 06:02:37,191 INFO 
+  Processing bofa-rewards-visa (14 PDFs)...
+2026-03-03 06:02:37,472 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:37,616 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:37,758 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:37,759 INFO     OK eStmt_2025-01-23.pdf -> 2025-01-23.csv (2 txns, charges=$4.23, credits=$4.23) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:37,759 WARNING        WARNING: Charges total mismatch: parsed $4.23 vs expected $18.38 (purchases=$4.23 + fees=$0.00 + interest=$0.00 + balance_transfers=$14.15)
+2026-03-03 06:02:38,123 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:38,311 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:38,497 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:38,497 INFO     OK eStmt_2025-02-23.pdf -> 2025-02-23.csv (2 txns, charges=$4.23, credits=$4.23) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:38,497 WARNING        WARNING: Charges total mismatch: parsed $4.23 vs expected $18.38 (purchases=$4.23 + fees=$0.00 + interest=$0.00 + balance_transfers=$14.15)
+2026-03-03 06:02:38,908 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:39,123 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:39,313 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:39,313 INFO     OK eStmt_2025-03-23.pdf -> 2025-03-23.csv (2 txns, charges=$4.23, credits=$4.23) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:39,313 WARNING        WARNING: Charges total mismatch: parsed $4.23 vs expected $18.38 (purchases=$4.23 + fees=$0.00 + interest=$0.00 + balance_transfers=$14.15)
+2026-03-03 06:02:39,537 INFO     OK eStmt_2025-04-23.pdf -> 2025-04-23.csv (9 txns, charges=$36196.23, credits=$14.23)
+2026-03-03 06:02:40,037 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:40,292 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:40,547 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:40,547 INFO     OK eStmt_2025-05-23.pdf -> 2025-05-23.csv (3 txns, charges=$4.23, credits=$800.00) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:40,547 WARNING        WARNING: Charges total mismatch: parsed $4.23 vs expected $18.38 (purchases=$4.23 + fees=$0.00 + interest=$0.00 + balance_transfers=$14.15)
+2026-03-03 06:02:40,950 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:41,153 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:41,353 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:41,353 INFO     OK eStmt_2025-06-23.pdf -> 2025-06-23.csv (3 txns, charges=$30.29, credits=$0.00) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:41,354 WARNING        WARNING: Charges total mismatch: parsed $30.29 vs expected $44.44 (purchases=$2.23 + fees=$28.00 + interest=$0.06 + balance_transfers=$14.15)
+2026-03-03 06:02:41,726 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:41,922 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:42,100 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:42,100 INFO     OK eStmt_2025-07-23.pdf -> 2025-07-23.csv (2 txns, charges=$0.35, credits=$734.00) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:42,100 WARNING        WARNING: Charges total mismatch: parsed $0.35 vs expected $14.50 (purchases=$0.00 + fees=$0.00 + interest=$0.35 + balance_transfers=$14.15)
+2026-03-03 06:02:42,500 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:42,702 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:42,887 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:42,887 INFO     OK eStmt_2025-08-23.pdf -> 2025-08-23.csv (2 txns, charges=$0.37, credits=$347.00) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:42,887 WARNING        WARNING: Charges total mismatch: parsed $0.37 vs expected $14.52 (purchases=$0.00 + fees=$0.00 + interest=$0.37 + balance_transfers=$14.15)
+2026-03-03 06:02:43,274 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:43,476 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:43,662 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:43,663 INFO     OK eStmt_2025-09-23.pdf -> 2025-09-23.csv (2 txns, charges=$0.37, credits=$343.00) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:43,663 WARNING        WARNING: Charges total mismatch: parsed $0.37 vs expected $14.52 (purchases=$0.00 + fees=$0.00 + interest=$0.37 + balance_transfers=$14.15)
+2026-03-03 06:02:44,060 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.90 -> $13.90
+2026-03-03 06:02:44,272 DEBUG Retry with {'layout': True}: mismatch $13.90 -> $13.90
+2026-03-03 06:02:44,465 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.90 -> $13.90
+2026-03-03 06:02:44,465 INFO     OK eStmt_2025-10-23.pdf -> 2025-10-23.csv (2 txns, charges=$0.36, credits=$340.00) [retried 3x, mismatch=$13.90] [33m(1 warnings)[0m
+2026-03-03 06:02:44,465 WARNING        WARNING: Charges total mismatch: parsed $0.36 vs expected $14.26 (purchases=$0.00 + fees=$0.00 + interest=$0.36 + balance_transfers=$13.90)
+2026-03-03 06:02:44,845 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.65 -> $13.65
+2026-03-03 06:02:45,045 DEBUG Retry with {'layout': True}: mismatch $13.65 -> $13.65
+2026-03-03 06:02:45,231 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.65 -> $13.65
+2026-03-03 06:02:45,232 INFO     OK eStmt_2025-11-23.pdf -> 2025-11-23.csv (2 txns, charges=$0.37, credits=$336.00) [retried 3x, mismatch=$13.65] [33m(1 warnings)[0m
+2026-03-03 06:02:45,232 WARNING        WARNING: Charges total mismatch: parsed $0.37 vs expected $14.02 (purchases=$0.00 + fees=$0.00 + interest=$0.37 + balance_transfers=$13.65)
+2026-03-03 06:02:45,600 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.65 -> $13.65
+2026-03-03 06:02:45,785 DEBUG Retry with {'layout': True}: mismatch $13.65 -> $13.65
+2026-03-03 06:02:45,971 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.65 -> $13.65
+2026-03-03 06:02:45,972 INFO     OK eStmt_2025-12-23.pdf -> 2025-12-23.csv (2 txns, charges=$0.36, credits=$333.00) [retried 3x, mismatch=$13.65] [33m(1 warnings)[0m
+2026-03-03 06:02:45,972 WARNING        WARNING: Charges total mismatch: parsed $0.36 vs expected $14.01 (purchases=$0.00 + fees=$0.00 + interest=$0.36 + balance_transfers=$13.65)
+2026-03-03 06:02:46,364 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.40 -> $13.40
+2026-03-03 06:02:46,564 DEBUG Retry with {'layout': True}: mismatch $13.40 -> $13.40
+2026-03-03 06:02:46,747 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.40 -> $13.40
+2026-03-03 06:02:46,748 INFO     OK eStmt_2026-01-23.pdf -> 2026-01-23.csv (2 txns, charges=$0.37, credits=$330.00) [retried 3x, mismatch=$13.40] [33m(1 warnings)[0m
+2026-03-03 06:02:46,748 WARNING        WARNING: Charges total mismatch: parsed $0.37 vs expected $13.77 (purchases=$0.00 + fees=$0.00 + interest=$0.37 + balance_transfers=$13.40)
+2026-03-03 06:02:47,339 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.40 -> $13.40
+2026-03-03 06:02:47,625 DEBUG Retry with {'layout': True}: mismatch $13.40 -> $13.40
+2026-03-03 06:02:47,914 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.40 -> $13.40
+2026-03-03 06:02:47,915 INFO     OK eStmt_2026-02-23.pdf -> 2026-02-23.csv (2 txns, charges=$0.38, credits=$326.00) [retried 3x, mismatch=$13.40] [33m(1 warnings)[0m
+2026-03-03 06:02:47,915 WARNING        WARNING: Charges total mismatch: parsed $0.38 vs expected $13.78 (purchases=$0.00 + fees=$0.00 + interest=$0.38 + balance_transfers=$13.40)
+2026-03-03 06:02:47,915 INFO 
+  Done: 14 succeeded, 0 errors, 13 warnings
+2026-03-03 06:02:47,915 INFO 
+  Checking for missing statements...
+2026-03-03 06:02:47,915 INFO   No gaps found.
+2026-03-03 06:02:47,916 INFO 
+  Verifying statement balances...
+2026-03-03 06:02:47,917 INFO   [32mAll balance checks passed.[0m
+2026-03-03 06:03:28,046 INFO Credit Card Statement Ingestion — 2026-03-03 06:03:28
+2026-03-03 06:03:28,047 INFO 
+  Processing bofa-rewards-visa (14 PDFs)...
+2026-03-03 06:03:28,193 INFO     OK eStmt_2025-01-23.pdf -> 2025-01-23.csv (2 txns, charges=$4.23, credits=$4.23)
+2026-03-03 06:03:28,372 INFO     OK eStmt_2025-02-23.pdf -> 2025-02-23.csv (2 txns, charges=$4.23, credits=$4.23)
+2026-03-03 06:03:28,560 INFO     OK eStmt_2025-03-23.pdf -> 2025-03-23.csv (2 txns, charges=$4.23, credits=$4.23)
+2026-03-03 06:03:28,775 INFO     OK eStmt_2025-04-23.pdf -> 2025-04-23.csv (9 txns, charges=$36196.23, credits=$14.23)
+2026-03-03 06:03:29,036 INFO     OK eStmt_2025-05-23.pdf -> 2025-05-23.csv (3 txns, charges=$4.23, credits=$800.00)
+2026-03-03 06:03:29,232 INFO     OK eStmt_2025-06-23.pdf -> 2025-06-23.csv (3 txns, charges=$30.29, credits=$0.00)
+2026-03-03 06:03:29,426 INFO     OK eStmt_2025-07-23.pdf -> 2025-07-23.csv (2 txns, charges=$0.35, credits=$734.00)
+2026-03-03 06:03:29,619 INFO     OK eStmt_2025-08-23.pdf -> 2025-08-23.csv (2 txns, charges=$0.37, credits=$347.00)
+2026-03-03 06:03:29,814 INFO     OK eStmt_2025-09-23.pdf -> 2025-09-23.csv (2 txns, charges=$0.37, credits=$343.00)
+2026-03-03 06:03:30,001 INFO     OK eStmt_2025-10-23.pdf -> 2025-10-23.csv (2 txns, charges=$0.36, credits=$340.00)
+2026-03-03 06:03:30,216 INFO     OK eStmt_2025-11-23.pdf -> 2025-11-23.csv (2 txns, charges=$0.37, credits=$336.00)
+2026-03-03 06:03:30,399 INFO     OK eStmt_2025-12-23.pdf -> 2025-12-23.csv (2 txns, charges=$0.36, credits=$333.00)
+2026-03-03 06:03:30,619 INFO     OK eStmt_2026-01-23.pdf -> 2026-01-23.csv (2 txns, charges=$0.37, credits=$330.00)
+2026-03-03 06:03:30,923 INFO     OK eStmt_2026-02-23.pdf -> 2026-02-23.csv (2 txns, charges=$0.38, credits=$326.00)
+2026-03-03 06:03:30,923 INFO 
+  Done: 14 succeeded, 0 errors, 0 warnings
+2026-03-03 06:03:30,923 INFO 
+  Checking for missing statements...
+2026-03-03 06:03:30,924 INFO   No gaps found.
+2026-03-03 06:03:30,924 INFO 
+  Verifying statement balances...
+2026-03-03 06:03:30,925 INFO   [32mAll balance checks passed.[0m

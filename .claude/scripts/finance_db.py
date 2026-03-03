@@ -348,6 +348,7 @@ ACCOUNTS = [
     ("chase-freedom-1350", "Chase Freedom"),
     ("fidelity-credit-card", "Fidelity Credit Card"),
     ("bofa-atmos-7982", "BofA Atmos Rewards"),
+    ("bofa-rewards-visa", "BofA Rewards Visa Signature"),
 ]
 
 # (name, parent_name_or_None)

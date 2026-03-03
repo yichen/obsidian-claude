@@ -1,4 +1,4 @@
-> Last Updated: 2026-03-02 04:01:43
+> Last Updated: 2026-03-03 04:02:09
 
 
 
@@ -59,24 +59,7 @@
 
 
 
-## Mar 02, Monday
 
-*   **[FB] Meme Mondays**
-    *   **Time:** 12 AM
-    *   **Loc:** Longman Performing Arts Center at Issaquah High School, 700 2nd Ave SE, Issaquah, WA
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Longman%20Performing%20Arts%20Center%20at%20Issaquah%20High%20School%2C%20700%202nd%20Ave%20SE%2C%20Issaquah%2C%20WA)
-    *   **Facebook Group:** Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/2378137489298488/
-*   **[FB] Bruni's Snowbowl scouting hike.**
-    *   **Time:** 9:30 AM
-    *   **Facebook Group:** 40+ Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/1252096366890865/
-*   **[Latin] Salsa Practica**
-    *   **Time:** March 2 @ 9:00 pm - 11:00 pm
-    *   **Loc:** Reverie Ballroom - Seattle, 915 E Pine St, Seattle, WA, United States
-    *   **Drive:** 33m (20.7 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/salsa-practica/2026-03-02/
 
 ## Mar 03, Tuesday
 
@@ -164,6 +147,19 @@
     *   **Loc:** Sea Monster Lounge, 2202 N 45th S, Seattle, WA, United States
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2202%20N%2045th%20S%2C%20Seattle%2C%20WA%2C%20United%20States)
     *   **Link:** https://golatindance.com/event/live-salsa-at-sea-monster-lounge-2-3/2026-03-07/
+*   **[Latin] AVS Vinyl Salsa Night at Reverie Ballroom**
+    *   **Time:** March 7 @ 8:30 pm - 1:30 am
+    *   **Loc:** Reverie Ballroom - Seattle, 915 E Pine St, Seattle, WA, United States
+    *   **Drive:** 33m (20.7 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/avs-vinyl-salsa-night-at-reverie-ballroom/2026-03-07/
+
+## Mar 13, Friday
+
+*   **[FB] Live Band Night - Come Out & Play**
+    *   **Time:** 7 PM
+    *   **Facebook Group:** FB Group
+    *   **Link:** https://www.facebook.com/events/1445853483900358/
 
 ## Jun 08, Monday
 
@@ -455,4 +451,7 @@ Seattle
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Tacoma%2C%20Washington)
     *   **Facebook Group:** 40+ Single Hikers of the PNW
     *   **Link:** https://www.facebook.com/events/2952757638254385/
+*   **[FB] Trail of Ten Falls**
+    *   **Facebook Group:** Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/1449840013178483/
 ## Sources Checked
