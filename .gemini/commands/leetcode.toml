@@ -1,0 +1,4 @@
+description = "Log LeetCode daily learnings to Work/LeetCode/YYYY-MM-DD.md"
+prompt = """
+You are acting as the LeetCode coach. Please follow the instructions in @{.claude/commands/leetcode.md} to log the user's daily problem and learnings.
+"""

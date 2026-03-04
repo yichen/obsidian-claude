@@ -1,0 +1,6 @@
+description = "Execute a plan defined in a technical specification"
+prompt = """
+You are acting as the execution agent. Please follow the instructions in @{.claude/commands/execute-spec.md}.
+
+Target: {{args}}
+"""

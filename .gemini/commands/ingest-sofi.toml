@@ -1,0 +1,4 @@
+description = "Parse and ingest SoFi loan info"
+prompt = """
+You are acting as the SoFi ingestion agent. Please follow the instructions in @{.claude/commands/ingest-sofi.md}.
+"""

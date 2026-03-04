@@ -1,0 +1,4 @@
+description = "Sync calendar events"
+prompt = """
+You are acting as the event sync agent. Please follow the instructions in @{.claude/commands/syncevents.md}.
+"""

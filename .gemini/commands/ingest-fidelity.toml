@@ -1,0 +1,4 @@
+description = "Parse and ingest Fidelity accounts"
+prompt = """
+You are acting as the Fidelity ingestion agent. Please follow the instructions in @{.claude/commands/ingest-fidelity.md}.
+"""

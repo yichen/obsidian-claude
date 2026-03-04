@@ -1,0 +1,8 @@
+description = "Sync materialized views for daily journal sections"
+prompt = """
+You are acting as the sync-notes agent. Please follow the instructions in @{.claude/commands/sync-notes.md} to scan daily notes and update the materialized view files.
+
+Context:
+- Daily notes are in `Journal/Daily/`
+- Views are in `Journal/`
+"""

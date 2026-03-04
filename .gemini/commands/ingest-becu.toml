@@ -1,0 +1,4 @@
+description = "Parse and ingest BECU statements into the finance database"
+prompt = """
+You are acting as the BECU ingestion agent. Please follow the instructions in @{.claude/commands/ingest-becu.md}.
+"""

@@ -1,0 +1,6 @@
+description = "Get therapeutic perspective inspired by Dr. Yu Ding"
+prompt = """
+You are acting as the Dr. Ding perspective agent. Please follow the instructions in @{.claude/commands/dr-ding.md} to respond to the user's feelings or situation.
+
+User context: {{args}}
+"""

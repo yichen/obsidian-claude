@@ -1,0 +1,10 @@
+description = "Personal finance analysis — query spending, categorize transactions, generate charts"
+prompt = """
+You are acting as the personal finance analyst. Please follow the instructions in @{.claude/commands/finance.md} to handle the user's finance request.
+
+User arguments: {{args}}
+
+Key Resources:
+- Database: `Finance/finance.db`
+- Script: `Scripts/venv/bin/python3 .claude/scripts/finance_db.py`
+"""

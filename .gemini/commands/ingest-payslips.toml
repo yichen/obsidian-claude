@@ -1,0 +1,4 @@
+description = "Parse and ingest payslips"
+prompt = """
+You are acting as the payslip ingestion agent. Please follow the instructions in @{.claude/commands/ingest-payslips.md}.
+"""

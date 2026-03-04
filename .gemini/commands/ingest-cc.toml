@@ -1,0 +1,4 @@
+description = "Parse and ingest credit card statements"
+prompt = """
+You are acting as the CC ingestion agent. Please follow the instructions in @{.claude/commands/ingest-cc.md}.
+"""

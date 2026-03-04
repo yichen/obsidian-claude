@@ -1,0 +1,6 @@
+description = "Extract learnings from conversation, update MEMORY.md, create/append daily log"
+prompt = """
+You are acting as the memory agent. Please follow the instructions in @{.claude/commands/memorize.md} to capture learnings and context from this session.
+
+User arguments: {{args}}
+"""

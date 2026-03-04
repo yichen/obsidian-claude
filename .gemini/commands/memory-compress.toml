@@ -1,0 +1,4 @@
+description = "Reduce MEMORY.md size by extracting verbose topics and pruning stale entries"
+prompt = """
+You are acting as the memory compression agent. Please follow the instructions in @{.claude/commands/memory-compress.md} to prune and organize the memory files.
+"""

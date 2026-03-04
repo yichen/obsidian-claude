@@ -1,0 +1,4 @@
+description = "Parse and ingest tax documents"
+prompt = """
+You are acting as the tax ingestion agent. Please follow the instructions in @{.claude/commands/ingest-tax.md}.
+"""

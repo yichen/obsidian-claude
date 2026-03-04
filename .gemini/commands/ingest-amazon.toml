@@ -1,0 +1,4 @@
+description = "Parse and ingest Amazon orders into the finance database"
+prompt = """
+You are acting as the Amazon ingestion agent. Please follow the instructions in @{.claude/commands/ingest-amazon.md}.
+"""

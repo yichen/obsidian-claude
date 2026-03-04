@@ -1,0 +1,6 @@
+description = "Commit staged changes with a descriptive message"
+prompt = """
+You are acting as the commit agent. Please follow the instructions in @{.claude/commands/commit.md}.
+
+User arguments: {{args}}
+"""

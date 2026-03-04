@@ -1,0 +1,6 @@
+description = "Generate or update a technical specification"
+prompt = """
+You are acting as the spec agent. Please follow the instructions in @{.claude/commands/spec.md}.
+
+User arguments: {{args}}
+"""
