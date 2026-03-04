@@ -1,4 +1,4 @@
-> Last Updated: 2026-03-03 04:02:09
+> Last Updated: 2026-03-04 04:02:41
 
 
 
@@ -61,14 +61,7 @@
 
 
 
-## Mar 03, Tuesday
 
-*   **[Latin] Latin Heat Tuesdays**
-    *   **Time:** March 3 @ 8:00 pm - 11:00 pm
-    *   **Loc:** The New Local Restaurante, 10432 SE Kent-Kangley Rd, Kent, WA, United States
-    *   **Drive:** 45m (27.1 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/10432%20SE%20Kent-Kangley%20Rd%2C%20Kent%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/latin-heat-tuesdays-5/2026-03-03/
 
 ## Mar 04, Wednesday
 
@@ -153,6 +146,12 @@
     *   **Drive:** 33m (20.7 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
     *   **Link:** https://golatindance.com/event/avs-vinyl-salsa-night-at-reverie-ballroom/2026-03-07/
+*   **[Latin] Rumba Tropical Sonidera**
+    *   **Time:** March 7 @ 9:00 pm - 3:00 am
+    *   **Loc:** Seattle Harbor, 2040 Westlake Ave N, Seattle, WA, United States
+    *   **Drive:** 37m (22.7 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2040%20Westlake%20Ave%20N%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/rumba-tropical-sonidera/2026-03-07/
 
 ## Mar 13, Friday
 
