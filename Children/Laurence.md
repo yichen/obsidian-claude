@@ -1,3 +1,9 @@
+## 2026-03-03
+- **Regulation Tool:** Ciara assigned the 'impulse stoplight' homework (red = stop and think, yellow = double-check the impulse, green = act) to help him slow down before reacting; plan to practice it together during transitions.
+- **Stop-Think-Choose Worksheet:** She also provided a stoplight sheet prompting him to notice his feelings, brainstorm at least two choices, and then pick the best action before he moves.
+- **Choices & Do-Overs:** Activity 5 from the *Thriving with ADHD Workbook for Kids* asks him to write out a choice he'd redo, the consequences, and better alternatives, plus a "press the pause button" reminder to take breaths before reacting.
+- **Safety Reminder:** Ciara told him (with me present) that any threats to hurt or kill someone have to be reported, so he understands the boundary.
+
 ## 2026-03-01
 - **Behavior:** Sheri reported Laurence spent the day throwing things and even tossed a gallon of water that broke and flooded the floor.
 - **Possible Triggers:** She suspects his medication might be contributing, because the entire day felt unusually hard.
