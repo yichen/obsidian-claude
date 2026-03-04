@@ -84,8 +84,7 @@
               "title": "Bookmarks"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -200,8 +199,11 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "54297b07a570ec5a",
+  "active": "06077be195cc1739",
   "lastOpenFiles": [
+    "Untitled 1.md",
+    "Untitled 2.md",
+    "Health/Yi's Mental Health Therapy with Dr. Ding.md",
     "Life/Daily/2026/02/2026-02-27.md",
     "lancedb",
     "Projects/1_selling-rental/spec.md",
@@ -245,9 +247,6 @@
     "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/philox/LICENSE.md",
     "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/splitmix64/LICENSE.md",
     "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/sfc64/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/mt19937/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/pcg64/LICENSE.md",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/random/src/distributions/LICENSE.md",
     "Untitled 1.canvas",
     "Untitled.canvas"
   ]
