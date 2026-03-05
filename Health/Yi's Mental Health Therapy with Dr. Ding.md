@@ -5,7 +5,15 @@ Yu Ding PsycD
 
 [https://doxy.me/drding](https://doxy.me/drding)
 
-### 2026-02-19
+## 2026-03-05
+
+- Slept 4 hours last night after the second date with Tingting. Last week after our first date I also slept 4 hours. When I la
+	- Ding: sound bath for sleep
+- Ding: you have been doing meditation consistently a while back. Are you still doing that?
+	- Yi: Not anymore. WIth the excitement with AI, and dating, and two jobs, I feel I don't have enough time for meditation.
+	- Ding: with the current state, meditation is more important
+
+## 2026-02-19
 - Yi: Initial impact (reputation) doing very well at ServiceTitan.
 - Yi: too much context switch (multiple jobs, dates), my sleep problem is probably over stimulation. 
 - Yi: last Sunday (Chinese New Year Eve) I camped in my car to get better sleep. I did the whole trip just to sleep there. 
