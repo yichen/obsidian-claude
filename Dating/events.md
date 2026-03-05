@@ -1,4 +1,4 @@
-> Last Updated: 2026-03-04 04:02:41
+> Last Updated: 2026-03-05 04:02:25
 
 
 
@@ -63,20 +63,7 @@
 
 
 
-## Mar 04, Wednesday
 
-*   **[Latin] El Centro Skate Rink: Adult Latino Skate Nights**
-    *   **Time:** March 4 @ 7:30 am - 10:00 pm
-    *   **Loc:** El Centro Skate Rink, 34222 Pacific Hwy S., Federal Way, WA, United States
-    *   **Drive:** 52m (36.3 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/34222%20Pacific%20Hwy%20S.%2C%20Federal%20Way%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/el-centro-skate-rink-adult-latino-skate-nights/2026-03-04/
-*   **[Latin] Sueños de Salsa Salsa y Bachata**
-    *   **Time:** March 4 @ 8:30 pm - 11:00 pm
-    *   **Loc:** Sueños de Salsa, 6512 Roosevelt Way NE, Seattle, WA, US
-    *   **Drive:** 37m (25.0 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/6512%20Roosevelt%20Way%20NE%2C%20Seattle%2C%20WA%2C%20US)
-    *   **Link:** https://golatindance.com/event/suenos-de-salsa-salsa-y-bachata/2026-03-04/
 
 ## Mar 05, Thursday
 
@@ -100,6 +87,12 @@
     *   **Loc:** LaVida Dance Studio, 11961 124th Ave NE, Totem Square Plaza, Kirkland, WA, United States
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/11961%20124th%20Ave%20NE%2C%20Totem%20Square%20Plaza%2C%20Kirkland%2C%20WA%2C%20United%20States)
     *   **Link:** https://golatindance.com/event/salsa-bachata-dance-social-w-intro-classes-every-3rd-friday/2026-03-06/
+*   **[FB] Nite Wave - The Best 80’s 90s Party Ever**
+    *   **Time:** 8 PM
+    *   **Loc:** Your push notifications are offTurn on notifications to stay connectedTurn onNot nowTurn onNot nowNew See allUnreadHiking in the PNW And Outdoor...: "Golden hour at Cannon Beach hits different. Save this spot for your next coastal sunset!"4hMark as readUnreadZion National Park Utah: "Headed to Zion in mid-May for my 40th birthday celebration and couldn't be more excited. Somehow..."5hMark as readEarlier Unread40+ Single Hikers of the PNW: "Anyone interested in doing this with me on Friday, April 10th? Willowbrook is located in Sedro..."7hMark as readUnreadPNW Singles Outdoor Dating Adventures: "Hey y'all!"8hMark as readUnreadPNW Traveler: "Planning a trip up along the WA coast. Any suggestions on nice RV Parks/campgrounds in Forks? And..."8hMark as readSee previous notifications
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Your%20push%20notifications%20are%20offTurn%20on%20notifications%20to%20stay%20connectedTurn%20onNot%20nowTurn%20onNot%20nowNew%C2%A0See%20allUnreadHiking%20in%20the%20PNW%20And%20Outdoor...%3A%20%22Golden%20hour%20at%20Cannon%20Beach%20hits%20different.%20Save%20this%20spot%20for%20your%20next%20coastal%20sunset%21%224hMark%20as%20readUnreadZion%20National%20Park%20Utah%3A%20%22Headed%20to%20Zion%20in%20mid-May%20for%20my%2040th%20birthday%20celebration%20and%20couldn%27t%20be%20more%20excited.%20Somehow...%225hMark%20as%20readEarlier%C2%A0Unread40%2B%20Single%20Hikers%20of%20the%20PNW%3A%20%22Anyone%20interested%20in%20doing%20this%20with%20me%20on%20Friday%2C%20April%2010th%3F%20Willowbrook%20is%20located%20in%20Sedro...%227hMark%20as%20readUnreadPNW%20Singles%20Outdoor%20Dating%20Adventures%3A%20%22Hey%20y%27all%21%228hMark%20as%20readUnreadPNW%20Traveler%3A%20%22Planning%20a%20trip%20up%20along%20the%20WA%20coast.%20Any%20suggestions%20on%20nice%20RV%20Parks/campgrounds%20in%20Forks%3F%20And...%228hMark%20as%20readSee%20previous%20notifications)
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/1412638983739339/
 *   **[Latin] Latin Night at Seattle Harbor**
     *   **Time:** March 6 @ 9:00 pm - 2:00 am
     *   **Loc:** Seattle Harbor, 2040 Westlake Ave N, Seattle, WA, United States
@@ -152,6 +145,20 @@
     *   **Drive:** 37m (22.7 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2040%20Westlake%20Ave%20N%2C%20Seattle%2C%20WA%2C%20United%20States)
     *   **Link:** https://golatindance.com/event/rumba-tropical-sonidera/2026-03-07/
+
+## Mar 08, Sunday
+
+*   **[Latin] Salsaymotion Sunset Social**
+    *   **Time:** March 8 @ 6:00 pm - 8:30 pm
+    *   **Loc:** Bravo Dance School, 13635 NE 8th St Suite 104, Bellevue, WA, United States
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/13635%20NE%208th%20St%20Suite%20104%2C%20Bellevue%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/salsaymotion-sunset-social-2/2026-03-08/
+*   **[Latin] eSOeS – Salsa/Bachata at Aria Ballroom every Sunday**
+    *   **Time:** March 8 @ 7:00 pm - 11:00 pm
+    *   **Loc:** Aria Ballroom, 15300 NE 95th St, Redmond, WA, United States
+    *   **Drive:** 27m (13.1 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/15300%20NE%2095th%20St%2C%20Redmond%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/esoes-salsa-bachata-at-aria-ballroom-every-sunday/2026-03-08/
 
 ## Mar 13, Friday
 
@@ -453,4 +460,10 @@ Seattle
 *   **[FB] Trail of Ten Falls**
     *   **Facebook Group:** Single Hikers of the PNW
     *   **Link:** https://www.facebook.com/events/1449840013178483/
+*   **[FB] Sunday Hike @ Riverside State Park 7 Mile Trilhead**
+    *   **Loc:** Spokane, Washington
+    *   **Drive:** 4h 58m (268.3 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Spokane%2C%20Washington)
+    *   **Facebook Group:** FB Group
+    *   **Link:** https://www.facebook.com/events/1556910395392855/
 ## Sources Checked
