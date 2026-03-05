@@ -15,6 +15,11 @@ Yu Ding PsycD
 - Yi: I will seriously consider quit coffee (but keep de-caf)
 - Ding: if you are already overstimulated, try to avoid taking new information (e.g. YouTube).
 - Ding: there is a study that hearing real birds' sound has great impact for mental healthy, while birds audio from devices does not have that effect. Try avoid devices after 8pm
+- Last weekend, with the help of AI, I found out I have to sell my rental house as my HELOC only have 8 moths of runway even with two jobs. I am shocked that my two jobs is not enough to give me a positive cash flow. 
+- Ding: looks like there is a real reason you are anxious: dad getting worse, two jobs, dating, selling rental, job interviews. 
+	- Just accept that you are anxious for a good reason.
+- Ding: can we make our brain a very precious resource, and must be maintained and recharged. Make it a high priority responsibility. 
+	- Intentionally protect your brain. For example, avoid watching Youtube videos regarding AI, Claude Code, those videos that stimulate you. 
 
 ## 2026-02-19
 - Yi: Initial impact (reputation) doing very well at ServiceTitan.
