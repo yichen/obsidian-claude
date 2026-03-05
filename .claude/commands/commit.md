@@ -1,6 +1,6 @@
-# /commit — Commit and push to titan
+# /commit — Commit and push to main
 
-Commit all local changes in the Obsidian vault and push to the remote `titan` branch.
+Commit all local changes in the Obsidian vault and push to the remote `main` branch.
 
 ## Arguments
 
@@ -27,19 +27,17 @@ Run `git add -A` to stage everything. This is a personal Obsidian vault — ther
 
 Create the commit. Do NOT include a Co-Authored-By line — this is a personal vault.
 
-### Step 5: Push to titan
+### Step 5: Push to main
 
-Push to the remote `titan` branch:
+Push to the remote `main` branch:
 
 ```
-git push origin HEAD:titan
+git push origin main
 ```
-
-If the local branch is not `titan`, this still pushes the current branch's commits to the remote `titan` branch.
 
 ### Step 6: Confirm
 
 Display:
 - Number of files changed
 - The commit message
-- Confirmation that it was pushed to `origin/titan`
+- Confirmation that it was pushed to `origin/main`
