@@ -1,3 +1,6 @@
+## 2026-03-05
+- **Sleep:** Great evening after the date, but I only got about four hours of fragmented sleep—woke up wired, tried light chores and tidying to imitate the trick that worked last time, and still couldn't fall back asleep; starting to wonder if the 4 a.m. wakeups are becoming a new pattern.
+
 ## 2026-03-02
 - **Sleep:** Took hydroxyzine PAM last night and slept just under seven hours, but REM was tiny—less than 10 minutes, same pattern I remember from past doses.
 
