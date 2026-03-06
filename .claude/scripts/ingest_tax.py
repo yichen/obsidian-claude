@@ -46,6 +46,7 @@ LOG_FILE = OUTPUT_ROOT / "ingest.log"
 PROCESSING_LOG_PATH = OUTPUT_ROOT / "processing_log.json"
 
 YEARS = [2025, 2024, 2023, 2022]  # Process newest first
+MAX_PARSE_ATTEMPTS = 3  # Retry budget for transient PDF parse failures
 
 # --- Logging ---
 logger = logging.getLogger("ingest_tax")
@@ -3877,10 +3878,17 @@ def run_ingest(year_filter: Optional[int] = None, source: str = "prepare", force
 
         for pdf_path in new_pdfs:
             try:
-                if source == "archive":
-                    result = process_archive_pdf(pdf_path, year)
-                else:
-                    result = process_pdf(pdf_path, year)
+                for _attempt in range(1, MAX_PARSE_ATTEMPTS + 1):
+                    try:
+                        if source == "archive":
+                            result = process_archive_pdf(pdf_path, year)
+                        else:
+                            result = process_pdf(pdf_path, year)
+                        break
+                    except Exception as e:
+                        if _attempt == MAX_PARSE_ATTEMPTS:
+                            raise
+                        print(f"  Attempt {_attempt}/{MAX_PARSE_ATTEMPTS} failed: {e}, retrying...")
                 record_result(processing_log, pdf_path, result)
 
                 if result["status"] == "success":

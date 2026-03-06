@@ -45,6 +45,7 @@ RETRY_SETTINGS = [
     {"layout": True},
     {"x_tolerance": 5},
 ]
+MAX_PARSE_ATTEMPTS = 3  # Retry budget for transient PDF parse failures
 
 # --- Logging ---
 logger = logging.getLogger("ingest_cc")
@@ -1537,7 +1538,14 @@ def run_ingest(
 
         for pdf_path, filename in new_pdfs:
             try:
-                result = process_pdf(pdf_path, config)
+                for _attempt in range(1, MAX_PARSE_ATTEMPTS + 1):
+                    try:
+                        result = process_pdf(pdf_path, config)
+                        break
+                    except Exception as e:
+                        if _attempt == MAX_PARSE_ATTEMPTS:
+                            raise
+                        print(f"  Attempt {_attempt}/{MAX_PARSE_ATTEMPTS} failed: {e}, retrying...")
                 card_log["processed"][filename] = result
                 card_log["errors"].pop(filename, None)
 

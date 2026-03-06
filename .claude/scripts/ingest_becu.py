@@ -36,6 +36,7 @@ OUTPUT_ROOT = OBSIDIAN_ROOT / "Finance" / "becu"
 LOG_FILE = OUTPUT_ROOT / "ingest.log"
 PROCESSING_LOG_PATH = OUTPUT_ROOT / "processing_log.json"
 
+MAX_PARSE_ATTEMPTS = 3  # Retry budget for transient PDF parse failures
 CHECKING_ACCT = "3588947679"
 HELOC_ACCT = "2019617876"
 MIN_STATEMENT_MONTH = "2025-01"
@@ -971,7 +972,14 @@ def cmd_run(force: bool = False):
 
         logger.info(f"Processing {name} → {month}")
         try:
-            data = parse_statement(path, month, name)
+            for _attempt in range(1, MAX_PARSE_ATTEMPTS + 1):
+                try:
+                    data = parse_statement(path, month, name)
+                    break
+                except Exception as e:
+                    if _attempt == MAX_PARSE_ATTEMPTS:
+                        raise
+                    print(f"  Attempt {_attempt}/{MAX_PARSE_ATTEMPTS} failed: {e}, retrying...")
             write_yaml(data, OUTPUT_ROOT / f"{month}.yaml")
 
             mismatches = data.get("validation", {}).get("mismatches", [])

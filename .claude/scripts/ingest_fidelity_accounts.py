@@ -38,6 +38,7 @@ SOURCE_ROOT = Path.home() / "Dropbox" / "0-FinancialStatements" / "fidelity-acco
 OUTPUT_ROOT = OBSIDIAN_ROOT / "Finance" / "fidelity-accounts"
 LOG_FILE = OUTPUT_ROOT / "ingest.log"
 PROCESSING_LOG_PATH = OUTPUT_ROOT / "processing_log.json"
+MAX_PARSE_ATTEMPTS = 3  # Retry budget for transient PDF parse failures
 
 # --- Regex patterns ---
 MONTHLY_RE = re.compile(r"^Statement(\d{1,2})(\d{2})(\d{4})\.pdf$")
@@ -1780,7 +1781,14 @@ def cmd_run(year: Optional[int] = None, force: bool = False):
 
     for pdf_info in sorted(to_process, key=lambda x: x.statement_date):
         try:
-            data = parse_statement(pdf_info.path)
+            for _attempt in range(1, MAX_PARSE_ATTEMPTS + 1):
+                try:
+                    data = parse_statement(pdf_info.path)
+                    break
+                except Exception as e:
+                    if _attempt == MAX_PARSE_ATTEMPTS:
+                        raise
+                    print(f"  Attempt {_attempt}/{MAX_PARSE_ATTEMPTS} failed: {e}, retrying...")
             output_path = OUTPUT_ROOT / f"{pdf_info.statement_date}.yaml"
             write_yaml(data, output_path)
 
