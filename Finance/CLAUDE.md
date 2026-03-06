@@ -151,24 +151,48 @@ The JSON file syncs via Obsidian Sync and is the **only irreplaceable data** —
 | `Finance/tax/processing_log.json` | Tax PDF ingestion tracking | Yes |
 
 ### Manual Commands
+- `finance_db.py dashboard` — pipeline status: per-source counts, pending files, freshness
+- `finance_db.py preflight` — pre-rebuild checks: source dirs, venv, DB, dependencies
+- `finance_db.py rebuild [--force|--import-only|--parse-only]` — full pipeline rebuild
 - `finance_db.py backup-rules` — export rules to JSON on demand
 - `finance_db.py restore-rules` — reimport rules from JSON into DB
 
 ### Full Rebuild Procedure
-If the database is lost or corrupted, rebuild from scratch:
+If the database is lost or corrupted, rebuild from scratch with a single command:
+```bash
+Scripts/venv/bin/python3 .claude/scripts/finance_db.py rebuild
+```
+
+This runs pre-flight checks, parses all PDFs in parallel (6 ingest scripts), then sequentially imports everything into SQLite. Flags:
+- `--force` — reprocess all PDFs (ignore processing logs) and reimport everything
+- `--import-only` — skip PDF parsing, only run SQLite imports (assumes YAML/CSV files exist)
+- `--parse-only` — only run PDF parsing, skip SQLite imports
+
+For manual step-by-step rebuild (equivalent to `rebuild --import-only`):
 ```bash
 PYTHON=Scripts/venv/bin/python3
 $PYTHON .claude/scripts/finance_db.py init               # schema + seed data
-$PYTHON .claude/scripts/finance_db.py restore-rules       # 751 categorization rules
+$PYTHON .claude/scripts/finance_db.py restore-rules       # categorization rules
 $PYTHON .claude/scripts/finance_db.py import              # CC transactions
 $PYTHON .claude/scripts/finance_db.py categorize          # apply rules to CC txns
 $PYTHON .claude/scripts/finance_db.py import-amazon       # Amazon orders
+$PYTHON .claude/scripts/finance_db.py categorize-amazon   # apply rules to Amazon
 $PYTHON .claude/scripts/finance_db.py import-payslips     # payslips
 $PYTHON .claude/scripts/finance_db.py import-tax          # tax documents
 $PYTHON .claude/scripts/finance_db.py import-fidelity     # Fidelity accounts + CMA txns
 $PYTHON .claude/scripts/finance_db.py import-sofi         # SoFi loan statements
 $PYTHON .claude/scripts/finance_db.py import-becu         # BECU checking + HELOC
+$PYTHON .claude/scripts/finance_db.py validate            # balance validation
 ```
+
+### Pipeline Observability
+
+| Command | Purpose |
+|---------|---------|
+| `dashboard` | Per-source status: files processed, DB rows, date ranges, pending files, staleness, categorization |
+| `preflight` | Pre-rebuild checks: source dirs, venv, DB, dependencies, rules backup |
+| `status` | Database-only stats (row counts, categorization rates) |
+| `validate` | Balance validation across CC statements |
 
 ### What's Reproducible vs. What's Not
 
