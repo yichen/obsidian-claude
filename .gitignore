@@ -2,6 +2,7 @@
 # Ignore heavy/internal Obsidian noise
 .obsidian/workspace
 .obsidian/workspace.json
+.obsidian/workspace-mobile.json
 .obsidian/cache/
 .obsidian/indexed-db/
 .obsidian/plugins/obsidian-git/
@@ -12,16 +13,11 @@
 
 # System files
 .DS_Store
-**/.DS_Store
 *.pyc
 __pycache__/
 
-# --- TRACK LIST ---
-# Explicitly track everything else (Notes, Folders, Attachments)
-!*
-!*/
-
-# Explicitly track your AI config
+# --- EXCEPTIONS ---
+# If you want to be extra sure your AI config is tracked
 !/.claude/
 !/.claude/**
 !/.gitignore

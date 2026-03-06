@@ -140,20 +140,6 @@
 - May need IRS Form 8332 for non-custodial parent years (Sheri is custodian in even years, Yi in odd years)
 - 2025 total spousal support paid: ~$95,000 ($5k/mo temp Jan-May + $10k/mo June-Dec)
 
-### Execute-Spec Command (2026-03-02)
-- Created `/execute-spec` slash command at `.claude/commands/execute-spec.md`
-- Reads a `spec.md` (produced by `/spec`), creates task list from Decomposition table, works through sub-tasks with constraint enforcement and escalation triggers
-- 5 phases: Load & Validate → Plan & Present → Execute → Verify → Report
-- Logs progress to `execution-log.md` in the same folder as spec — supports resume across sessions
-- User checkpoints every 3 tasks or after any Large-effort task
-
-### MetLife Legal Plan via Salesforce (2026-03-02)
-- **Benefit**: MetLife Legal Plan, post-tax deduction, $9.43/paycheck (~$227/year)
-- **Access**: [members.legalplans.com](https://members.legalplans.com) or call 1-800-821-6400
-- **Covers**: real estate transactions, will preparation, document review, family law — no copays, no claim forms, no usage limits
-- **Relevant to rental sale**: can use network attorney to review listing agreement, purchase contract, closing docs at no extra cost
-- Rate was $14.14/paycheck in Jan-Feb 2025, dropped to $9.43 from mid-Feb 2025
-
 ### LeetCode Practice Skill (2026-02-26)
 - Created `/leetcode` slash command at `.claude/commands/leetcode.md`
 - Logs daily practice to `Work/LeetCode/YYYY-MM-DD.md`
@@ -224,6 +210,12 @@
 - **MetLife Legal Plan** covers real estate transaction review — use before cancelling the benefit
 - **Revised Mar 2026**: deficit -$733/mo (near breakeven), sale is optional deleveraging not survival
 - **HELOC runway**: $79K available / $733/mo = ~9 years — no longer urgent
+
+### Cash Flow / Rental Sale Decision (2026-03-01) `(active)`
+- **Revised Mar 2026**: After hobby freeze + legal eliminated + ESPP stopped + subscription cuts, deficit went from -$6,785/mo to **-$733/mo** (near breakeven)
+- **HELOC runway**: $79K available / $733/mo = ~9 years (was ~Oct 2026) — no longer urgent
+- **Rental sale**: still beneficial (+$5,882/mo surplus, $137K reserve) but **no longer required for survival**
+
 - **Remaining levers**: cut dining 50% (+$300), audit Apple subs (+$50-100) → would flip to positive
 - **Spousal maintenance ends ~late 2028**: +$10K/mo — everything becomes very comfortable
 - Re-evaluate withholding in October per safe harbor strategy
