@@ -1,4 +1,4 @@
-> Last Updated: 2026-03-05 04:02:25
+> Last Updated: 2026-03-06 04:02:00
 
 
 
@@ -65,23 +65,16 @@
 
 
 
-## Mar 05, Thursday
 
-*   **[Latin] Latin Dance & DJ Thursday Nights**
-    *   **Time:** March 5 @ 8:30 pm - 12:00 am
-    *   **Loc:** Aurora Borealis Restaurant, 16708 Aurora Ave N, Shoreline, WA, United States
-    *   **Drive:** 47m (31.2 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/16708%20Aurora%20Ave%20N%2C%20Shoreline%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/latin-dance-dj-thursday-nights/2026-03-05/
-*   **[Latin] Bachata Night at Reverie Ballroom**
-    *   **Time:** March 5 @ 9:00 pm - 1:00 am
-    *   **Loc:** Reverie Ballroom - Seattle, 915 E Pine St, Seattle, WA, United States
-    *   **Drive:** 33m (20.7 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/bachata-night-at-reverie-ballroom/2026-03-05/
 
 ## Mar 06, Friday
 
+*   **[FB] Woodland Park Training**
+    *   **Time:** 12 PM
+    *   **Loc:** 2008 1st Ave, Seattle, WA, United States, Washington 98121
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2008%201st%20Ave%2C%20Seattle%2C%20WA%2C%20United%20States%2C%20Washington%2098121)
+    *   **Facebook Group:** FB Group
+    *   **Link:** https://www.facebook.com/events/895709039998746/
 *   **[Latin] SALSA & BACHATA DANCE SOCIAL**
     *   **Time:** March 6 @ 8:00 pm - 11:30 pm
     *   **Loc:** LaVida Dance Studio, 11961 124th Ave NE, Totem Square Plaza, Kirkland, WA, United States
@@ -159,6 +152,24 @@
     *   **Drive:** 27m (13.1 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/15300%20NE%2095th%20St%2C%20Redmond%2C%20WA%2C%20United%20States)
     *   **Link:** https://golatindance.com/event/esoes-salsa-bachata-at-aria-ballroom-every-sunday/2026-03-08/
+
+## Mar 09, Monday
+
+*   **[Latin] Salsa Practica**
+    *   **Time:** March 9 @ 9:00 pm - 11:00 pm
+    *   **Loc:** Reverie Ballroom - Seattle, 915 E Pine St, Seattle, WA, United States
+    *   **Drive:** 33m (20.7 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/salsa-practica/2026-03-09/
+
+## Mar 10, Tuesday
+
+*   **[Latin] Latin Heat Tuesdays**
+    *   **Time:** March 10 @ 8:00 pm - 11:00 pm
+    *   **Loc:** The New Local Restaurante, 10432 SE Kent-Kangley Rd, Kent, WA, United States
+    *   **Drive:** 45m (27.1 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/10432%20SE%20Kent-Kangley%20Rd%2C%20Kent%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/latin-heat-tuesdays-5/2026-03-10/
 
 ## Mar 13, Friday
 
