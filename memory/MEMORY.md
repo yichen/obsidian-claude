@@ -15,7 +15,7 @@
 - Schedule H ↔ nanny W-2: exact match both years; 2025 Salesforce W-2 fed withholding ↔ payslip DB: exact match ($160,668.34)
 - **Team agents pattern**: Used 4 parallel agents (parser-1099int, parser-5498, parser-schedule-h, parser-1040) + 1 sequential (cross-validator). Each agent edits different functions in same file — minimal conflicts. TaskCreate with blockedBy for dependencies.
 
-### Personal Finance Database & Analysis Skill (2026-03-01)
+### Personal Finance Database & Analysis Skill (2026-03-01, updated 2026-03-06)
 - Created `/finance` slash command + Python script at `.claude/scripts/finance_db.py`
 - SQLite database at `Finance/finance.db` — schema: transactions, categories, accounts, categorization_rules, import_log, **amazon_orders**, **payslips, payslip_line_items**
 - **5,620 CC transactions** imported from 163 CSVs (Dec 2022 – Feb 2026, 6 cards)
@@ -28,9 +28,11 @@
 - **Amazon subcategories added (Mar 2026)**: Kids Books, Kids Toys and Games, Kids Food, Kids Gear, Baby and Infant, Tech and Electronics, Camping and Outdoor, Photography, Office, Supplements
 - `backup_db()` creates `.db.bak` + auto-exports `Finance/categorization_rules.json` (1,239 rules) before every import
 - `backup-rules` / `restore-rules` commands for manual export/import of categorization rules
-- **Full rebuild**: `init` → `restore-rules` → `import` → `categorize` → `import-amazon` → `categorize-amazon` → `import-payslips` → `import-tax` → `import-fidelity` → `import-sofi` → `import-becu`
-- `finance_db.py validate` — post-import balance validation against PDF balance summaries
+- **Full rebuild**: `finance_db.py rebuild` (single command — parallel parse + sequential import). Flags: `--force`, `--import-only`, `--parse-only`
+- **Pipeline observability**: `dashboard` (per-source status, pending files, freshness, categorization), `preflight` (pre-rebuild checks), `validate` (balance validation)
+- **Retry budget**: All 6 ingest scripts have `MAX_PARSE_ATTEMPTS = 3` — retries transient pdfminer failures
 - `/finance <question>` translates natural language to SQL queries — supports payslip/income/cash-flow queries
+- `/finance` context priming now runs `dashboard` first to detect stale/pending data before answering queries
 - matplotlib installed in venv for chart generation to `Finance/reports/`
 - **Finance CLAUDE.md** at `Finance/CLAUDE.md` documents all data sources, schema, tax facts, query patterns; root CLAUDE.md routes to it
 
@@ -208,6 +210,13 @@
 - Hotel: The Laylow, Autograph Collection (Waikiki), Conf: 76599630
 - Car: Alamo intermediate (Toyota Corolla), Conf: 68668670
 - Extras: $141 Costco shop card, $100 F&B credit, waived resort fee, free valet
+
+### Finance Pipeline Minions Improvements (2026-03-06) `(COMPLETED)`
+- Implemented 6 changes inspired by Stripe's "Minions" article for reliable one-shot coding agents
+- Added `dashboard`, `preflight`, `rebuild` commands to `finance_db.py`
+- Added `MAX_PARSE_ATTEMPTS = 3` retry budget to all 6 ingest scripts
+- Updated `/finance` context priming to use `dashboard` before answering queries (Data Completeness Guard)
+- Updated `Finance/CLAUDE.md` and `.claude/commands/finance.md` documentation
 
 ### Rental Sale Spec Execution (2026-03-02) `(active)`
 - **Spec**: `Projects/1_selling-rental/spec.md` — 11 sub-tasks, 6 acceptance criteria
