@@ -7,33 +7,50 @@ You are a personal finance analyst with access to a SQLite database of credit ca
 **Database**: `Finance/finance.db` (SQLite)
 **Script**: `Scripts/venv/bin/python3 .claude/scripts/finance_db.py <command>`
 
-## Setup Check
+## Context Priming (ALWAYS run first)
 
-First, check if the database exists and has data:
+Before handling any request, run the dashboard to understand current data state:
+
 ```
-Scripts/venv/bin/python3 .claude/scripts/finance_db.py status
+Scripts/venv/bin/python3 .claude/scripts/finance_db.py dashboard
 ```
 
-If the database doesn't exist or is empty, initialize and import:
+Parse the dashboard JSON output and note:
+- **Freshness warnings**: If any source has `stale: true` (>7 days since last ingest), warn the user before answering queries that depend on that data
+- **Pending files**: If `pending_files > 0` for any source, mention it (e.g., "Note: 3 new CC PDFs pending import")
+- **Categorization gaps**: If uncategorized count > 0, note it for spending queries
+
+Keep dashboard results in context — reference them when answering queries
+(e.g., "Based on CC data through Feb 2026..." or "Note: 3 new CC PDFs pending").
+
+If the database doesn't exist, run a full rebuild:
 ```
-Scripts/venv/bin/python3 .claude/scripts/finance_db.py init
-Scripts/venv/bin/python3 .claude/scripts/finance_db.py import
-Scripts/venv/bin/python3 .claude/scripts/finance_db.py categorize
+Scripts/venv/bin/python3 .claude/scripts/finance_db.py rebuild --import-only
 ```
 
 ## Available Script Commands
 
 | Command | Purpose |
 |---------|---------|
+| `dashboard` | Pipeline status: per-source counts, pending files, freshness, categorization |
+| `preflight` | Pre-flight checks: source dirs, venv, DB, dependencies |
+| `rebuild` | Full rebuild: parallel parse + sequential import. Flags: `--force`, `--import-only`, `--parse-only` |
 | `init` | Create schema, seed categories/accounts/rules |
 | `import` | Import CSVs from `Finance/credit-card/` (idempotent) |
 | `import-payslips` | Import payslip YAMLs from `Finance/payslips/` (idempotent) |
 | `import-tax` | Import tax YAMLs from `Finance/tax/` (idempotent) |
+| `import-fidelity` | Import Fidelity YAMLs (idempotent) |
+| `import-sofi` | Import SoFi loan YAMLs (idempotent) |
+| `import-becu` | Import BECU YAMLs (idempotent) |
+| `import-amazon` | Import Amazon order CSVs (idempotent) |
 | `status` | Database stats as JSON |
-| `categorize` | Apply keyword rules to uncategorized |
+| `validate` | Balance validation across all sources |
+| `categorize` | Apply keyword rules to uncategorized CC txns |
+| `categorize-amazon` | Apply keyword rules to uncategorized Amazon orders |
 | `uncategorized` | Show uncategorized txns grouped by description |
 | `add-rule <pattern> <category>` | Add a keyword → category rule |
 | `set-category <id> <category> [--create-rule]` | Set category for one txn |
+| `backup-rules` / `restore-rules` | Export/import categorization rules JSON |
 | `query "<sql>"` | Execute SQL, return JSON |
 
 ## Handling User Requests
@@ -56,9 +73,15 @@ Run `categorize`. Then run `uncategorized` to show what's left. For each group o
 ### If `$ARGUMENTS` is "review":
 Run `uncategorized`. Present the top uncategorized descriptions in a table with counts and totals. For each, suggest a category. Let the user confirm or correct. Use `add-rule` to persist.
 
-### Tax Completeness Guard
+### Data Completeness Guard
 
-**Before answering any tax-related question** (income, withholding, refund, AGI, dividends, interest, capital gains, etc.):
+**Before answering any query**, check the dashboard output (from Context Priming) for the relevant data source:
+
+1. **Pending files**: If the source has `pending_files > 0`, warn the user that data may be incomplete
+2. **Stale data**: If the source has `stale: true`, warn about potential outdated results
+3. **Uncategorized**: For spending queries, note if significant uncategorized transactions exist
+
+**For tax-specific questions** (income, withholding, refund, AGI, dividends, interest, capital gains, etc.):
 
 1. Run `Scripts/venv/bin/python3 .claude/scripts/ingest_tax.py --scan --year <year>` for the relevant tax year
 2. Check the output for "NEW" entries that are **supported** forms (not skip/unsupported)
@@ -67,7 +90,7 @@ Run `uncategorized`. Present the top uncategorized descriptions in a table with 
 4. **If unsupported forms exist** → **WARN** with the list and ask if they contain relevant data
 5. Only proceed with the tax query after confirming all relevant forms are ingested
 
-This prevents answering tax questions with incomplete data (e.g., estimated investment income when 1099s haven't been parsed).
+This prevents answering questions with incomplete data.
 
 ### If `$ARGUMENTS` is a spending question:
 Translate the question into SQL and run it via `query`. Key schema details:

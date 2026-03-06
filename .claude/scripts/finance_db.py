@@ -7,7 +7,9 @@ import os
 import re
 import shutil
 import sqlite3
+import subprocess
 import sys
+from datetime import datetime
 from pathlib import Path
 
 import yaml
@@ -22,6 +24,39 @@ FIDELITY_ROOT = VAULT_ROOT / "Finance" / "fidelity-accounts"
 SOFI_ROOT = VAULT_ROOT / "Finance" / "sofi-loan"
 BECU_ROOT = VAULT_ROOT / "Finance" / "becu"
 RULES_BACKUP_PATH = VAULT_ROOT / "Finance" / "categorization_rules.json"
+
+SCRIPTS_DIR = Path(__file__).resolve().parent
+VENV_PYTHON = str(VAULT_ROOT / "Scripts" / "venv" / "bin" / "python3")
+
+PROCESSING_LOGS = {
+    "CC Statements": VAULT_ROOT / "Finance" / "credit-card" / "processing_log.json",
+    "Tax Documents": VAULT_ROOT / "Finance" / "tax" / "processing_log.json",
+    "Payslips": VAULT_ROOT / "Finance" / "payslips" / "processing_log.json",
+    "Fidelity": VAULT_ROOT / "Finance" / "fidelity-accounts" / "processing_log.json",
+    "SoFi Loan": VAULT_ROOT / "Finance" / "sofi-loan" / "processing_log.json",
+    "BECU": VAULT_ROOT / "Finance" / "becu" / "processing_log.json",
+}
+
+SOURCE_DIRS = {
+    "CC Statements": Path.home() / "Dropbox" / "0-FinancialStatements" / "credit-cards",
+    "Tax Documents": [
+        Path.home() / "Dropbox" / "1-Tax" / "2-prepare",
+        Path.home() / "Dropbox" / "1-Tax" / "3-archive",
+    ],
+    "Payslips": Path.home() / "Dropbox" / "0-FinancialStatements" / "payslips",
+    "Fidelity": Path.home() / "Dropbox" / "0-FinancialStatements" / "fidelity-accounts",
+    "SoFi Loan": Path.home() / "Dropbox" / "0-FinancialStatements" / "sofi-loan",
+    "BECU": Path.home() / "Dropbox" / "0-FinancialStatements" / "BECU",
+}
+
+INGEST_SCRIPTS = [
+    ("CC Statements", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_cc_statements.py"), "--run"]),
+    ("Tax Documents", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_tax.py"), "--run"]),
+    ("Payslips", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_payslips.py"), "--run"]),
+    ("Fidelity", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_fidelity_accounts.py"), "run"]),
+    ("SoFi Loan", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_sofi_loan.py"), "run"]),
+    ("BECU", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_becu.py"), "run"]),
+]
 
 # ---------------------------------------------------------------------------
 # Schema
@@ -2325,6 +2360,369 @@ def _apply_single_rule(conn, pattern, cat_id):
 
 
 # ---------------------------------------------------------------------------
+# Dashboard, Preflight, Rebuild
+# ---------------------------------------------------------------------------
+
+
+def _count_log_files(source_name):
+    """Count files tracked in a processing log. Returns (count, last_run)."""
+    log_path = PROCESSING_LOGS.get(source_name)
+    if not log_path or not log_path.exists():
+        return 0
+
+    try:
+        data = json.loads(log_path.read_text())
+    except (json.JSONDecodeError, KeyError):
+        return 0
+
+    if source_name == "CC Statements":
+        # cards -> {card_name -> {processed: {filename: ...}}}
+        count = 0
+        for card in data.get("cards", {}).values():
+            count += len(card.get("processed", {}))
+        return count
+    elif source_name == "Tax Documents":
+        # files -> {filename: {...}}
+        return len(data.get("files", {}))
+    elif source_name == "Payslips":
+        # employers -> {name -> {files_scanned: {filename: ...}}}
+        count = 0
+        for emp in data.get("employers", {}).values():
+            fs = emp.get("files_scanned", {})
+            if isinstance(fs, dict):
+                count += len(fs)
+        return count
+    elif source_name == "Fidelity":
+        # Flat dict: {filename.pdf: {...}, ...} — no version wrapper
+        return len([k for k in data if k.endswith(".pdf")])
+    elif source_name in ("SoFi Loan", "BECU"):
+        # pdfs -> {filename: {...}}
+        return len(data.get("pdfs", {}))
+    return 0
+
+
+def _count_pending_files(source_name):
+    """Count PDF files in source dir not yet in processing log."""
+    dirs = SOURCE_DIRS.get(source_name, [])
+    if isinstance(dirs, Path):
+        dirs = [dirs]
+
+    processed = _count_log_files(source_name)
+
+    # Count PDFs in source dirs
+    total_pdfs = 0
+    for d in dirs:
+        if d.exists():
+            total_pdfs += len(list(d.rglob("*.pdf")))
+
+    return total_pdfs, max(0, total_pdfs - processed)
+
+
+def _get_log_last_run(log_path):
+    """Extract last_run timestamp from a processing log."""
+    if not log_path.exists():
+        return None
+    try:
+        data = json.loads(log_path.read_text())
+        # Most logs have a top-level last_run key
+        if "last_run" in data:
+            return data["last_run"]
+        # Fidelity uses flat format — find latest processed_at
+        timestamps = []
+        for v in data.values():
+            if isinstance(v, dict) and "processed_at" in v:
+                timestamps.append(v["processed_at"])
+        return max(timestamps) if timestamps else None
+    except (json.JSONDecodeError, KeyError):
+        return None
+
+
+def cmd_dashboard():
+    """Print comprehensive pipeline status as JSON."""
+    conn = get_db()
+    sources = []
+
+    # DB table configs: source_name -> (table, date_col)
+    db_tables = {
+        "CC Statements": ("transactions", "date"),
+        "Tax Documents": ("tax_documents", "tax_year"),
+        "Payslips": ("payslips", "pay_date"),
+        "Fidelity": ("fidelity_cma_transactions", "date"),
+        "SoFi Loan": ("sofi_loan_statements", "statement_month"),
+        "BECU": ("becu_checking_statements", "statement_month"),
+    }
+
+    for name, log_path in PROCESSING_LOGS.items():
+        # Processing log stats
+        files_processed = _count_log_files(name)
+        last_ingest = _get_log_last_run(log_path)
+
+        # DB row count and date range
+        db_rows = 0
+        date_range = None
+        table, date_col = db_tables.get(name, (None, None))
+        if table:
+            try:
+                db_rows = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
+                dr = conn.execute(
+                    f"SELECT MIN({date_col}), MAX({date_col}) FROM {table}"
+                ).fetchone()
+                if dr and dr[0]:
+                    date_range = f"{dr[0]} to {dr[1]}"
+            except sqlite3.OperationalError:
+                pass
+
+        # Pending files
+        total_pdfs, pending = _count_pending_files(name)
+
+        # Staleness: >7 days since last ingest
+        stale = False
+        if last_ingest:
+            try:
+                last_dt = datetime.fromisoformat(last_ingest.replace("Z", "+00:00"))
+                stale = (datetime.now(last_dt.tzinfo) - last_dt).days > 7
+            except (ValueError, TypeError):
+                pass
+
+        sources.append({
+            "name": name,
+            "files_processed": files_processed,
+            "db_rows": db_rows,
+            "date_range": date_range,
+            "last_ingest": last_ingest,
+            "pending_files": pending,
+            "stale": stale,
+        })
+
+    # Categorization stats
+    cc_total = cc_cat = 0
+    amz_total = amz_cat = 0
+    try:
+        cc_total = conn.execute(
+            "SELECT COUNT(*) FROM transactions WHERE is_transfer=0"
+        ).fetchone()[0]
+        cc_cat = conn.execute(
+            "SELECT COUNT(*) FROM transactions WHERE is_transfer=0 AND category_id IS NOT NULL"
+        ).fetchone()[0]
+    except sqlite3.OperationalError:
+        pass
+    try:
+        amz_total = conn.execute("SELECT COUNT(*) FROM amazon_orders").fetchone()[0]
+        amz_cat = conn.execute(
+            "SELECT COUNT(*) FROM amazon_orders WHERE category_id IS NOT NULL"
+        ).fetchone()[0]
+    except sqlite3.OperationalError:
+        pass
+
+    cc_pct = round(cc_cat / cc_total * 100, 1) if cc_total else 0
+    amz_pct = round(amz_cat / amz_total * 100, 1) if amz_total else 0
+
+    # DB size
+    db_size_kb = round(DB_PATH.stat().st_size / 1024) if DB_PATH.exists() else 0
+
+    # Freshness warnings
+    warnings = []
+    for s in sources:
+        if s["stale"]:
+            warnings.append(f"{s['name']}: stale (last ingest {s['last_ingest']})")
+        if s["pending_files"] > 0:
+            warnings.append(f"{s['name']}: {s['pending_files']} new PDFs detected")
+    if cc_total - cc_cat > 0:
+        warnings.append(f"CC: {cc_total - cc_cat} uncategorized transactions")
+    if amz_total - amz_cat > 0:
+        warnings.append(f"Amazon: {amz_total - amz_cat} uncategorized orders")
+
+    conn.close()
+    result = {
+        "sources": sources,
+        "categorization": {
+            "cc_pct": cc_pct,
+            "amazon_pct": amz_pct,
+            "cc_uncategorized": cc_total - cc_cat,
+            "amazon_uncategorized": amz_total - amz_cat,
+        },
+        "db_size_kb": db_size_kb,
+        "freshness_warnings": warnings,
+    }
+    print(json.dumps(result, indent=2))
+
+
+def cmd_preflight():
+    """Run pre-flight checks and report readiness as JSON."""
+    checks = []
+    blocked = []
+
+    # Source dirs
+    for name, dirs in SOURCE_DIRS.items():
+        if isinstance(dirs, Path):
+            dirs = [dirs]
+        all_ok = True
+        for d in dirs:
+            if not d.exists():
+                all_ok = False
+                checks.append({"name": f"Source: {name}", "status": "blocked",
+                                "detail": f"Missing: {d}"})
+                blocked.append(f"Source: {name} — {d} not found")
+                break
+        if all_ok:
+            log_count = _count_log_files(name)
+            _, pending = _count_pending_files(name)
+            checks.append({"name": f"Source: {name}", "status": "ok",
+                            "detail": f"{log_count} processed, {pending} new"})
+
+    # DB writable
+    db_dir = DB_PATH.parent
+    if db_dir.exists() and os.access(str(db_dir), os.W_OK):
+        checks.append({"name": "DB writable", "status": "ok"})
+    else:
+        checks.append({"name": "DB writable", "status": "blocked",
+                        "detail": f"{db_dir} not writable"})
+        blocked.append("DB directory not writable")
+
+    # Venv
+    venv_path = Path(VENV_PYTHON)
+    if venv_path.exists():
+        checks.append({"name": "Venv", "status": "ok"})
+    else:
+        checks.append({"name": "Venv", "status": "blocked",
+                        "detail": f"{VENV_PYTHON} not found"})
+        blocked.append("Python venv not found")
+
+    # Dependencies (pdfminer)
+    try:
+        subprocess.run(
+            [VENV_PYTHON, "-c", "import pdfminer"],
+            capture_output=True, timeout=5, check=True,
+        )
+        checks.append({"name": "Dependencies", "status": "ok"})
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, FileNotFoundError):
+        checks.append({"name": "Dependencies", "status": "blocked",
+                        "detail": "pdfminer not importable"})
+        blocked.append("pdfminer dependency missing")
+
+    # Processing logs
+    for name, log_path in PROCESSING_LOGS.items():
+        if log_path.exists():
+            checks.append({"name": f"Log: {name}", "status": "ok"})
+        else:
+            checks.append({"name": f"Log: {name}", "status": "ok",
+                            "detail": "will be created"})
+
+    # Rules backup
+    if RULES_BACKUP_PATH.exists():
+        try:
+            rules_data = json.loads(RULES_BACKUP_PATH.read_text())
+            if isinstance(rules_data, dict) and "rules" in rules_data:
+                count = len(rules_data["rules"])
+            elif isinstance(rules_data, list):
+                count = len(rules_data)
+            else:
+                count = 0
+            checks.append({"name": "Rules backup", "status": "ok",
+                            "detail": f"{count} rules"})
+        except (json.JSONDecodeError, KeyError):
+            checks.append({"name": "Rules backup", "status": "ok",
+                            "detail": "exists but unreadable format"})
+    else:
+        checks.append({"name": "Rules backup", "status": "warn",
+                        "detail": "categorization_rules.json not found"})
+
+    ready = len(blocked) == 0
+    print(json.dumps({"ready": ready, "checks": checks, "blocked": blocked}, indent=2))
+    return ready
+
+
+def cmd_rebuild():
+    """Full pipeline rebuild: parallel parse → sequential import."""
+    args = sys.argv[2:]
+    force = "--force" in args
+    import_only = "--import-only" in args
+    parse_only = "--parse-only" in args
+
+    # Pre-flight gate
+    print("=== Pre-flight checks ===")
+    ready = cmd_preflight()
+    if not ready:
+        print("\nERROR: Pre-flight checks failed. Fix blocked items before rebuild.")
+        sys.exit(1)
+    print()
+
+    # Phase 1: Parallel Parse
+    if not import_only:
+        print("=== Phase 1: Parallel Parse (PDF → YAML/CSV) ===")
+        procs = []
+        for name, cmd in INGEST_SCRIPTS:
+            full_cmd = list(cmd)
+            if force:
+                full_cmd.append("--force")
+            proc = subprocess.Popen(
+                full_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                text=True, cwd=str(VAULT_ROOT),
+            )
+            procs.append((name, proc))
+            print(f"  Started: {name}")
+
+        # Collect results
+        errors = []
+        for i, (name, proc) in enumerate(procs, 1):
+            stdout, stderr = proc.communicate()
+            status = "done" if proc.returncode == 0 else "FAILED"
+            if proc.returncode != 0:
+                errors.append(name)
+            # Count new files from stdout if possible
+            detail = ""
+            if stdout:
+                lines = stdout.strip().split("\n")
+                # Show last meaningful line as summary
+                for line in reversed(lines):
+                    line = line.strip()
+                    if line and not line.startswith("{"):
+                        detail = f" — {line}"
+                        break
+            print(f"  [{i}/{len(procs)}] {name}: {status}{detail}")
+            if proc.returncode != 0 and stderr:
+                for line in stderr.strip().split("\n")[-3:]:
+                    print(f"    stderr: {line}")
+
+        if errors:
+            print(f"\nWARNING: {len(errors)} ingest script(s) had errors: {', '.join(errors)}")
+            print("Continuing with import phase...\n")
+        else:
+            print(f"\nAll {len(procs)} ingest scripts completed successfully.\n")
+
+    if parse_only:
+        print("=== Parse-only mode: skipping import phase ===")
+        return
+
+    # Phase 2: Sequential Import
+    print("=== Phase 2: Sequential Import (YAML/CSV → SQLite) ===")
+    import_steps = [
+        ("Init schema", cmd_init),
+        ("Restore rules", cmd_restore_rules),
+        ("Import CC transactions", cmd_import),
+        ("Categorize CC", cmd_categorize),
+        ("Import Amazon orders", cmd_import_amazon),
+        ("Categorize Amazon", cmd_categorize_amazon),
+        ("Import payslips", cmd_import_payslips),
+        ("Import tax documents", cmd_import_tax),
+        ("Import Fidelity", cmd_import_fidelity),
+        ("Import SoFi", cmd_import_sofi),
+        ("Import BECU", cmd_import_becu),
+        ("Validate balances", cmd_validate),
+    ]
+
+    for i, (step_name, func) in enumerate(import_steps, 1):
+        print(f"\n  [{i}/{len(import_steps)}] {step_name}...")
+        try:
+            func()
+        except Exception as e:
+            print(f"    ERROR: {e}")
+            print(f"    Continuing with next step...")
+
+    print("\n=== Rebuild complete ===")
+
+
+# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -2332,9 +2730,10 @@ def main():
     if len(sys.argv) < 2:
         print("Usage: finance_db.py <command> [args]")
         print("Commands: init, import, import-amazon, import-payslips, import-tax, import-fidelity, import-sofi, import-becu,")
-        print("          status, categorize, categorize-amazon, uncategorized, add-rule <pattern> <category>,")
+        print("          status, dashboard, preflight, rebuild [--force|--import-only|--parse-only],")
+        print("          categorize, categorize-amazon, uncategorized, add-rule <pattern> <category>,")
         print("          set-category <id> <category> [--create-rule], query <sql>,")
-        print("          backup-rules, restore-rules")
+        print("          backup-rules, restore-rules, validate")
         sys.exit(1)
 
     cmd = sys.argv[1]
@@ -2376,6 +2775,12 @@ def main():
         cmd_set_category(sys.argv[2], sys.argv[3], create_rule)
     elif cmd == "validate":
         cmd_validate()
+    elif cmd == "dashboard":
+        cmd_dashboard()
+    elif cmd == "preflight":
+        cmd_preflight()
+    elif cmd == "rebuild":
+        cmd_rebuild()
     elif cmd == "backup-rules":
         cmd_backup_rules()
     elif cmd == "restore-rules":
