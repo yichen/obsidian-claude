@@ -1,4 +1,4 @@
-> Last Updated: 2026-03-06 04:02:00
+> Last Updated: 2026-03-07 04:02:03
 
 
 
@@ -67,43 +67,7 @@
 
 
 
-## Mar 06, Friday
 
-*   **[FB] Woodland Park Training**
-    *   **Time:** 12 PM
-    *   **Loc:** 2008 1st Ave, Seattle, WA, United States, Washington 98121
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2008%201st%20Ave%2C%20Seattle%2C%20WA%2C%20United%20States%2C%20Washington%2098121)
-    *   **Facebook Group:** FB Group
-    *   **Link:** https://www.facebook.com/events/895709039998746/
-*   **[Latin] SALSA & BACHATA DANCE SOCIAL**
-    *   **Time:** March 6 @ 8:00 pm - 11:30 pm
-    *   **Loc:** LaVida Dance Studio, 11961 124th Ave NE, Totem Square Plaza, Kirkland, WA, United States
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/11961%20124th%20Ave%20NE%2C%20Totem%20Square%20Plaza%2C%20Kirkland%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/salsa-bachata-dance-social-w-intro-classes-every-3rd-friday/2026-03-06/
-*   **[FB] Nite Wave - The Best 80’s 90s Party Ever**
-    *   **Time:** 8 PM
-    *   **Loc:** Your push notifications are offTurn on notifications to stay connectedTurn onNot nowTurn onNot nowNew See allUnreadHiking in the PNW And Outdoor...: "Golden hour at Cannon Beach hits different. Save this spot for your next coastal sunset!"4hMark as readUnreadZion National Park Utah: "Headed to Zion in mid-May for my 40th birthday celebration and couldn't be more excited. Somehow..."5hMark as readEarlier Unread40+ Single Hikers of the PNW: "Anyone interested in doing this with me on Friday, April 10th? Willowbrook is located in Sedro..."7hMark as readUnreadPNW Singles Outdoor Dating Adventures: "Hey y'all!"8hMark as readUnreadPNW Traveler: "Planning a trip up along the WA coast. Any suggestions on nice RV Parks/campgrounds in Forks? And..."8hMark as readSee previous notifications
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Your%20push%20notifications%20are%20offTurn%20on%20notifications%20to%20stay%20connectedTurn%20onNot%20nowTurn%20onNot%20nowNew%C2%A0See%20allUnreadHiking%20in%20the%20PNW%20And%20Outdoor...%3A%20%22Golden%20hour%20at%20Cannon%20Beach%20hits%20different.%20Save%20this%20spot%20for%20your%20next%20coastal%20sunset%21%224hMark%20as%20readUnreadZion%20National%20Park%20Utah%3A%20%22Headed%20to%20Zion%20in%20mid-May%20for%20my%2040th%20birthday%20celebration%20and%20couldn%27t%20be%20more%20excited.%20Somehow...%225hMark%20as%20readEarlier%C2%A0Unread40%2B%20Single%20Hikers%20of%20the%20PNW%3A%20%22Anyone%20interested%20in%20doing%20this%20with%20me%20on%20Friday%2C%20April%2010th%3F%20Willowbrook%20is%20located%20in%20Sedro...%227hMark%20as%20readUnreadPNW%20Singles%20Outdoor%20Dating%20Adventures%3A%20%22Hey%20y%27all%21%228hMark%20as%20readUnreadPNW%20Traveler%3A%20%22Planning%20a%20trip%20up%20along%20the%20WA%20coast.%20Any%20suggestions%20on%20nice%20RV%20Parks/campgrounds%20in%20Forks%3F%20And...%228hMark%20as%20readSee%20previous%20notifications)
-    *   **Facebook Group:** 40+ Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/1412638983739339/
-*   **[Latin] Latin Night at Seattle Harbor**
-    *   **Time:** March 6 @ 9:00 pm - 2:00 am
-    *   **Loc:** Seattle Harbor, 2040 Westlake Ave N, Seattle, WA, United States
-    *   **Drive:** 37m (22.7 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2040%20Westlake%20Ave%20N%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/latin-night-at-seattle-harbor-2-2/2026-03-06/
-*   **[Latin] SALSA | BACHATA | ZOUK | KIZOMBA at Salsa Con Todo**
-    *   **Time:** March 6 @ 10:00 pm - 1:00 am
-    *   **Loc:** Salsa Con Todo Studio, 211 N 36th St, Seattle, WA, United States
-    *   **Drive:** 40m (24.9 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/211%20N%2036th%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/salsa-bachata-zouk-kizomba-at-salsa-con-todo/2026-03-06/
-*   **[FB] Winthrop Hot Air Balloon Round Up Weekend March 6th-8th**
-    *   **Loc:** Winthrop, Washington
-    *   **Drive:** 4h 47m (202.2 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Winthrop%2C%20Washington)
-    *   **Facebook Group:** 40+ Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/1162022429188687/
 
 ## Mar 07, Saturday
 
@@ -117,6 +81,10 @@
     *   **Time:** 9 AM
     *   **Facebook Group:** FB Group
     *   **Link:** https://www.facebook.com/events/1722355138745746/
+*   **[FB] Tarbell to Silver Star**
+    *   **Time:** 9 AM
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/1625789798615007/
 *   **[FB] Mazama Ridge Snowshoe, Mount Rainier National Park**
     *   **Time:** 10 AM
     *   **Facebook Group:** FB Group
@@ -141,6 +109,13 @@
 
 ## Mar 08, Sunday
 
+*   **[FB] HeyBrook Ridge Morning Hike! 10am!**
+    *   **Time:** 10 AM
+    *   **Loc:** Index, Washington
+    *   **Drive:** 1h 24m (49.5 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Index%2C%20Washington)
+    *   **Facebook Group:** FB Group
+    *   **Link:** https://www.facebook.com/events/1445599320692885/
 *   **[Latin] Salsaymotion Sunset Social**
     *   **Time:** March 8 @ 6:00 pm - 8:30 pm
     *   **Loc:** Bravo Dance School, 13635 NE 8th St Suite 104, Bellevue, WA, United States
@@ -170,6 +145,29 @@
     *   **Drive:** 45m (27.1 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/10432%20SE%20Kent-Kangley%20Rd%2C%20Kent%2C%20WA%2C%20United%20States)
     *   **Link:** https://golatindance.com/event/latin-heat-tuesdays-5/2026-03-10/
+
+## Mar 11, Wednesday
+
+*   **[Latin] Sueños de Salsa Salsa y Bachata**
+    *   **Time:** March 11 @ 8:30 pm - 11:00 pm
+    *   **Loc:** Sueños de Salsa, 6512 Roosevelt Way NE, Seattle, WA, US
+    *   **Drive:** 37m (25.0 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/6512%20Roosevelt%20Way%20NE%2C%20Seattle%2C%20WA%2C%20US)
+    *   **Link:** https://golatindance.com/event/suenos-de-salsa-salsa-y-bachata/2026-03-11/
+
+## Mar 12, Thursday
+
+*   **[Latin] PIVOT’s Thursday Bachata Social**
+    *   **Time:** March 12 @ 7:30 pm - 11:00 pm
+    *   **Loc:** PIVOT Dance Emporium, 3220 1ST AVE S STE B600, Seattle, WA, United States
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/3220%201ST%20AVE%20S%20STE%20B600%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/pivots-thursday-bachata-social/2026-03-12/
+*   **[Latin] Latin Dance & DJ Thursday Nights**
+    *   **Time:** March 12 @ 8:30 pm - 12:00 am
+    *   **Loc:** Aurora Borealis Restaurant, 16708 Aurora Ave N, Shoreline, WA, United States
+    *   **Drive:** 47m (31.2 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/16708%20Aurora%20Ave%20N%2C%20Shoreline%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/latin-dance-dj-thursday-nights/2026-03-12/
 
 ## Mar 13, Friday
 
@@ -477,4 +475,10 @@ Seattle
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Spokane%2C%20Washington)
     *   **Facebook Group:** FB Group
     *   **Link:** https://www.facebook.com/events/1556910395392855/
+*   **[FB] North Corner Community Orchestra (NOCCO) Concert**
+    *   **Loc:** 1119 8th Ave, Seattle, WA 98101-2738, United States
+    *   **Drive:** 31m (20.2 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/1119%208th%20Ave%2C%20Seattle%2C%20WA%2098101-2738%2C%20United%20States)
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/1463151438686266/
 ## Sources Checked
