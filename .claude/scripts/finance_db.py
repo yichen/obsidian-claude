@@ -24,6 +24,7 @@ FIDELITY_ROOT = VAULT_ROOT / "Finance" / "fidelity-accounts"
 SOFI_ROOT = VAULT_ROOT / "Finance" / "sofi-loan"
 BECU_ROOT = VAULT_ROOT / "Finance" / "becu"
 RULES_BACKUP_PATH = VAULT_ROOT / "Finance" / "categorization_rules.json"
+ISSUES_PATH = VAULT_ROOT / "Finance" / "pipeline-issues.md"
 
 SCRIPTS_DIR = Path(__file__).resolve().parent
 VENV_PYTHON = str(VAULT_ROOT / "Scripts" / "venv" / "bin" / "python3")
@@ -1057,6 +1058,63 @@ def validate_balances(card_filter: str | None = None) -> list[dict]:
     return errors
 
 
+def log_issues(balance_errors=None, parse_errors=None, categorization=None):
+    """Persist pipeline issues to Finance/pipeline-issues.md for later review."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+    sections = []
+
+    if balance_errors:
+        lines = ["### Balance Validation"]
+        for e in balance_errors:
+            if e.get("type") == "balance_mismatch":
+                lines.append(
+                    f"- [ ] **{e['source_file']}**: computed {e['computed_new_balance']}"
+                    f" vs PDF {e['pdf_new_balance']} (diff ${e['diff']:.2f})"
+                )
+            elif e.get("type") == "chain_break":
+                lines.append(
+                    f"- [ ] **{e['statement']}**: chain break — expected previous"
+                    f" {e['expected_previous']}, actual {e['actual_previous']}"
+                    f" (diff ${e['diff']:.2f})"
+                )
+            else:
+                lines.append(f"- [ ] {json.dumps(e)}")
+        sections.append("\n".join(lines))
+
+    if parse_errors:
+        lines = ["### Parse Errors"]
+        for name, detail in parse_errors:
+            lines.append(f"- [ ] **{name}**: {detail}")
+        sections.append("\n".join(lines))
+
+    if categorization:
+        cc_uncat = categorization.get("cc_uncategorized", 0)
+        amz_uncat = categorization.get("amazon_uncategorized", 0)
+        if cc_uncat > 0 or amz_uncat > 0:
+            lines = ["### Uncategorized"]
+            if cc_uncat > 0:
+                lines.append(f"- [ ] CC transactions: {cc_uncat} uncategorized")
+            if amz_uncat > 0:
+                lines.append(f"- [ ] Amazon orders: {amz_uncat} uncategorized")
+            sections.append("\n".join(lines))
+
+    if not sections:
+        # No issues — write clean status
+        content = (
+            "# Finance Pipeline Issues\n\n"
+            f"**Last updated:** {timestamp}\n\n"
+            "No open issues.\n"
+        )
+    else:
+        content = (
+            "# Finance Pipeline Issues\n\n"
+            f"**Last updated:** {timestamp}\n\n"
+            + "\n\n".join(sections) + "\n"
+        )
+
+    ISSUES_PATH.write_text(content)
+
+
 def cmd_validate():
     """Run balance validation and print results."""
     errors = validate_balances()
@@ -1064,6 +1122,7 @@ def cmd_validate():
         print(json.dumps({"status": "ok", "message": "All balance checks passed"}, indent=2))
     else:
         print(json.dumps({"status": "errors", "errors": errors}, indent=2))
+    log_issues(balance_errors=errors if errors else None)
 
 
 def cmd_import():
@@ -2668,6 +2727,11 @@ def cmd_rebuild():
         sys.exit(1)
     print()
 
+    # Collect issues across phases for log_issues() at the end
+    rebuild_parse_errors = []
+    rebuild_balance_errors = None
+    rebuild_categorization = None
+
     # Phase 1: Parallel Parse
     if not import_only:
         print("=== Phase 1: Parallel Parse (PDF → YAML/CSV) ===")
@@ -2690,6 +2754,7 @@ def cmd_rebuild():
             status = "done" if proc.returncode == 0 else "FAILED"
             if proc.returncode != 0:
                 errors.append(name)
+                rebuild_parse_errors.append((name, stderr.strip().split("\n")[-1] if stderr else "unknown error"))
             # Count new files from stdout if possible
             detail = ""
             if stdout:
@@ -2732,14 +2797,49 @@ def cmd_rebuild():
         ("Validate balances", cmd_validate),
     ]
 
+    # Capture stdout from import steps to extract issues
+    import io
+    from contextlib import redirect_stdout
+
     for i, (step_name, func) in enumerate(import_steps, 1):
         print(f"\n  [{i}/{len(import_steps)}] {step_name}...")
         try:
-            func()
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                func()
+            output = buf.getvalue()
+            print(output, end="")
+
+            # Extract issues from specific steps
+            if step_name == "Validate balances":
+                try:
+                    data = json.loads(output)
+                    if data.get("status") == "errors":
+                        rebuild_balance_errors = data["errors"]
+                except (json.JSONDecodeError, ValueError):
+                    pass
+            elif step_name in ("Categorize CC", "Categorize Amazon"):
+                try:
+                    data = json.loads(output)
+                    if rebuild_categorization is None:
+                        rebuild_categorization = {}
+                    if step_name == "Categorize CC":
+                        rebuild_categorization["cc_uncategorized"] = data.get("remaining_uncategorized", 0)
+                    else:
+                        rebuild_categorization["amazon_uncategorized"] = data.get("remaining_uncategorized", 0)
+                except (json.JSONDecodeError, ValueError):
+                    pass
         except Exception as e:
             print(f"    ERROR: {e}")
             print(f"    Continuing with next step...")
 
+    # Persist all issues
+    log_issues(
+        balance_errors=rebuild_balance_errors,
+        parse_errors=rebuild_parse_errors if rebuild_parse_errors else None,
+        categorization=rebuild_categorization,
+    )
+    print(f"\n  Issues log: {ISSUES_PATH}")
     print("\n=== Rebuild complete ===")
 
 
