@@ -112,6 +112,18 @@ CREATE INDEX IF NOT EXISTS idx_txn_category ON transactions(category_id);
 CREATE INDEX IF NOT EXISTS idx_txn_account ON transactions(account_id);
 CREATE INDEX IF NOT EXISTS idx_txn_source ON transactions(source_file);
 
+CREATE TABLE IF NOT EXISTS trips (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    start_date TEXT NOT NULL,
+    end_date TEXT NOT NULL,
+    trip_type TEXT,
+    booking_method TEXT,
+    location_keywords TEXT,
+    trip_file TEXT,
+    notes TEXT
+);
+
 CREATE TABLE IF NOT EXISTS amazon_orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     order_id TEXT NOT NULL,
@@ -905,6 +917,15 @@ def cmd_init():
     backup_db()
     conn = get_db()
     conn.executescript(SCHEMA)
+
+    # Add trip_id column to transactions if missing (migration)
+    cols = [r[1] for r in conn.execute("PRAGMA table_info(transactions)").fetchall()]
+    if "trip_id" not in cols:
+        conn.execute("ALTER TABLE transactions ADD COLUMN trip_id TEXT REFERENCES trips(id)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_txn_trip ON transactions(trip_id)")
+        print("Added trip_id column to transactions.")
+    else:
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_txn_trip ON transactions(trip_id)")
 
     # Seed accounts
     for name, display in ACCOUNTS:
@@ -2723,6 +2744,304 @@ def cmd_rebuild():
 
 
 # ---------------------------------------------------------------------------
+# Trip Tagging
+# ---------------------------------------------------------------------------
+
+# Patterns that are clearly NOT trip-related (home subscriptions, recurring, etc.)
+NON_TRIP_PATTERNS = [
+    "AMAZON", "APPLE.COM/BILL", "STARLINK", "COMCAST", "GOOGLE *FI",
+    "CLAUDE.AI", "OPENAI", "LEETCODE", "BACKBLAZE", "SQSP*",
+    "ADOBE", "W8TECH", "CAMPNAB", "D J*WSJ", "GARMIN",
+    "TESLA SUBSCRIPTION", "TESLA SUPERCHARGER",
+    "YMCA", "ADVANTAGE PHYSICAL", "VIRGINIA MASON", "NEW VISION",
+    "Yu Ding", "ISSAQUAH SCHOOL", "BRIGHT HORIZONS",
+    "SAMMAMISH PLATEAU WATE", "CTLP*CSC",
+    "GREAT WOLF",  # separate trip
+    "FlexiSpot", "eBay", "VERITASVANS", "TOBEYSTUTO",
+    "Audible*", "Kindle Svcs",
+]
+
+
+def cmd_add_trip():
+    """Register a trip. Usage: add-trip <id> <start> <end> [--name N] [--type T]
+    [--booking B] [--keywords k1,k2,...] [--file F] [--notes N]"""
+    args = sys.argv[2:]
+    if len(args) < 3:
+        print("Usage: add-trip <id> <start-date> <end-date> [--name ...] [--type solo|family] "
+              "[--booking costco|direct|expedia|chase-points] [--keywords k1,k2,...] [--file path] [--notes ...]")
+        sys.exit(1)
+
+    trip_id, start_date, end_date = args[0], args[1], args[2]
+
+    def _get_flag(flag):
+        for i, a in enumerate(args):
+            if a == flag and i + 1 < len(args):
+                return args[i + 1]
+        return None
+
+    name = _get_flag("--name") or trip_id
+    trip_type = _get_flag("--type")
+    booking = _get_flag("--booking")
+    keywords = _get_flag("--keywords")
+    trip_file = _get_flag("--file")
+    notes = _get_flag("--notes")
+
+    # Store keywords as JSON array
+    kw_json = json.dumps(keywords.split(",")) if keywords else None
+
+    conn = get_db()
+    conn.execute(
+        """INSERT OR REPLACE INTO trips(id, name, start_date, end_date, trip_type,
+           booking_method, location_keywords, trip_file, notes)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (trip_id, name, start_date, end_date, trip_type, booking, kw_json, trip_file, notes),
+    )
+    conn.commit()
+    conn.close()
+    print(f"Trip '{trip_id}' registered: {start_date} to {end_date}")
+
+
+def cmd_list_trips():
+    """List all registered trips."""
+    conn = get_db()
+    rows = conn.execute(
+        """SELECT t.id, t.name, t.start_date, t.end_date, t.trip_type, t.booking_method,
+                  COUNT(tx.id) as tagged_txns,
+                  ROUND(SUM(CASE WHEN tx.is_transfer=0 THEN ABS(tx.amount) ELSE 0 END), 2) as total_cost
+           FROM trips t
+           LEFT JOIN transactions tx ON tx.trip_id = t.id
+           GROUP BY t.id ORDER BY t.start_date"""
+    ).fetchall()
+    conn.close()
+
+    result = []
+    for r in rows:
+        result.append({
+            "id": r[0], "name": r[1], "start_date": r[2], "end_date": r[3],
+            "type": r[4], "booking": r[5], "tagged_txns": r[6],
+            "total_cost": r[7] or 0,
+        })
+    print(json.dumps(result, indent=2))
+
+
+def cmd_tag_trip():
+    """Auto-tag transactions for a trip by date range + location keywords.
+    Usage: tag-trip <trip-id> [--dry-run] [--include-pre-trip]"""
+    if len(sys.argv) < 3:
+        print("Usage: tag-trip <trip-id> [--dry-run] [--include-pre-trip]")
+        sys.exit(1)
+
+    trip_id = sys.argv[2]
+    dry_run = "--dry-run" in sys.argv
+    include_pre = "--include-pre-trip" in sys.argv
+
+    conn = get_db()
+    trip = conn.execute("SELECT * FROM trips WHERE id = ?", (trip_id,)).fetchone()
+    if not trip:
+        print(f"Trip '{trip_id}' not found. Use list-trips to see registered trips.")
+        conn.close()
+        sys.exit(1)
+
+    trip_name = trip[1]
+    start_date = trip[2]
+    end_date = trip[3]
+    kw_json = trip[6]
+    keywords = json.loads(kw_json) if kw_json else []
+
+    # Build query: transactions within date range, not already tagged, not transfers
+    query = """
+        SELECT t.id, t.date, t.description, t.amount, a.name as card,
+               COALESCE(c.name, 'Uncategorized') as category, t.is_transfer, t.trip_id
+        FROM transactions t
+        JOIN accounts a ON a.id = t.account_id
+        LEFT JOIN categories c ON c.id = t.category_id
+        WHERE t.date BETWEEN ? AND ?
+        ORDER BY t.date, t.description
+    """
+    rows = conn.execute(query, (start_date, end_date)).fetchall()
+
+    tagged = []
+    skipped_non_trip = []
+    skipped_already = []
+
+    for r in rows:
+        txn_id, date, desc, amount, card, category, is_transfer, existing_trip = r
+        desc_upper = desc.upper()
+
+        # Skip if already tagged to another trip
+        if existing_trip and existing_trip != trip_id:
+            skipped_already.append(r)
+            continue
+
+        # Skip non-trip patterns
+        is_non_trip = any(pat.upper() in desc_upper for pat in NON_TRIP_PATTERNS)
+        if is_non_trip:
+            skipped_non_trip.append(r)
+            continue
+
+        # Check if description matches location keywords
+        matches_location = any(kw.upper() in desc_upper for kw in keywords)
+
+        # Also include travel-category transactions (flights, lodging, rental car, etc.)
+        travel_categories = {"Flights", "Lodging", "Rental Car", "Travel", "Parking"}
+        is_travel_cat = category in travel_categories
+
+        # Include if: matches location OR is a travel category OR is a restaurant/gas/coffee at trip location
+        local_categories = {"Restaurants", "Fast Food", "Coffee", "Groceries", "Gas"}
+        is_local_spend = category in local_categories
+
+        if matches_location or is_travel_cat or is_local_spend:
+            tagged.append(r)
+
+    # Print results
+    print(f"\n=== Auto-tag results for trip '{trip_id}' ({trip_name}) ===")
+    print(f"Date range: {start_date} to {end_date}")
+    print(f"Location keywords: {keywords}")
+    print(f"\n--- WILL TAG ({len(tagged)} transactions) ---")
+    total = 0
+    for r in tagged:
+        amt = abs(r[3]) if r[3] < 0 else -r[3]  # show charges as positive
+        total += abs(r[3])
+        sign = "" if r[3] < 0 else "(refund) "
+        print(f"  {r[1]}  ${abs(r[3]):>9.2f}  {sign}{r[2][:55]:<55}  [{r[5]}]")
+    print(f"  {'':>10} ----------")
+    print(f"  {'':>10} ${total:>9.2f}  TOTAL")
+
+    if skipped_non_trip:
+        print(f"\n--- SKIPPED as non-trip ({len(skipped_non_trip)}) ---")
+        for r in skipped_non_trip:
+            print(f"  {r[1]}  ${abs(r[3]):>9.2f}  {r[2][:55]}")
+
+    if skipped_already:
+        print(f"\n--- SKIPPED as tagged to other trip ({len(skipped_already)}) ---")
+        for r in skipped_already:
+            print(f"  {r[1]}  ${abs(r[3]):>9.2f}  {r[2][:55]}  [trip: {r[7]}]")
+
+    if dry_run:
+        print(f"\n(Dry run — no changes made. Remove --dry-run to apply.)")
+    else:
+        for r in tagged:
+            conn.execute("UPDATE transactions SET trip_id = ? WHERE id = ?", (trip_id, r[0]))
+        conn.commit()
+        print(f"\nTagged {len(tagged)} transactions to trip '{trip_id}'.")
+
+    conn.close()
+
+
+def cmd_untag_trip():
+    """Remove all trip tags for a trip. Usage: untag-trip <trip-id>"""
+    if len(sys.argv) < 3:
+        print("Usage: untag-trip <trip-id>")
+        sys.exit(1)
+    trip_id = sys.argv[2]
+    conn = get_db()
+    cur = conn.execute("UPDATE transactions SET trip_id = NULL WHERE trip_id = ?", (trip_id,))
+    conn.commit()
+    print(f"Untagged {cur.rowcount} transactions from trip '{trip_id}'.")
+    conn.close()
+
+
+def cmd_tag_txn():
+    """Manually tag a transaction to a trip. Usage: tag-txn <txn-id> <trip-id>"""
+    if len(sys.argv) < 4:
+        print("Usage: tag-txn <txn-id> <trip-id>")
+        sys.exit(1)
+    txn_id, trip_id = sys.argv[2], sys.argv[3]
+    conn = get_db()
+    # Verify trip exists
+    if not conn.execute("SELECT 1 FROM trips WHERE id = ?", (trip_id,)).fetchone():
+        print(f"Trip '{trip_id}' not found.")
+        conn.close()
+        sys.exit(1)
+    cur = conn.execute("UPDATE transactions SET trip_id = ? WHERE id = ?", (trip_id, txn_id))
+    if cur.rowcount == 0:
+        print(f"Transaction {txn_id} not found.")
+    else:
+        row = conn.execute(
+            "SELECT date, description, amount FROM transactions WHERE id = ?", (txn_id,)
+        ).fetchone()
+        print(f"Tagged txn {txn_id} ({row[0]} ${abs(row[2]):.2f} {row[1][:50]}) → trip '{trip_id}'")
+    conn.commit()
+    conn.close()
+
+
+def cmd_trip_cost():
+    """Show cost breakdown for a trip. Usage: trip-cost <trip-id>"""
+    if len(sys.argv) < 3:
+        print("Usage: trip-cost <trip-id> [--detail]")
+        sys.exit(1)
+    trip_id = sys.argv[2]
+    detail = "--detail" in sys.argv
+
+    conn = get_db()
+    trip = conn.execute("SELECT * FROM trips WHERE id = ?", (trip_id,)).fetchone()
+    if not trip:
+        print(f"Trip '{trip_id}' not found.")
+        conn.close()
+        sys.exit(1)
+
+    # Get all tagged transactions
+    rows = conn.execute(
+        """SELECT t.date, t.description, t.amount, a.name as card,
+                  COALESCE(cp.name, c.name, 'Uncategorized') as top_category,
+                  COALESCE(c.name, 'Uncategorized') as sub_category,
+                  t.is_transfer
+           FROM transactions t
+           JOIN accounts a ON a.id = t.account_id
+           LEFT JOIN categories c ON c.id = t.category_id
+           LEFT JOIN categories cp ON cp.id = c.parent_id
+           WHERE t.trip_id = ?
+           ORDER BY t.date""",
+        (trip_id,),
+    ).fetchall()
+
+    if not rows:
+        print(f"No transactions tagged for trip '{trip_id}'.")
+        conn.close()
+        return
+
+    # Build breakdown by category
+    by_category = {}
+    grand_total = 0
+    txn_list = []
+
+    for r in rows:
+        date, desc, amount, card, top_cat, sub_cat, is_xfer = r
+        cost = abs(amount) if amount < 0 else -amount  # charges positive, refunds negative
+        if is_xfer:
+            continue
+        by_category.setdefault(top_cat, {"total": 0, "items": []})
+        by_category[top_cat]["total"] += cost
+        by_category[top_cat]["items"].append((date, desc, cost, card, sub_cat))
+        grand_total += cost
+        txn_list.append(r)
+
+    result = {
+        "trip_id": trip_id,
+        "name": trip[1],
+        "dates": f"{trip[2]} to {trip[3]}",
+        "type": trip[4],
+        "booking_method": trip[5],
+        "total_cost": round(grand_total, 2),
+        "transaction_count": len(txn_list),
+        "breakdown": {},
+    }
+
+    for cat in sorted(by_category, key=lambda c: by_category[c]["total"], reverse=True):
+        info = by_category[cat]
+        cat_data = {"total": round(info["total"], 2), "count": len(info["items"])}
+        if detail:
+            cat_data["transactions"] = [
+                {"date": i[0], "description": i[1][:60], "amount": round(i[2], 2), "card": i[3]}
+                for i in info["items"]
+            ]
+        result["breakdown"][cat] = cat_data
+
+    print(json.dumps(result, indent=2))
+    conn.close()
+
+
+# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -2733,7 +3052,8 @@ def main():
         print("          status, dashboard, preflight, rebuild [--force|--import-only|--parse-only],")
         print("          categorize, categorize-amazon, uncategorized, add-rule <pattern> <category>,")
         print("          set-category <id> <category> [--create-rule], query <sql>,")
-        print("          backup-rules, restore-rules, validate")
+        print("          backup-rules, restore-rules, validate,")
+        print("          add-trip, list-trips, tag-trip, untag-trip, tag-txn, trip-cost")
         sys.exit(1)
 
     cmd = sys.argv[1]
@@ -2790,6 +3110,18 @@ def main():
             print("Usage: finance_db.py query <sql>")
             sys.exit(1)
         cmd_query(sys.argv[2])
+    elif cmd == "add-trip":
+        cmd_add_trip()
+    elif cmd == "list-trips":
+        cmd_list_trips()
+    elif cmd == "tag-trip":
+        cmd_tag_trip()
+    elif cmd == "untag-trip":
+        cmd_untag_trip()
+    elif cmd == "tag-txn":
+        cmd_tag_txn()
+    elif cmd == "trip-cost":
+        cmd_trip_cost()
     else:
         print(f"Unknown command: {cmd}")
         sys.exit(1)
