@@ -201,6 +201,12 @@
   },
   "active": "54297b07a570ec5a",
   "lastOpenFiles": [
+    "Scripts/venv/lib/python3.13/site-packages/pyyaml-6.0.3.dist-info/licenses",
+    "Scripts/venv/lib/python3.13/site-packages/pyyaml-6.0.3.dist-info",
+    "Scripts/venv/lib/python3.13/site-packages/_yaml/__pycache__",
+    "Scripts/venv/lib/python3.13/site-packages/yaml/__pycache__",
+    "Scripts/venv/lib/python3.13/site-packages/_yaml",
+    "Scripts/venv/lib/python3.13/site-packages/yaml",
     "memory/2026-03-06.md",
     "Finance/finance.db-shm",
     "Finance/finance.db-wal",
@@ -223,11 +229,6 @@
     "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Reservations.md",
     "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Plan.md",
     "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Itinerary.md",
-    "Trips/2026/2026-04-13_17-Spring-Break-with-Kids",
-    "Finance/becu/processing_log.json",
-    "Finance/becu/2026-02.yaml",
-    "Finance/becu/2026-01.yaml",
-    "Finance/becu/2025-12.yaml",
     "Life/Daily/2026/03/2026-03-01.md",
     "Trips/2026/2026-04-13_17 Spring Break with Kids/Itinerary.md",
     "Finance/activity-log.md",
@@ -246,7 +247,6 @@
     "Finance/reports/yearly-spending-by-category.png",
     "Finance/reports/monthly-spending-by-category-2025.png",
     "Scripts/venv/lib/python3.14/site-packages/matplotlib/mpl-data/sample_data/logo2.png",
-    "Scripts/venv/lib/python3.14/site-packages/numpy-2.4.2.dist-info/licenses/numpy/_core/src/npysort/x86-simd-sort/LICENSE.md",
     "Untitled 1.canvas",
     "Untitled.canvas"
   ]
