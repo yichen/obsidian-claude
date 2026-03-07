@@ -159,6 +159,9 @@
 - Always check Trips/Lessons Learned.md before planning
 - Validate all URLs before including in itineraries
 
+## MCP Tool Constraints
+- **Brave Search API (Free plan)**: rate limit = 1 req/sec. NEVER call `mcp__brave-search__brave_web_search` in parallel — always sequential.
+
 ## User Preferences
 
 - Prefers concise financial analysis with tables over narrative
