@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run": "2026-02-28T21:35:12",
+  "last_run": "2026-03-07T07:12:54",
   "files": {
     "/Users/ychen2/Dropbox/1-Tax/3-archive/2024/Yi Chen and Sheri Martin's 2024 Tax Return Final.pdf": {
       "status": "success",
@@ -25,6 +25,789 @@
       "validation_ok": true,
       "mismatches": [],
       "processed_at": "2026-02-28T21:35:12"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-1095-c-salesforce.pdf": {
+      "status": "skipped",
+      "reason": "form_1095-C_not_needed",
+      "processed_at": "2026-03-07T07:12:34"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-1099-SA-original.pdf": {
+      "status": "success",
+      "form_type": "1099-SA",
+      "output_file": "Finance/tax/prepare/2025/1099-sa-2025-1099-sa-original.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:34"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-5498-SA-original.pdf": {
+      "status": "success",
+      "form_type": "5498-SA",
+      "output_file": "Finance/tax/prepare/2025/5498-sa-2025-5498-sa-original.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:34"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-Frozen-Laurence-UTMA-9437-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2025/1099-consolidated-fidelity-9437.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:35"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-Frozen-Ruby-UTMA-2753-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2025/1099-consolidated-fidelity-2753.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:35"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-SALESFORCECOM-48797-1099-R-Tax-Form.pdf": {
+      "status": "success",
+      "form_type": "1099-R",
+      "output_file": "Finance/tax/prepare/2025/1099-r-fidelity-salesforce-401k-401-k----salesforce.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:35"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-SERVICETITAN-401(K)-77662-1099-R-Tax-Form.pdf": {
+      "status": "success",
+      "form_type": "1099-R",
+      "output_file": "Finance/tax/prepare/2025/1099-r-fidelity-servicetitan-401k-401-k----servicetitan.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:35"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-SERVICETITAN-401K-77662-1099-R-Tax-Form.pdf": {
+      "status": "success",
+      "form_type": "1099-R",
+      "output_file": "Finance/tax/prepare/2025/1099-r-fidelity-servicetitan-401k-401-k----servicetitan.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:35"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-Traditional-IRA-9024-Form-1099-R-&-Instructions.pdf": {
+      "status": "success",
+      "form_type": "1099-R",
+      "output_file": "Finance/tax/prepare/2025/1099-r-fidelity-investments-ira-traditional-ira.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:35"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-Yi's-Individual-CMA-4983-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2025/1099-consolidated-fidelity-4983.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:36"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2025/1099-consolidated-fidelity-0887.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:37"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/Acura MDX Renew your vehicle tabs Confirmation Number_ 0-100-553-956.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:37"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/Endeavor Elementary Statement - 2026-02-02T105538.522.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:37"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/Form-1098-694006164-5806.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2025/1098-rocket-mortgage-006164.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:37"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/mortgage-1098-748333812-16110.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2025/1098-rocket-mortgage-333812.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:37"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/MS_2025_1099-CONS_MSSB_LLC_5046_20260203.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2025/1099-consolidated-morgan-stanley-6206.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:37"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/Salesforce-W2.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2025/w-2-salesforce-inc.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:38"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/Trailer - Renew your vehicle tabs Confirmation Number_ 0-100-802-695.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:38"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/W-2_Form_2025_Chen_2026_02_26_08_35_16_-0800_W-2_ESS.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2025/w-2-servicetitan-inc.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:38"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/BECU-Statement-E6D719F8-2E38-213F-6EF1-FFD0A7095102.PDF": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2025/1098-becu.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:38"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2025/BECU-Statement-F270CEC9-4719-DD17-8228-52BFDBE7B9B3.PDF": {
+      "status": "success",
+      "form_type": "1099-INT",
+      "output_file": "Finance/tax/prepare/2025/1099-int-boeing-employees-credit-union-947679.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:38"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/Pay stubs PLA sheri July - Oct 2024/ Pay Period- 07_21_2024 - 08_03_2024.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:38"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/Pay stubs PLA sheri July - Oct 2024/ Pay Period- 09_01_2024 - 09_14_2024.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:38"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/2024 Tax Summary (2025-03-19).pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:38"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/2024-CHEN-FAMILY-CHECKING-4267-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2024/1099-consolidated-fidelity-4267.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:38"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/2024-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2024/1099-consolidated-fidelity-6649.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:39"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/2024-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2024/1099-consolidated-fidelity-4267.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:40"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/2024-Joint-WROS-TOD-6649-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2024/1099-consolidated-fidelity-6649.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:40"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/2024-Laurence-UTMA-9437-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2024/1099-consolidated-fidelity-9437.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:41"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/2024-rental-income.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:41"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/2024-Ruby-UTMA-2753-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2024/1099-consolidated-fidelity-2753.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:41"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/2024-SHERI-INDIVIDUAL-TOD-9955-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2024/1099-consolidated-fidelity-9955.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:42"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/2024-Traditional-IRA-9024-Form-1099-R-.pdf": {
+      "status": "success",
+      "form_type": "1099-R",
+      "output_file": "Finance/tax/prepare/2024/1099-r-fidelity-investments-ira-traditional-ira.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:42"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/2024-W2-Salesforce.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2024/w-2-salesforce-inc.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:42"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/2024-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2024/1099-consolidated-fidelity-0887.yaml",
+      "validation_ok": false,
+      "mismatches": [
+        "1099-B short_term: gain/loss (-4983.29) != proceeds (42227.03) - basis (47210.32) + wash (40.0) = -4943.29"
+      ],
+      "processed_at": "2026-03-07T07:12:43"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/2024-Yi-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2024/1099-consolidated-fidelity-0887.yaml",
+      "validation_ok": false,
+      "mismatches": [
+        "1099-B short_term: gain/loss (-4983.29) != proceeds (42227.03) - basis (47210.32) + wash (40.0) = -4943.29"
+      ],
+      "processed_at": "2026-03-07T07:12:44"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/2024-Yi-s-Individual-CMA-4983-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2024/1099-consolidated-fidelity-4983.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:44"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/2025-03-18-Lincoln-life-W-2.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2024/w-2-lincoln-national-life-insuranc.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:44"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/Acura-CAA-4255-Renew-2024.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:44"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/flagstar-1098.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2024/1098-flagstar-bank.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:44"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/IFS W2_2024.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2024/w-2-ifs-w2-2024.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:44"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/mrcooper-1098.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2024/1098-mr-cooper-006164.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/Pay stubs PLA sheri July - Oct 2024/Pay Period- 07_07_2024 - 07_20_2024.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/Pay stubs PLA sheri July - Oct 2024/Pay Period- 08_04_2024 - 08_17_2024.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/Pay stubs PLA sheri July - Oct 2024/Pay Period- 08_18_2024 - 08_31_2024.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/Pay stubs PLA sheri July - Oct 2024/Pay Period- 09_15_2024 - 09_28_2024.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/Pay stubs PLA sheri July - Oct 2024/Pay Period- 09_29_2024 - 10_12_2024.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/childcare/schedule_h.20241231.pdf": {
+      "status": "success",
+      "form_type": "Schedule-H",
+      "output_file": "Finance/tax/prepare/2024/schedule-h-yi-chen.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/trailer-tabs-renew-2024.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Sheri/UE 1099 2024.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/W-2_Form_2024_Chen_stripe.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2024/w-2-stripe.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/childcare/w2.20241231.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2024/w-2-yi-chen.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/1099-INT-BECU-Statement-ECAF35A4-3155-518E-A2AE-9A0196BAFF85.PDF": {
+      "status": "success",
+      "form_type": "1099-INT",
+      "output_file": "Finance/tax/prepare/2024/1099-int-boeing-employees-credit-union-947679.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/Sheri/1099 2024 unemployment .pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-flagstar-form-1098.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2023/1098-flagstar-bank.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-Health-Savings-Account-4209-Form-5498-SA-&-Instructions.pdf": {
+      "status": "success",
+      "form_type": "5498-SA",
+      "output_file": "Finance/tax/prepare/2023/5498-sa-fidelity-investments.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:45"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2023/1099-consolidated-fidelity-6649.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:46"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2023/1099-consolidated-fidelity-4267.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:46"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-Laurence-UTMA-9437-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2023/1099-consolidated-fidelity-9437.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:47"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-MrCooper-FORM-1098.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2023/1098-mr-cooper-006164.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:47"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-Ruby-UTMA-2753-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2023/1099-consolidated-fidelity-2753.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:47"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-Self-Employed-401K-9729-Form-5500-AVS-&-Instructions.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:47"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/Sheri/2023-tax-final.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:47"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2023/1099-consolidated-fidelity-0887.yaml",
+      "validation_ok": false,
+      "mismatches": [
+        "1099-B short_term: gain/loss (-6109.27) != proceeds (35671.67) - basis (41780.94) + wash (124.84) = -5984.43"
+      ],
+      "processed_at": "2026-03-07T07:12:49"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-YI-CHEN-ROTH-IRA-8097-Form-5498.pdf": {
+      "status": "success",
+      "form_type": "5498",
+      "output_file": "Finance/tax/prepare/2023/5498-fidelity-investments-roth-ira-518097.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:49"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-YI-CHEN-TRADITIONAL-IRA-4208-Form-1099-R-&-Instructions.pdf": {
+      "status": "success",
+      "form_type": "1099-R",
+      "output_file": "Finance/tax/prepare/2023/1099-r-fidelity-investments-ira-traditional-ira.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:49"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf": {
+      "status": "success",
+      "form_type": "5498",
+      "output_file": "Finance/tax/prepare/2023/5498-fidelity-investments-ira-984208.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:49"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2024-09-19-Airbnb-w2-2023.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2023/w-2-airbnb-inc.yaml",
+      "validation_ok": false,
+      "mismatches": [
+        "Box 1 (3570.0) > $100 but no taxes withheld (Boxes 2,4,6 all zero)"
+      ],
+      "processed_at": "2026-03-07T07:12:49"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2024-09-19-Lincoln-life.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:49"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2024-09-19-stripe-1095c.pdf": {
+      "status": "skipped",
+      "reason": "form_1095-C_not_needed",
+      "processed_at": "2026-03-07T07:12:49"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2024-09-19-tax-State Farm.pdf": {
+      "status": "success",
+      "form_type": "1099-R",
+      "output_file": "Finance/tax/prepare/2023/1099-r-unknown.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:49"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/[2024-09-19] 2023_Tax_Preparation.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:49"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/Chen, Yi & Martin, Sheri_Inv#_Opp2249357-2301-00002877_1-11-2023_2_51_PM.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:49"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/Chen, Yi & Martin, Sheri_Inv#_Opp2356233-2307-00004952_7-24-2023_4_04_PM.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:49"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/nanny-on-w2/diana.schedule_h.20231231.pdf": {
+      "status": "success",
+      "form_type": "Schedule-H",
+      "output_file": "Finance/tax/prepare/2023/schedule-h-yi-chen.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:50"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/nanny-on-w2/diana.w2.20231231.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2023/w-2-yi-chen.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:50"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/Sheri/Fidelity_001.pdf": {
+      "status": "skipped",
+      "reason": "unsupported_form_1099-DIV",
+      "form_type": "1099-DIV",
+      "processed_at": "2026-03-07T07:12:50"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/Sheri/File_002.pdf": {
+      "status": "skipped",
+      "reason": "unsupported_form_1099-DIV",
+      "form_type": "1099-DIV",
+      "processed_at": "2026-03-07T07:12:50"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/Sheri/File_003.pdf": {
+      "status": "skipped",
+      "reason": "unsupported_form_1099-DIV",
+      "form_type": "1099-DIV",
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/Sheri/File_004.pdf": {
+      "status": "success",
+      "form_type": "5498",
+      "output_file": "Finance/tax/prepare/2023/5498-fidelity-investments-roth-ira-592351.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/firstrepublic-0210879651 - 34 - YI CHEN - 2023.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/IFS-2023-transactions.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/IFS-Transaction-Details.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/Sheri/PLA w2.pdf": {
+      "status": "error",
+      "error": "Unknown W-2 format for PLA w2.pdf",
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/shutterstock_2023_tax_form_yiphoto.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/Stripe_W-2_Form_2023_Chen_2024_01_25_15_54_20_-0800_W-2_ESS.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2023/w-2-stripe.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/Sheri/W2_2023 IFS .pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2023/w-2-w2-2023-ifs.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2023/Sheri/W2_2024 IFS.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2023/w-2-w2-2024-ifs.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-1098-flagstar-2021-2.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2022/1098-flagstar-bank.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-1098-for-2021-flagstar.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2022/1098-flagstar-bank.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-Airbnb-1095c.pdf": {
+      "status": "skipped",
+      "reason": "form_1095-C_not_needed",
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-Airbnb-1099-misc.pdf": {
+      "status": "skipped",
+      "reason": "unsupported_form_1099-MISC",
+      "form_type": "1099-MISC",
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-airbnb-401k-true-up.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-Airbnb-form-3922.pdf": {
+      "status": "skipped",
+      "reason": "form_3922_not_needed",
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-Airbnb-w2.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2022/w-2-airbnb-inc.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:51"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-flagstar-1098-1.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2022/1098-flagstar-bank.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:52"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-flagstar-1098-2.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2022/1098-flagstar-bank.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:52"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-flagstar-form-1098.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2022/1098-flagstar-bank.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:52"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-healthequity-5498sa.pdf": {
+      "status": "success",
+      "form_type": "5498-SA",
+      "output_file": "Finance/tax/prepare/2022/5498-sa-healthequity-401494.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:52"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-loandepot-1098.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2022/1098-loandepot.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:52"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-statefarm-lifeinsurance-1099r.pdf": {
+      "status": "success",
+      "form_type": "1099-R",
+      "output_file": "Finance/tax/prepare/2022/1099-r-state-farm-life-insurance-roth-ira.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:52"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-stripe-1095-c.pdf": {
+      "status": "skipped",
+      "reason": "form_1095-C_not_needed",
+      "processed_at": "2026-03-07T07:12:52"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-stripe-W-2_Form_2022_Chen_2023_03_02_09_39_39_-0800_W-2_ESS.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2022/w-2-stripe.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:52"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-w2-meta.pdf": {
+      "status": "success",
+      "form_type": "W-2",
+      "output_file": "Finance/tax/prepare/2022/w-2-meta-platforms-inc.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:52"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf": {
+      "status": "success",
+      "form_type": "1099-CONSOLIDATED",
+      "output_file": "Finance/tax/prepare/2022/1099-consolidated-fidelity-0887.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:53"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-YI-CHEN-ROTH-IRA-8097-Form-5498.pdf": {
+      "status": "success",
+      "form_type": "5498",
+      "output_file": "Finance/tax/prepare/2022/5498-fidelity-investments-roth-ira-518097.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:53"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-YI-CHEN-TRADITIONAL-IRA-4208-Form-1099-R-&-Instructions.pdf": {
+      "status": "success",
+      "form_type": "1099-R",
+      "output_file": "Finance/tax/prepare/2022/1099-r-fidelity-investments-ira-traditional-ira.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:54"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf": {
+      "status": "success",
+      "form_type": "5498",
+      "output_file": "Finance/tax/prepare/2022/5498-fidelity-investments-ira-984208.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:54"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2023 Airbnb 401(k) Summary Plan Description.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:54"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/childcare_fsa_airbnb.pdf": {
+      "status": "skipped",
+      "reason": "unrecognized_form",
+      "processed_at": "2026-03-07T07:12:54"
+    },
+    "/Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/tax.pdf": {
+      "status": "success",
+      "form_type": "1098",
+      "output_file": "Finance/tax/prepare/2022/1098-mr-cooper-006164.yaml",
+      "validation_ok": true,
+      "mismatches": [],
+      "processed_at": "2026-03-07T07:12:54"
     }
   }
 }

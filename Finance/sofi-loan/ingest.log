@@ -149,3 +149,5 @@ Done: 14 processed, 0 errors
 2026-03-01 17:33:18,696 INFO   2026-02   processed  Statement-02-2026_699eb9f726669e68eed1bfa870e2f65cea7eb6c0dc49c.pdf
 2026-03-01 17:33:18,696 INFO 
 0 new / 14 total
+2026-03-07 07:12:34,372 INFO SoFi Loan Statement Ingestion — 2026-03-07 07:12:34
+2026-03-07 07:12:34,373 INFO No new PDFs to process.

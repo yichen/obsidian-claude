@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "last_run": "2026-03-03T06:03:30",
+  "last_run": "2026-03-07T07:13:16",
   "cards": {
     "bofa-rewards-visa": {
       "processed": {
@@ -283,6 +283,3397 @@
             "previous_balance": 32660.3,
             "new_balance": 32334.68
           }
+        }
+      },
+      "errors": {}
+    },
+    "apple-card": {
+      "processed": {
+        "Apple Card Statement - April 2023.pdf": {
+          "statement_date": "2023-04-30",
+          "output_csv": "2023-04-30.csv",
+          "transaction_count": 13,
+          "total_charges": 142.9,
+          "total_credits": 405.06,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:34",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 405.06,
+            "new_balance": 205.31,
+            "installments": 62.41
+          }
+        },
+        "Apple Card Statement - August 2023.pdf": {
+          "statement_date": "2023-08-31",
+          "output_csv": "2023-08-31.csv",
+          "transaction_count": 18,
+          "total_charges": 343.69,
+          "total_credits": 541.24,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:34",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-08-23 APPLE.COM/BILL ONE APPLE PARK WAY 866-712-7753 95014 CA USA -27.98"
+          ],
+          "balance_summary": {
+            "previous_balance": 541.24,
+            "new_balance": 406.1,
+            "installments": 62.41
+          }
+        },
+        "Apple Card Statement - December 2023.pdf": {
+          "statement_date": "2023-12-31",
+          "output_csv": "2023-12-31.csv",
+          "transaction_count": 24,
+          "total_charges": 769.11,
+          "total_credits": 7949.39,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:34",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-12-12 LETSGO NETWORK INCORPO80 Tilman Cir, MARKHAM L3P 5V6 ON CAN -6.69"
+          ]
+        },
+        "Apple Card Statement - February 2023.pdf": {
+          "statement_date": "2023-02-28",
+          "output_csv": "2023-02-28.csv",
+          "transaction_count": 13,
+          "total_charges": 219.85,
+          "total_credits": 431.29,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:35",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 431.29,
+            "new_balance": 282.26,
+            "installments": 62.41
+          }
+        },
+        "Apple Card Statement - February 2024.pdf": {
+          "statement_date": "2024-02-29",
+          "output_csv": "2024-02-29.csv",
+          "transaction_count": 19,
+          "total_charges": 607.68,
+          "total_credits": 1541.86,
+          "verification": {
+            "mismatch": 1.56,
+            "mismatch_ratio": 0.0031,
+            "retries": 3,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:35",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed net $501.95 vs expected $503.51"
+          ]
+        },
+        "Apple Card Statement - January 2023.pdf": {
+          "statement_date": "2023-01-31",
+          "output_csv": "2023-01-31.csv",
+          "transaction_count": 14,
+          "total_charges": 368.88,
+          "total_credits": 272.31,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:35",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 272.31,
+            "new_balance": 431.29,
+            "installments": 62.41
+          }
+        },
+        "Apple Card Statement - July 2023.pdf": {
+          "statement_date": "2023-07-31",
+          "output_csv": "2023-07-31.csv",
+          "transaction_count": 21,
+          "total_charges": 478.6,
+          "total_credits": 529.8,
+          "verification": {
+            "mismatch": 0.23,
+            "mismatch_ratio": 0.0005,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:36",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed net $470.87 vs expected $471.10"
+          ],
+          "balance_summary": {
+            "previous_balance": 529.8,
+            "new_balance": 541.24,
+            "installments": 62.41
+          }
+        },
+        "Apple Card Statement - June 2023.pdf": {
+          "statement_date": "2023-06-30",
+          "output_csv": "2023-06-30.csv",
+          "transaction_count": 18,
+          "total_charges": 467.39,
+          "total_credits": 614.87,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:36",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 614.87,
+            "new_balance": 529.8,
+            "installments": 62.41
+          }
+        },
+        "Apple Card Statement - March 2023.pdf": {
+          "statement_date": "2023-03-31",
+          "output_csv": "2023-03-31.csv",
+          "transaction_count": 15,
+          "total_charges": 342.1,
+          "total_credits": 282.26,
+          "verification": {
+            "mismatch": 0.55,
+            "mismatch_ratio": 0.0017,
+            "retries": 3,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:37",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed net $314.43 vs expected $314.98"
+          ],
+          "balance_summary": {
+            "previous_balance": 282.26,
+            "new_balance": 405.06,
+            "installments": 62.41
+          }
+        },
+        "Apple Card Statement - May 2023.pdf": {
+          "statement_date": "2023-05-31",
+          "output_csv": "2023-05-31.csv",
+          "transaction_count": 14,
+          "total_charges": 552.46,
+          "total_credits": 205.31,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:37",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 205.31,
+            "new_balance": 614.87,
+            "installments": 62.41
+          }
+        },
+        "Apple Card Statement - November 2023.pdf": {
+          "statement_date": "2023-11-30",
+          "output_csv": "2023-11-30.csv",
+          "transaction_count": 21,
+          "total_charges": 7949.39,
+          "total_credits": 264.46,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:37",
+          "status": "success",
+          "warnings": []
+        },
+        "Apple Card Statement - October 2023.pdf": {
+          "statement_date": "2023-10-31",
+          "output_csv": "2023-10-31.csv",
+          "transaction_count": 14,
+          "total_charges": 264.46,
+          "total_credits": 252.82,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:37",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 252.82,
+            "new_balance": 264.46,
+            "installments": 0.0
+          }
+        },
+        "Apple Card Statement - September 2023.pdf": {
+          "statement_date": "2023-09-30",
+          "output_csv": "2023-09-30.csv",
+          "transaction_count": 13,
+          "total_charges": 190.25,
+          "total_credits": 406.1,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:37",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 406.1,
+            "new_balance": 252.82,
+            "installments": 62.57
+          }
+        },
+        "Apple Card Statement - April 2024.pdf": {
+          "statement_date": "2024-04-30",
+          "output_csv": "2024-04-30.csv",
+          "transaction_count": 42,
+          "total_charges": 1257.73,
+          "total_credits": 1275.9,
+          "verification": {
+            "mismatch": 2.33,
+            "mismatch_ratio": 0.002,
+            "retries": 3,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:38",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed net $1141.38 vs expected $1143.71",
+            "Possible duplicate: 2024-03-30 SDOT PAYBYPHONE PARKIN700 5TH AVE SEATTLE 98104 WA USA -0.75"
+          ]
+        },
+        "Apple Card Statement - August 2024.pdf": {
+          "statement_date": "2024-08-31",
+          "output_csv": "2024-08-31.csv",
+          "transaction_count": 21,
+          "total_charges": 388.51,
+          "total_credits": 1062.19,
+          "verification": {
+            "mismatch": 0.3,
+            "mismatch_ratio": 0.0008,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:38",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed net $358.51 vs expected $358.81"
+          ],
+          "balance_summary": {
+            "previous_balance": 1062.19,
+            "new_balance": 508.55,
+            "installments": 119.74
+          }
+        },
+        "Apple Card Statement - December 2024.pdf": {
+          "statement_date": "2024-12-31",
+          "output_csv": "2024-12-31.csv",
+          "transaction_count": 18,
+          "total_charges": 610.08,
+          "total_credits": 885.63,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:39",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 885.63,
+            "new_balance": 904.65,
+            "installments": 294.57
+          }
+        },
+        "Apple Card Statement - January 2024.pdf": {
+          "statement_date": "2024-01-31",
+          "output_csv": "2024-01-31.csv",
+          "transaction_count": 25,
+          "total_charges": 1541.86,
+          "total_credits": 909.62,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:39",
+          "status": "success",
+          "warnings": []
+        },
+        "Apple Card Statement - January 2025.pdf": {
+          "statement_date": "2025-01-31",
+          "output_csv": "2025-01-31.csv",
+          "transaction_count": 15,
+          "total_charges": 262.21,
+          "total_credits": 904.65,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:39",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 904.65,
+            "new_balance": 556.78,
+            "installments": 294.57
+          }
+        },
+        "Apple Card Statement - July 2024.pdf": {
+          "statement_date": "2024-07-31",
+          "output_csv": "2024-07-31.csv",
+          "transaction_count": 15,
+          "total_charges": 942.45,
+          "total_credits": 1352.64,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:39",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1352.64,
+            "new_balance": 1062.19,
+            "installments": 119.74
+          }
+        },
+        "Apple Card Statement - June 2024.pdf": {
+          "statement_date": "2024-06-30",
+          "output_csv": "2024-06-30.csv",
+          "transaction_count": 25,
+          "total_charges": 1232.9,
+          "total_credits": 1197.01,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:39",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2024-06-15 TAOBAO.COM Canary Wharf 125 LONDON WAE14 5AB ENGGBR -1.78"
+          ],
+          "balance_summary": {
+            "previous_balance": 1197.01,
+            "new_balance": 1352.64,
+            "installments": 119.74
+          }
+        },
+        "Apple Card Statement - March 2024.pdf": {
+          "statement_date": "2024-03-31",
+          "output_csv": "2024-03-31.csv",
+          "transaction_count": 45,
+          "total_charges": 1275.9,
+          "total_credits": 609.24,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:40",
+          "status": "success",
+          "warnings": []
+        },
+        "Apple Card Statement - May 2024.pdf": {
+          "statement_date": "2024-05-31",
+          "output_csv": "2024-05-31.csv",
+          "transaction_count": 36,
+          "total_charges": 1077.01,
+          "total_credits": 1260.06,
+          "verification": {
+            "mismatch": 0.26,
+            "mismatch_ratio": 0.0002,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:40",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed net $1068.40 vs expected $1068.66"
+          ],
+          "balance_summary": {
+            "previous_balance": 1260.06,
+            "new_balance": 1197.01,
+            "installments": 119.74
+          }
+        },
+        "Apple Card Statement - November 2024.pdf": {
+          "statement_date": "2024-11-30",
+          "output_csv": "2024-11-30.csv",
+          "transaction_count": 12,
+          "total_charges": 765.89,
+          "total_credits": 337.24,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:40",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 337.24,
+            "new_balance": 885.63,
+            "installments": 119.74
+          }
+        },
+        "Apple Card Statement - October 2024.pdf": {
+          "statement_date": "2024-10-31",
+          "output_csv": "2024-10-31.csv",
+          "transaction_count": 18,
+          "total_charges": 204.26,
+          "total_credits": 2237.76,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:40",
+          "status": "success",
+          "warnings": [
+            "Balance check: previous(2237.76) - txns(2033.5) + installments(119.74) = 324.0, expected new_balance=337.24 (diff=$13.24)"
+          ],
+          "balance_summary": {
+            "previous_balance": 2237.76,
+            "new_balance": 337.24,
+            "installments": 119.74
+          }
+        },
+        "Apple Card Statement - September 2024.pdf": {
+          "statement_date": "2024-09-30",
+          "output_csv": "2024-09-30.csv",
+          "transaction_count": 17,
+          "total_charges": 2118.02,
+          "total_credits": 508.55,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:40",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 508.55,
+            "new_balance": 2237.76,
+            "installments": 119.74
+          }
+        },
+        "Apple Card Statement - April 2025.pdf": {
+          "statement_date": "2025-04-30",
+          "output_csv": "2025-04-30.csv",
+          "transaction_count": 8,
+          "total_charges": 180.19,
+          "total_credits": 390.43,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:41",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 390.43,
+            "new_balance": 474.88,
+            "installments": 294.69
+          }
+        },
+        "Apple Card Statement - August 2025.pdf": {
+          "statement_date": "2025-08-31",
+          "output_csv": "2025-08-31.csv",
+          "transaction_count": 14,
+          "total_charges": 583.87,
+          "total_credits": 516.09,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:41",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 516.09,
+            "new_balance": 758.7,
+            "installments": 174.83
+          }
+        },
+        "Apple Card Statement - December 2025.pdf": {
+          "statement_date": "2025-12-31",
+          "output_csv": "2025-12-31.csv",
+          "transaction_count": 9,
+          "total_charges": 297.68,
+          "total_credits": 557.94,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:41",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 557.94,
+            "new_balance": 297.68,
+            "installments": 0.0
+          }
+        },
+        "Apple Card Statement - February 2025.pdf": {
+          "statement_date": "2025-02-28",
+          "output_csv": "2025-02-28.csv",
+          "transaction_count": 10,
+          "total_charges": 188.67,
+          "total_credits": 556.78,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:41",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 556.78,
+            "new_balance": 483.24,
+            "installments": 294.57
+          }
+        },
+        "Apple Card Statement - July 2025.pdf": {
+          "statement_date": "2025-07-31",
+          "output_csv": "2025-07-31.csv",
+          "transaction_count": 12,
+          "total_charges": 341.26,
+          "total_credits": 437.71,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:41",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 437.71,
+            "new_balance": 516.09,
+            "installments": 174.83
+          }
+        },
+        "Apple Card Statement - June 2025.pdf": {
+          "statement_date": "2025-06-30",
+          "output_csv": "2025-06-30.csv",
+          "transaction_count": 17,
+          "total_charges": 262.51,
+          "total_credits": 363.24,
+          "verification": {
+            "mismatch": 0.37,
+            "mismatch_ratio": 0.0016,
+            "retries": 3,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:42",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed net $225.81 vs expected $226.18",
+            "Possible duplicate: 2025-06-14 Letsgo Network 675 Cochrane Drive, East Tower, Suite 600 Markham L3R0B8 ON CAN -6.69"
+          ],
+          "balance_summary": {
+            "previous_balance": 363.24,
+            "new_balance": 437.71,
+            "installments": 174.83
+          }
+        },
+        "Apple Card Statement - March 2025.pdf": {
+          "statement_date": "2025-03-31",
+          "output_csv": "2025-03-31.csv",
+          "transaction_count": 8,
+          "total_charges": 95.86,
+          "total_credits": 483.24,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:42",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 483.24,
+            "new_balance": 390.43,
+            "installments": 294.57
+          }
+        },
+        "Apple Card Statement - May 2025.pdf": {
+          "statement_date": "2025-05-31",
+          "output_csv": "2025-05-31.csv",
+          "transaction_count": 8,
+          "total_charges": 188.41,
+          "total_credits": 474.88,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:42",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 474.88,
+            "new_balance": 363.24,
+            "installments": 174.83
+          }
+        },
+        "Apple Card Statement - November 2025.pdf": {
+          "statement_date": "2025-11-30",
+          "output_csv": "2025-11-30.csv",
+          "transaction_count": 8,
+          "total_charges": 383.07,
+          "total_credits": 702.52,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:43",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 702.52,
+            "new_balance": 557.94,
+            "installments": 174.87
+          }
+        },
+        "Apple Card Statement - October 2025.pdf": {
+          "statement_date": "2025-10-31",
+          "output_csv": "2025-10-31.csv",
+          "transaction_count": 11,
+          "total_charges": 527.48,
+          "total_credits": 927.35,
+          "verification": {
+            "mismatch": 0.21,
+            "mismatch_ratio": 0.0004,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:43",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed net $520.48 vs expected $520.69"
+          ],
+          "balance_summary": {
+            "previous_balance": 927.35,
+            "new_balance": 702.52,
+            "installments": 174.83
+          }
+        },
+        "Apple Card Statement - September 2025.pdf": {
+          "statement_date": "2025-09-30",
+          "output_csv": "2025-09-30.csv",
+          "transaction_count": 11,
+          "total_charges": 751.52,
+          "total_credits": 758.7,
+          "verification": {
+            "mismatch": 1.0,
+            "mismatch_ratio": 0.0015,
+            "retries": 3,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:43",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed net $651.52 vs expected $652.52"
+          ],
+          "balance_summary": {
+            "previous_balance": 758.7,
+            "new_balance": 927.35,
+            "installments": 174.83
+          }
+        },
+        "Apple Card Statement - January 2026.pdf": {
+          "statement_date": "2026-01-31",
+          "output_csv": "2026-01-31.csv",
+          "transaction_count": 10,
+          "total_charges": 334.19,
+          "total_credits": 297.68,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:44",
+          "status": "success",
+          "warnings": []
+        }
+      },
+      "errors": {}
+    },
+    "chase-prime-1158": {
+      "processed": {
+        "20230106-statements-1158-.pdf": {
+          "statement_date": "2023-01-06",
+          "output_csv": "2023-01-06.csv",
+          "transaction_count": 39,
+          "total_charges": 1117.47,
+          "total_credits": 2504.87,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:44",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 2504.87,
+            "new_balance": 1117.47
+          }
+        },
+        "20230206-statements-1158-.pdf": {
+          "statement_date": "2023-02-06",
+          "output_csv": "2023-02-06.csv",
+          "transaction_count": 50,
+          "total_charges": 1722.12,
+          "total_credits": 1117.47,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:44",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1117.47,
+            "new_balance": 1722.12
+          }
+        },
+        "20230306-statements-1158-.pdf": {
+          "statement_date": "2023-03-06",
+          "output_csv": "2023-03-06.csv",
+          "transaction_count": 53,
+          "total_charges": 1783.03,
+          "total_credits": 1722.12,
+          "verification": {
+            "mismatch": 0.37,
+            "mismatch_ratio": 0.0002,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:44",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed $1783.03 vs expected $1783.40 (purchases=$1783.40 + fees=$0.00 + interest=$0.00)"
+          ],
+          "balance_summary": {
+            "previous_balance": 1722.12,
+            "new_balance": 1783.4
+          }
+        },
+        "20230406-statements-1158-.pdf": {
+          "statement_date": "2023-04-06",
+          "output_csv": "2023-04-06.csv",
+          "transaction_count": 41,
+          "total_charges": 1580.25,
+          "total_credits": 1783.4,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:44",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1783.4,
+            "new_balance": 1580.25
+          }
+        },
+        "20230506-statements-1158-.pdf": {
+          "statement_date": "2023-05-06",
+          "output_csv": "2023-05-06.csv",
+          "transaction_count": 35,
+          "total_charges": 1049.53,
+          "total_credits": 1580.25,
+          "verification": {
+            "mismatch": 0.54,
+            "mismatch_ratio": 0.0005,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:45",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed $1049.53 vs expected $1050.07 (purchases=$1050.07 + fees=$0.00 + interest=$0.00)"
+          ],
+          "balance_summary": {
+            "previous_balance": 1580.25,
+            "new_balance": 1050.07
+          }
+        },
+        "20230606-statements-1158-.pdf": {
+          "statement_date": "2023-06-06",
+          "output_csv": "2023-06-06.csv",
+          "transaction_count": 38,
+          "total_charges": 2343.02,
+          "total_credits": 1050.07,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:45",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1050.07,
+            "new_balance": 2343.02
+          }
+        },
+        "20230706-statements-1158-.pdf": {
+          "statement_date": "2023-07-06",
+          "output_csv": "2023-07-06.csv",
+          "transaction_count": 37,
+          "total_charges": 2263.53,
+          "total_credits": 2343.02,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:45",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 2343.02,
+            "new_balance": 2263.53
+          }
+        },
+        "20230806-statements-1158-.pdf": {
+          "statement_date": "2023-08-06",
+          "output_csv": "2023-08-06.csv",
+          "transaction_count": 42,
+          "total_charges": 1711.44,
+          "total_credits": 2263.53,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:45",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 2263.53,
+            "new_balance": 1711.44
+          }
+        },
+        "20230906-statements-1158-.pdf": {
+          "statement_date": "2023-09-06",
+          "output_csv": "2023-09-06.csv",
+          "transaction_count": 40,
+          "total_charges": 1043.99,
+          "total_credits": 1711.44,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:45",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1711.44,
+            "new_balance": 1043.99
+          }
+        },
+        "20231006-statements-1158-.pdf": {
+          "statement_date": "2023-10-06",
+          "output_csv": "2023-10-06.csv",
+          "transaction_count": 27,
+          "total_charges": 807.65,
+          "total_credits": 1043.99,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:45",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1043.99,
+            "new_balance": 807.65
+          }
+        },
+        "20231106-statements-1158-.pdf": {
+          "statement_date": "2023-11-06",
+          "output_csv": "2023-11-06.csv",
+          "transaction_count": 53,
+          "total_charges": 1739.48,
+          "total_credits": 807.65,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:46",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 807.65,
+            "new_balance": 1739.48
+          }
+        },
+        "20231206-statements-1158-.pdf": {
+          "statement_date": "2023-12-06",
+          "output_csv": "2023-12-06.csv",
+          "transaction_count": 71,
+          "total_charges": 2407.56,
+          "total_credits": 1739.48,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:46",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1739.48,
+            "new_balance": 2407.56
+          }
+        },
+        "20240106-statements-1158-.pdf": {
+          "statement_date": "2024-01-06",
+          "output_csv": "2024-01-06.csv",
+          "transaction_count": 37,
+          "total_charges": 1332.55,
+          "total_credits": 2407.56,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:46",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 2407.56,
+            "new_balance": 1332.55
+          }
+        },
+        "20240206-statements-1158-.pdf": {
+          "statement_date": "2024-02-06",
+          "output_csv": "2024-02-06.csv",
+          "transaction_count": 35,
+          "total_charges": 2150.66,
+          "total_credits": 1332.55,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:46",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1332.55,
+            "new_balance": 2150.66
+          }
+        },
+        "20240306-statements-1158-.pdf": {
+          "statement_date": "2024-03-06",
+          "output_csv": "2024-03-06.csv",
+          "transaction_count": 41,
+          "total_charges": 1130.63,
+          "total_credits": 2150.66,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:47",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 2150.66,
+            "new_balance": 1130.63
+          }
+        },
+        "20240406-statements-1158-.pdf": {
+          "statement_date": "2024-04-06",
+          "output_csv": "2024-04-06.csv",
+          "transaction_count": 17,
+          "total_charges": 2030.02,
+          "total_credits": 1130.63,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:47",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1130.63,
+            "new_balance": 2030.02
+          }
+        },
+        "20240506-statements-1158-.pdf": {
+          "statement_date": "2024-05-06",
+          "output_csv": "2024-05-06.csv",
+          "transaction_count": 25,
+          "total_charges": 1081.1,
+          "total_credits": 2030.02,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:47",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 2030.02,
+            "new_balance": 1081.1
+          }
+        },
+        "20240606-statements-1158-.pdf": {
+          "statement_date": "2024-06-06",
+          "output_csv": "2024-06-06.csv",
+          "transaction_count": 35,
+          "total_charges": 1785.35,
+          "total_credits": 1081.1,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:47",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1081.1,
+            "new_balance": 1785.35
+          }
+        },
+        "20240706-statements-1158-.pdf": {
+          "statement_date": "2024-07-06",
+          "output_csv": "2024-07-06.csv",
+          "transaction_count": 28,
+          "total_charges": 1062.77,
+          "total_credits": 1785.35,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:48",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1785.35,
+            "new_balance": 1062.77
+          }
+        },
+        "20240806-statements-1158-.pdf": {
+          "statement_date": "2024-08-06",
+          "output_csv": "2024-08-06.csv",
+          "transaction_count": 15,
+          "total_charges": 427.57,
+          "total_credits": 1062.77,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:48",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1062.77,
+            "new_balance": 427.57
+          }
+        },
+        "20240906-statements-1158-.pdf": {
+          "statement_date": "2024-09-06",
+          "output_csv": "2024-09-06.csv",
+          "transaction_count": 47,
+          "total_charges": 5735.71,
+          "total_credits": 427.57,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:48",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 427.57,
+            "new_balance": 5735.71
+          }
+        },
+        "20241006-statements-1158-.pdf": {
+          "statement_date": "2024-10-06",
+          "output_csv": "2024-10-06.csv",
+          "transaction_count": 32,
+          "total_charges": 1208.28,
+          "total_credits": 5735.71,
+          "verification": {
+            "mismatch": 0.53,
+            "mismatch_ratio": 0.0004,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:49",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed $1208.28 vs expected $1208.81 (purchases=$1208.81 + fees=$0.00 + interest=$0.00)"
+          ],
+          "balance_summary": {
+            "previous_balance": 5735.71,
+            "new_balance": 1208.81
+          }
+        },
+        "20241106-statements-1158-.pdf": {
+          "statement_date": "2024-11-06",
+          "output_csv": "2024-11-06.csv",
+          "transaction_count": 30,
+          "total_charges": 1446.84,
+          "total_credits": 1208.81,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:49",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1208.81,
+            "new_balance": 1446.84
+          }
+        },
+        "20241206-statements-1158-.pdf": {
+          "statement_date": "2024-12-06",
+          "output_csv": "2024-12-06.csv",
+          "transaction_count": 46,
+          "total_charges": 3115.92,
+          "total_credits": 1446.84,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:50",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1446.84,
+            "new_balance": 3115.92
+          }
+        },
+        "20250106-statements-1158-.pdf": {
+          "statement_date": "2025-01-06",
+          "output_csv": "2025-01-06.csv",
+          "transaction_count": 27,
+          "total_charges": 904.65,
+          "total_credits": 3115.92,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:50",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 3115.92,
+            "new_balance": 904.65
+          }
+        },
+        "20250206-statements-1158-.pdf": {
+          "statement_date": "2025-02-06",
+          "output_csv": "2025-02-06.csv",
+          "transaction_count": 13,
+          "total_charges": 439.7,
+          "total_credits": 904.65,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:50",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 904.65,
+            "new_balance": 439.7
+          }
+        },
+        "20250306-statements-1158-.pdf": {
+          "statement_date": "2025-03-06",
+          "output_csv": "2025-03-06.csv",
+          "transaction_count": 12,
+          "total_charges": 205.39,
+          "total_credits": 439.7,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:50",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 439.7,
+            "new_balance": 205.39
+          }
+        },
+        "20250406-statements-1158-.pdf": {
+          "statement_date": "2025-04-06",
+          "output_csv": "2025-04-06.csv",
+          "transaction_count": 11,
+          "total_charges": 207.59,
+          "total_credits": 310.26,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:51",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 205.39,
+            "new_balance": 102.72
+          }
+        },
+        "20250506-statements-1158-.pdf": {
+          "statement_date": "2025-05-06",
+          "output_csv": "2025-05-06.csv",
+          "transaction_count": 22,
+          "total_charges": 454.73,
+          "total_credits": 102.72,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:51",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 102.72,
+            "new_balance": 454.73
+          }
+        },
+        "20250606-statements-1158-.pdf": {
+          "statement_date": "2025-06-06",
+          "output_csv": "2025-06-06.csv",
+          "transaction_count": 21,
+          "total_charges": 487.52,
+          "total_credits": 454.73,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:51",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 454.73,
+            "new_balance": 487.52
+          }
+        },
+        "20250706-statements-1158-.pdf": {
+          "statement_date": "2025-07-06",
+          "output_csv": "2025-07-06.csv",
+          "transaction_count": 12,
+          "total_charges": 1173.17,
+          "total_credits": 487.52,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:52",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 487.52,
+            "new_balance": 1173.17
+          }
+        },
+        "20250806-statements-1158-.pdf": {
+          "statement_date": "2025-08-06",
+          "output_csv": "2025-08-06.csv",
+          "transaction_count": 14,
+          "total_charges": 388.55,
+          "total_credits": 1173.17,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:52",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1173.17,
+            "new_balance": 388.55
+          }
+        },
+        "20250906-statements-1158-.pdf": {
+          "statement_date": "2025-09-06",
+          "output_csv": "2025-09-06.csv",
+          "transaction_count": 16,
+          "total_charges": 427.71,
+          "total_credits": 388.55,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:52",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 388.55,
+            "new_balance": 427.71
+          }
+        },
+        "20251006-statements-1158-.pdf": {
+          "statement_date": "2025-10-06",
+          "output_csv": "2025-10-06.csv",
+          "transaction_count": 22,
+          "total_charges": 864.44,
+          "total_credits": 427.71,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:53",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 427.71,
+            "new_balance": 864.44
+          }
+        },
+        "20251106-statements-1158-.pdf": {
+          "statement_date": "2025-11-06",
+          "output_csv": "2025-11-06.csv",
+          "transaction_count": 26,
+          "total_charges": 1548.39,
+          "total_credits": 864.44,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:53",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 864.44,
+            "new_balance": 1548.39
+          }
+        },
+        "20251206-statements-1158-.pdf": {
+          "statement_date": "2025-12-06",
+          "output_csv": "2025-12-06.csv",
+          "transaction_count": 35,
+          "total_charges": 1552.18,
+          "total_credits": 1548.39,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:53",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1548.39,
+            "new_balance": 1552.18
+          }
+        },
+        "20260106-statements-1158-.pdf": {
+          "statement_date": "2026-01-06",
+          "output_csv": "2026-01-06.csv",
+          "transaction_count": 21,
+          "total_charges": 489.03,
+          "total_credits": 1552.18,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:54",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1552.18,
+            "new_balance": 489.03
+          }
+        },
+        "20260206-statements-1158-.pdf": {
+          "statement_date": "2026-02-06",
+          "output_csv": "2026-02-06.csv",
+          "transaction_count": 11,
+          "total_charges": 150.54,
+          "total_credits": 489.03,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:54",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 489.03,
+            "new_balance": 150.54
+          }
+        }
+      },
+      "errors": {}
+    },
+    "chase-sapphire-2341": {
+      "processed": {
+        "20230106-statements-2341-.pdf": {
+          "statement_date": "2023-01-06",
+          "output_csv": "2023-01-06.csv",
+          "transaction_count": 37,
+          "total_charges": 2884.85,
+          "total_credits": 2779.72,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:54",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1575.04,
+            "new_balance": 1680.17
+          }
+        },
+        "20230206-statements-2341-.pdf": {
+          "statement_date": "2023-02-06",
+          "output_csv": "2023-02-06.csv",
+          "transaction_count": 28,
+          "total_charges": 1762.93,
+          "total_credits": 1680.17,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:54",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-01-27 HILTON CABLE 55 SAN FRANCISCO CA -4.89"
+          ],
+          "balance_summary": {
+            "previous_balance": 1680.17,
+            "new_balance": 1762.93
+          }
+        },
+        "20230306-statements-2341-.pdf": {
+          "statement_date": "2023-03-06",
+          "output_csv": "2023-03-06.csv",
+          "transaction_count": 23,
+          "total_charges": 9521.94,
+          "total_credits": 1762.93,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:54",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1762.93,
+            "new_balance": 9521.94
+          }
+        },
+        "20230406-statements-2341-.pdf": {
+          "statement_date": "2023-04-06",
+          "output_csv": "2023-04-06.csv",
+          "transaction_count": 28,
+          "total_charges": 11739.91,
+          "total_credits": 9521.94,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:55",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 9521.94,
+            "new_balance": 11739.91
+          }
+        },
+        "20230506-statements-2341-.pdf": {
+          "statement_date": "2023-05-06",
+          "output_csv": "2023-05-06.csv",
+          "transaction_count": 20,
+          "total_charges": 1009.29,
+          "total_credits": 11739.91,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:55",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 11739.91,
+            "new_balance": 1009.29
+          }
+        },
+        "20230606-statements-2341-.pdf": {
+          "statement_date": "2023-06-06",
+          "output_csv": "2023-06-06.csv",
+          "transaction_count": 42,
+          "total_charges": 1779.45,
+          "total_credits": 1009.29,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:55",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1009.29,
+            "new_balance": 1779.45
+          }
+        },
+        "20230706-statements-2341-.pdf": {
+          "statement_date": "2023-07-06",
+          "output_csv": "2023-07-06.csv",
+          "transaction_count": 56,
+          "total_charges": 5871.33,
+          "total_credits": 1779.45,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:55",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-06-08 JAL PAC USD IRVINE CA -18.8",
+            "Possible duplicate: 2023-07-01 PILATES STUDIO 11 WWW.PILATESTU WA -10.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 1779.45,
+            "new_balance": 5871.33
+          }
+        },
+        "20230806-statements-2341-.pdf": {
+          "statement_date": "2023-08-06",
+          "output_csv": "2023-08-06.csv",
+          "transaction_count": 50,
+          "total_charges": 4358.95,
+          "total_credits": 5871.33,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:55",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-08-03 SQ *PATCHY'S ENTERPRISES, Issaquah WA -8.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 5871.33,
+            "new_balance": 4358.95
+          }
+        },
+        "20230906-statements-2341-.pdf": {
+          "statement_date": "2023-09-06",
+          "output_csv": "2023-09-06.csv",
+          "transaction_count": 38,
+          "total_charges": 6097.0,
+          "total_credits": 4358.95,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:55",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 4358.95,
+            "new_balance": 6097.0
+          }
+        },
+        "20231006-statements-2341-.pdf": {
+          "statement_date": "2023-10-06",
+          "output_csv": "2023-10-06.csv",
+          "transaction_count": 36,
+          "total_charges": 3108.02,
+          "total_credits": 6097.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:55",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 6097.0,
+            "new_balance": 3108.02
+          }
+        },
+        "20231106-statements-2341-.pdf": {
+          "statement_date": "2023-11-06",
+          "output_csv": "2023-11-06.csv",
+          "transaction_count": 23,
+          "total_charges": 1036.06,
+          "total_credits": 3108.02,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:56",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-11-04 PILATES STUDIO 11 WWW.PILATESTU WA -10.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 3108.02,
+            "new_balance": 1036.06
+          }
+        },
+        "20231206-statements-2341-.pdf": {
+          "statement_date": "2023-12-06",
+          "output_csv": "2023-12-06.csv",
+          "transaction_count": 26,
+          "total_charges": 7474.42,
+          "total_credits": 2449.3,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:56",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1036.06,
+            "new_balance": 6061.18
+          }
+        },
+        "20240106-statements-2341-.pdf": {
+          "statement_date": "2024-01-06",
+          "output_csv": "2024-01-06.csv",
+          "transaction_count": 84,
+          "total_charges": 10960.04,
+          "total_credits": 6061.18,
+          "verification": {
+            "mismatch": 2.52,
+            "mismatch_ratio": 0.0002,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:56",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed $10960.04 vs expected $10962.56 (purchases=$10962.56 + fees=$0.00 + interest=$0.00)",
+            "Possible duplicate: 2023-12-19 WECHAT*TENCENT ShenZhen -1.4",
+            "Possible duplicate: 2023-12-21 WECHAT*TENCENT ShenZhen -1.4",
+            "Possible duplicate: 2023-12-21 WECHAT*TENCENT ShenZhen -1.4",
+            "Possible duplicate: 2023-12-26 WECHAT*TENCENT ShenZhen -1.4",
+            "Possible duplicate: 2023-12-27 WECHAT*TENCENT ShenZhen -1.4"
+          ],
+          "balance_summary": {
+            "previous_balance": 6061.18,
+            "new_balance": 10962.56
+          }
+        },
+        "20240206-statements-2341-.pdf": {
+          "statement_date": "2024-02-06",
+          "output_csv": "2024-02-06.csv",
+          "transaction_count": 42,
+          "total_charges": 2505.35,
+          "total_credits": 10962.56,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:56",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 10962.56,
+            "new_balance": 2505.35
+          }
+        },
+        "20240306-statements-2341-.pdf": {
+          "statement_date": "2024-03-06",
+          "output_csv": "2024-03-06.csv",
+          "transaction_count": 11,
+          "total_charges": 6123.53,
+          "total_credits": 8500.52,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:56",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 2505.35,
+            "new_balance": 128.36
+          }
+        },
+        "20240406-statements-2341-.pdf": {
+          "statement_date": "2024-04-06",
+          "output_csv": "2024-04-06.csv",
+          "transaction_count": 9,
+          "total_charges": 844.1,
+          "total_credits": 128.36,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:57",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 128.36,
+            "new_balance": 844.1
+          }
+        },
+        "20240506-statements-2341-.pdf": {
+          "statement_date": "2024-05-06",
+          "output_csv": "2024-05-06.csv",
+          "transaction_count": 17,
+          "total_charges": 1129.45,
+          "total_credits": 844.1,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:57",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 844.1,
+            "new_balance": 1129.45
+          }
+        },
+        "20240606-statements-2341-.pdf": {
+          "statement_date": "2024-06-06",
+          "output_csv": "2024-06-06.csv",
+          "transaction_count": 15,
+          "total_charges": 451.83,
+          "total_credits": 1129.45,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:57",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1129.45,
+            "new_balance": 451.83
+          }
+        },
+        "20240706-statements-2341-.pdf": {
+          "statement_date": "2024-07-06",
+          "output_csv": "2024-07-06.csv",
+          "transaction_count": 28,
+          "total_charges": 681.69,
+          "total_credits": 451.83,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:58",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 451.83,
+            "new_balance": 681.69
+          }
+        },
+        "20240806-statements-2341-.pdf": {
+          "statement_date": "2024-08-06",
+          "output_csv": "2024-08-06.csv",
+          "transaction_count": 11,
+          "total_charges": 1303.31,
+          "total_credits": 681.69,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:58",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 681.69,
+            "new_balance": 1303.31
+          }
+        },
+        "20240906-statements-2341-.pdf": {
+          "statement_date": "2024-09-06",
+          "output_csv": "2024-09-06.csv",
+          "transaction_count": 55,
+          "total_charges": 1848.38,
+          "total_credits": 1303.31,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:58",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1303.31,
+            "new_balance": 1848.38
+          }
+        },
+        "20241006-statements-2341-.pdf": {
+          "statement_date": "2024-10-06",
+          "output_csv": "2024-10-06.csv",
+          "transaction_count": 27,
+          "total_charges": 1406.9,
+          "total_credits": 1848.38,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:58",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1848.38,
+            "new_balance": 1406.9
+          }
+        },
+        "20241106-statements-2341-.pdf": {
+          "statement_date": "2024-11-06",
+          "output_csv": "2024-11-06.csv",
+          "transaction_count": 33,
+          "total_charges": 7741.1,
+          "total_credits": 1406.9,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:59",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1406.9,
+            "new_balance": 7741.1
+          }
+        },
+        "20241206-statements-2341-.pdf": {
+          "statement_date": "2024-12-06",
+          "output_csv": "2024-12-06.csv",
+          "transaction_count": 19,
+          "total_charges": 637.89,
+          "total_credits": 1000.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:59",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 7741.1,
+            "new_balance": 7378.99
+          }
+        },
+        "20250106-statements-2341-.pdf": {
+          "statement_date": "2025-01-06",
+          "output_csv": "2025-01-06.csv",
+          "transaction_count": 15,
+          "total_charges": 522.68,
+          "total_credits": 1025.33,
+          "verification": {
+            "mismatch": 0.07,
+            "mismatch_ratio": 0.0001,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:12:59",
+          "status": "success",
+          "warnings": [
+            "Payment total mismatch: parsed $1025.33 vs expected $1025.40"
+          ],
+          "balance_summary": {
+            "previous_balance": 7378.99,
+            "new_balance": 6876.27
+          }
+        },
+        "20250206-statements-2341-.pdf": {
+          "statement_date": "2025-02-06",
+          "output_csv": "2025-02-06.csv",
+          "transaction_count": 25,
+          "total_charges": 6499.62,
+          "total_credits": 1000.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:00",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 6876.27,
+            "new_balance": 12375.89
+          }
+        },
+        "20250306-statements-2341-.pdf": {
+          "statement_date": "2025-03-06",
+          "output_csv": "2025-03-06.csv",
+          "transaction_count": 40,
+          "total_charges": 1941.43,
+          "total_credits": 14112.45,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:00",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 12375.89,
+            "new_balance": 204.87
+          }
+        },
+        "20250406-statements-2341-.pdf": {
+          "statement_date": "2025-04-06",
+          "output_csv": "2025-04-06.csv",
+          "transaction_count": 18,
+          "total_charges": 387.68,
+          "total_credits": 321.77,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:00",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 204.87,
+            "new_balance": 270.78
+          }
+        },
+        "20250506-statements-2341-.pdf": {
+          "statement_date": "2025-05-06",
+          "output_csv": "2025-05-06.csv",
+          "transaction_count": 28,
+          "total_charges": 8250.04,
+          "total_credits": 270.78,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:01",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 270.78,
+            "new_balance": 8250.04
+          }
+        },
+        "20250606-statements-2341-.pdf": {
+          "statement_date": "2025-06-06",
+          "output_csv": "2025-06-06.csv",
+          "transaction_count": 20,
+          "total_charges": 814.3,
+          "total_credits": 500.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:01",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 8250.04,
+            "new_balance": 8564.34
+          }
+        },
+        "20250706-statements-2341-.pdf": {
+          "statement_date": "2025-07-06",
+          "output_csv": "2025-07-06.csv",
+          "transaction_count": 21,
+          "total_charges": 935.24,
+          "total_credits": 8564.34,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:01",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 8564.34,
+            "new_balance": 935.24
+          }
+        },
+        "20250806-statements-2341-.pdf": {
+          "statement_date": "2025-08-06",
+          "output_csv": "2025-08-06.csv",
+          "transaction_count": 41,
+          "total_charges": 4129.33,
+          "total_credits": 2426.01,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:01",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 935.24,
+            "new_balance": 2638.56
+          }
+        },
+        "20250906-statements-2341-.pdf": {
+          "statement_date": "2025-09-06",
+          "output_csv": "2025-09-06.csv",
+          "transaction_count": 77,
+          "total_charges": 8244.43,
+          "total_credits": 2638.56,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:02",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2025-08-25 HBLeisure Vista CA -3.0",
+            "Possible duplicate: 2025-08-26 USS MIDWAY MUSEUM SAN DIEGO CA -20.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 2638.56,
+            "new_balance": 8244.43
+          }
+        },
+        "20251006-statements-2341-.pdf": {
+          "statement_date": "2025-10-06",
+          "output_csv": "2025-10-06.csv",
+          "transaction_count": 20,
+          "total_charges": 9676.42,
+          "total_credits": 16518.86,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:02",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 8244.43,
+            "new_balance": 1401.99
+          }
+        },
+        "20251106-statements-2341-.pdf": {
+          "statement_date": "2025-11-06",
+          "output_csv": "2025-11-06.csv",
+          "transaction_count": 35,
+          "total_charges": 5742.04,
+          "total_credits": 1401.99,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:02",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2025-11-05 WIFIONBOARD ALASKA 877-350-0038 IL -8.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 1401.99,
+            "new_balance": 5742.04
+          }
+        },
+        "20251206-statements-2341-.pdf": {
+          "statement_date": "2025-12-06",
+          "output_csv": "2025-12-06.csv",
+          "transaction_count": 28,
+          "total_charges": 4648.47,
+          "total_credits": 5742.04,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:03",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 5742.04,
+            "new_balance": 4648.47
+          }
+        },
+        "20260106-statements-2341-.pdf": {
+          "statement_date": "2026-01-06",
+          "output_csv": "2026-01-06.csv",
+          "transaction_count": 41,
+          "total_charges": 1716.43,
+          "total_credits": 4648.47,
+          "verification": {
+            "mismatch": 0.57,
+            "mismatch_ratio": 0.0003,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:03",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed $1716.43 vs expected $1717.00 (purchases=$1717.00 + fees=$0.00 + interest=$0.00)",
+            "Possible duplicate: 2025-12-13 Letsgo Network Markham ON -6.69"
+          ],
+          "balance_summary": {
+            "previous_balance": 4648.47,
+            "new_balance": 1717.0
+          }
+        },
+        "20260206-statements-2341-.pdf": {
+          "statement_date": "2026-02-06",
+          "output_csv": "2026-02-06.csv",
+          "transaction_count": 24,
+          "total_charges": 10734.65,
+          "total_credits": 1717.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:03",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1717.0,
+            "new_balance": 10734.65
+          }
+        }
+      },
+      "errors": {}
+    },
+    "chase-freedom-1350": {
+      "processed": {
+        "20250913-statements-1350-.pdf": {
+          "statement_date": "2025-09-13",
+          "output_csv": "2025-09-13.csv",
+          "transaction_count": 18,
+          "total_charges": 2458.98,
+          "total_credits": 0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:04",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 0.0,
+            "new_balance": 2458.98
+          }
+        },
+        "20251013-statements-1350-.pdf": {
+          "statement_date": "2025-10-13",
+          "output_csv": "2025-10-13.csv",
+          "transaction_count": 22,
+          "total_charges": 1528.02,
+          "total_credits": 2458.98,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:04",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 2458.98,
+            "new_balance": 1528.02
+          }
+        },
+        "20251113-statements-1350-.pdf": {
+          "statement_date": "2025-11-13",
+          "output_csv": "2025-11-13.csv",
+          "transaction_count": 45,
+          "total_charges": 4916.98,
+          "total_credits": 1528.02,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:04",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2025-11-08 TST*RED SILO COFFEE ROAS Golden CO -6.54"
+          ],
+          "balance_summary": {
+            "previous_balance": 1528.02,
+            "new_balance": 4916.98
+          }
+        },
+        "20251213-statements-1350-.pdf": {
+          "statement_date": "2025-12-13",
+          "output_csv": "2025-12-13.csv",
+          "transaction_count": 56,
+          "total_charges": 3914.31,
+          "total_credits": 5000.0,
+          "verification": {
+            "mismatch": 0.51,
+            "mismatch_ratio": 0.0001,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:05",
+          "status": "success",
+          "warnings": [
+            "Charges total mismatch: parsed $3914.31 vs expected $3914.82 (purchases=$3914.82 + fees=$0.00 + interest=$0.00)"
+          ],
+          "balance_summary": {
+            "previous_balance": 4916.98,
+            "new_balance": 3831.8
+          }
+        },
+        "20260113-statements-1350-.pdf": {
+          "statement_date": "2026-01-13",
+          "output_csv": "2026-01-13.csv",
+          "transaction_count": 40,
+          "total_charges": 1730.26,
+          "total_credits": 3831.8,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:05",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2025-12-14 TOBEYSTUTOR.COM NEW YORK NY 29.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 3831.8,
+            "new_balance": 1730.26
+          }
+        },
+        "20260213-statements-1350-.pdf": {
+          "statement_date": "2026-02-13",
+          "output_csv": "2026-02-13.csv",
+          "transaction_count": 53,
+          "total_charges": 3455.67,
+          "total_credits": 1730.26,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:05",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1730.26,
+            "new_balance": 3455.67
+          }
+        }
+      },
+      "errors": {}
+    },
+    "fidelity-credit-card": {
+      "processed": {
+        "2023-01-18.pdf": {
+          "statement_date": "2023-01-18",
+          "output_csv": "2023-01-18.csv",
+          "transaction_count": 108,
+          "total_charges": 16998.77,
+          "total_credits": 14137.31,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:05",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-01-16 DOCNETWORK INC 734-619-8300 MI -50.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 13962.22,
+            "new_balance": 16823.68
+          }
+        },
+        "2023-02-16.pdf": {
+          "statement_date": "2023-02-16",
+          "output_csv": "2023-02-16.csv",
+          "transaction_count": 93,
+          "total_charges": 11598.1,
+          "total_credits": 16823.68,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:06",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-02-06 DOCNETWORK INC 734-619-8300 MI -50.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 16823.68,
+            "new_balance": 11598.1
+          }
+        },
+        "2023-03-16 Statement - Card...5161.pdf": {
+          "statement_date": "2023-03-16",
+          "output_csv": "2023-03-16.csv",
+          "transaction_count": 83,
+          "total_charges": 15036.31,
+          "total_credits": 11598.1,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:06",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-02-16 FACTS TUITION AND FEES 402-4661063 NE -100.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 11598.1,
+            "new_balance": 15036.31
+          }
+        },
+        "2023-04-18.pdf": {
+          "statement_date": "2023-04-18",
+          "output_csv": "2023-04-18.csv",
+          "transaction_count": 128,
+          "total_charges": 15835.28,
+          "total_credits": 15036.31,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:06",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-03-30 COIN-O-MATIC VENDING WOODINVILLE WA -1.85",
+            "Possible duplicate: 2023-03-30 COIN-O-MATIC VENDING WOODINVILLE WA -1.85"
+          ],
+          "balance_summary": {
+            "previous_balance": 15036.31,
+            "new_balance": 15835.28
+          }
+        },
+        "2023-05-17.pdf": {
+          "statement_date": "2023-05-17",
+          "output_csv": "2023-05-17.csv",
+          "transaction_count": 104,
+          "total_charges": 7323.95,
+          "total_credits": 15835.28,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:07",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 15835.28,
+            "new_balance": 7323.95
+          }
+        },
+        "2023-06-16.pdf": {
+          "statement_date": "2023-06-16",
+          "output_csv": "2023-06-16.csv",
+          "transaction_count": 56,
+          "total_charges": 9528.55,
+          "total_credits": 9624.87,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:07",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-06-11 CTM GROUP INC. SALEM NH -1.5",
+            "Possible duplicate: 2023-06-11 CTM GROUP INC. SALEM NH -1.5"
+          ],
+          "balance_summary": {
+            "previous_balance": 7323.95,
+            "new_balance": 7227.63
+          }
+        },
+        "2023-07-18.pdf": {
+          "statement_date": "2023-07-18",
+          "output_csv": "2023-07-18.csv",
+          "transaction_count": 100,
+          "total_charges": 9266.97,
+          "total_credits": 8125.63,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:07",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-07-13 DOCNETWORK INC ANN ARBOR MI 449.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 7227.63,
+            "new_balance": 8368.97
+          }
+        },
+        "2023-08-17.pdf": {
+          "statement_date": "2023-08-17",
+          "output_csv": "2023-08-17.csv",
+          "transaction_count": 88,
+          "total_charges": 12602.81,
+          "total_credits": 8369.97,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:07",
+          "status": "success",
+          "warnings": [
+            "Transaction date 2023-04-13 out of range for statement 2023-08-17"
+          ],
+          "balance_summary": {
+            "previous_balance": 8368.97,
+            "new_balance": 12601.81
+          }
+        },
+        "2023-09-18.pdf": {
+          "statement_date": "2023-09-18",
+          "output_csv": "2023-09-18.csv",
+          "transaction_count": 89,
+          "total_charges": 10201.09,
+          "total_credits": 13193.83,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:08",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 12601.81,
+            "new_balance": 9609.07
+          }
+        },
+        "2023-10-17.pdf": {
+          "statement_date": "2023-10-17",
+          "output_csv": "2023-10-17.csv",
+          "transaction_count": 76,
+          "total_charges": 6158.79,
+          "total_credits": 9609.07,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:08",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 9609.07,
+            "new_balance": 6158.79
+          }
+        },
+        "2023-11-16.pdf": {
+          "statement_date": "2023-11-16",
+          "output_csv": "2023-11-16.csv",
+          "transaction_count": 80,
+          "total_charges": 4658.05,
+          "total_credits": 6181.31,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:08",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-11-07 MED*SWEDISH MEDICAL CT 888-294-9333 WA -18.73"
+          ],
+          "balance_summary": {
+            "previous_balance": 6158.79,
+            "new_balance": 4635.53
+          }
+        },
+        "2023-12-18.pdf": {
+          "statement_date": "2023-12-18",
+          "output_csv": "2023-12-18.csv",
+          "transaction_count": 105,
+          "total_charges": 8842.35,
+          "total_credits": 4635.53,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:08",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2023-11-21 RITE AID 05187 ISSAQUAH WA -5.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 4635.53,
+            "new_balance": 8842.35
+          }
+        },
+        "2024-01-17.pdf": {
+          "statement_date": "2024-01-17",
+          "output_csv": "2024-01-17.csv",
+          "transaction_count": 119,
+          "total_charges": 6765.99,
+          "total_credits": 8974.47,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:09",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 8842.35,
+            "new_balance": 6633.87
+          }
+        },
+        "2024-02-16.pdf": {
+          "statement_date": "2024-02-16",
+          "output_csv": "2024-02-16.csv",
+          "transaction_count": 110,
+          "total_charges": 14885.24,
+          "total_credits": 6634.86,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:09",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2024-02-09 STARBUCKS STORE 03222 REDMOND WA -4.8"
+          ],
+          "balance_summary": {
+            "previous_balance": 6633.87,
+            "new_balance": 14884.25
+          }
+        },
+        "2024-03-18.pdf": {
+          "statement_date": "2024-03-18",
+          "output_csv": "2024-03-18.csv",
+          "transaction_count": 75,
+          "total_charges": 8473.39,
+          "total_credits": 22415.25,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:09",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2024-02-24 FRONTLINE FOOD SERVIC COUPEVILLE WA -2.4"
+          ],
+          "balance_summary": {
+            "previous_balance": 14884.25,
+            "new_balance": 942.39
+          }
+        },
+        "2024-04-16.pdf": {
+          "statement_date": "2024-04-16",
+          "output_csv": "2024-04-16.csv",
+          "transaction_count": 22,
+          "total_charges": 990.38,
+          "total_credits": 3502.02,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:09",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 942.39,
+            "new_balance": -1569.25
+          }
+        },
+        "2024-05-17.pdf": {
+          "statement_date": "2024-05-17",
+          "output_csv": "2024-05-17.csv",
+          "transaction_count": 31,
+          "total_charges": 8759.49,
+          "total_credits": 0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:10",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": -1569.25,
+            "new_balance": 7190.24
+          }
+        },
+        "2024-06-17 Statement - Card...5161.pdf": {
+          "statement_date": "2024-06-17",
+          "output_csv": "2024-06-17.csv",
+          "transaction_count": 64,
+          "total_charges": 16047.43,
+          "total_credits": 7190.24,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:10",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 7190.24,
+            "new_balance": 16047.43
+          }
+        },
+        "2024-07-17 Statement - Card...5161.pdf": {
+          "statement_date": "2024-07-17",
+          "output_csv": "2024-07-17.csv",
+          "transaction_count": 43,
+          "total_charges": 6708.84,
+          "total_credits": 16148.36,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:10",
+          "status": "success",
+          "warnings": [
+            "Transaction date 2024-03-19 out of range for statement 2024-07-17",
+            "Transaction date 2024-04-19 out of range for statement 2024-07-17"
+          ],
+          "balance_summary": {
+            "previous_balance": 16047.43,
+            "new_balance": 6607.91
+          }
+        },
+        "2024-08-19 Statement - Card...5161.pdf": {
+          "statement_date": "2024-08-19",
+          "output_csv": "2024-08-19.csv",
+          "transaction_count": 49,
+          "total_charges": 5588.2,
+          "total_credits": 6607.91,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:10",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 6607.91,
+            "new_balance": 5588.2
+          }
+        },
+        "2024-09-18 Statement - Card...5161.pdf": {
+          "statement_date": "2024-09-18",
+          "output_csv": "2024-09-18.csv",
+          "transaction_count": 51,
+          "total_charges": 11022.18,
+          "total_credits": 5588.2,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:11",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 5588.2,
+            "new_balance": 11022.18
+          }
+        },
+        "2024-10-17 Statement - Card...5161.pdf": {
+          "statement_date": "2024-10-17",
+          "output_csv": "2024-10-17.csv",
+          "transaction_count": 43,
+          "total_charges": 4921.9,
+          "total_credits": 11054.18,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:11",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 11022.18,
+            "new_balance": 4889.9
+          }
+        },
+        "2024-11-18 Statement - Card...5161.pdf": {
+          "statement_date": "2024-11-18",
+          "output_csv": "2024-11-18.csv",
+          "transaction_count": 61,
+          "total_charges": 11091.75,
+          "total_credits": 5833.76,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:11",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 4889.9,
+            "new_balance": 10147.89
+          }
+        },
+        "2024-12-17 Statement - Card...5161.pdf": {
+          "statement_date": "2024-12-17",
+          "output_csv": "2024-12-17.csv",
+          "transaction_count": 53,
+          "total_charges": 10990.69,
+          "total_credits": 5005.99,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:11",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2024-12-02 VIRGINIA MASON MEDICAL 206-2236601 WA -27.62",
+            "Possible duplicate: 2024-12-15 SP COUGAR MOUNTAIN Z 142-53915508 WA -3.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 10147.89,
+            "new_balance": 16132.59
+          }
+        },
+        "2025-01-16 Statement - Card...5161.pdf": {
+          "statement_date": "2025-01-16",
+          "output_csv": "2025-01-16.csv",
+          "transaction_count": 24,
+          "total_charges": 3247.55,
+          "total_credits": 10024.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:12",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 16132.59,
+            "new_balance": 9356.14
+          }
+        },
+        "2025-02-18 Statement - Card...5161.pdf": {
+          "statement_date": "2025-02-18",
+          "output_csv": "2025-02-18.csv",
+          "transaction_count": 39,
+          "total_charges": 4966.04,
+          "total_credits": 5000.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:12",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2025-01-17 SQ *ISSAQUAH COFFEE CO Issaquah WA -4.44"
+          ],
+          "balance_summary": {
+            "previous_balance": 9356.14,
+            "new_balance": 9322.18
+          }
+        },
+        "2025-03-18 Statement - Card...5161.pdf": {
+          "statement_date": "2025-03-18",
+          "output_csv": "2025-03-18.csv",
+          "transaction_count": 31,
+          "total_charges": 4613.94,
+          "total_credits": 12927.78,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:12",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 9322.18,
+            "new_balance": 1008.34
+          }
+        },
+        "2025-04-16 Statement - Card...5161.pdf": {
+          "statement_date": "2025-04-16",
+          "output_csv": "2025-04-16.csv",
+          "transaction_count": 27,
+          "total_charges": 3428.23,
+          "total_credits": 1068.96,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:12",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1008.34,
+            "new_balance": 3367.61
+          }
+        },
+        "2025-05-19 Statement - Card...5161.pdf": {
+          "statement_date": "2025-05-19",
+          "output_csv": "2025-05-19.csv",
+          "transaction_count": 63,
+          "total_charges": 7797.54,
+          "total_credits": 15610.12,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:12",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2025-05-13 CTLP*Emerald City Gymn REDMOND WA -2.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 3367.61,
+            "new_balance": -4444.97
+          }
+        },
+        "2025-06-17 Statement - Card...5161.pdf": {
+          "statement_date": "2025-06-17",
+          "output_csv": "2025-06-17.csv",
+          "transaction_count": 52,
+          "total_charges": 5704.41,
+          "total_credits": 0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:13",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": -4444.97,
+            "new_balance": 1259.44
+          }
+        },
+        "2025-07-18 Statement - Card...5161.pdf": {
+          "statement_date": "2025-07-18",
+          "output_csv": "2025-07-18.csv",
+          "transaction_count": 47,
+          "total_charges": 3497.05,
+          "total_credits": 2539.4,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:13",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2025-06-18 PAYMENT THANK YOU 1259.44",
+            "Possible duplicate: 2025-06-23 TAOBAO 408-7855580 CA -15.73"
+          ],
+          "balance_summary": {
+            "previous_balance": 1259.44,
+            "new_balance": 2217.09
+          }
+        },
+        "2025-08-19 Statement - Card...5161.pdf": {
+          "statement_date": "2025-08-19",
+          "output_csv": "2025-08-19.csv",
+          "transaction_count": 26,
+          "total_charges": 1663.31,
+          "total_credits": 2217.09,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:13",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 2217.09,
+            "new_balance": 1663.31
+          }
+        },
+        "2025-09-18 Statement - Card...5161.pdf": {
+          "statement_date": "2025-09-18",
+          "output_csv": "2025-09-18.csv",
+          "transaction_count": 19,
+          "total_charges": 2255.71,
+          "total_credits": 1663.31,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:13",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1663.31,
+            "new_balance": 2255.71
+          }
+        },
+        "2025-10-17 Statement - Card...5161.pdf": {
+          "statement_date": "2025-10-17",
+          "output_csv": "2025-10-17.csv",
+          "transaction_count": 16,
+          "total_charges": 1130.8,
+          "total_credits": 2255.71,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:14",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 2255.71,
+            "new_balance": 1130.8
+          }
+        },
+        "2025-11-18 Statement - Card...5161.pdf": {
+          "statement_date": "2025-11-18",
+          "output_csv": "2025-11-18.csv",
+          "transaction_count": 22,
+          "total_charges": 2856.09,
+          "total_credits": 1130.8,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:14",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 1130.8,
+            "new_balance": 2856.09
+          }
+        },
+        "2025-12-16 Statement - Card...5161.pdf": {
+          "statement_date": "2025-12-16",
+          "output_csv": "2025-12-16.csv",
+          "transaction_count": 18,
+          "total_charges": 1951.57,
+          "total_credits": 2856.09,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:14",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 2856.09,
+            "new_balance": 1951.57
+          }
+        },
+        "2026-01-16 Statement - Card...5161.pdf": {
+          "statement_date": "2026-01-16",
+          "output_csv": "2026-01-16.csv",
+          "transaction_count": 49,
+          "total_charges": 6031.16,
+          "total_credits": 1951.57,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:14",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2026-01-12 ISSAQUAH SD 425-8377000 WA -28.5"
+          ],
+          "balance_summary": {
+            "previous_balance": 1951.57,
+            "new_balance": 6031.16
+          }
+        },
+        "2026-02-17 Statement - Card...5161.pdf": {
+          "statement_date": "2026-02-17",
+          "output_csv": "2026-02-17.csv",
+          "transaction_count": 17,
+          "total_charges": 1174.35,
+          "total_credits": 6031.16,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:14",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 6031.16,
+            "new_balance": 1174.35
+          }
+        }
+      },
+      "errors": {}
+    },
+    "bofa-atmos-7982": {
+      "processed": {
+        "eStmt_2025-09-28.pdf": {
+          "statement_date": "2025-09-28",
+          "output_csv": "2025-09-28.csv",
+          "transaction_count": 51,
+          "total_charges": 4523.24,
+          "total_credits": 0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:15",
+          "status": "success",
+          "warnings": [
+            "Possible duplicate: 2025-09-21 LS KIDSQUEST CHILDREN 142-56378100 WA -1.0"
+          ],
+          "balance_summary": {
+            "previous_balance": 0.0,
+            "new_balance": 4523.24
+          }
+        },
+        "eStmt_2025-10-28.pdf": {
+          "statement_date": "2025-10-28",
+          "output_csv": "2025-10-28.csv",
+          "transaction_count": 24,
+          "total_charges": 3894.07,
+          "total_credits": 8030.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:15",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 4523.24,
+            "new_balance": 387.31
+          }
+        },
+        "eStmt_2025-11-28.pdf": {
+          "statement_date": "2025-11-28",
+          "output_csv": "2025-11-28.csv",
+          "transaction_count": 16,
+          "total_charges": 495.49,
+          "total_credits": 187.34,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:15",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 387.31,
+            "new_balance": 695.46
+          }
+        },
+        "eStmt_2025-12-28.pdf": {
+          "statement_date": "2025-12-28",
+          "output_csv": "2025-12-28.csv",
+          "transaction_count": 7,
+          "total_charges": 54.69,
+          "total_credits": 1082.77,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:15",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 695.46,
+            "new_balance": -332.62
+          }
+        },
+        "eStmt_2026-01-28.pdf": {
+          "statement_date": "2026-01-28",
+          "output_csv": "2026-01-28.csv",
+          "transaction_count": 5,
+          "total_charges": 245.81,
+          "total_credits": 0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:15",
+          "status": "success",
+          "warnings": []
+        },
+        "eStmt_2026-02-28.pdf": {
+          "statement_date": "2026-02-28",
+          "output_csv": "2026-02-28.csv",
+          "transaction_count": 2,
+          "total_charges": 56.77,
+          "total_credits": 0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-07T07:13:16",
+          "status": "success",
+          "warnings": []
         }
       },
       "errors": {}

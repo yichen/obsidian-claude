@@ -4013,3 +4013,150 @@
 2026-02-28 21:35:17,677 INFO       prepare folder PDF collection.
 2026-02-28 21:35:17,677 INFO 
   Result: 1 matched, 3 expected gaps, 1 info-only
+2026-03-07 07:12:34,371 INFO Tax Document Ingestion — 2026-03-07 07:12:34
+2026-03-07 07:12:34,374 INFO 
+  Processing 2025 (21 PDFs)...
+2026-03-07 07:12:34,375 INFO     [90mSKIP[0m 2025-1095-c-salesforce.pdf (form_1095-C_not_needed)
+2026-03-07 07:12:34,398 INFO     1099-SA appears to be a blank IRS template: 2025-1099-SA-original.pdf
+2026-03-07 07:12:34,399 INFO     [32mOK[0m [1099-SA ] 2025-1099-SA-original.pdf -> Finance/tax/prepare/2025/1099-sa-2025-1099-sa-original.yaml
+2026-03-07 07:12:34,440 INFO     [32mOK[0m [5498-SA ] 2025-5498-SA-original.pdf -> Finance/tax/prepare/2025/5498-sa-2025-5498-sa-original.yaml
+2026-03-07 07:12:35,024 INFO     [32mOK[0m [1099-CONSOLIDATED] 2025-Frozen-Laurence-UTMA-9437-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2025/1099-consolidated-fidelity-9437.yaml
+2026-03-07 07:12:35,605 INFO     [32mOK[0m [1099-CONSOLIDATED] 2025-Frozen-Ruby-UTMA-2753-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2025/1099-consolidated-fidelity-2753.yaml
+2026-03-07 07:12:35,678 INFO     [32mOK[0m [1099-R  ] 2025-SALESFORCECOM-48797-1099-R-Tax-Form.pdf -> Finance/tax/prepare/2025/1099-r-fidelity-salesforce-401k-401-k----salesforce.yaml
+2026-03-07 07:12:35,753 INFO     [32mOK[0m [1099-R  ] 2025-SERVICETITAN-401(K)-77662-1099-R-Tax-Form.pdf -> Finance/tax/prepare/2025/1099-r-fidelity-servicetitan-401k-401-k----servicetitan.yaml
+2026-03-07 07:12:35,825 INFO     [32mOK[0m [1099-R  ] 2025-SERVICETITAN-401K-77662-1099-R-Tax-Form.pdf -> Finance/tax/prepare/2025/1099-r-fidelity-servicetitan-401k-401-k----servicetitan.yaml
+2026-03-07 07:12:35,916 INFO     [32mOK[0m [1099-R  ] 2025-Traditional-IRA-9024-Form-1099-R-&-Instructions.pdf -> Finance/tax/prepare/2025/1099-r-fidelity-investments-ira-traditional-ira.yaml
+2026-03-07 07:12:36,483 INFO     [32mOK[0m [1099-CONSOLIDATED] 2025-Yi's-Individual-CMA-4983-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2025/1099-consolidated-fidelity-4983.yaml
+2026-03-07 07:12:37,082 INFO     [32mOK[0m [1099-CONSOLIDATED] 2025-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2025/1099-consolidated-fidelity-0887.yaml
+2026-03-07 07:12:37,082 INFO     [90mSKIP[0m Acura MDX Renew your vehicle tabs Confirmation Number_ 0-100-553-956.pdf (unrecognized_form)
+2026-03-07 07:12:37,141 INFO     [90mSKIP[0m Endeavor Elementary Statement - 2026-02-02T105538.522.pdf (unrecognized_form)
+2026-03-07 07:12:37,299 INFO     [32mOK[0m [1098    ] Form-1098-694006164-5806.pdf -> Finance/tax/prepare/2025/1098-rocket-mortgage-006164.yaml
+2026-03-07 07:12:37,467 INFO     [32mOK[0m [1098    ] mortgage-1098-748333812-16110.pdf -> Finance/tax/prepare/2025/1098-rocket-mortgage-333812.yaml
+2026-03-07 07:12:37,933 INFO     [32mOK[0m [1099-CONSOLIDATED] MS_2025_1099-CONS_MSSB_LLC_5046_20260203.pdf -> Finance/tax/prepare/2025/1099-consolidated-morgan-stanley-6206.yaml
+2026-03-07 07:12:37,933 DEBUG   W-2 format detected: salesforce for Salesforce-W2.pdf
+2026-03-07 07:12:38,068 INFO     [32mOK[0m [W-2     ] Salesforce-W2.pdf -> Finance/tax/prepare/2025/w-2-salesforce-inc.yaml
+2026-03-07 07:12:38,068 INFO     [90mSKIP[0m Trailer - Renew your vehicle tabs Confirmation Number_ 0-100-802-695.pdf (unrecognized_form)
+2026-03-07 07:12:38,068 DEBUG   W-2 format detected: paylocity for W-2_Form_2025_Chen_2026_02_26_08_35_16_-0800_W-2_ESS.pdf
+2026-03-07 07:12:38,087 INFO     [32mOK[0m [W-2     ] W-2_Form_2025_Chen_2026_02_26_08_35_16_-0800_W-2_ESS.pdf -> Finance/tax/prepare/2025/w-2-servicetitan-inc.yaml
+2026-03-07 07:12:38,262 INFO     [32mOK[0m [1098    ] BECU-Statement-E6D719F8-2E38-213F-6EF1-FFD0A7095102.PDF -> Finance/tax/prepare/2025/1098-becu.yaml
+2026-03-07 07:12:38,310 INFO     [32mOK[0m [1099-INT] BECU-Statement-F270CEC9-4719-DD17-8228-52BFDBE7B9B3.PDF -> Finance/tax/prepare/2025/1099-int-boeing-employees-credit-union-947679.yaml
+2026-03-07 07:12:38,314 INFO 
+  Processing 2024 (32 PDFs)...
+2026-03-07 07:12:38,316 INFO     [90mSKIP[0m  Pay Period- 07_21_2024 - 08_03_2024.pdf (unrecognized_form)
+2026-03-07 07:12:38,318 INFO     [90mSKIP[0m  Pay Period- 09_01_2024 - 09_14_2024.pdf (unrecognized_form)
+2026-03-07 07:12:38,358 INFO     [90mSKIP[0m 2024 Tax Summary (2025-03-19).pdf (unrecognized_form)
+2026-03-07 07:12:38,899 INFO     [32mOK[0m [1099-CONSOLIDATED] 2024-CHEN-FAMILY-CHECKING-4267-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2024/1099-consolidated-fidelity-4267.yaml
+2026-03-07 07:12:39,474 INFO     [32mOK[0m [1099-CONSOLIDATED] 2024-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2024/1099-consolidated-fidelity-6649.yaml
+2026-03-07 07:12:40,000 INFO     [32mOK[0m [1099-CONSOLIDATED] 2024-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2024/1099-consolidated-fidelity-4267.yaml
+2026-03-07 07:12:40,590 INFO     [32mOK[0m [1099-CONSOLIDATED] 2024-Joint-WROS-TOD-6649-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2024/1099-consolidated-fidelity-6649.yaml
+2026-03-07 07:12:41,172 INFO     [32mOK[0m [1099-CONSOLIDATED] 2024-Laurence-UTMA-9437-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2024/1099-consolidated-fidelity-9437.yaml
+2026-03-07 07:12:41,215 INFO     [90mSKIP[0m 2024-rental-income.pdf (unrecognized_form)
+2026-03-07 07:12:41,806 INFO     [32mOK[0m [1099-CONSOLIDATED] 2024-Ruby-UTMA-2753-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2024/1099-consolidated-fidelity-2753.yaml
+2026-03-07 07:12:42,413 INFO     [32mOK[0m [1099-CONSOLIDATED] 2024-SHERI-INDIVIDUAL-TOD-9955-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2024/1099-consolidated-fidelity-9955.yaml
+2026-03-07 07:12:42,508 INFO     [32mOK[0m [1099-R  ] 2024-Traditional-IRA-9024-Form-1099-R-.pdf -> Finance/tax/prepare/2024/1099-r-fidelity-investments-ira-traditional-ira.yaml
+2026-03-07 07:12:42,509 DEBUG   W-2 format detected: salesforce for 2024-W2-Salesforce.pdf
+2026-03-07 07:12:42,630 INFO     [32mOK[0m [W-2     ] 2024-W2-Salesforce.pdf -> Finance/tax/prepare/2024/w-2-salesforce-inc.yaml
+2026-03-07 07:12:43,343 INFO     [32mOK[0m [1099-CONSOLIDATED] 2024-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2024/1099-consolidated-fidelity-0887.yaml [33m⚠ VALIDATION: ['1099-B short_term: gain/loss (-4983.29) != proceeds (42227.03) - basis (47210.32) + wash (40.0) = -4943.29'][0m
+2026-03-07 07:12:44,055 INFO     [32mOK[0m [1099-CONSOLIDATED] 2024-Yi-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2024/1099-consolidated-fidelity-0887.yaml [33m⚠ VALIDATION: ['1099-B short_term: gain/loss (-4983.29) != proceeds (42227.03) - basis (47210.32) + wash (40.0) = -4943.29'][0m
+2026-03-07 07:12:44,559 INFO     [32mOK[0m [1099-CONSOLIDATED] 2024-Yi-s-Individual-CMA-4983-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2024/1099-consolidated-fidelity-4983.yaml
+2026-03-07 07:12:44,559 DEBUG   W-2 format detected: lincoln for 2025-03-18-Lincoln-life-W-2.pdf
+2026-03-07 07:12:44,665 INFO     [32mOK[0m [W-2     ] 2025-03-18-Lincoln-life-W-2.pdf -> Finance/tax/prepare/2024/w-2-lincoln-national-life-insuranc.yaml
+2026-03-07 07:12:44,665 INFO     [90mSKIP[0m Acura-CAA-4255-Renew-2024.pdf (unrecognized_form)
+2026-03-07 07:12:44,799 INFO     [32mOK[0m [1098    ] flagstar-1098.pdf -> Finance/tax/prepare/2024/1098-flagstar-bank.yaml
+2026-03-07 07:12:44,847 DEBUG   W-2 format detected: adp for IFS W2_2024.pdf
+2026-03-07 07:12:44,900 INFO     [32mOK[0m [W-2     ] IFS W2_2024.pdf -> Finance/tax/prepare/2024/w-2-ifs-w2-2024.yaml
+2026-03-07 07:12:45,054 INFO     [32mOK[0m [1098    ] mrcooper-1098.pdf -> Finance/tax/prepare/2024/1098-mr-cooper-006164.yaml
+2026-03-07 07:12:45,057 INFO     [90mSKIP[0m Pay Period- 07_07_2024 - 07_20_2024.pdf (unrecognized_form)
+2026-03-07 07:12:45,059 INFO     [90mSKIP[0m Pay Period- 08_04_2024 - 08_17_2024.pdf (unrecognized_form)
+2026-03-07 07:12:45,061 INFO     [90mSKIP[0m Pay Period- 08_18_2024 - 08_31_2024.pdf (unrecognized_form)
+2026-03-07 07:12:45,063 INFO     [90mSKIP[0m Pay Period- 09_15_2024 - 09_28_2024.pdf (unrecognized_form)
+2026-03-07 07:12:45,065 INFO     [90mSKIP[0m Pay Period- 09_29_2024 - 10_12_2024.pdf (unrecognized_form)
+2026-03-07 07:12:45,232 INFO     [32mOK[0m [Schedule-H] schedule_h.20241231.pdf -> Finance/tax/prepare/2024/schedule-h-yi-chen.yaml
+2026-03-07 07:12:45,232 INFO     [90mSKIP[0m trailer-tabs-renew-2024.pdf (unrecognized_form)
+2026-03-07 07:12:45,286 INFO     [90mSKIP[0m UE 1099 2024.pdf (unrecognized_form)
+2026-03-07 07:12:45,286 DEBUG   W-2 format detected: paylocity for W-2_Form_2024_Chen_stripe.pdf
+2026-03-07 07:12:45,305 INFO     [32mOK[0m [W-2     ] W-2_Form_2024_Chen_stripe.pdf -> Finance/tax/prepare/2024/w-2-stripe.yaml
+2026-03-07 07:12:45,305 DEBUG   W-2 format detected: nanny for w2.20241231.pdf
+2026-03-07 07:12:45,353 INFO     [32mOK[0m [W-2     ] w2.20241231.pdf -> Finance/tax/prepare/2024/w-2-yi-chen.yaml
+2026-03-07 07:12:45,381 INFO     [32mOK[0m [1099-INT] 1099-INT-BECU-Statement-ECAF35A4-3155-518E-A2AE-9A0196BAFF85.PDF -> Finance/tax/prepare/2024/1099-int-boeing-employees-credit-union-947679.yaml
+2026-03-07 07:12:45,384 INFO 
+  Processing 2023 (35 PDFs)...
+2026-03-07 07:12:45,432 INFO     [90mSKIP[0m 1099 2024 unemployment .pdf (unrecognized_form)
+2026-03-07 07:12:45,593 INFO     [32mOK[0m [1098    ] 2023-flagstar-form-1098.pdf -> Finance/tax/prepare/2023/1098-flagstar-bank.yaml
+2026-03-07 07:12:45,658 INFO     [32mOK[0m [5498-SA ] 2023-Health-Savings-Account-4209-Form-5498-SA-&-Instructions.pdf -> Finance/tax/prepare/2023/5498-sa-fidelity-investments.yaml
+2026-03-07 07:12:46,191 INFO     [32mOK[0m [1099-CONSOLIDATED] 2023-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2023/1099-consolidated-fidelity-6649.yaml
+2026-03-07 07:12:46,704 INFO     [32mOK[0m [1099-CONSOLIDATED] 2023-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2023/1099-consolidated-fidelity-4267.yaml
+2026-03-07 07:12:47,242 INFO     [32mOK[0m [1099-CONSOLIDATED] 2023-Laurence-UTMA-9437-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2023/1099-consolidated-fidelity-9437.yaml
+2026-03-07 07:12:47,392 INFO     [32mOK[0m [1098    ] 2023-MrCooper-FORM-1098.pdf -> Finance/tax/prepare/2023/1098-mr-cooper-006164.yaml
+2026-03-07 07:12:47,933 INFO     [32mOK[0m [1099-CONSOLIDATED] 2023-Ruby-UTMA-2753-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2023/1099-consolidated-fidelity-2753.yaml
+2026-03-07 07:12:47,964 INFO     [90mSKIP[0m 2023-Self-Employed-401K-9729-Form-5500-AVS-&-Instructions.pdf (unrecognized_form)
+2026-03-07 07:12:47,984 INFO     [90mSKIP[0m 2023-tax-final.pdf (unrecognized_form)
+2026-03-07 07:12:49,282 INFO     [32mOK[0m [1099-CONSOLIDATED] 2023-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2023/1099-consolidated-fidelity-0887.yaml [33m⚠ VALIDATION: ['1099-B short_term: gain/loss (-6109.27) != proceeds (35671.67) - basis (41780.94) + wash (124.84) = -5984.43'][0m
+2026-03-07 07:12:49,323 INFO     [32mOK[0m [5498    ] 2023-YI-CHEN-ROTH-IRA-8097-Form-5498.pdf -> Finance/tax/prepare/2023/5498-fidelity-investments-roth-ira-518097.yaml
+2026-03-07 07:12:49,405 INFO     [32mOK[0m [1099-R  ] 2023-YI-CHEN-TRADITIONAL-IRA-4208-Form-1099-R-&-Instructions.pdf -> Finance/tax/prepare/2023/1099-r-fidelity-investments-ira-traditional-ira.yaml
+2026-03-07 07:12:49,437 INFO     [32mOK[0m [5498    ] 2023-YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf -> Finance/tax/prepare/2023/5498-fidelity-investments-ira-984208.yaml
+2026-03-07 07:12:49,437 DEBUG   W-2 format detected: adp for 2024-09-19-Airbnb-w2-2023.pdf
+2026-03-07 07:12:49,540 INFO     [32mOK[0m [W-2     ] 2024-09-19-Airbnb-w2-2023.pdf -> Finance/tax/prepare/2023/w-2-airbnb-inc.yaml [33m⚠ VALIDATION: ['Box 1 (3570.0) > $100 but no taxes withheld (Boxes 2,4,6 all zero)'][0m
+2026-03-07 07:12:49,635 INFO     [90mSKIP[0m 2024-09-19-Lincoln-life.pdf (unrecognized_form)
+2026-03-07 07:12:49,635 INFO     [90mSKIP[0m 2024-09-19-stripe-1095c.pdf (form_1095-C_not_needed)
+2026-03-07 07:12:49,814 INFO     [32mOK[0m [1099-R  ] 2024-09-19-tax-State Farm.pdf -> Finance/tax/prepare/2023/1099-r-unknown.yaml
+2026-03-07 07:12:49,855 INFO     [90mSKIP[0m [2024-09-19] 2023_Tax_Preparation.pdf (unrecognized_form)
+2026-03-07 07:12:49,888 INFO     [90mSKIP[0m Chen, Yi & Martin, Sheri_Inv#_Opp2249357-2301-00002877_1-11-2023_2_51_PM.pdf (unrecognized_form)
+2026-03-07 07:12:49,948 INFO     [90mSKIP[0m Chen, Yi & Martin, Sheri_Inv#_Opp2356233-2307-00004952_7-24-2023_4_04_PM.pdf (unrecognized_form)
+2026-03-07 07:12:50,137 INFO     [32mOK[0m [Schedule-H] diana.schedule_h.20231231.pdf -> Finance/tax/prepare/2023/schedule-h-yi-chen.yaml
+2026-03-07 07:12:50,137 DEBUG   W-2 format detected: nanny for diana.w2.20231231.pdf
+2026-03-07 07:12:50,185 INFO     [32mOK[0m [W-2     ] diana.w2.20231231.pdf -> Finance/tax/prepare/2023/w-2-yi-chen.yaml
+2026-03-07 07:12:50,458 INFO     [90mSKIP[0m Fidelity_001.pdf (unsupported_form_1099-DIV)
+2026-03-07 07:12:50,736 INFO     [90mSKIP[0m File_002.pdf (unsupported_form_1099-DIV)
+2026-03-07 07:12:51,008 INFO     [90mSKIP[0m File_003.pdf (unsupported_form_1099-DIV)
+2026-03-07 07:12:51,092 INFO     [32mOK[0m [5498    ] File_004.pdf -> Finance/tax/prepare/2023/5498-fidelity-investments-roth-ira-592351.yaml
+2026-03-07 07:12:51,095 INFO     [90mSKIP[0m firstrepublic-0210879651 - 34 - YI CHEN - 2023.pdf (unrecognized_form)
+2026-03-07 07:12:51,195 INFO     [90mSKIP[0m IFS-2023-transactions.pdf (unrecognized_form)
+2026-03-07 07:12:51,258 INFO     [90mSKIP[0m IFS-Transaction-Details.pdf (unrecognized_form)
+2026-03-07 07:12:51,261 DEBUG   W-2 format detected: generic for PLA w2.pdf
+2026-03-07 07:12:51,262 DEBUG   W-2 format detected: generic for PLA w2.pdf
+2026-03-07 07:12:51,263 DEBUG   W-2 format detected: generic for PLA w2.pdf
+2026-03-07 07:12:51,263 ERROR     [31mFAIL[0m PLA w2.pdf: Unknown W-2 format for PLA w2.pdf
+2026-03-07 07:12:51,331 INFO     [90mSKIP[0m shutterstock_2023_tax_form_yiphoto.pdf (unrecognized_form)
+2026-03-07 07:12:51,332 DEBUG   W-2 format detected: paylocity for Stripe_W-2_Form_2023_Chen_2024_01_25_15_54_20_-0800_W-2_ESS.pdf
+2026-03-07 07:12:51,353 INFO     [32mOK[0m [W-2     ] Stripe_W-2_Form_2023_Chen_2024_01_25_15_54_20_-0800_W-2_ESS.pdf -> Finance/tax/prepare/2023/w-2-stripe.yaml
+2026-03-07 07:12:51,413 DEBUG   W-2 format detected: adp for W2_2023 IFS .pdf
+2026-03-07 07:12:51,469 INFO     [32mOK[0m [W-2     ] W2_2023 IFS .pdf -> Finance/tax/prepare/2023/w-2-w2-2023-ifs.yaml
+2026-03-07 07:12:51,519 DEBUG   W-2 format detected: adp for W2_2024 IFS.pdf
+2026-03-07 07:12:51,572 INFO     [32mOK[0m [W-2     ] W2_2024 IFS.pdf -> Finance/tax/prepare/2023/w-2-w2-2024-ifs.yaml
+2026-03-07 07:12:51,576 INFO 
+  Processing 2022 (23 PDFs)...
+2026-03-07 07:12:51,632 INFO     [32mOK[0m [1098    ] 2022-1098-flagstar-2021-2.pdf -> Finance/tax/prepare/2022/1098-flagstar-bank.yaml
+2026-03-07 07:12:51,691 INFO     [32mOK[0m [1098    ] 2022-1098-for-2021-flagstar.pdf -> Finance/tax/prepare/2022/1098-flagstar-bank.yaml
+2026-03-07 07:12:51,691 INFO     [90mSKIP[0m 2022-Airbnb-1095c.pdf (form_1095-C_not_needed)
+2026-03-07 07:12:51,691 INFO     [90mSKIP[0m 2022-Airbnb-1099-misc.pdf (unsupported_form_1099-MISC)
+2026-03-07 07:12:51,740 INFO     [90mSKIP[0m 2022-airbnb-401k-true-up.pdf (unrecognized_form)
+2026-03-07 07:12:51,740 INFO     [90mSKIP[0m 2022-Airbnb-form-3922.pdf (form_3922_not_needed)
+2026-03-07 07:12:51,740 DEBUG   W-2 format detected: adp for 2022-Airbnb-w2.pdf
+2026-03-07 07:12:51,862 INFO     [32mOK[0m [W-2     ] 2022-Airbnb-w2.pdf -> Finance/tax/prepare/2022/w-2-airbnb-inc.yaml
+2026-03-07 07:12:52,101 INFO     [32mOK[0m [1098    ] 2022-flagstar-1098-1.pdf -> Finance/tax/prepare/2022/1098-flagstar-bank.yaml
+2026-03-07 07:12:52,461 INFO     [32mOK[0m [1098    ] 2022-flagstar-1098-2.pdf -> Finance/tax/prepare/2022/1098-flagstar-bank.yaml
+2026-03-07 07:12:52,515 INFO     [32mOK[0m [1098    ] 2022-flagstar-form-1098.pdf -> Finance/tax/prepare/2022/1098-flagstar-bank.yaml
+2026-03-07 07:12:52,635 INFO     [32mOK[0m [5498-SA ] 2022-healthequity-5498sa.pdf -> Finance/tax/prepare/2022/5498-sa-healthequity-401494.yaml
+2026-03-07 07:12:52,683 INFO     [32mOK[0m [1098    ] 2022-loandepot-1098.pdf -> Finance/tax/prepare/2022/1098-loandepot.yaml
+2026-03-07 07:12:52,774 INFO     [32mOK[0m [1099-R  ] 2022-statefarm-lifeinsurance-1099r.pdf -> Finance/tax/prepare/2022/1099-r-state-farm-life-insurance-roth-ira.yaml
+2026-03-07 07:12:52,774 INFO     [90mSKIP[0m 2022-stripe-1095-c.pdf (form_1095-C_not_needed)
+2026-03-07 07:12:52,774 DEBUG   W-2 format detected: paylocity for 2022-stripe-W-2_Form_2022_Chen_2023_03_02_09_39_39_-0800_W-2_ESS.pdf
+2026-03-07 07:12:52,801 INFO     [32mOK[0m [W-2     ] 2022-stripe-W-2_Form_2022_Chen_2023_03_02_09_39_39_-0800_W-2_ESS.pdf -> Finance/tax/prepare/2022/w-2-stripe.yaml
+2026-03-07 07:12:52,801 DEBUG   W-2 format detected: adp for 2022-w2-meta.pdf
+2026-03-07 07:12:52,914 INFO     [32mOK[0m [W-2     ] 2022-w2-meta.pdf -> Finance/tax/prepare/2022/w-2-meta-platforms-inc.yaml
+2026-03-07 07:12:53,878 INFO     [32mOK[0m [1099-CONSOLIDATED] 2022-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2022/1099-consolidated-fidelity-0887.yaml
+2026-03-07 07:12:53,918 INFO     [32mOK[0m [5498    ] 2022-YI-CHEN-ROTH-IRA-8097-Form-5498.pdf -> Finance/tax/prepare/2022/5498-fidelity-investments-roth-ira-518097.yaml
+2026-03-07 07:12:54,000 INFO     [32mOK[0m [1099-R  ] 2022-YI-CHEN-TRADITIONAL-IRA-4208-Form-1099-R-&-Instructions.pdf -> Finance/tax/prepare/2022/1099-r-fidelity-investments-ira-traditional-ira.yaml
+2026-03-07 07:12:54,046 INFO     [32mOK[0m [5498    ] 2022-YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf -> Finance/tax/prepare/2022/5498-fidelity-investments-ira-984208.yaml
+2026-03-07 07:12:54,056 INFO     [90mSKIP[0m 2023 Airbnb 401(k) Summary Plan Description.pdf (unrecognized_form)
+2026-03-07 07:12:54,118 INFO     [90mSKIP[0m childcare_fsa_airbnb.pdf (unrecognized_form)
+2026-03-07 07:12:54,334 INFO     [32mOK[0m [1098    ] tax.pdf -> Finance/tax/prepare/2022/1098-mr-cooper-006164.yaml
+2026-03-07 07:12:54,334 INFO 
+  Done: 72 succeeded, 38 skipped, 1 errors
+2026-03-07 07:12:54,335 WARNING 
+  ⚠ VALIDATION FAILURES:
+2026-03-07 07:12:54,335 WARNING     2024-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf: 1099-B short_term: gain/loss (-4983.29) != proceeds (42227.03) - basis (47210.32) + wash (40.0) = -4943.29
+2026-03-07 07:12:54,335 WARNING     2024-Yi-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf: 1099-B short_term: gain/loss (-4983.29) != proceeds (42227.03) - basis (47210.32) + wash (40.0) = -4943.29
+2026-03-07 07:12:54,335 WARNING     2023-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf: 1099-B short_term: gain/loss (-6109.27) != proceeds (35671.67) - basis (41780.94) + wash (124.84) = -5984.43
+2026-03-07 07:12:54,335 WARNING     2024-09-19-Airbnb-w2-2023.pdf: Box 1 (3570.0) > $100 but no taxes withheld (Boxes 2,4,6 all zero)

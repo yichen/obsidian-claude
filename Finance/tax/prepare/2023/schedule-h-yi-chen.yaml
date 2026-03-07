@@ -30,7 +30,7 @@ source:
   pages:
   - 2
   - 3
-  processed_at: '2026-02-28T21:34:35'
+  processed_at: '2026-03-07T07:12:50'
 cross_validation:
   nanny_w2_file: Finance/tax/prepare/2023/w-2-yi-chen.yaml
   nanny_w2_box1: 3660.00

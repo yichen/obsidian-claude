@@ -1,6 +1,6 @@
 {
-  "exported_at": "2026-03-06T21:32:23.789941",
-  "count": 1239,
+  "exported_at": "2026-03-07T07:13:16.881437",
+  "count": 1240,
   "rules": [
     {
       "pattern": "ACH DEPOSIT",
@@ -5593,6 +5593,14 @@
       "source": "manual",
       "category": "Kids Activities",
       "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "Fjallraven",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Clothing",
+      "parent_category": "Shopping"
     },
     {
       "pattern": "FlexiSpot",
