@@ -1,3 +1,6 @@
+## 2026-03-07
+- **Sleep:** Did a meditation session, deliberately skipped the exciting AI/Claude YouTube videos so I wouldn't get revved up, and ended up sleeping roughly seven hours.
+
 ## 2026-03-06
 - **Meds:** Took hydroxyzine PAM at bedtime to rebound from the four-hour night before and give my nervous system a calmer runway.
 - **Sleep:** Did a guided meditation, stayed off the stimulating YouTube AI rabbit holes (AJ/Claude Code), and ended up sleeping a full 8 hours — exactly the reset I needed.
