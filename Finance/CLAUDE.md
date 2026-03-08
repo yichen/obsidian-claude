@@ -79,6 +79,8 @@
 - **CC Payments**: Apple Card, Chase, Fidelity, BofA — all flagged `is_transfer=1`
 - **Transfers**: BECU, Fidelity exchanges, Morgan Stanley — all flagged `is_transfer=1`
 - **Fixed Obligations**: Mortgage, HELOC, SoFi Loan, HOA, Insurance, Phone/Internet
+  - **"SAMMAMISH FORE" = Rental property HOA** (2516 175th Ave NE), NOT primary residence. $573/mo in 2025, $620/mo from Jan 2026.
+  - **"NSM DBAMR.COOP" (Mr. Cooper)**: Two separate debits — primary mortgage ($4,957) and rental mortgage ($1,780)
 - **Other**: Payroll, Rental Income, IRS Estimated Tax, Venmo, Checks
 
 **Key queries:**
@@ -209,6 +211,24 @@ $PYTHON .claude/scripts/finance_db.py validate            # balance validation
 | **Categorization rules** | **~750** | **`categorization_rules.json`** | **Only via `restore-rules`** |
 
 The ~750 categorization rules were built up over many `/finance review` sessions. Only ~230 are in the Python script's seed data. The rest (~520) were added interactively and exist only in the DB and the JSON backup.
+
+## Properties
+
+### Primary Residence
+- **Address**: Sammamish, WA (exact address TBD)
+- **Mortgage**: Mr. Cooper, $4,957/mo (CMA debit "NSM DBAMR.COOP")
+- **HOA**: $300 every 6 months (~$50/mo effective), paid by check from CMA (e.g., Check #1078 on Jan 21, 2026)
+
+### Rental Property
+- **Address**: 2516 175th Ave NE
+- **Purchased**: 2005 for $320,000; rental since Dec 2014
+- **Mortgage**: Mr. Cooper, $1,780/mo (CMA debit "NSM DBAMR.COOP" — second, smaller debit)
+- **HOA**: "Sammamish Foresammamish" / "SAMMAMISH FORE" in CMA — $573/mo (2025), $620/mo (Jan 2026+)
+- **Gross rent**: $1,995/mo (CMA deposit "Apartments.c Apts Smoth")
+- **Monthly P&L**: $1,995 - $1,780 - $620 = **-$405/mo cash-flow negative**
+- **Mortgage balance**: ~$219,493 (as of early 2026)
+
+**IMPORTANT**: The CMA "SAMMAMISH FORE" charge is the RENTAL HOA, not the primary residence. This is counterintuitive because of the "Sammamish" name.
 
 ## Key Tax Facts
 
