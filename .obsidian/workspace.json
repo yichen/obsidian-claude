@@ -201,9 +201,9 @@
   },
   "active": "54297b07a570ec5a",
   "lastOpenFiles": [
-    "Finance/reports/cash-flow-dashboard.png",
-    "Finance/finance.db-shm",
     "Finance/finance.db-wal",
+    "Finance/finance.db-shm",
+    "Finance/reports/cash-flow-dashboard.png",
     "Finance/wellsfargo-car-loan/2026-02.yaml",
     "Finance/wellsfargo-car-loan/2026-01.yaml",
     "Finance/wellsfargo-car-loan/2025-12.yaml",
@@ -246,7 +246,6 @@
     "Finance/reports/monthly-spending-trend.png",
     "Finance/reports/yearly-spending-by-category.png",
     "Finance/reports/monthly-spending-by-category-2025.png",
-    "Scripts/venv/lib/python3.14/site-packages/matplotlib/mpl-data/sample_data/logo2.png",
     "Untitled 1.canvas",
     "Untitled.canvas"
   ]

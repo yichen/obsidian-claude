@@ -244,7 +244,7 @@ The ~750 categorization rules were built up over many `/finance review` sessions
 - **Purchased**: 2005 for $320,000; rental since Dec 2014
 - **Mortgage**: Mr. Cooper, $1,780/mo (CMA debit "NSM DBAMR.COOP" — second, smaller debit)
 - **HOA**: "Sammamish Foresammamish" / "SAMMAMISH FORE" in CMA — $573/mo (2025), $620/mo (Jan 2026+)
-- **Gross rent**: $1,995/mo (CMA deposit "Apartments.c Apts Smoth")
+- **Gross rent**: $1,995/mo (CMA deposit "Apartments.c Apts Smoth") — no property management fee, full amount deposited to CMA
 - **Monthly P&L**: $1,995 - $1,780 - $620 = **-$405/mo cash-flow negative**
 - **Mortgage balance**: ~$219,493 (as of early 2026)
 
