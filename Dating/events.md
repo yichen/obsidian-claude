@@ -1,4 +1,4 @@
-> Last Updated: 2026-03-07 04:02:03
+> Last Updated: 2026-03-08 04:02:14
 
 
 
@@ -69,46 +69,17 @@
 
 
 
-## Mar 07, Saturday
 
-*   **[FB] Tarbell to Silver Star**
-    *   **Time:** 8:30 AM
-    *   **Loc:** Longman Performing Arts Center at Issaquah High School, 700 2nd Ave SE, Issaquah, WA
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Longman%20Performing%20Arts%20Center%20at%20Issaquah%20High%20School%2C%20700%202nd%20Ave%20SE%2C%20Issaquah%2C%20WA)
-    *   **Facebook Group:** Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/770494448984170/
-*   **[FB] Trail of 10 Falls**
-    *   **Time:** 9 AM
-    *   **Facebook Group:** FB Group
-    *   **Link:** https://www.facebook.com/events/1722355138745746/
-*   **[FB] Tarbell to Silver Star**
-    *   **Time:** 9 AM
-    *   **Facebook Group:** 40+ Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/1625789798615007/
-*   **[FB] Mazama Ridge Snowshoe, Mount Rainier National Park**
-    *   **Time:** 10 AM
-    *   **Facebook Group:** FB Group
-    *   **Link:** https://www.facebook.com/events/777790328714703/
-*   **[Latin] Live Salsa Saturdays at Sea Monster Lounge**
-    *   **Time:** March 7 @ 7:00 pm - 9:00 pm
-    *   **Loc:** Sea Monster Lounge, 2202 N 45th S, Seattle, WA, United States
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2202%20N%2045th%20S%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/live-salsa-at-sea-monster-lounge-2-3/2026-03-07/
-*   **[Latin] AVS Vinyl Salsa Night at Reverie Ballroom**
-    *   **Time:** March 7 @ 8:30 pm - 1:30 am
-    *   **Loc:** Reverie Ballroom - Seattle, 915 E Pine St, Seattle, WA, United States
-    *   **Drive:** 33m (20.7 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/avs-vinyl-salsa-night-at-reverie-ballroom/2026-03-07/
-*   **[Latin] Rumba Tropical Sonidera**
-    *   **Time:** March 7 @ 9:00 pm - 3:00 am
-    *   **Loc:** Seattle Harbor, 2040 Westlake Ave N, Seattle, WA, United States
-    *   **Drive:** 37m (22.7 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2040%20Westlake%20Ave%20N%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/rumba-tropical-sonidera/2026-03-07/
 
 ## Mar 08, Sunday
 
+*   **[FB] Colorectal Cancer Awareness Hike - Poo Poo Point**
+    *   **Time:** 9 AM
+    *   **Loc:** Issaquah, Washington
+    *   **Drive:** 13m (5.5 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Issaquah%2C%20Washington)
+    *   **Facebook Group:** Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/749784817959924/
 *   **[FB] HeyBrook Ridge Morning Hike! 10am!**
     *   **Time:** 10 AM
     *   **Loc:** Index, Washington
@@ -121,6 +92,17 @@
     *   **Loc:** Bravo Dance School, 13635 NE 8th St Suite 104, Bellevue, WA, United States
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/13635%20NE%208th%20St%20Suite%20104%2C%20Bellevue%2C%20WA%2C%20United%20States)
     *   **Link:** https://golatindance.com/event/salsaymotion-sunset-social-2/2026-03-08/
+*   **[FB] Northend "Pop Up" Game Night**
+    *   **Time:** 6 PM
+    *   **Loc:** Mount Vernon, Washington
+    *   **Drive:** 1h 37m (75.1 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Mount%20Vernon%2C%20Washington)
+    *   **Facebook Group:** Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/837465889343267/
+*   **[FB] "Practically Canada" Game Night Pop Up**
+    *   **Time:** 6 PM
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/2723812401321787/
 *   **[Latin] eSOeS – Salsa/Bachata at Aria Ballroom every Sunday**
     *   **Time:** March 8 @ 7:00 pm - 11:00 pm
     *   **Loc:** Aria Ballroom, 15300 NE 95th St, Redmond, WA, United States
@@ -130,6 +112,10 @@
 
 ## Mar 09, Monday
 
+*   **[FB] Meme Mondays**
+    *   **Time:** 12 AM
+    *   **Facebook Group:** Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/2378137482631822/
 *   **[Latin] Salsa Practica**
     *   **Time:** March 9 @ 9:00 pm - 11:00 pm
     *   **Loc:** Reverie Ballroom - Seattle, 915 E Pine St, Seattle, WA, United States
@@ -139,6 +125,13 @@
 
 ## Mar 10, Tuesday
 
+*   **[FB] Team Tuesday: Granite Lakes!**
+    *   **Time:** 9 AM
+    *   **Loc:** Tanner, Washington
+    *   **Drive:** 30m (21.2 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Tanner%2C%20Washington)
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/4309633045915124/
 *   **[Latin] Latin Heat Tuesdays**
     *   **Time:** March 10 @ 8:00 pm - 11:00 pm
     *   **Loc:** The New Local Restaurante, 10432 SE Kent-Kangley Rd, Kent, WA, United States
@@ -168,6 +161,12 @@
     *   **Drive:** 47m (31.2 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/16708%20Aurora%20Ave%20N%2C%20Shoreline%2C%20WA%2C%20United%20States)
     *   **Link:** https://golatindance.com/event/latin-dance-dj-thursday-nights/2026-03-12/
+*   **[Latin] Bachata Night at Reverie Ballroom**
+    *   **Time:** March 12 @ 9:00 pm - 1:00 am
+    *   **Loc:** Reverie Ballroom - Seattle, 915 E Pine St, Seattle, WA, United States
+    *   **Drive:** 33m (20.7 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/bachata-night-at-reverie-ballroom/2026-03-12/
 
 ## Mar 13, Friday
 
@@ -175,6 +174,17 @@
     *   **Time:** 7 PM
     *   **Facebook Group:** FB Group
     *   **Link:** https://www.facebook.com/events/1445853483900358/
+*   **[Latin] SALSA & BACHATA DANCE SOCIAL**
+    *   **Time:** March 13 @ 8:00 pm - 11:30 pm
+    *   **Loc:** LaVida Dance Studio, 11961 124th Ave NE, Totem Square Plaza, Kirkland, WA, United States
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/11961%20124th%20Ave%20NE%2C%20Totem%20Square%20Plaza%2C%20Kirkland%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/salsa-bachata-dance-social-w-intro-classes-every-3rd-friday/2026-03-13/
+*   **[Latin] Noche de Baile feat. Orquesta Kanaima**
+    *   **Time:** March 13 @ 9:00 pm - 1:00 am
+    *   **Loc:** Aurora Borealis, 16708 Aurora Ave N., Shoreline, WA, United States
+    *   **Drive:** 47m (31.2 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/16708%20Aurora%20Ave%20N.%2C%20Shoreline%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/noche-de-baile-feat-orquesta-kanaima/
 
 ## Jun 08, Monday
 
@@ -481,4 +491,10 @@ Seattle
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/1119%208th%20Ave%2C%20Seattle%2C%20WA%2098101-2738%2C%20United%20States)
     *   **Facebook Group:** 40+ Single Hikers of the PNW
     *   **Link:** https://www.facebook.com/events/1463151438686266/
+*   **[FB] Winthrop Hot Air Balloon Round Up Weekend March 6th-8th**
+    *   **Loc:** Winthrop, Washington
+    *   **Drive:** 4h 47m (202.2 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Winthrop%2C%20Washington)
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/1162022429188687/
 ## Sources Checked
