@@ -71,7 +71,7 @@
 - **No longer need to sell rental** for survival — rental sale becomes optional deleveraging
 - **HELOC**: $150,904 balance, 6.99%, $230K limit, $79K available — runway now ~19 months at -$733/mo (was ~Oct 2026)
 - **Two mortgages via Mr. Cooper**: primary $4,957/mo + rental $1,780/mo
-- **Tesla loan**: Wells Fargo, ~$45K balance, $1,000/mo via BECU auto-draft
+- **Tesla loan**: Wells Fargo Auto #1313987526, $46,391 balance (Feb 2026), $897.79/mo required + $102.21 extra principal = $1,000/mo via BECU auto-draft (NOT from CMA)
 
 ### Rental Property (2026-03-01)
 - **Address**: 2516 175th Ave NE

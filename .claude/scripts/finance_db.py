@@ -23,6 +23,7 @@ TAX_ROOT = VAULT_ROOT / "Finance" / "tax"
 FIDELITY_ROOT = VAULT_ROOT / "Finance" / "fidelity-accounts"
 SOFI_ROOT = VAULT_ROOT / "Finance" / "sofi-loan"
 BECU_ROOT = VAULT_ROOT / "Finance" / "becu"
+WF_CAR_ROOT = VAULT_ROOT / "Finance" / "wellsfargo-car-loan"
 RULES_BACKUP_PATH = VAULT_ROOT / "Finance" / "categorization_rules.json"
 ISSUES_PATH = VAULT_ROOT / "Finance" / "pipeline-issues.md"
 
@@ -36,6 +37,7 @@ PROCESSING_LOGS = {
     "Fidelity": VAULT_ROOT / "Finance" / "fidelity-accounts" / "processing_log.json",
     "SoFi Loan": VAULT_ROOT / "Finance" / "sofi-loan" / "processing_log.json",
     "BECU": VAULT_ROOT / "Finance" / "becu" / "processing_log.json",
+    "WF Car Loan": VAULT_ROOT / "Finance" / "wellsfargo-car-loan" / "processing_log.json",
 }
 
 SOURCE_DIRS = {
@@ -48,6 +50,7 @@ SOURCE_DIRS = {
     "Fidelity": Path.home() / "Dropbox" / "0-FinancialStatements" / "fidelity-accounts",
     "SoFi Loan": Path.home() / "Dropbox" / "0-FinancialStatements" / "sofi-loan",
     "BECU": Path.home() / "Dropbox" / "0-FinancialStatements" / "BECU",
+    "WF Car Loan": Path.home() / "Dropbox" / "0-FinancialStatements" / "wellsfargo-car-loan",
 }
 
 INGEST_SCRIPTS = [
@@ -57,6 +60,7 @@ INGEST_SCRIPTS = [
     ("Fidelity", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_fidelity_accounts.py"), "run"]),
     ("SoFi Loan", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_sofi_loan.py"), "run"]),
     ("BECU", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_becu.py"), "run"]),
+    ("WF Car Loan", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_wellsfargo_car.py"), "run"]),
 ]
 
 # ---------------------------------------------------------------------------
@@ -383,6 +387,29 @@ CREATE TABLE IF NOT EXISTS becu_heloc_statements (
 CREATE INDEX IF NOT EXISTS idx_becu_check_month ON becu_checking_statements(statement_month);
 CREATE INDEX IF NOT EXISTS idx_becu_check_txn ON becu_checking_transactions(statement_id);
 CREATE INDEX IF NOT EXISTS idx_becu_heloc_month ON becu_heloc_statements(statement_month);
+
+CREATE TABLE IF NOT EXISTS wellsfargo_car_statements (
+    id INTEGER PRIMARY KEY,
+    statement_month TEXT NOT NULL UNIQUE,
+    statement_date TEXT NOT NULL,
+    account_number TEXT NOT NULL,
+    vehicle TEXT,
+    interest_rate REAL,
+    monthly_payment REAL,
+    maturity_date TEXT,
+    daily_interest REAL,
+    payoff_amount REAL,
+    payoff_date TEXT,
+    payment_due_date TEXT,
+    total_amount_due REAL,
+    principal_paid REAL,
+    interest_paid REAL,
+    extra_principal REAL,
+    total_paid REAL,
+    ytd_interest_paid REAL,
+    yaml_file TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_wf_car_stmt_month ON wellsfargo_car_statements(statement_month);
 """
 
 # ---------------------------------------------------------------------------
@@ -2114,6 +2141,74 @@ def cmd_import_becu():
     }, indent=2))
 
 
+def cmd_import_wellsfargo_car():
+    """Import Wells Fargo car loan YAML files into the database (idempotent)."""
+    backup_db()
+    conn = get_db()
+    conn.executescript(SCHEMA)
+
+    new_stmts = 0
+    skipped = 0
+
+    yaml_files = sorted(WF_CAR_ROOT.glob("*.yaml"))
+    if not yaml_files:
+        print("No Wells Fargo car loan YAML files found.")
+        return
+
+    for yaml_file in yaml_files:
+        with open(yaml_file, encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+        if not data:
+            continue
+
+        stmt_month = data.get("statement_month", "")
+        agg = data.get("aggregates", {})
+        ytd_info = data.get("ytd_interest") or {}
+
+        try:
+            conn.execute(
+                """INSERT OR IGNORE INTO wellsfargo_car_statements
+                   (statement_month, statement_date, account_number, vehicle,
+                    interest_rate, monthly_payment, maturity_date, daily_interest,
+                    payoff_amount, payoff_date, payment_due_date, total_amount_due,
+                    principal_paid, interest_paid, extra_principal, total_paid,
+                    ytd_interest_paid, yaml_file)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (
+                    stmt_month,
+                    data.get("statement_date"),
+                    data.get("account_number"),
+                    data.get("vehicle"),
+                    data.get("interest_rate"),
+                    data.get("monthly_payment"),
+                    data.get("maturity_date"),
+                    data.get("daily_interest"),
+                    data.get("payoff_amount"),
+                    data.get("payoff_date"),
+                    data.get("payment_due_date"),
+                    data.get("total_amount_due"),
+                    agg.get("principal_paid"),
+                    agg.get("interest_paid"),
+                    agg.get("extra_principal"),
+                    agg.get("total_paid"),
+                    ytd_info.get("amount"),
+                    f"Finance/wellsfargo-car-loan/{yaml_file.name}",
+                ),
+            )
+            if conn.execute("SELECT changes()").fetchone()[0] > 0:
+                new_stmts += 1
+            else:
+                skipped += 1
+        except sqlite3.IntegrityError:
+            skipped += 1
+
+    conn.commit()
+    print(json.dumps({
+        "new_statements": new_stmts,
+        "skipped_existing": skipped,
+    }, indent=2))
+
+
 def cmd_status():
     """Print database statistics."""
     conn = get_db()
@@ -2475,7 +2570,7 @@ def _count_log_files(source_name):
     elif source_name == "Fidelity":
         # Flat dict: {filename.pdf: {...}, ...} — no version wrapper
         return len([k for k in data if k.endswith(".pdf")])
-    elif source_name in ("SoFi Loan", "BECU"):
+    elif source_name in ("SoFi Loan", "BECU", "WF Car Loan"):
         # pdfs -> {filename: {...}}
         return len(data.get("pdfs", {}))
     return 0
@@ -2530,6 +2625,7 @@ def cmd_dashboard():
         "Fidelity": ("fidelity_cma_transactions", "date"),
         "SoFi Loan": ("sofi_loan_statements", "statement_month"),
         "BECU": ("becu_checking_statements", "statement_month"),
+        "WF Car Loan": ("wellsfargo_car_statements", "statement_month"),
     }
 
     for name, log_path in PROCESSING_LOGS.items():
@@ -2794,6 +2890,7 @@ def cmd_rebuild():
         ("Import Fidelity", cmd_import_fidelity),
         ("Import SoFi", cmd_import_sofi),
         ("Import BECU", cmd_import_becu),
+        ("Import WF Car Loan", cmd_import_wellsfargo_car),
         ("Validate balances", cmd_validate),
     ]
 
@@ -3148,7 +3245,7 @@ def cmd_trip_cost():
 def main():
     if len(sys.argv) < 2:
         print("Usage: finance_db.py <command> [args]")
-        print("Commands: init, import, import-amazon, import-payslips, import-tax, import-fidelity, import-sofi, import-becu,")
+        print("Commands: init, import, import-amazon, import-payslips, import-tax, import-fidelity, import-sofi, import-becu, import-wellsfargo-car,")
         print("          status, dashboard, preflight, rebuild [--force|--import-only|--parse-only],")
         print("          categorize, categorize-amazon, uncategorized, add-rule <pattern> <category>,")
         print("          set-category <id> <category> [--create-rule], query <sql>,")
@@ -3174,6 +3271,8 @@ def main():
         cmd_import_sofi()
     elif cmd == "import-becu":
         cmd_import_becu()
+    elif cmd == "import-wellsfargo-car":
+        cmd_import_wellsfargo_car()
     elif cmd == "status":
         cmd_status()
     elif cmd == "categorize":

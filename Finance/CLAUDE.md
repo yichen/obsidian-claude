@@ -130,10 +130,27 @@
 - Monthly checking activity: `SELECT s.statement_month, s.deposits, s.withdrawals_fees, COUNT(t.id) as txn_count FROM becu_checking_statements s LEFT JOIN becu_checking_transactions t ON t.statement_id=s.id GROUP BY s.statement_month`
 - MONEYLINE transfers (Fidelity↔BECU): `SELECT date, amount, description FROM becu_checking_transactions WHERE description LIKE '%MONEYLINE%' ORDER BY date`
 
+### Wells Fargo Car Loan (`wellsfargo_car_statements` table)
+- **Source YAMLs**: `Finance/wellsfargo-car-loan/YYYY-MM.yaml`
+- **Ingestion script**: `.claude/scripts/ingest_wellsfargo_car.py` -- parses PDFs from `~/Dropbox/0-FinancialStatements/wellsfargo-car-loan/`
+- **Slash command**: `/ingest-wellsfargo-car` (scan, run, chain)
+- **4 monthly statements** (Nov 2025 -- Feb 2026)
+- **Account**: 1313987526, 2026 Tesla Model Y, 3.990% APR, matures 10/30/30
+- **Monthly payment**: $897.79 required (auto-pay) + $102.21 extra principal = $1,000/mo from BECU
+- **Import command**: `finance_db.py import-wellsfargo-car`
+- **Dedup key**: `statement_month` (UNIQUE)
+- **Key fields**: statement_month, payoff_amount, principal_paid, interest_paid, extra_principal, total_paid, ytd_interest_paid, daily_interest
+- **Validation**: Intra-statement (P+I = payment amount), chain (YTD interest accumulation by year)
+
+**Key queries:**
+- Payoff trajectory: `SELECT statement_month, payoff_amount FROM wellsfargo_car_statements ORDER BY statement_month`
+- Total interest paid: `SELECT SUM(interest_paid) FROM wellsfargo_car_statements WHERE statement_month LIKE '2025%'`
+- Monthly payment breakdown: `SELECT statement_month, principal_paid, interest_paid, extra_principal, total_paid FROM wellsfargo_car_statements ORDER BY statement_month`
+
 ## Backup & Recovery
 
 ### Automatic Backup
-Every import command (`import`, `import-amazon`, `import-payslips`, `import-tax`, `import-fidelity`, `import-sofi`, `import-becu`) automatically:
+Every import command (`import`, `import-amazon`, `import-payslips`, `import-tax`, `import-fidelity`, `import-sofi`, `import-becu`, `import-wellsfargo-car`) automatically:
 1. Creates `Finance/finance.db.bak` (full DB copy, overwritten each time)
 2. Exports all categorization rules to `Finance/categorization_rules.json`
 
@@ -150,6 +167,7 @@ The JSON file syncs via Obsidian Sync and is the **only irreplaceable data** —
 | `Finance/fidelity-accounts/processing_log.json` | Fidelity PDF ingestion tracking | Yes |
 | `Finance/sofi-loan/processing_log.json` | SoFi loan PDF ingestion tracking | Yes |
 | `Finance/becu/processing_log.json` | BECU PDF ingestion tracking | Yes |
+| `Finance/wellsfargo-car-loan/processing_log.json` | WF car loan PDF ingestion tracking | Yes |
 | `Finance/tax/processing_log.json` | Tax PDF ingestion tracking | Yes |
 
 ### Manual Commands
@@ -165,7 +183,7 @@ If the database is lost or corrupted, rebuild from scratch with a single command
 Scripts/venv/bin/python3 .claude/scripts/finance_db.py rebuild
 ```
 
-This runs pre-flight checks, parses all PDFs in parallel (6 ingest scripts), then sequentially imports everything into SQLite. Flags:
+This runs pre-flight checks, parses all PDFs in parallel (7 ingest scripts), then sequentially imports everything into SQLite. Flags:
 - `--force` — reprocess all PDFs (ignore processing logs) and reimport everything
 - `--import-only` — skip PDF parsing, only run SQLite imports (assumes YAML/CSV files exist)
 - `--parse-only` — only run PDF parsing, skip SQLite imports
@@ -184,6 +202,7 @@ $PYTHON .claude/scripts/finance_db.py import-tax          # tax documents
 $PYTHON .claude/scripts/finance_db.py import-fidelity     # Fidelity accounts + CMA txns
 $PYTHON .claude/scripts/finance_db.py import-sofi         # SoFi loan statements
 $PYTHON .claude/scripts/finance_db.py import-becu         # BECU checking + HELOC
+$PYTHON .claude/scripts/finance_db.py import-wellsfargo-car # WF car loan
 $PYTHON .claude/scripts/finance_db.py validate            # balance validation
 ```
 
@@ -206,7 +225,8 @@ $PYTHON .claude/scripts/finance_db.py validate            # balance validation
 | Tax documents | ~900 | YAMLs in `Finance/tax/` | Yes — `import-tax` |
 | Fidelity accounts + CMA | ~900 | YAMLs in `Finance/fidelity-accounts/` | Yes — `import-fidelity` |
 | SoFi loan statements | 14 | YAMLs in `Finance/sofi-loan/` | Yes — `import-sofi` |
-| BECU checking + HELOC | ~140 | YAMLs in `Finance/becu/` | Yes — `import-becu` |
+| BECU checking + HELOC | ~140 | YAMLs in `Finance/becu/` | Yes -- `import-becu` |
+| WF car loan statements | 4 | YAMLs in `Finance/wellsfargo-car-loan/` | Yes -- `import-wellsfargo-car` |
 | Categories + accounts | ~100 | Seed data in Python script | Yes — `init` |
 | **Categorization rules** | **~750** | **`categorization_rules.json`** | **Only via `restore-rules`** |
 
@@ -229,6 +249,23 @@ The ~750 categorization rules were built up over many `/finance review` sessions
 - **Mortgage balance**: ~$219,493 (as of early 2026)
 
 **IMPORTANT**: The CMA "SAMMAMISH FORE" charge is the RENTAL HOA, not the primary residence. This is counterintuitive because of the "Sammamish" name.
+
+### Vehicle — 2026 Tesla Model Y
+- **Lender**: Wells Fargo Auto, Account 1313987526
+- **Loan originated**: 10/16/2025, $48,681.00
+- **Interest rate**: 3.990% fixed
+- **Maturity date**: 10/30/2030
+- **Required monthly payment**: $897.79 (auto-pay via "Automatic Loan Payment" program)
+- **Extra principal**: $102.21/mo ("Customer request principal pmt") — user-configurable, may change over time
+- **Total monthly payment**: $1,000/mo
+- **Paid from**: BECU checking (auto-draft). BECU transaction: "External Withdrawal WELLS FARGO AUTO - DRAFT" on ~30th of each month
+- **NOT paid from CMA** — this is a BECU outflow, not a Fidelity CMA outflow
+- **Payoff balance**: $46,391 (as of Feb 2026)
+- **2025 total interest**: $397.31
+
+**Cross-reference reconciliation:**
+- WF statement `total_paid` should match BECU `WELLS FARGO AUTO` withdrawal amount (1-day lag possible)
+- First payment (Dec 2025) was $897.79 only; $1,000 payments started Dec 30, 2025
 
 ## Key Tax Facts
 

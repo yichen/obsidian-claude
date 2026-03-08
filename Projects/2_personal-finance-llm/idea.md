@@ -129,16 +129,259 @@ The POC uses **pdfminer text extraction + Claude Code as the agent that writes p
 2. Matches against registry — finds existing community parser
 3. Runs locally — instant, no agent coding needed
 
-**Federated improvement**: When User B encounters an edge case that User A's parser missed, User B's agent fixes it. The code diff (not data) is contributed back. This is federated learning for code, not model weights.
-
-**Format change detection**: Banks occasionally redesign their PDF layout. When this happens, the existing parser's balance validation immediately fails — unlike vision LLM where accuracy silently degrades. The agent writes a new parser with a new fingerprint, versioned separately (e.g., `becu-checking-v3`).
-
 **Precedents for community-contributed rule sets** (rules contain no user data):
 - uBlock Origin — community filter lists
 - Homebrew — community formulae
 - Wireshark — community protocol dissectors
 
 **Unproven**: Whether layout fingerprinting is robust enough to match same-bank statements across users while distinguishing format changes [A6]. This requires prototyping.
+
+### Registry Design: Immutable Parsers + Two-Stage Matching
+
+**Core design principle: Published parsers are immutable.** A user can never modify another user's parser — they can only publish a new version. This prevents the failure mode where User B's "fix" breaks User A's working parser.
+
+```
+WRONG: User B edits becu-checking-v2 → breaks User A's statements
+RIGHT: User B publishes becu-checking-v3 → both v2 and v3 exist, matching picks best fit
+```
+
+**Registry schema:**
+
+```
+parsers/
+  becu/
+    checking/
+      v1/
+        parser.py          # immutable Python code
+        fingerprint.json   # structural signature this parser expects
+        metadata.json      # author_hash, created, validation_stats
+      v2/
+        parser.py
+        fingerprint.json
+        metadata.json
+  chase/
+    sapphire-reserve/
+      v1/ ...
+      v2/ ...
+```
+
+**Parser metadata:**
+
+```json
+{
+    "id": "becu-checking-v2",
+    "institution": "BECU",
+    "statement_type": "checking",
+    "version": 2,
+    "fingerprint": {
+        "institution_patterns": ["BECU", "Boeing Employees Credit Union"],
+        "fonts": ["Arial", "Arial-Bold", "Courier"],
+        "column_x_positions": [72, 150, 380, 480],
+        "header_patterns": ["Monthly Statement", "Account Summary"],
+        "pdf_producer": "iText*",
+        "date_format": "MM/DD/YYYY"
+    },
+    "validation_stats": {
+        "total_runs": 342,
+        "pass_rate": 0.987,
+        "last_success": "2026-03-01",
+        "date_range_seen": ["2024-01", "2026-02"]
+    },
+    "immutable": true,
+    "created": "2026-02-15"
+}
+```
+
+**Two-stage matching algorithm** (all local, zero LLM, milliseconds):
+
+```
+Stage 1: Institution detection
+  Extract text from first page → search for known bank names
+  "BECU" found → query registry index for "becu" parsers
+  Result: [becu-checking-v3, v2, v1] sorted by pass_rate x recency
+  Cost: milliseconds
+
+Stage 2: Fingerprint comparison
+  Extract structural metadata from PDF (fonts, column positions, headers)
+  Compare against each candidate's fingerprint.json → similarity score
+  v3: score 0.95 (fonts match, columns match)
+  v2: score 0.82 (columns shifted slightly)
+  v1: score 0.40 (old format, different fonts)
+  Cost: milliseconds
+```
+
+**Full execution flow:**
+
+```
+User drops PDF
+    |
+    v
+[Stage 1] Text search for institution name (msec, local)
+    |
+    v
+[Stage 2] Compare fingerprints → rank candidates (msec, local)
+    |
+    v
+[Stage 3] Run top match → validate against balance totals (msec, local)
+    |
+    +--PASS--> Import to SQLite. Done.
+    |          Anonymously report success (opt-in, increments pass count)
+    |
+    +--FAIL--> Try next candidate → validate
+                |
+                +--PASS--> Import. Done.
+                |
+                +--FAIL (all candidates)-->
+                    |
+                    v
+                [Stage 4] Agent generates new parser (LLM call, $1-5, minutes)
+                    |
+                    v
+                Validate → PASS → save as becu-checking-v4
+                    |
+                    v
+                Prompt: "Share becu-checking-v4 to registry?"
+```
+
+**Key design decisions:**
+
+| Decision | Choice | Reasoning |
+|----------|--------|-----------|
+| Can a user modify another user's parser? | **No — immutable** | Prevents breaking other users' working parsers |
+| What if two users publish for the same bank? | **Both exist as separate versions** | Matching algorithm picks best fit per-PDF |
+| How to rank candidates? | **Fingerprint similarity x pass rate x recency** | High pass rate = battle-tested; recency = handles format changes |
+| What gets uploaded to registry? | **parser.py + fingerprint.json + metadata** | No transaction data, no PDF content, no PII |
+| What gets reported back anonymously? | **Pass/fail per parser per run (opt-in)** | Improves ranking without sharing financial data |
+| When to trigger new parser generation? | **Only when ALL candidates fail validation** | LLM calls are expensive; exhaust cheap options first |
+| How does the app discover parsers? | **Sync registry index on launch** (small JSON manifest) | Download parser code on demand, not all 500 upfront |
+
+**Anonymous validation reporting (opt-in):**
+
+When a parser succeeds or fails, the app can report:
+
+```json
+{
+    "parser_id": "becu-checking-v2",
+    "result": "pass",
+    "statement_month": "2026-02",
+    "fingerprint_similarity": 0.95
+}
+```
+
+This lets the registry rank parsers by real-world reliability. A parser with 98.7% pass rate across 342 users is clearly more trustworthy than one with 60% across 5 users. Even this minimal reporting should be opt-in — some users won't want the registry to know which banks they use.
+
+**Format change detection**: Banks occasionally redesign their PDF layout. When this happens, all existing parsers' balance validation fails. The agent writes a new parser with a new fingerprint, published as a new immutable version. Old fingerprints route to old parsers (for users parsing historical statements), new fingerprints route to the new parser. Unlike vision LLM where format changes cause silent accuracy degradation, deterministic parser + validation gate catches changes immediately.
+
+### Model-Agnostic Architecture
+
+A critical discovery from the POC: **all parsers are pure Python with zero LLM dependency at runtime** [A13]. The imports across all ingest scripts are: `pdfminer`, `re`, `json`, `csv`, `yaml`, `sqlite3` — no `anthropic`, no `openai`. Claude Code was the developer, not the runtime.
+
+This means the product is not locked to any LLM provider:
+
+| Phase | LLM Needed? | Any Provider Works? |
+|-------|-------------|-------------------|
+| Parse a known format | No — pure Python | N/A |
+| Write a new parser | Yes | Claude, GPT, Gemini, local Llama — any model that can write Python |
+| NL query ("how much on kids?") | Yes | Any model that can generate SQL |
+| Categorize ambiguous transactions | Maybe | Rule-based covers most; LLM for edge cases |
+
+**Cost implication**: Once a user has parsers for their 3-4 banks (likely covered by the community registry), they may only need the LLM for occasional NL queries — pennies per month, not $5-15. The API cost is front-loaded during setup, then drops to near-zero. This significantly changes the pricing story from the $15-25/mo total cost estimated in the business model section [A4].
+
+### Email Integration: The TripIt Pattern
+
+Email is the richest source of itemized transaction data, and it's already accessible to local apps via IMAP — a universal protocol supported by virtually every email provider since the 1990s. No cloud OAuth needed.
+
+**Provider compatibility:**
+
+**Two auth methods supported** — App Password for CLI, OAuth for desktop app:
+
+| Method | Best For | UX | Developer Setup |
+|--------|----------|-----|----------------|
+| **App Password + IMAP** | CLI MVP, universal | Paste password in terminal | Zero — just use stdlib `imaplib` |
+| **OAuth 2.0** | Desktop app, polished UX | "Sign in with Google" button → browser consent → done | Register Google Cloud / Azure AD app; Gmail sensitive scope review (weeks) |
+
+Both methods store credentials locally. Both route email data directly from provider → user's machine. The startup cannot access user email with either approach — the tokens never leave the user's device.
+
+**Provider compatibility:**
+
+| Provider | App Password | OAuth 2.0 |
+|----------|-------------|-----------|
+| Gmail | Yes (requires 2FA) | Yes (Google Cloud project) |
+| Yahoo Mail | Yes (requires 2FA) | Yes (Yahoo Developer) |
+| iCloud Mail | Yes (App-Specific Password) | No — Apple does not offer OAuth for IMAP |
+| Fastmail | Yes | Yes |
+| Outlook.com (personal) | Yes (with MFA) | Yes (Azure AD) |
+| Microsoft 365 (corporate) | No — deprecated [A15] | Yes (Azure AD) — required |
+| ProtonMail | Via ProtonMail Bridge | No |
+| Any IMAP provider | Yes | Varies |
+
+**Recommendation**: Ship App Password support first (universal, zero developer registration, works for CLI). Add OAuth as a polished option when the desktop app is built — it's the better UX for non-technical users ("Sign in with Google" vs "go find your App Password settings").
+
+**Setup with App Password (30 seconds, one-time, any provider):**
+1. User generates an App Password in their email provider's security settings
+2. Enters in CLI: `localfinance config --email imap.gmail.com --user me@gmail.com`
+   (or `imap.mail.yahoo.com`, `imap.mail.me.com`, `outlook.office365.com`, etc.)
+3. App Password stored locally in encrypted config
+
+The app asks three standard fields — IMAP server, email, password — the same as every email client since Thunderbird.
+
+**The TripIt-style filter pattern** (recommended approach):
+
+User creates a server-side rule in their email provider (Gmail filter, Outlook rule, Yahoo filter — all support this):
+
+```
+Filter: From: auto-confirm@amazon.com → Move to folder: finance-receipts
+Filter: From: uber.us@uber.com       → Move to folder: finance-receipts
+Filter: From: noreply@venmo.com      → Move to folder: finance-receipts
+
+App behavior:
+  IMAP sync folder "finance-receipts" → parse locally → mark as processed
+```
+
+This gives the app access to **only one folder, not the full inbox** — minimal access footprint. The user controls exactly which senders are included. This pattern works on any email provider that supports server-side rules, which is essentially all of them.
+
+**What email receipts unlock:**
+
+| Email Source | What You Extract | Value Over Plaid |
+|---|---|---|
+| Amazon order confirmations | Itemized products, prices, ASINs | The killer feature — Plaid sees only "AMZN $47.23" |
+| Uber/Lyft receipts | Trip details, tip, route | Per-ride granularity |
+| DoorDash/Instacart | Itemized grocery/food orders | Category-level food spending |
+| Airline/hotel confirmations | Flight cost, booking ref | Travel cost breakdown |
+| Subscription confirmations | Service name, renewal date, price | Subscription tracking |
+| Venmo/Zelle notifications | Who, amount, memo | P2P payment context |
+
+**Revised onboarding funnel** (with email integration):
+```
+Step 1: Install CLI                        (30 sec)
+Step 2: Enter LLM API key (any provider)   (2 min — BYOK, one-time)
+Step 3: Connect email via IMAP              (30 sec — any provider, optional but high value)
+Step 4: Drop CC/bank PDFs in watch folder   (5 min — for statement-level data)
+
+After step 3, user already has itemized Amazon + Uber + subscriptions.
+Step 4 adds CC transaction-level data that email doesn't cover.
+```
+
+### Parser Coverage Strategy
+
+**Do NOT open 100 bank accounts to get statement samples.** Here's the practical approach:
+
+**Seed parsers (founder-built, pre-launch):**
+- The POC already covers 6 CC cards + BECU + Fidelity CMA + SoFi — ~10 formats
+- Open no-fee checking at 3-5 additional top banks: Wells Fargo, Citi, Capital One [A16] [A17]
+- Credit score impact: minimal — most checking accounts are soft pull or ChexSystems only [A16]
+- This covers the top 5 US card issuers (~50-60% of market [A17])
+
+**Obtaining test statements for other banks (no account needed):**
+
+| Method | Coverage | Quality | Cost |
+|--------|----------|---------|------|
+| Beta users share redacted statements | Real formats, exact match | High | $0 |
+| Open-source parsers (GitHub: statement-parser, pdf-statement-reader) | ~5-10 banks | Medium — study format knowledge, not reuse code | $0 |
+| Template sites (TemplateLab, Scribd, PDFSimpli) | ~20 banks | Low — may not match real PDF structure exactly | $0 |
+| Docparser/Parseur template libraries | Format structure visible | Medium | Free tier |
+
+**The 80/20 insight**: Seed parsers for the top 5 banks + the community parser registry for the long tail. The first 1,000 users will collectively encounter most remaining US bank formats — each new format becomes a community parser contribution.
 
 ---
 
@@ -221,24 +464,36 @@ Gross margin:                $7.65/mo   (93%)
 ## Technical Architecture
 
 ```
-+-------------------------------------+
-|  Desktop App (Tauri)                |  <- What the user sees
-+-----------+-------------------------+
-|  Claude Agent SDK (Python)          |  <- The brain
-|  - Parser agent (writes/runs code)  |
-|  - Query agent (NL -> SQL)          |
-|  - Categorization agent             |
-+-----------+-------------------------+
-|  Local SQLite DB                    |  <- All data stays here
-|  Local PDF/CSV storage              |
-|  Parser registry cache              |
-+-----------+-------------------------+
-|  Outbound API (user's BYOK key)    |  <- Only prompts leave machine
-|  User -> Anthropic directly         |
-+-------------------------------------+
++------------------------------------------+
+|  CLI (MVP) / Desktop App (future)        |  <- What the user sees
++-----------+------------------------------+
+|  Agent layer (model-agnostic) [A13]      |  <- The brain (only for new parsers + NL queries)
+|  - Parser generation (any LLM)           |
+|  - NL -> SQL queries (any LLM)           |
+|  - Categorization (mostly rule-based)    |
++-----------+------------------------------+
+|  Pure Python runtime (no LLM needed)     |  <- Deterministic parsers, validation, import
+|  - pdfminer + regex parsers              |
+|  - imaplib email sync [A14]              |
+|  - SQLite DB + categorization rules      |
++-----------+------------------------------+
+|  Local storage                           |  <- All data stays here
+|  - SQLite DB, PDFs, CSVs                 |
+|  - Parser registry cache                 |
+|  - Encrypted email credentials           |
++-----------+------------------------------+
+|  Outbound connections (user-controlled)  |
+|  - LLM API (BYOK, any provider)          |  <- Only prompts, not raw data
+|  - imap.gmail.com (App Password)         |  <- Email receipts, labeled only
+|  - Parser registry (code only, no PII)   |  <- Download/upload parsers
++------------------------------------------+
 ```
 
-**SDK constraint (Mar 2026)**: Claude Agent SDK requires API key billing — does not support Claude Pro/Max subscription billing [A9]. Users need a separate Anthropic API key.
+**Key architecture decisions:**
+- **Model-agnostic**: Parsers are pure Python [A13]. LLM is only needed for writing new parsers and NL queries — any provider works (Claude, GPT, Gemini, local Ollama)
+- **Email is local IMAP**: Data flows Google → user's machine directly. App only syncs a filtered label, not full inbox
+- **CLI-first MVP**: Desktop app deferred until demand validated. CLI targets the initial tech-savvy audience.
+- **SDK constraint (Mar 2026)**: Claude Agent SDK requires API key billing [A9], but since architecture is model-agnostic, this is not a hard dependency
 
 ---
 
@@ -267,9 +522,13 @@ Gross margin:                $7.65/mo   (93%)
 | Agent scaffold | Instructions for "write a parser for this new PDF" | POC exists | Needs generalization beyond 10 known formats |
 | Contribution flow | Prompt user to share parser; automated PII check | To build | Community growth |
 | Local finance engine | SQLite DB, categorization, NL queries | POC exists | Needs packaging for non-developer users |
-| Desktop app shell | Tauri app wrapping the agent + UI | To build | User-facing product |
-| Browser extension | Auto-download statements to watch folder | Nice-to-have | Onboarding friction reduction |
+| Email receipt sync | IMAP label sync + receipt parser (Amazon, Uber, etc.) | To build | Onboarding experience, itemized purchases |
+| Model-agnostic LLM adapter | Swap Claude/GPT/Ollama for parser gen + NL queries | To build | Multi-provider support |
+| Seed parser expansion | Add Wells Fargo, Citi, Capital One parsers [A17] | To build | 50-60% market coverage at launch |
 | Watch folder monitor | Detect new files, trigger parsing | To build | Core UX |
+| CLI packaging | pip/brew installable CLI as MVP | To build | First distributable product |
+| Desktop app shell | Tauri app wrapping the agent + UI | Deferred | Not MVP — build after CLI validation |
+| Browser extension | Auto-download statements to watch folder | Nice-to-have | Onboarding friction reduction |
 
 ---
 
@@ -300,7 +559,9 @@ However, several critical assumptions remain unvalidated: the size of the addres
 | 2 | Test agent parser generation on 20 unseen bank formats | Validate core technical assumption [A5] | 2 weeks |
 | 3 | Prototype layout fingerprinting on 5 same-bank cross-user statements | Validate registry matching [A6] | 1 week |
 | 4 | Survey 50 target-profile users on privacy attitudes + WTP | Validate [A2] and [A4] with primary data | 2 weeks |
-| 5 | Ship CLI-first MVP to 10 beta users | End-to-end validation before desktop app investment | 4 weeks |
+| 5 | Build email receipt parser (Amazon order confirmations via IMAP) | Validate the "TripIt pattern" for local email sync | 1 week |
+| 6 | Open no-fee checking at Wells Fargo, Citi, Capital One | Seed parsers for top 5 banks [A17] — no credit score impact [A16] | 1 week |
+| 7 | Ship CLI-first MVP (`pip install`) to 10 beta users | End-to-end validation before desktop app investment | 4 weeks |
 
 ---
 
@@ -382,6 +643,30 @@ Source: Bureau of Labor Statistics, Occupational Employment and Wage Statistics,
 ### [13] Mint User Count at Shutdown
 
 Source: Various press reports at time of Mint shutdown (Mar 2024). Estimates range from 3.6M to 4.5M active users. Intuit migrated users to Credit Karma, but adoption rates were not publicly disclosed.
+
+### [14] Bank Account Opening and Credit Score Impact
+
+Sources: SoFi (sofi.com/learn), Capital One (capitalone.com/learn-grow), Doctor of Credit (doctorofcredit.com/bank-accounts). Most banks perform soft pull or ChexSystems check (no credit score impact) when opening checking/savings accounts. Rare exceptions do hard pulls — a hard inquiry costs ~3-5 FICO points and stays for 2 years. ChexSystems tracks banking history, not credit.
+
+**Practical implication**: Opening 5-10 no-fee checking accounts for parser testing is safe. Opening 100 is not recommended — ChexSystems flagging and account management overhead.
+
+### [15] Gmail App Passwords and IMAP Access
+
+Source: Google Account Help documentation, Python `imaplib` stdlib documentation. App Passwords require 2-Step Verification enabled. User generates a 16-character password at myaccount.google.com → Security → App Passwords. Connection: `imaplib.IMAP4_SSL("imap.gmail.com", 993)`.
+
+**Verification status**: Confirmed working as of Mar 2026. Google has not announced deprecation of App Passwords.
+
+### [16] Microsoft 365 Basic Auth Deprecation
+
+Source: Microsoft Learn — "Authenticate an IMAP, POP or SMTP connection using OAuth" (learn.microsoft.com). Basic Authentication deprecated for Exchange Online effective December 31, 2022. IMAP access requires OAuth 2.0 with Azure AD app registration. Some personal Outlook.com accounts may still support App Passwords with MFA enabled, but M365 corporate accounts require OAuth.
+
+**Practical implication**: Gmail is the simpler target for MVP. Outlook/M365 support requires OAuth infrastructure — defer to Phase 2.
+
+### [17] US Credit Card Market Concentration
+
+Sources: Approximate market share by cards in force (various industry reports). Chase (~20%), Bank of America (~10%), Citi (~10%), Capital One (~10%), Wells Fargo (~5%) = ~55% of US credit cards. Exact figures vary by source and metric (cards vs. balances vs. transaction volume).
+
+**Verification status**: APPROXIMATE. No single authoritative source for exact market share. The directional claim (top 5 = majority of market) is widely supported.
 
 ---
 

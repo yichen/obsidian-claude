@@ -1,0 +1,28 @@
+statement_month: 2025-11
+statement_date: '2025-11-10'
+account_number: '1313987526'
+vehicle: 2026 Tesla Model Y
+interest_rate: 3.99
+monthly_payment: 897.79
+maturity_date: '2030-10-30'
+daily_interest: 5.32
+payoff_amount: 48819.36
+payoff_date: '2025-11-11'
+payment_due_date: '2025-11-30'
+current_payment_due: 897.79
+total_amount_due: 897.79
+activity:
+- date: '2025-10-16'
+  description: New loan
+  amount: 48681.00
+aggregates:
+  principal_paid: 0.00
+  interest_paid: 0.00
+  extra_principal: 0.00
+  total_paid: 48681.00
+ytd_interest: null
+validation:
+  mismatches: []
+source:
+  file: 111025 WellsFargo.pdf
+  processed_at: '2026-03-08T06:12:36'
