@@ -1,3 +1,6 @@
+### 2026-03-08
+- **Food:** Ruby picked out the cake dessert at MOD Pizza but immediately changed her mind and refused to eat it, so skip buying that treat for her again.
+
 ### 2026-02-24
 - **Snacks:** Ruby is really into the Chinese 旺旺雪饼 rice crackers right now.
 
