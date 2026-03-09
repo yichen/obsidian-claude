@@ -1,4 +1,4 @@
-> Last Updated: 2026-03-08 04:02:14
+> Last Updated: 2026-03-09 04:02:04
 
 
 
@@ -71,44 +71,7 @@
 
 
 
-## Mar 08, Sunday
 
-*   **[FB] Colorectal Cancer Awareness Hike - Poo Poo Point**
-    *   **Time:** 9 AM
-    *   **Loc:** Issaquah, Washington
-    *   **Drive:** 13m (5.5 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Issaquah%2C%20Washington)
-    *   **Facebook Group:** Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/749784817959924/
-*   **[FB] HeyBrook Ridge Morning Hike! 10am!**
-    *   **Time:** 10 AM
-    *   **Loc:** Index, Washington
-    *   **Drive:** 1h 24m (49.5 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Index%2C%20Washington)
-    *   **Facebook Group:** FB Group
-    *   **Link:** https://www.facebook.com/events/1445599320692885/
-*   **[Latin] Salsaymotion Sunset Social**
-    *   **Time:** March 8 @ 6:00 pm - 8:30 pm
-    *   **Loc:** Bravo Dance School, 13635 NE 8th St Suite 104, Bellevue, WA, United States
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/13635%20NE%208th%20St%20Suite%20104%2C%20Bellevue%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/salsaymotion-sunset-social-2/2026-03-08/
-*   **[FB] Northend "Pop Up" Game Night**
-    *   **Time:** 6 PM
-    *   **Loc:** Mount Vernon, Washington
-    *   **Drive:** 1h 37m (75.1 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Mount%20Vernon%2C%20Washington)
-    *   **Facebook Group:** Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/837465889343267/
-*   **[FB] "Practically Canada" Game Night Pop Up**
-    *   **Time:** 6 PM
-    *   **Facebook Group:** 40+ Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/2723812401321787/
-*   **[Latin] eSOeS – Salsa/Bachata at Aria Ballroom every Sunday**
-    *   **Time:** March 8 @ 7:00 pm - 11:00 pm
-    *   **Loc:** Aria Ballroom, 15300 NE 95th St, Redmond, WA, United States
-    *   **Drive:** 27m (13.1 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/15300%20NE%2095th%20St%2C%20Redmond%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/esoes-salsa-bachata-at-aria-ballroom-every-sunday/2026-03-08/
 
 ## Mar 09, Monday
 
@@ -132,6 +95,19 @@
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Tanner%2C%20Washington)
     *   **Facebook Group:** 40+ Single Hikers of the PNW
     *   **Link:** https://www.facebook.com/events/4309633045915124/
+*   **[FB] Team Tuesday: Granite Lakes**
+    *   **Time:** 9 AM
+    *   **Loc:** Tanner, Washington
+    *   **Drive:** 30m (21.2 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Tanner%2C%20Washington)
+    *   **Facebook Group:** Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/935535315580282/
+*   **[FB] Game night**
+    *   **Time:** 6 PM
+    *   **Loc:** 2008 1st Ave, Seattle, WA, United States, Washington 98121
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2008%201st%20Ave%2C%20Seattle%2C%20WA%2C%20United%20States%2C%20Washington%2098121)
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/1439372654298918/
 *   **[Latin] Latin Heat Tuesdays**
     *   **Time:** March 10 @ 8:00 pm - 11:00 pm
     *   **Loc:** The New Local Restaurante, 10432 SE Kent-Kangley Rd, Kent, WA, United States
@@ -185,6 +161,21 @@
     *   **Drive:** 47m (31.2 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/16708%20Aurora%20Ave%20N.%2C%20Shoreline%2C%20WA%2C%20United%20States)
     *   **Link:** https://golatindance.com/event/noche-de-baile-feat-orquesta-kanaima/
+*   **[Latin] Latin Night at Seattle Harbor**
+    *   **Time:** March 13 @ 9:00 pm - 2:00 am
+    *   **Loc:** Seattle Harbor, 2040 Westlake Ave N, Seattle, WA, United States
+    *   **Drive:** 37m (22.7 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2040%20Westlake%20Ave%20N%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/latin-night-at-seattle-harbor-2-2/2026-03-13/
+*   **[Latin] SALSA | BACHATA | ZOUK | KIZOMBA at Salsa Con Todo**
+    *   **Time:** March 13 @ 10:00 pm - 1:00 am
+    *   **Loc:** Salsa Con Todo Studio, 211 N 36th St, Seattle, WA, United States
+    *   **Drive:** 40m (24.9 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/211%20N%2036th%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/salsa-bachata-zouk-kizomba-at-salsa-con-todo/2026-03-13/
+*   **[FB] Wenaha River Backpack**
+    *   **Facebook Group:** Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/916805500737257/
 
 ## Jun 08, Monday
 
@@ -497,4 +488,9 @@ Seattle
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Winthrop%2C%20Washington)
     *   **Facebook Group:** 40+ Single Hikers of the PNW
     *   **Link:** https://www.facebook.com/events/1162022429188687/
+*   **[FB] Wednesday Fitness at Seattle Center**
+    *   **Loc:** 2008 1st Ave, Seattle, WA, United States, Washington 98121
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2008%201st%20Ave%2C%20Seattle%2C%20WA%2C%20United%20States%2C%20Washington%2098121)
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/1469772351473803/
 ## Sources Checked
