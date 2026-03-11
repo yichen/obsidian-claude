@@ -214,6 +214,9 @@
 - **Revised Mar 2026**: deficit -$733/mo (near breakeven), sale is optional deleveraging not survival
 - **HELOC runway**: $79K available / $733/mo = ~9 years — no longer urgent
 
+### BASC After-School Care (2026-03-10) `(active)`
+- ~$615/mo from CMA (53% of $1,160). Details in `memory/topics/cma-categorization-hints.md` — load when ingesting Fidelity CMA or categorizing.
+
 ### Cash Flow / Rental Sale Decision (2026-03-01) `(active)`
 - **Revised Mar 2026**: After hobby freeze + legal eliminated + ESPP stopped + subscription cuts, deficit went from -$6,785/mo to **-$733/mo** (near breakeven)
 - **HELOC runway**: $79K available / $733/mo = ~9 years (was ~Oct 2026) — no longer urgent

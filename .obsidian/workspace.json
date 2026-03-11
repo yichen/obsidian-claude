@@ -30,8 +30,21 @@
               "icon": "lucide-file",
               "title": "Patents"
             }
+          },
+          {
+            "id": "6f09735df8cb3e99",
+            "type": "leaf",
+            "state": {
+              "type": "release-notes",
+              "state": {
+                "currentVersion": "1.12.4"
+              },
+              "icon": "lucide-book-up",
+              "title": "Release Notes 1.12.4"
+            }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -199,7 +212,7 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "54297b07a570ec5a",
+  "active": "6f09735df8cb3e99",
   "lastOpenFiles": [
     "Finance/finance.db-wal",
     "Finance/finance.db-shm",
