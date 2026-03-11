@@ -1,4 +1,4 @@
-> Last Updated: 2026-03-09 04:02:04
+> Last Updated: 2026-03-11 04:02:16
 
 
 
@@ -73,47 +73,9 @@
 
 
 
-## Mar 09, Monday
 
-*   **[FB] Meme Mondays**
-    *   **Time:** 12 AM
-    *   **Facebook Group:** Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/2378137482631822/
-*   **[Latin] Salsa Practica**
-    *   **Time:** March 9 @ 9:00 pm - 11:00 pm
-    *   **Loc:** Reverie Ballroom - Seattle, 915 E Pine St, Seattle, WA, United States
-    *   **Drive:** 33m (20.7 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/salsa-practica/2026-03-09/
 
-## Mar 10, Tuesday
 
-*   **[FB] Team Tuesday: Granite Lakes!**
-    *   **Time:** 9 AM
-    *   **Loc:** Tanner, Washington
-    *   **Drive:** 30m (21.2 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Tanner%2C%20Washington)
-    *   **Facebook Group:** 40+ Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/4309633045915124/
-*   **[FB] Team Tuesday: Granite Lakes**
-    *   **Time:** 9 AM
-    *   **Loc:** Tanner, Washington
-    *   **Drive:** 30m (21.2 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Tanner%2C%20Washington)
-    *   **Facebook Group:** Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/935535315580282/
-*   **[FB] Game night**
-    *   **Time:** 6 PM
-    *   **Loc:** 2008 1st Ave, Seattle, WA, United States, Washington 98121
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2008%201st%20Ave%2C%20Seattle%2C%20WA%2C%20United%20States%2C%20Washington%2098121)
-    *   **Facebook Group:** 40+ Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/1439372654298918/
-*   **[Latin] Latin Heat Tuesdays**
-    *   **Time:** March 10 @ 8:00 pm - 11:00 pm
-    *   **Loc:** The New Local Restaurante, 10432 SE Kent-Kangley Rd, Kent, WA, United States
-    *   **Drive:** 45m (27.1 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/10432%20SE%20Kent-Kangley%20Rd%2C%20Kent%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/latin-heat-tuesdays-5/2026-03-10/
 
 ## Mar 11, Wednesday
 
@@ -176,6 +138,27 @@
 *   **[FB] Wenaha River Backpack**
     *   **Facebook Group:** Single Hikers of the PNW
     *   **Link:** https://www.facebook.com/events/916805500737257/
+
+## Mar 14, Saturday
+
+*   **[Latin] Live Salsa Saturdays at Sea Monster Lounge**
+    *   **Time:** March 14 @ 7:00 pm - 9:00 pm
+    *   **Loc:** Sea Monster Lounge, 2202 N 45th S, Seattle, WA, United States
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2202%20N%2045th%20S%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/live-salsa-at-sea-monster-lounge-2-3/2026-03-14/
+*   **[Latin] Bliss Salsa Bachata Social**
+    *   **Time:** March 14 @ 8:00 pm - 12:00 am
+    *   **Loc:** 704 19th Ave E, 704 19th Ave E, Seattle, WA, United States
+    *   **Drive:** 35m (21.0 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/704%2019th%20Ave%20E%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/bliss-salsa-bachata-social-2/2026-03-14/
+
+## Mar 21, Saturday
+
+*   **[FB] Falls Creek Falls**
+    *   **Time:** 9 AM
+    *   **Facebook Group:** FB Group
+    *   **Link:** https://www.facebook.com/events/807832181710025/
 
 ## Jun 08, Monday
 
@@ -493,4 +476,28 @@ Seattle
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2008%201st%20Ave%2C%20Seattle%2C%20WA%2C%20United%20States%2C%20Washington%2098121)
     *   **Facebook Group:** 40+ Single Hikers of the PNW
     *   **Link:** https://www.facebook.com/events/1469772351473803/
+*   **[FB] Columbia Gorge sunrise hike and dim sum outing!**
+    *   **Facebook Group:** Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/2048055575762238/
+*   **[FB] Family Friendly Movie Night**
+    *   **Loc:** Burlington, Washington
+    *   **Drive:** 1h 42m (78.9 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Burlington%2C%20Washington)
+    *   **Facebook Group:** Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/1522258579617424/
+*   **[FB] The Hipsters at the Muckleshoot**
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/879173904890806/
+*   **[FB] Family Friendly Movie Night**
+    *   **Loc:** Burlington, Washington
+    *   **Drive:** 1h 42m (78.9 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Burlington%2C%20Washington)
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/909723161905522/
+*   **[FB] Ladies Night at Devil's Reef**
+    *   **Loc:** Tacoma, Washington
+    *   **Drive:** 1h 3m (44.7 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Tacoma%2C%20Washington)
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/1444420687208917/
 ## Sources Checked

@@ -1,0 +1,62 @@
+# Manually logged transactions — reconciled during statement ingestion
+# Usage: /finance log <description>
+# Matched by: finance_db.py match-pending (runs after imports)
+# Matching: account + date ±5 days + amount ±$1
+# Statuses: pending → matched | stale (45+ days unmatched)
+
+- date: '2026-03-10'
+  account: cma
+  amount: -614.8
+  payee: Sheri Martin
+  category: Kids Cost
+  memo: BASC after-school care Mar 2026 (53% of $1,160)
+  status: pending
+- date: '2026-03-11'
+  account: cma
+  amount: -185.5
+  payee: Sheri Martin
+  category: Kids Activities
+  memo: Ruby gymnastics at Emerald City Gymnastics, Mar 2026 (53% of $350)
+  status: pending
+- date: '2026-03-10'
+  account: chase-prime
+  amount: -33.08
+  payee: Amazon
+  category: Home Improvement
+  memo: 'Solfres headboard reading light, Order #112-4877767-3570653'
+  status: pending
+- date: '2026-03-08'
+  account: chase-prime
+  amount: -8.44
+  payee: Amazon
+  category: Kids Toys and Games
+  memo: 'MAGIKON Chinese Chess Xiangqi, Order #112-1948657-0924233'
+  status: pending
+- date: '2026-03-04'
+  account: chase-prime
+  amount: -7.09
+  payee: Amazon
+  category: Kids Gear
+  memo: 'Neo-wows no-tie shoe laces for Ruby, Order #112-0349087-1193873'
+  status: pending
+- date: '2026-03-03'
+  account: chase-prime
+  amount: -14.33
+  payee: Amazon
+  category: Kids Gear
+  memo: 'Newcotte 4-pack girls belts for Ruby, Order #114-5761142-3329066'
+  status: pending
+- date: '2026-03-01'
+  account: chase-prime
+  amount: -12.67
+  payee: Amazon
+  category: Home Improvement
+  memo: 'Minwax Helmsman spar urethane spray, Order #112-4013266-6230625'
+  status: pending
+- date: '2026-03-01'
+  account: chase-prime
+  amount: -48.53
+  payee: Amazon
+  category: Supplements
+  memo: 'THORNE Creatine monohydrate powder 90 servings, Order #112-7587571-7851456'
+  status: pending

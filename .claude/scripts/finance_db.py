@@ -25,6 +25,7 @@ SOFI_ROOT = VAULT_ROOT / "Finance" / "sofi-loan"
 BECU_ROOT = VAULT_ROOT / "Finance" / "becu"
 WF_CAR_ROOT = VAULT_ROOT / "Finance" / "wellsfargo-car-loan"
 RULES_BACKUP_PATH = VAULT_ROOT / "Finance" / "categorization_rules.json"
+PENDING_TXN_PATH = VAULT_ROOT / "Finance" / "pending-transactions.yaml"
 ISSUES_PATH = VAULT_ROOT / "Finance" / "pipeline-issues.md"
 
 SCRIPTS_DIR = Path(__file__).resolve().parent
@@ -3239,6 +3240,270 @@ def cmd_trip_cost():
 
 
 # ---------------------------------------------------------------------------
+# Pending transaction matching
+# ---------------------------------------------------------------------------
+
+ACCOUNT_TABLE_MAP = {
+    # CMA
+    "cma": "fidelity_cma_transactions",
+    # Credit cards
+    "apple-card": "transactions",
+    "chase-prime": "transactions",
+    "chase-sapphire": "transactions",
+    "chase-freedom": "transactions",
+    "fidelity-cc": "transactions",
+    "bofa-atmos": "transactions",
+    # BECU
+    "becu-checking": "becu_checking_transactions",
+    # Amazon
+    "amazon": "amazon_orders",
+}
+
+# Map short account names to DB account names (for CC transactions table)
+ACCOUNT_NAME_MAP = {
+    "apple-card": "apple-card",
+    "chase-prime": "chase-prime-1158",
+    "chase-sapphire": "chase-sapphire-2341",
+    "chase-freedom": "chase-freedom-1350",
+    "fidelity-cc": "fidelity-credit-card",
+    "bofa-atmos": "bofa-atmos-7982",
+}
+
+
+def cmd_match_pending():
+    """Match pending transactions from YAML log against imported DB transactions."""
+    if not PENDING_TXN_PATH.exists():
+        print(json.dumps({"error": "No pending transactions file found"}))
+        return
+
+    with open(PENDING_TXN_PATH, encoding="utf-8") as f:
+        entries = yaml.safe_load(f) or []
+
+    if not entries:
+        print(json.dumps({"message": "No pending entries", "matched": 0, "stale": 0}))
+        return
+
+    # Detect duplicate pending entries (same account + amount + date ±1 day)
+    duplicates = []
+    pending = [e for e in entries if e.get("status") == "pending"]
+    seen = set()
+    for e in pending:
+        key = (e.get("account", ""), round(float(e.get("amount", 0)), 2), e.get("date", ""))
+        if key in seen:
+            duplicates.append({
+                "date": e.get("date"),
+                "account": e.get("account"),
+                "amount": e.get("amount"),
+                "memo": e.get("memo"),
+            })
+        seen.add(key)
+
+    conn = get_db()
+    matched = 0
+    stale = 0
+    results = []
+    today = datetime.now()
+
+    for entry in entries:
+        if entry.get("status") != "pending":
+            continue
+
+        account = entry.get("account", "")
+        table = ACCOUNT_TABLE_MAP.get(account)
+        if not table:
+            results.append({
+                "entry": entry.get("memo", ""),
+                "result": f"unknown account: {account}",
+            })
+            continue
+
+        target_date = entry.get("date", "")
+        target_amount = float(entry.get("amount", 0))
+        category = entry.get("category", "")
+
+        # Check for stale (45+ days)
+        try:
+            entry_date = datetime.strptime(target_date, "%Y-%m-%d")
+            if (today - entry_date).days > 45:
+                entry["status"] = "stale"
+                stale += 1
+                results.append({
+                    "entry": entry.get("memo", ""),
+                    "result": "stale (45+ days)",
+                })
+                continue
+        except ValueError:
+            pass
+
+        # Match based on table type
+        match_found = False
+
+        if table == "fidelity_cma_transactions":
+            rows = conn.execute(
+                """SELECT id, date, amount, description, category
+                   FROM fidelity_cma_transactions
+                   WHERE date BETWEEN date(?, '-5 days') AND date(?, '+5 days')
+                     AND ABS(amount - ?) < 1.0""",
+                (target_date, target_date, target_amount),
+            ).fetchall()
+
+            for row in rows:
+                txn_id, txn_date, txn_amount, txn_desc, txn_cat = row
+                if txn_cat and txn_cat == category:
+                    # Already correctly categorized
+                    entry["status"] = "matched"
+                    matched += 1
+                    match_found = True
+                    results.append({
+                        "entry": entry.get("memo", ""),
+                        "result": f"matched (already categorized): id={txn_id} {txn_date} ${txn_amount}",
+                    })
+                    break
+                elif not txn_cat or txn_cat in ("Uncategorized", "Divorce — Other"):
+                    # Update category
+                    conn.execute(
+                        "UPDATE fidelity_cma_transactions SET category=? WHERE id=?",
+                        (category, txn_id),
+                    )
+                    entry["status"] = "matched"
+                    matched += 1
+                    match_found = True
+                    results.append({
+                        "entry": entry.get("memo", ""),
+                        "result": f"matched & categorized: id={txn_id} {txn_date} ${txn_amount} → {category}",
+                    })
+                    break
+
+        elif table == "transactions":
+            # CC transactions — need account_id join
+            db_account = ACCOUNT_NAME_MAP.get(account)
+            if db_account:
+                rows = conn.execute(
+                    """SELECT t.id, t.date, t.amount, t.description, t.category_id
+                       FROM transactions t
+                       JOIN accounts a ON a.id = t.account_id
+                       WHERE a.name = ?
+                         AND t.date BETWEEN date(?, '-5 days') AND date(?, '+5 days')
+                         AND ABS(t.amount - ?) < 1.0""",
+                    (db_account, target_date, target_date, target_amount),
+                ).fetchall()
+
+                for row in rows:
+                    txn_id, txn_date, txn_amount, txn_desc, txn_cat_id = row
+                    if txn_cat_id is None:
+                        # Look up category_id by name
+                        cat_row = conn.execute(
+                            "SELECT id FROM categories WHERE name=?", (category,)
+                        ).fetchone()
+                        if cat_row:
+                            conn.execute(
+                                "UPDATE transactions SET category_id=? WHERE id=?",
+                                (cat_row[0], txn_id),
+                            )
+                            entry["status"] = "matched"
+                            matched += 1
+                            match_found = True
+                            results.append({
+                                "entry": entry.get("memo", ""),
+                                "result": f"matched & categorized: id={txn_id} {txn_date} ${txn_amount} → {category}",
+                            })
+                            break
+                    else:
+                        # Already categorized
+                        entry["status"] = "matched"
+                        matched += 1
+                        match_found = True
+                        results.append({
+                            "entry": entry.get("memo", ""),
+                            "result": f"matched (already categorized): id={txn_id} {txn_date} ${txn_amount}",
+                        })
+                        break
+
+        elif table == "amazon_orders":
+            rows = conn.execute(
+                """SELECT id, order_date, total_amount, product_name, category_id
+                   FROM amazon_orders
+                   WHERE order_date BETWEEN date(?, '-5 days') AND date(?, '+5 days')
+                     AND ABS(total_amount - ABS(?)) < 1.0""",
+                (target_date, target_date, target_amount),
+            ).fetchall()
+
+            for row in rows:
+                order_id, order_date, amount, product, cat_id = row
+                if cat_id is None:
+                    cat_row = conn.execute(
+                        "SELECT id FROM categories WHERE name=?", (category,)
+                    ).fetchone()
+                    if cat_row:
+                        conn.execute(
+                            "UPDATE amazon_orders SET category_id=? WHERE id=?",
+                            (cat_row[0], order_id),
+                        )
+                        entry["status"] = "matched"
+                        matched += 1
+                        match_found = True
+                        results.append({
+                            "entry": entry.get("memo", ""),
+                            "result": f"matched & categorized: id={order_id} {order_date} ${amount} → {category}",
+                        })
+                        break
+                else:
+                    entry["status"] = "matched"
+                    matched += 1
+                    match_found = True
+                    results.append({
+                        "entry": entry.get("memo", ""),
+                        "result": f"matched (already categorized): id={order_id} {order_date} ${amount}",
+                    })
+                    break
+
+        elif table == "becu_checking_transactions":
+            rows = conn.execute(
+                """SELECT t.id, t.date, t.amount, t.description
+                   FROM becu_checking_transactions t
+                   WHERE t.date BETWEEN date(?, '-5 days') AND date(?, '+5 days')
+                     AND ABS(t.amount - ?) < 1.0""",
+                (target_date, target_date, target_amount),
+            ).fetchall()
+
+            if rows:
+                row = rows[0]
+                entry["status"] = "matched"
+                matched += 1
+                match_found = True
+                results.append({
+                    "entry": entry.get("memo", ""),
+                    "result": f"matched: id={row[0]} {row[1]} ${row[2]}",
+                })
+
+        if not match_found:
+            results.append({
+                "entry": entry.get("memo", ""),
+                "result": "no match yet",
+            })
+
+    conn.commit()
+    conn.close()
+
+    # Write back updated statuses
+    with open(PENDING_TXN_PATH, "w", encoding="utf-8") as f:
+        f.write("# Manually logged transactions — reconciled during statement ingestion\n")
+        f.write("# Usage: /finance log <description>\n")
+        f.write("# Matched by: finance_db.py match-pending (runs after imports)\n")
+        f.write("# Matching: account + date ±5 days + amount ±$1\n")
+        f.write("# Statuses: pending → matched | stale (45+ days unmatched)\n\n")
+        yaml.dump(entries, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
+
+    print(json.dumps({
+        "total_pending": sum(1 for e in entries if e.get("status") == "pending"),
+        "matched": matched,
+        "stale": stale,
+        "duplicates": duplicates,
+        "details": results,
+    }, indent=2))
+
+
+# ---------------------------------------------------------------------------
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -3250,7 +3515,8 @@ def main():
         print("          categorize, categorize-amazon, uncategorized, add-rule <pattern> <category>,")
         print("          set-category <id> <category> [--create-rule], query <sql>,")
         print("          backup-rules, restore-rules, validate,")
-        print("          add-trip, list-trips, tag-trip, untag-trip, tag-txn, trip-cost")
+        print("          add-trip, list-trips, tag-trip, untag-trip, tag-txn, trip-cost,")
+        print("          match-pending")
         sys.exit(1)
 
     cmd = sys.argv[1]
@@ -3321,6 +3587,8 @@ def main():
         cmd_tag_txn()
     elif cmd == "trip-cost":
         cmd_trip_cost()
+    elif cmd == "match-pending":
+        cmd_match_pending()
     else:
         print(f"Unknown command: {cmd}")
         sys.exit(1)

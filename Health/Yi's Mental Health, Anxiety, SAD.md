@@ -1,3 +1,10 @@
+## 2026-03-10
+- **Sleep:** Slept almost 7 hours last night. Evening routine included a short meditation and chasing the kids around the house playing loudly—running after them has always helped me wind down and sleep well.
+
+## 2026-03-09
+- **Meds:** Took hydroxyzine PAM at bedtime.
+- **Sleep:** Slept almost 7 hours last night. Evening routine included a short meditation and chasing the kids around the house playing loudly—running after them has always helped me wind down and sleep well.
+
 ## 2026-03-07
 - **Sleep:** Did a meditation session, deliberately skipped the exciting AI/Claude YouTube videos so I wouldn't get revved up, and ended up sleeping roughly seven hours.
 

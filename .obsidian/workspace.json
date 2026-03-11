@@ -35,12 +35,24 @@
             "id": "6f09735df8cb3e99",
             "type": "leaf",
             "state": {
-              "type": "release-notes",
+              "type": "markdown",
               "state": {
-                "currentVersion": "1.12.4"
+                "file": "Children/Laurence.md",
+                "mode": "source",
+                "source": false,
+                "backlinks": true,
+                "backlinkOpts": {
+                  "collapseAll": false,
+                  "extraContext": false,
+                  "sortOrder": "alphabetical",
+                  "showSearch": false,
+                  "searchQuery": "",
+                  "backlinkCollapsed": false,
+                  "unlinkedCollapsed": true
+                }
               },
-              "icon": "lucide-book-up",
-              "title": "Release Notes 1.12.4"
+              "icon": "lucide-file",
+              "title": "Laurence"
             }
           }
         ],
@@ -214,6 +226,11 @@
   },
   "active": "6f09735df8cb3e99",
   "lastOpenFiles": [
+    "Projects/openclaw/reinstall-progress.md",
+    "Projects/openclaw/reinstall-notes.md",
+    "Projects/openclaw",
+    "Finance/pending-transactions.yaml",
+    "Children/2026/01/2026-01-07.md",
     "Finance/finance.db-wal",
     "Finance/finance.db-shm",
     "Finance/reports/cash-flow-dashboard.png",
@@ -223,9 +240,7 @@
     "Finance/wellsfargo-car-loan/processing_log.json",
     "Finance/wellsfargo-car-loan/2025-11.yaml",
     "Finance/wellsfargo-car-loan/ingest.log",
-    "Finance/wellsfargo-car-loan",
     "Projects/2_personal-finance-llm/idea.md",
-    "Projects/2_personal-finance-llm",
     "Finance/pipeline-issues.md",
     "Trips/2026/2026-03-11_15-Solo-Workation-Bozeman-MT-mine.md",
     "Trips/2026/2026-03-11_15-Solo-Workation-Bozeman-MT.md",
@@ -248,8 +263,6 @@
     "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Itinerary.md",
     "Life/Daily/2026/03/2026-03-01.md",
     "Trips/2026/2026-04-13_17 Spring Break with Kids/Itinerary.md",
-    "Finance/activity-log.md",
-    "memory/2026-03-01.md",
     "Finance/reports/2025-shopping-breakdown.png",
     "Finance/reports/2025-food-breakdown.png",
     "Finance/reports/2025-subcategory-breakdown.png",

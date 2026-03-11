@@ -52,6 +52,7 @@ Scripts/venv/bin/python3 .claude/scripts/finance_db.py rebuild --import-only
 | `add-rule <pattern> <category>` | Add a keyword → category rule |
 | `set-category <id> <category> [--create-rule]` | Set category for one txn |
 | `backup-rules` / `restore-rules` | Export/import categorization rules JSON |
+| `match-pending` | Match pending transaction log against imported DB transactions |
 | `query "<sql>"` | Execute SQL, return JSON |
 
 ## Handling User Requests
@@ -70,6 +71,43 @@ Run `import-tax`, report results. This loads all tax YAMLs from `Finance/tax/pre
 
 ### If `$ARGUMENTS` is "categorize":
 Run `categorize`. Then run `uncategorized` to show what's left. For each group of uncategorized transactions, propose a category and ask the user to confirm. When confirmed, use `add-rule` to create rules.
+
+### If `$ARGUMENTS` starts with "log":
+
+The user wants to pre-log a transaction for future reconciliation. Parse the input to extract:
+- **account**: which account (cma, apple-card, chase-sapphire, chase-freedom, chase-prime, fidelity-cc, bofa-atmos, becu-checking, amazon)
+- **amount**: the dollar amount (negative for charges/payments, positive for deposits)
+- **date**: defaults to today if not specified
+- **payee**: who the payment is to
+- **category**: the finance category to assign
+- **memo**: brief description
+
+If any required field is ambiguous, ask the user.
+
+**Steps:**
+1. Read `Finance/pending-transactions.yaml` (create if it doesn't exist)
+2. **Duplicate check**: Before appending, scan existing entries for a match on `account` + `amount` + `date` (±1 day). If a duplicate is found, show it to the user and ask if they still want to log it. Do NOT silently add duplicates.
+3. Append a new entry with `status: pending`
+4. Write the file back
+5. Confirm what was logged
+
+**Valid account names:** cma, apple-card, chase-prime, chase-sapphire, chase-freedom, fidelity-cc, bofa-atmos, becu-checking, amazon
+
+**Example entries:**
+```yaml
+- date: "2026-03-10"
+  account: cma
+  amount: -614.80
+  payee: "Sheri Martin"
+  category: "Kids Cost"
+  memo: "BASC after-school care Mar 2026 (53% of $1,160)"
+  status: pending
+```
+
+After logging, remind the user: "This will be auto-matched when the next statement is imported. Run `match-pending` after importing to reconcile."
+
+### If `$ARGUMENTS` is "match-pending":
+Run `Scripts/venv/bin/python3 .claude/scripts/finance_db.py match-pending` and report results.
 
 ### If `$ARGUMENTS` is "review":
 Run `uncategorized`. Present the top uncategorized descriptions in a table with counts and totals. For each, suggest a category. Let the user confirm or correct. Use `add-rule` to persist.
