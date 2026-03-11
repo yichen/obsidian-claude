@@ -147,6 +147,16 @@
 - Total interest paid: `SELECT SUM(interest_paid) FROM wellsfargo_car_statements WHERE statement_month LIKE '2025%'`
 - Monthly payment breakdown: `SELECT statement_month, principal_paid, interest_paid, extra_principal, total_paid FROM wellsfargo_car_statements ORDER BY statement_month`
 
+## Pending Transaction Log
+
+**File**: `Finance/pending-transactions.yaml`
+**Usage**: `/finance log <description>` or manually append
+**Reconciliation**: `finance_db.py match-pending` (runs after imports)
+
+Pre-log transactions before monthly statements arrive. Matched by account + date (±5 days) + amount (±$1). Supports all account types: CMA, credit cards, BECU checking, Amazon.
+
+Valid account names: `cma`, `apple-card`, `chase-prime`, `chase-sapphire`, `chase-freedom`, `fidelity-cc`, `bofa-atmos`, `becu-checking`, `amazon`
+
 ## Backup & Recovery
 
 ### Automatic Backup
