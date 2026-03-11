@@ -2,13 +2,21 @@
 
 Date: 2026-03-11
 
-## Root Cause
+## Root Cause (Confirmed 2026-03-11)
 
-The embedded agent uses the Anthropic SDK internally, which calls an internal LLM proxy at port 18792. The `OPENROUTER_API_KEY` environment variable is how OpenClaw's built-in OpenRouter provider gets its credentials — but the LaunchAgent service doesn't inherit shell env vars, so the gateway never had it. All OpenRouter calls 404'd internally before ever hitting the network.
+**All three OpenRouter API keys returned 401 "User not found"** — the OpenRouter account was deactivated or the keys were all revoked. This is why every LLM call returned 404 (OpenClaw converts the upstream 401 into a generic 404 error).
 
-Secondary issue: the Bailian (DashScope) API key `sk-950770c6b8a6492db78d12e6cdfb47b9` is now returning 403 (access denied / expired). Bailian should be removed entirely on reinstall.
+Secondary issues found and fixed:
+- Primary model was stuck on `bailian/qwen-plus-latest` instead of OpenRouter (config changes weren't sticking due to repeated doctor-fix cycles)
+- Bailian provider had `"api": "openai-responses"` which calls `/responses` endpoint — Bailian doesn't support this, causing additional 404s
+- Bailian API key `sk-950770c6b8a6492db78d12e6cdfb47b9` is 403 (expired)
+- Config JSON was malformed (6 model entries stranded outside bailian provider array) — fixed by `openclaw doctor --fix`
 
-The JSON config was also malformed — 6 model entries were stranded outside their provider object — but this was fixed and is not the core issue.
+**The fix (no reinstall needed):**
+1. Get a new valid OpenRouter API key
+2. Update `models.providers.openrouter.apiKey` in `~/.openclaw/openclaw.json`
+3. Update `OPENROUTER_API_KEY` in `~/Library/LaunchAgents/ai.openclaw.gateway.plist`
+4. Set `agents.defaults.model.primary` to `openrouter/qwen/qwen3.5-35b-a3b`
 
 ---
 
@@ -106,6 +114,14 @@ launchctl bootstrap gui/$UID ~/Library/LaunchAgents/ai.openclaw.gateway.plist
 ```
 
 ---
+
+## Resolution (2026-03-11)
+
+Clean reinstall completed successfully. Bot is responding on Telegram.
+
+Backups preserved at:
+- `~/openclaw-backup/` — pre-reinstall user files
+- `~/openclaw-clean-install/` — clean install snapshot (for revert reference)
 
 ## Key Lesson
 

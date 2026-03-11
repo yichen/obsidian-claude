@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Children/Laurence.md",
+                "file": "Children/Ruby.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,7 +52,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Laurence"
+              "title": "Ruby"
             }
           }
         ],
@@ -226,6 +226,7 @@
   },
   "active": "6f09735df8cb3e99",
   "lastOpenFiles": [
+    "Children/Laurence.md",
     "Projects/openclaw/reinstall-progress.md",
     "Projects/openclaw/reinstall-notes.md",
     "Projects/openclaw",
@@ -262,7 +263,6 @@
     "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Plan.md",
     "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Itinerary.md",
     "Life/Daily/2026/03/2026-03-01.md",
-    "Trips/2026/2026-04-13_17 Spring Break with Kids/Itinerary.md",
     "Finance/reports/2025-shopping-breakdown.png",
     "Finance/reports/2025-food-breakdown.png",
     "Finance/reports/2025-subcategory-breakdown.png",
