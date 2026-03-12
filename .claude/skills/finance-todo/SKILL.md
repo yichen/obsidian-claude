@@ -1,9 +1,9 @@
 ---
-name: finance-log
-description: "Log and track finance-related activities (FSA claims, reimbursements, applications, etc.)"
+name: finance-todo
+description: "Track finance-related activities needing follow-up (FSA claims, reimbursements, applications, disputes)"
 ---
 
-# /finance-log — Finance Activity Tracker
+# /finance-todo — Finance Activity Tracker
 
 Track financial actions that need follow-up: reimbursement requests, applications, disputes, payments, etc.
 
