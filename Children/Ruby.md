@@ -1,12 +1,15 @@
+### 2026-03-11
+- Last night Ruby told me that she felt more anxious when she is with me than with mommy. This is probably a wake-up call for me.
+
 ### 2026-03-08
 - **Food:** Ruby picked out the cake dessert at MOD Pizza but immediately changed her mind and refused to eat it, so skip buying that treat for her again.
 
 ### 2026-02-24
-- **Snacks:** Ruby is really into the Chinese 旺旺雪饼 rice crackers right now.
+- Snacks: Ruby is really into the Chinese 旺旺雪饼 rice crackers right now.
 
 ### 2026-02-11
 
-Yesterday was Tuesday, that means Ruby and I have some 1-on-1 time together when Laurence is visiting his therapist Ciara. When we were alone in the car, Ruby told me that the reason she likes crafting so much now, is because of me, that I have made so many wooden furnitures for her (loft bed, table). I was very touched. I did not realize that at all, and I did not realize she can make such connection. I feel very fulfilled as a father. 
+Yesterday was Tuesday, that means Ruby and I have some 1-on-1 time together when Laurence is visiting his therapist Ciara. When we were alone in the car, Ruby told me that the reason she likes crafting so much now, is because of me, that I have made so many wooden furnitures for her (loft bed, table). I was very touched. I did not realize that at all, and I did not realize she can make such connection. I feel very fulfilled as a father.
 
 ### 2026-02-05
 
