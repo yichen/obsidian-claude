@@ -1,0 +1,38 @@
+{
+  "name": "finance-demo",
+  "version": "0.1.0",
+  "description": "Personal Finance AI Demo",
+  "main": "out/main/index.js",
+  "scripts": {
+    "dev": "electron-vite dev",
+    "build": "electron-vite build",
+    "preview": "electron-vite preview",
+    "start": "electron-vite dev",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "dotenv": "^17.3.1",
+    "openai": "^4.78.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "react-markdown": "^9.0.1",
+    "react-syntax-highlighter": "^15.6.1",
+    "rehype-raw": "^7.0.0",
+    "remark-gfm": "^4.0.0"
+  },
+  "devDependencies": {
+    "@electron-toolkit/preload": "^3.0.1",
+    "@electron-toolkit/tsconfig": "^2.0.0",
+    "@electron-toolkit/utils": "^4.0.0",
+    "@types/node": "^22.13.9",
+    "@types/react": "^18.3.18",
+    "@types/react-dom": "^18.3.5",
+    "@types/react-syntax-highlighter": "^15.5.13",
+    "@vitejs/plugin-react": "^4.3.4",
+    "electron": "^35.1.0",
+    "electron-vite": "^3.1.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.2.0",
+    "vitest": "^3.0.8"
+  }
+}

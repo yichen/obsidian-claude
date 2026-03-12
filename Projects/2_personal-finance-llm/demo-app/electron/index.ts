@@ -1,0 +1,67 @@
+import { app, shell, BrowserWindow, ipcMain } from 'electron'
+import { join } from 'path'
+import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { initConfig, makeDeps, handleChat, queryDB, runFinanceCommand } from './finance-core'
+
+// ── Electron app setup ─────────────────────────────────────────────────────
+
+function createWindow(): void {
+  const win = new BrowserWindow({
+    width: 1100,
+    height: 760,
+    show: false,
+    titleBarStyle: 'hiddenInset',
+    backgroundColor: '#0f0f0f',
+    webPreferences: {
+      preload: join(__dirname, '../preload/preload.js'),
+      sandbox: false
+    }
+  })
+
+  win.on('ready-to-show', () => win.show())
+
+  win.webContents.setWindowOpenHandler(({ url }) => {
+    shell.openExternal(url)
+    return { action: 'deny' }
+  })
+
+  if (is.dev && process.env['ELECTRON_RENDERER_URL']) {
+    win.loadURL(process.env['ELECTRON_RENDERER_URL'])
+  } else {
+    win.loadFile(join(__dirname, '../renderer/index.html'))
+  }
+}
+
+app.whenReady().then(() => {
+  initConfig()
+  electronApp.setAppUserModelId('com.finance.demo')
+  app.on('browser-window-created', (_, window) => {
+    optimizer.watchWindowShortcuts(window)
+  })
+
+  ipcMain.handle('chat:send', async (event, messages) => {
+    try {
+      return await handleChat(messages, event.sender, makeDeps())
+    } catch (err) {
+      return { text: `Error: ${String(err)}` }
+    }
+  })
+
+  ipcMain.handle('db:query', async (_event, sql: string) => {
+    return await queryDB(sql, makeDeps())
+  })
+
+  ipcMain.handle('finance:command', async (_event, command: string) => {
+    return runFinanceCommand(command, [], makeDeps())
+  })
+
+  createWindow()
+
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
+})
+
+app.on('window-all-closed', () => {
+  if (process.platform !== 'darwin') app.quit()
+})
