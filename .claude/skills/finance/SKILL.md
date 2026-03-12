@@ -24,6 +24,11 @@ Parse the dashboard JSON output and note:
 Keep dashboard results in context — reference them when answering queries
 (e.g., "Based on CC data through Feb 2026..." or "Note: 3 new CC PDFs pending").
 
+Also read `Finance/pending-transactions.yaml` to include pre-logged transactions in analysis. These are real transactions not yet in the DB (current month, before statement arrives). When answering spending queries or cash flow projections:
+- Include pending entries (status=pending) as supplemental data
+- Note them separately (e.g., "Plus $X from pending log") so the user knows what's from statements vs pre-logged
+- Do NOT double-count — if a pending entry has status=matched, it's already in the DB
+
 If the database doesn't exist, run a full rebuild:
 ```
 Scripts/venv/bin/python3 .claude/scripts/finance_db.py rebuild --import-only

@@ -68,3 +68,11 @@
   category: Groceries
   memo: 'Costco Issaquah #110: 2x eggs, 5x poke bowl salmon, broccoli, tomatoes, avocados'
   status: pending
+
+- date: '2026-03-12'
+  account: chase-prime
+  amount: -63.98
+  payee: Amazon
+  category: Groceries
+  memo: '2x Lavazza Espresso Maestro Decaf Nespresso capsules (60ct), Order #112-8990939-1101025'
+  status: pending
