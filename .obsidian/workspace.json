@@ -37,7 +37,7 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "Children/Ruby.md",
+                "file": "Health/Yi's Mental Health Therapy with Dr. Ding.md",
                 "mode": "source",
                 "source": false,
                 "backlinks": true,
@@ -52,7 +52,7 @@
                 }
               },
               "icon": "lucide-file",
-              "title": "Ruby"
+              "title": "Yi's Mental Health Therapy with Dr. Ding"
             }
           }
         ],
@@ -109,7 +109,8 @@
               "title": "Bookmarks"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -226,6 +227,9 @@
   },
   "active": "6f09735df8cb3e99",
   "lastOpenFiles": [
+    "Health/providers.md",
+    "Children/Ruby.md",
+    "memory/2026-03-12.md",
     "Children/Laurence.md",
     "Projects/openclaw/reinstall-progress.md",
     "Projects/openclaw/reinstall-notes.md",
@@ -260,9 +264,6 @@
     "Finance/Planning/2026-03-01-Cash-Flow-Analysis-&-Rental-Sale-Decision.md",
     "Finance/Planning/2026-03-01 Cash Flow Analysis & Rental Sale Decision.md",
     "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Reservations.md",
-    "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Plan.md",
-    "Trips/2026/2026-04-13_17-Spring-Break-with-Kids/Itinerary.md",
-    "Life/Daily/2026/03/2026-03-01.md",
     "Finance/reports/2025-shopping-breakdown.png",
     "Finance/reports/2025-food-breakdown.png",
     "Finance/reports/2025-subcategory-breakdown.png",

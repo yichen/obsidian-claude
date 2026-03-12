@@ -58,8 +58,50 @@
 - **Safe harbor strategy**: keep current withholding, re-evaluate in October, adjust W-4 or make Q4 payment; W-2 withholding counts as paid evenly across all quarters (unlike estimated payments)
 - 110% of prior year tax safe harbor: need ~$180-185K in total 2026 withholding
 
-### Cash Flow Analysis (2026-03-01, updated)
-- **Full analysis saved to**: `Finance/Planning/2026-03-01-Cash-Flow-Analysis-and-Rental-Sale-Decision.md`
+### Pending Transaction Log System (2026-03-11)
+- **File**: `Finance/pending-transactions.yaml` — pre-log transactions before statements arrive
+- **Log command**: `/finance log <description>` — parses input, appends YAML entry
+- **Match command**: `finance_db.py match-pending` — matches pending entries against DB by account + date (±5 days) + amount (±$1)
+- **Duplicate detection**: Skill checks before appending (account + amount + date ±1 day); script warns on duplicates in output
+- Supports all accounts: cma, apple-card, chase-prime/sapphire/freedom, fidelity-cc, bofa-atmos, becu-checking, amazon
+- Statuses: `pending` → `matched` | `stale` (45+ days). Entries kept forever as audit trail.
+- **Documented in**: `Finance/CLAUDE.md` under "Pending Transaction Log"
+
+### Stripe Tender Offer & Investment Decision (2026-03-10)
+- **Stripe valuation**: $159B (Feb 2026), up 74% from $91.5B (Feb 2025). Tender at $63/share.
+- **Holdings**: 8,946 eligible shares across 2 grants (CS-251512 Aug 2023 @ $20.13, CS-89887 Nov 2023 @ $21.15)
+- **Decision**: Sell $311K (55%), keep $249K (~4,013 shares) for IPO upside
+- Both grants held >1 year → LTCG (20% + 3.8% NIIT = 23.8%). Tax ~$50K, net ~$261K.
+- **Settles Apr 3, 2026**. Plan: pay off SoFi ($41K) + Tesla ($46K) immediately, keep $174K reserve.
+- $249K kept = 5.6% of ~$4.4M net worth — within safe concentration limits
+- Stripe has annual tender offers; no IPO planned ("not in top 20 priorities" — John Collison)
+
+### Net Worth Snapshot (2026-03-10)
+- **Retirement**: $2,238,076 (Roth IRA $930K, Microsoft 401k $1.02M diversified in index funds, SF 401k $188K, Airbnb 401k $83K, ST 401k $13K)
+- **Microsoft 401k holdings**: Vanguard 500 (10%), Vanguard Russell 1000 Growth (29%), Fidelity Growth Company Pool (32%), Fidelity Contrafund Pool (30%) — NO MSFT stock
+- **Real estate**: primary ~$1M equity, rental ~$540K equity
+- **Stripe RSUs**: $560K (pre-sale)
+- **Fidelity non-retirement**: $161K
+- **Estimated total**: ~$4.4M
+
+### Updated Spousal Support Schedule (2026-03-10)
+- $10K/mo through Jun 2026, then **$8K/mo Jul 2026 – Jun 2028**, then $0
+- Previously assumed $10K/mo through late 2028 — this is $2K/mo better starting Jul 2026
+
+### Revised CC Baseline (2026-03-10)
+- Original $2,723/mo estimate was too aggressive — missed Kids Education ($1,225/mo) and Kids Activities ($817/mo)
+- LingoAce Chinese lessons: ~$3,088 semi-annual prepay → amortized ~$515/mo
+- **Realistic CC baseline**: ~$4,800/mo (not $2,723)
+- Kids Education normalized: ~$720/mo (LingoAce $515 + school fees $148 + tutoring $58)
+
+### Cash Flow Analysis (2026-03-01, updated 2026-03-10)
+- **Full analysis saved to**: `Finance/Planning/2026-03-01_Cash-Flow-Analysis-and-Rental-Sale-Decision.md`
+- **Updated projection** with Stripe $311K sale + rental sale + revised spousal ($8K from Jul 2026):
+- Apr 3: Stripe settles → pay SoFi+Tesla → $174K reserve, burn -$3.3K/mo
+- Jun: ESPP freed → flip positive +$2.8K/mo
+- Aug: Rental sold → HELOC paid → $397K reserve, +$6.6K/mo
+- Jul 2028: Spousal ends → +$14.6K/mo
+- **Realistic CC baseline**: $4,800/mo (not $2,723)
 - **Monthly take-home (Feb 2026)**: SF $10,817 + ST $9,736 + rental $1,995 = $22,548
 - **Monthly fixed obligations**: $23,833 (spousal $10K, primary mortgage $4,957, rental mortgage $1,780, SoFi $1,764, HELOC $1,358, child support $1,254, Tesla $1,000, rental HOA $620, insurance $550, kids ~$500, primary HOA $50)
 - **After-tax 401k**: already $0 at both employers (confirmed from Feb 2026 payslips)
@@ -217,11 +259,25 @@
 ### BASC After-School Care (2026-03-10) `(active)`
 - ~$615/mo from CMA (53% of $1,160). Details in `memory/topics/cma-categorization-hints.md` — load when ingesting Fidelity CMA or categorizing.
 
-### Cash Flow / Rental Sale Decision (2026-03-01) `(active)`
-- **Revised Mar 2026**: After hobby freeze + legal eliminated + ESPP stopped + subscription cuts, deficit went from -$6,785/mo to **-$733/mo** (near breakeven)
-- **HELOC runway**: $79K available / $733/mo = ~9 years (was ~Oct 2026) — no longer urgent
-- **Rental sale**: still beneficial (+$5,882/mo surplus, $137K reserve) but **no longer required for survival**
+### Stripe Tender Offer Execution (2026-03-10) `(active)`
+- Selling $311K of $560K eligible. Settles Apr 3, 2026.
+- Plan: pay off SoFi + Tesla immediately, keep HELOC open until rental sale covers it (~Aug 2026)
 
-- **Remaining levers**: cut dining 50% (+$300), audit Apple subs (+$50-100) → would flip to positive
-- **Spousal maintenance ends ~late 2028**: +$10K/mo — everything becomes very comfortable
-- Re-evaluate withholding in October per safe harbor strategy
+### Rental Sale Timeline (2026-03-10) `(active)`
+- Give tenant 90-day notice → vacancy ~Jun 2026 → list+sell → close ~Aug-Sep 2026
+- Net after tax: ~$374K → pay off HELOC ($151K) → $223K to reserve
+- Eastside market softening: prices -16% YoY, inventory +49% — sell sooner not later
+- Research saved to: `Finance/Planning/2026-03-10_Rental-Property-Inflation-Hedge-Research.md`
+
+### Slash Commands Created (2026-03-11) `(COMPLETED)`
+- `/ruby` — log to `Children/Ruby.md` (### headers, auto-tag)
+- `/laurence` — log to `Children/Laurence.md` (## headers, copyedits input)
+- `/sleep` — log to `Health/Yi's Mental Health, Anxiety, SAD.md` (splits into tagged bullets)
+- `/finance-log` renamed to `/finance-todo` — tracks activities needing follow-up
+
+### Local AI Desktop App Research (2026-03-11) `(active)`
+- Exploring product idea: privacy-focused financial document parsing desktop app
+- **Architecture**: Tauri + llama.cpp sidecar + Phi-4-mini (3.8B, 2.5GB) for local inference
+- **Hybrid approach**: deterministic PDF parsing (pdfplumber) + local LLM for classification/new formats + cloud API fallback for complex docs
+- **Market gap**: no desktop app exists with bundled local LLM for financial doc parsing
+- **Business model**: ship with local model (handles ~70% of formats free), charge for cloud API fallback ($0.50/parser), community parser library as moat
