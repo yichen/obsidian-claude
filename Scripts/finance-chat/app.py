@@ -1,96 +1,20 @@
-"""Finance Chat — Chainlit app wrapping finance_db.py with Claude tool_use."""
+"""Finance Chat — Native desktop app routing queries through Claude Code CLI.
+
+Uses pywebview for a native macOS window with embedded WebKit.
+Claude Code CLI (`claude -p`) handles AI + tool execution using your existing subscription.
+"""
 
 import json
 import os
+import re
 import subprocess
-import tempfile
 
-import anthropic
-import chainlit as cl
+import webview
 
 VAULT_ROOT = os.environ.get("VAULT_ROOT", "/Users/ychen2/Obsidian")
 PYTHON = os.path.join(VAULT_ROOT, "Scripts/venv/bin/python3")
 FINANCE_SCRIPT = os.path.join(VAULT_ROOT, ".claude/scripts/finance_db.py")
 REPORTS_DIR = os.path.join(VAULT_ROOT, "Finance/reports")
-
-# Load system prompt from SKILL.md + Finance/CLAUDE.md
-def load_system_prompt() -> str:
-    parts = ["You are a personal finance analyst with access to tools for querying a SQLite finance database.\n"]
-
-    skill_path = os.path.join(VAULT_ROOT, ".claude/skills/finance/SKILL.md")
-    if os.path.exists(skill_path):
-        with open(skill_path) as f:
-            # Skip YAML frontmatter
-            content = f.read()
-            if content.startswith("---"):
-                content = content.split("---", 2)[2]
-            parts.append(content.strip())
-
-    finance_claude = os.path.join(VAULT_ROOT, "Finance/CLAUDE.md")
-    if os.path.exists(finance_claude):
-        with open(finance_claude) as f:
-            parts.append("\n\n## Additional Schema Reference\n\n" + f.read())
-
-    parts.append("""
-## Tool Usage Notes
-- Use run_finance_command for high-level commands (dashboard, status, validate, etc.)
-- Use run_sql_query for custom SQL queries against the database
-- Use read_file to read YAML/markdown files from the vault (e.g., pending-transactions.yaml)
-- Use generate_chart to create matplotlib visualizations — they'll be shown inline
-- Always filter spending queries with is_transfer=0 and use ABS(amount) for display
-- Present results as clean markdown tables with rounded amounts
-""")
-    return "\n\n".join(parts)
-
-
-TOOLS = [
-    {
-        "name": "run_finance_command",
-        "description": "Run a finance_db.py CLI command. Available commands: dashboard, status, validate, preflight, categorize, uncategorized, import, import-payslips, import-tax, import-fidelity, import-sofi, import-becu, import-amazon, import-wellsfargo-car, match-pending, rebuild, backup-rules, restore-rules, query.",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "command": {"type": "string", "description": "The command name (e.g., 'dashboard', 'status', 'validate')"},
-                "args": {"type": "string", "description": "Additional arguments (optional)", "default": ""},
-            },
-            "required": ["command"],
-        },
-    },
-    {
-        "name": "run_sql_query",
-        "description": "Execute a SQL query against the finance SQLite database. Use for custom queries not covered by built-in commands. The database has tables: transactions, categories, accounts, payslips, payslip_line_items, amazon_orders, tax_documents, tax_line_items, fidelity_accounts, fidelity_cma_transactions, sofi_loan_statements, becu_checking_statements, becu_checking_transactions, becu_heloc_statements, wellsfargo_car_statements.",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "sql": {"type": "string", "description": "SQL query to execute"},
-            },
-            "required": ["sql"],
-        },
-    },
-    {
-        "name": "read_file",
-        "description": "Read a file from the Obsidian vault. Path is relative to vault root. Useful for reading pending-transactions.yaml, payslip YAMLs, etc.",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "path": {"type": "string", "description": "File path relative to vault root (e.g., 'Finance/pending-transactions.yaml')"},
-            },
-            "required": ["path"],
-        },
-    },
-    {
-        "name": "generate_chart",
-        "description": "Generate a matplotlib chart. The code should query Finance/finance.db directly and save the figure to Finance/reports/<name>.png. Return the filename used.",
-        "input_schema": {
-            "type": "object",
-            "properties": {
-                "python_code": {"type": "string", "description": "Complete Python script using matplotlib. Must save figure with plt.savefig()."},
-                "filename": {"type": "string", "description": "Output filename (e.g., 'monthly-spending-2025.png')"},
-            },
-            "required": ["python_code", "filename"],
-        },
-    },
-]
 
 
 def run_command(command: str, args: str = "") -> str:
@@ -110,160 +34,404 @@ def run_command(command: str, args: str = "") -> str:
         return f"ERROR: {e}"
 
 
-def execute_tool(name: str, input_data: dict) -> tuple[str, str | None]:
-    """Execute a tool call. Returns (text_result, optional_image_path)."""
-    if name == "run_finance_command":
-        return run_command(input_data["command"], input_data.get("args", "")), None
+def build_system_prompt() -> str:
+    """Build a system prompt that tells Claude Code how to use finance_db.py."""
+    parts = [
+        "You are a personal finance analyst. Answer questions about spending, income, and financial data.",
+        "",
+        "## Tools Available",
+        f"Run finance commands: `{PYTHON} {FINANCE_SCRIPT} <command> [args]`",
+        "",
+        "Key commands:",
+        "- `dashboard` — overview of all data sources",
+        "- `query \"<sql>\"` — run SQL against Finance/finance.db",
+        "- `status` — import status",
+        "- `validate` — check balances",
+        "- `match-pending` — match pending transactions",
+        "- `categorize` — apply categorization rules",
+        "- `uncategorized` — show uncategorized transactions",
+        "",
+        "Key tables: transactions, categories, accounts, payslips, payslip_line_items, "
+        "amazon_orders, fidelity_cma_transactions, becu_checking_transactions, becu_heloc_statements",
+        "",
+        "## Query Rules",
+        "- Filter spending with `is_transfer=0` and use `ABS(amount)` for display",
+        "- Present results as clean markdown tables with $ amounts rounded to 2 decimal places",
+        "- For charts: use matplotlib, save to Finance/reports/<name>.png",
+        f"  Run chart scripts with: `{PYTHON} <script.py>`",
+        "",
+        "## Files",
+        f"- Pending transactions: {VAULT_ROOT}/Finance/pending-transactions.yaml",
+        f"- Database: {VAULT_ROOT}/Finance/finance.db",
+        f"- Reports dir: {VAULT_ROOT}/Finance/reports/",
+    ]
 
-    elif name == "run_sql_query":
-        return run_command("query", f'"{input_data["sql"]}"'), None
+    # Append schema reference if available
+    finance_claude = os.path.join(VAULT_ROOT, "Finance/CLAUDE.md")
+    if os.path.exists(finance_claude):
+        with open(finance_claude) as f:
+            parts.append("\n## Schema Reference\n" + f.read())
 
-    elif name == "read_file":
-        path = os.path.join(VAULT_ROOT, input_data["path"])
-        try:
-            with open(path) as f:
-                return f.read(), None
-        except Exception as e:
-            return f"ERROR reading {path}: {e}", None
+    return "\n".join(parts)
 
-    elif name == "generate_chart":
-        os.makedirs(REPORTS_DIR, exist_ok=True)
-        filename = input_data["filename"]
-        output_path = os.path.join(REPORTS_DIR, filename)
 
-        # Inject the save path into the code
-        code = input_data["python_code"]
+# ---------------------------------------------------------------------------
+# HTML/CSS/JS chat UI
+# ---------------------------------------------------------------------------
 
-        with tempfile.NamedTemporaryFile(mode="w", suffix=".py", delete=False) as f:
-            f.write(code)
-            tmp_path = f.name
+HTML = """
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+  :root {
+    --bg: #1e1e2e;
+    --surface: #313244;
+    --text: #cdd6f4;
+    --text-dim: #a6adc8;
+    --accent: #89b4fa;
+    --user-bg: #45475a;
+    --tool-bg: #1e1e2e;
+    --border: #585b70;
+    --input-bg: #313244;
+  }
+  @media (prefers-color-scheme: light) {
+    :root {
+      --bg: #eff1f5;
+      --surface: #ccd0da;
+      --text: #4c4f69;
+      --text-dim: #6c6f85;
+      --accent: #1e66f5;
+      --user-bg: #bcc0cc;
+      --tool-bg: #e6e9ef;
+      --border: #9ca0b0;
+      --input-bg: #ccd0da;
+    }
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  #messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .msg {
+    max-width: 85%;
+    padding: 10px 14px;
+    border-radius: 12px;
+    line-height: 1.5;
+    font-size: 14px;
+    word-wrap: break-word;
+  }
+  .msg.user {
+    align-self: flex-end;
+    background: var(--user-bg);
+    border-bottom-right-radius: 4px;
+  }
+  .msg.assistant {
+    align-self: flex-start;
+    background: var(--surface);
+    border-bottom-left-radius: 4px;
+  }
+  .msg.assistant table {
+    border-collapse: collapse;
+    margin: 8px 0;
+    font-size: 13px;
+    width: 100%;
+  }
+  .msg.assistant th, .msg.assistant td {
+    border: 1px solid var(--border);
+    padding: 4px 8px;
+    text-align: left;
+  }
+  .msg.assistant th {
+    background: var(--tool-bg);
+  }
+  .msg.assistant code {
+    background: var(--tool-bg);
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-size: 13px;
+  }
+  .msg.assistant pre {
+    background: var(--tool-bg);
+    padding: 8px;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 6px 0;
+  }
+  .msg.assistant pre code {
+    padding: 0;
+    background: none;
+  }
+  .msg.assistant img {
+    max-width: 100%;
+    border-radius: 6px;
+    margin: 6px 0;
+  }
+  .thinking {
+    align-self: flex-start;
+    color: var(--text-dim);
+    font-style: italic;
+    font-size: 13px;
+    padding: 6px 14px;
+  }
+  .thinking .dot { animation: blink 1.4s infinite; }
+  .thinking .dot:nth-child(2) { animation-delay: 0.2s; }
+  .thinking .dot:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes blink { 0%,80%,100%{opacity:0} 40%{opacity:1} }
+  #input-area {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    border-top: 1px solid var(--border);
+    background: var(--bg);
+  }
+  #user-input {
+    flex: 1;
+    padding: 10px 14px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    background: var(--input-bg);
+    color: var(--text);
+    font-size: 14px;
+    font-family: inherit;
+    resize: none;
+    outline: none;
+    min-height: 40px;
+    max-height: 120px;
+  }
+  #user-input:focus { border-color: var(--accent); }
+  #send-btn {
+    padding: 8px 18px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: 600;
+    align-self: flex-end;
+  }
+  #send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+</head>
+<body>
+<div id="messages"></div>
+<div id="input-area">
+  <textarea id="user-input" placeholder="Ask about your finances..." rows="1"></textarea>
+  <button id="send-btn" onclick="sendMessage()">Send</button>
+</div>
+<script>
+const msgContainer = document.getElementById('messages');
+const userInput = document.getElementById('user-input');
+const sendBtn = document.getElementById('send-btn');
+let busy = false;
+
+userInput.addEventListener('input', function() {
+  this.style.height = 'auto';
+  this.style.height = Math.min(this.scrollHeight, 120) + 'px';
+});
+
+userInput.addEventListener('keydown', function(e) {
+  if (e.key === 'Enter' && !e.shiftKey) {
+    e.preventDefault();
+    sendMessage();
+  }
+});
+
+function scrollToBottom() {
+  msgContainer.scrollTop = msgContainer.scrollHeight;
+}
+
+function addMessage(role, html) {
+  const div = document.createElement('div');
+  div.className = 'msg ' + role;
+  div.innerHTML = html;
+  msgContainer.appendChild(div);
+  scrollToBottom();
+  return div;
+}
+
+function addThinking() {
+  const div = document.createElement('div');
+  div.className = 'thinking';
+  div.id = 'thinking-indicator';
+  div.innerHTML = 'Thinking<span class="dot">.</span><span class="dot">.</span><span class="dot">.</span>';
+  msgContainer.appendChild(div);
+  scrollToBottom();
+  return div;
+}
+
+function removeThinking() {
+  const el = document.getElementById('thinking-indicator');
+  if (el) el.remove();
+}
+
+function escapeHtml(text) {
+  const d = document.createElement('div');
+  d.textContent = text;
+  return d.innerHTML;
+}
+
+function renderMarkdown(text) {
+  try {
+    return marked.parse(text);
+  } catch (e) {
+    return escapeHtml(text);
+  }
+}
+
+async function sendMessage() {
+  const text = userInput.value.trim();
+  if (!text || busy) return;
+
+  busy = true;
+  sendBtn.disabled = true;
+  userInput.value = '';
+  userInput.style.height = 'auto';
+
+  addMessage('user', escapeHtml(text));
+  addThinking();
+
+  try {
+    const result = await window.pywebview.api.send_message(text);
+    removeThinking();
+    if (result.error) {
+      addMessage('assistant', '<em>Error: ' + escapeHtml(result.error) + '</em>');
+    } else {
+      let html = renderMarkdown(result.text || '');
+      if (result.images) {
+        for (const img of result.images) {
+          html += '<img src="file://' + img + '">';
+        }
+      }
+      addMessage('assistant', html);
+    }
+  } catch (e) {
+    removeThinking();
+    addMessage('assistant', '<em>Error: ' + escapeHtml(String(e)) + '</em>');
+  }
+
+  busy = false;
+  sendBtn.disabled = false;
+  userInput.focus();
+}
+
+// Load initial dashboard on startup
+window.addEventListener('pywebviewready', async function() {
+  try {
+    const status = await window.pywebview.api.get_initial_status();
+    if (status) {
+      addMessage('assistant', renderMarkdown(status));
+    }
+  } catch (e) {
+    addMessage('assistant', '<em>Failed to load: ' + escapeHtml(String(e)) + '</em>');
+  }
+});
+</script>
+</body>
+</html>
+"""
+
+
+# ---------------------------------------------------------------------------
+# pywebview API class — routes queries through Claude Code CLI
+# ---------------------------------------------------------------------------
+
+class Api:
+    def __init__(self):
+        self.system_prompt = build_system_prompt()
+        self.conversation: list[tuple[str, str]] = []  # (role, text) pairs for context
+
+    def get_initial_status(self):
+        """Called on window load — run dashboard and return formatted status."""
+        dashboard = run_command("dashboard")
+        return f"**Finance Chat ready.** Ask me anything about your spending, income, or financial data.\n\n<details><summary>Dashboard</summary>\n\n```\n{dashboard}\n```\n</details>"
+
+    def send_message(self, user_text: str):
+        """Route user question through `claude -p` CLI."""
+        self.conversation.append(("user", user_text))
+
+        # Build the full prompt with conversation history for multi-turn context
+        prompt_parts = []
+        if len(self.conversation) > 1:
+            prompt_parts.append("Previous conversation:")
+            for role, text in self.conversation[:-1]:
+                label = "User" if role == "user" else "Assistant"
+                # Truncate long assistant responses in history to save tokens
+                display = text[:2000] + "..." if len(text) > 2000 else text
+                prompt_parts.append(f"{label}: {display}")
+            prompt_parts.append("")
+
+        prompt_parts.append(user_text)
+        full_prompt = "\n".join(prompt_parts)
 
         try:
             result = subprocess.run(
-                [PYTHON, tmp_path], capture_output=True, text=True, timeout=30, cwd=VAULT_ROOT
+                [
+                    "claude", "-p",
+                    "--system-prompt", self.system_prompt,
+                    "--allowed-tools", "Bash(Scripts/venv/bin/python3*),Bash(cat*),Read",
+                    "--no-session-persistence",
+                    "--model", os.environ.get("CLAUDE_MODEL", "sonnet"),
+                ],
+                input=full_prompt,
+                capture_output=True,
+                text=True,
+                timeout=120,
+                cwd=VAULT_ROOT,
             )
+
             if result.returncode != 0:
-                return f"ERROR generating chart:\n{result.stderr}", None
-            if os.path.exists(output_path):
-                return f"Chart saved to {output_path}", output_path
-            return f"Chart script ran but file not found at {output_path}\nstdout: {result.stdout}\nstderr: {result.stderr}", None
+                error_msg = result.stderr.strip() or f"claude exited with code {result.returncode}"
+                return {"error": error_msg, "images": []}
+
+            response = result.stdout.strip()
+
+        except subprocess.TimeoutExpired:
+            return {"error": "Request timed out after 120 seconds.", "images": []}
+        except FileNotFoundError:
+            return {"error": "Claude Code CLI not found. Make sure 'claude' is in your PATH.", "images": []}
         except Exception as e:
-            return f"ERROR: {e}", None
-        finally:
-            os.unlink(tmp_path)
+            return {"error": str(e), "images": []}
 
-    return f"Unknown tool: {name}", None
+        self.conversation.append(("assistant", response))
 
+        # Detect chart images in response
+        images = []
+        for match in re.finditer(r'(Finance/reports/[\w.-]+\.png)', response):
+            img_path = os.path.join(VAULT_ROOT, match.group(1))
+            if os.path.exists(img_path):
+                images.append(img_path)
 
-@cl.on_chat_start
-async def on_start():
-    """Initialize conversation with system prompt and dashboard context."""
-    api_key = os.environ.get("ANTHROPIC_API_KEY", "")
-    if not api_key:
-        await cl.Message(content="**Set ANTHROPIC_API_KEY environment variable before starting.**").send()
-        return
-
-    client = anthropic.Anthropic(api_key=api_key)
-    system_prompt = load_system_prompt()
-
-    # Prime with dashboard
-    dashboard_output = run_command("dashboard")
-
-    # Read pending transactions
-    pending_path = os.path.join(VAULT_ROOT, "Finance/pending-transactions.yaml")
-    pending_content = ""
-    if os.path.exists(pending_path):
-        with open(pending_path) as f:
-            pending_content = f.read()
-
-    priming = f"## Current Dashboard\n```json\n{dashboard_output}\n```"
-    if pending_content:
-        priming += f"\n\n## Pending Transactions\n```yaml\n{pending_content}\n```"
-
-    cl.user_session.set("client", client)
-    cl.user_session.set("system_prompt", system_prompt + "\n\n" + priming)
-    cl.user_session.set("history", [])
-    cl.user_session.set("model", os.environ.get("CLAUDE_MODEL", "claude-sonnet-4-20250514"))
-
-    await cl.Message(content="Finance Chat ready. Ask me anything about your spending, income, or financial data.").send()
+        return {"text": response, "images": images}
 
 
-@cl.on_message
-async def on_message(message: cl.Message):
-    """Handle user messages with Claude tool_use loop."""
-    client: anthropic.Anthropic = cl.user_session.get("client")
-    if not client:
-        await cl.Message(content="No API key configured. Set ANTHROPIC_API_KEY and restart.").send()
-        return
+# ---------------------------------------------------------------------------
+# Main
+# ---------------------------------------------------------------------------
 
-    system_prompt = cl.user_session.get("system_prompt")
-    history: list = cl.user_session.get("history")
-    model = cl.user_session.get("model")
-
-    history.append({"role": "user", "content": message.content})
-
-    # Tool use loop
-    images_to_attach = []
-    msg = cl.Message(content="")
-    await msg.send()
-
-    while True:
-        response = client.messages.create(
-            model=model,
-            max_tokens=4096,
-            system=system_prompt,
-            tools=TOOLS,
-            messages=history,
-        )
-
-        # Check if there are tool calls
-        tool_uses = [b for b in response.content if b.type == "tool_use"]
-        text_blocks = [b for b in response.content if b.type == "text"]
-
-        if not tool_uses:
-            # Final text response
-            final_text = "\n".join(b.text for b in text_blocks)
-            history.append({"role": "assistant", "content": response.content})
-            msg.content = final_text
-
-            # Attach any chart images
-            for img_path in images_to_attach:
-                img_element = cl.Image(name=os.path.basename(img_path), path=img_path, display="inline")
-                msg.elements.append(img_element)
-
-            await msg.update()
-            break
-
-        # Execute tool calls
-        history.append({"role": "assistant", "content": response.content})
-        tool_results = []
-
-        for tool_use in tool_uses:
-            # Show tool use in a step
-            async with cl.Step(name=tool_use.name, type="tool") as step:
-                step.input = json.dumps(tool_use.input, indent=2)
-                result_text, image_path = execute_tool(tool_use.name, tool_use.input)
-
-                # Truncate very long results
-                if len(result_text) > 15000:
-                    result_text = result_text[:15000] + "\n... (truncated)"
-
-                step.output = result_text
-                if image_path:
-                    images_to_attach.append(image_path)
-
-            tool_results.append({
-                "type": "tool_result",
-                "tool_use_id": tool_use.id,
-                "content": result_text,
-            })
-
-        history.append({"role": "user", "content": tool_results})
-
-        # Stream partial text if any
-        if text_blocks:
-            partial = "\n".join(b.text for b in text_blocks)
-            msg.content = partial + "\n\n*Running tools...*"
-            await msg.update()
-
-    cl.user_session.set("history", history)
+if __name__ == "__main__":
+    api = Api()
+    window = webview.create_window(
+        "Finance Advisor",
+        html=HTML,
+        js_api=api,
+        width=900,
+        height=700,
+        min_size=(600, 400),
+    )
+    webview.start()
