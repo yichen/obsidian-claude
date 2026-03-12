@@ -60,3 +60,11 @@
   category: Supplements
   memo: 'THORNE Creatine monohydrate powder 90 servings, Order #112-7587571-7851456'
   status: pending
+
+- date: '2026-03-11'
+  account: chase-freedom
+  amount: -129.75
+  payee: Costco
+  category: Groceries
+  memo: 'Costco Issaquah #110: 2x eggs, 5x poke bowl salmon, broccoli, tomatoes, avocados'
+  status: pending

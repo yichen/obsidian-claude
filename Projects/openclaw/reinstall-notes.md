@@ -123,6 +123,19 @@ Backups preserved at:
 - `~/openclaw-backup/` — pre-reinstall user files
 - `~/openclaw-clean-install/` — clean install snapshot (for revert reference)
 
+## Config Change: Added Ollama qwen3.5:27b as Fallback (2026-03-11)
+
+Added local Ollama model as backup in `~/.openclaw/openclaw.json`:
+
+- `agents.defaults.model.fallbacks`: added `"ollama/qwen3.5:27b"` after `"openrouter/auto"`
+- `agents.defaults.models`: added `"ollama/qwen3.5:27b": { "alias": "Ollama-qwen3.5:27b" }`
+
+No changes to `models.json`, `auth-profiles.json`, or `gateway.plist` — Ollama is local and needs no auth.
+
+**Revert**: `cp ~/.openclaw/openclaw.json.bak-<timestamp> ~/.openclaw/openclaw.json` then reload LaunchAgent.
+
+---
+
 ## Key Lesson
 
 **OpenClaw reads `OPENROUTER_API_KEY` from the environment**, not from `models.providers.openrouter.apiKey` in the config (or in addition to it). The LaunchAgent must have this env var explicitly set in the plist `EnvironmentVariables` dict, or the built-in OpenRouter provider will never authenticate.
