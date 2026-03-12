@@ -1,4 +1,4 @@
-> Last Updated: 2026-03-11 04:02:16
+> Last Updated: 2026-03-12 04:02:15
 
 
 
@@ -77,14 +77,7 @@
 
 
 
-## Mar 11, Wednesday
 
-*   **[Latin] Sueños de Salsa Salsa y Bachata**
-    *   **Time:** March 11 @ 8:30 pm - 11:00 pm
-    *   **Loc:** Sueños de Salsa, 6512 Roosevelt Way NE, Seattle, WA, US
-    *   **Drive:** 37m (25.0 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/6512%20Roosevelt%20Way%20NE%2C%20Seattle%2C%20WA%2C%20US)
-    *   **Link:** https://golatindance.com/event/suenos-de-salsa-salsa-y-bachata/2026-03-11/
 
 ## Mar 12, Thursday
 
@@ -152,6 +145,12 @@
     *   **Drive:** 35m (21.0 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/704%2019th%20Ave%20E%2C%20Seattle%2C%20WA%2C%20United%20States)
     *   **Link:** https://golatindance.com/event/bliss-salsa-bachata-social-2/2026-03-14/
+*   **[Latin] Second Saturday Salsa & Bachata Social**
+    *   **Time:** March 14 @ 9:00 pm - 12:30 am
+    *   **Loc:** Reverie Ballroom - Seattle, 915 E Pine St, Seattle, WA, United States
+    *   **Drive:** 33m (20.7 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/second-saturday-bachata-social/2026-03-14/
 
 ## Mar 21, Saturday
 
@@ -159,6 +158,21 @@
     *   **Time:** 9 AM
     *   **Facebook Group:** FB Group
     *   **Link:** https://www.facebook.com/events/807832181710025/
+
+## Apr 02, Thursday
+
+*   **[FB] Ancient Lakes Campout and Hiking Meetup!**
+    *   **Time:** 6 PM
+    *   **Loc:** Details
+2 people going, including Danny Arias and Zach George
+Event by Zach George and PNW Singles Camping, Hiking, Paddling, And Other Outdoor Adventures
+Group
+ 
+ · Members of PNW Singles Camping, Hiking, Paddling, And Other Outdoor Adventures
+Come on out and join cohost Danny and I for a relaxed outdoor meetup!! We will be exploring one of Washington’s most unique landscapes in the Quincy Lakes Wilderness. This area is … See more
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Details%0A2%20people%20going%2C%20including%20Danny%20Arias%20and%20Zach%20George%0AEvent%20by%20Zach%20George%20and%20PNW%20Singles%20Camping%2C%20Hiking%2C%20Paddling%2C%20And%20Other%20Outdoor%20Adventures%0AGroup%0A%C2%A0%0A%20%C2%B7%20Members%20of%20PNW%20Singles%20Camping%2C%20Hiking%2C%20Paddling%2C%20And%20Other%20Outdoor%20Adventures%0ACome%20on%20out%20and%20join%20cohost%20Danny%20and%20I%20for%20a%20relaxed%20outdoor%20meetup%21%21%20We%20will%20be%20exploring%20one%20of%20Washington%E2%80%99s%20most%20unique%20landscapes%20in%20the%20Quincy%20Lakes%20Wilderness.%20This%20area%20is%20%E2%80%A6%20See%20more)
+    *   **Facebook Group:** FB Group
+    *   **Link:** https://www.facebook.com/events/930119719389212/
 
 ## Jun 08, Monday
 
