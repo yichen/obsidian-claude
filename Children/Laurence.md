@@ -1,3 +1,6 @@
+## 2026-03-12
+- School health room visit: got hit in the face with a ball during P.E. No visible injury; health room applied ice pack. Head Injury Report sent home. (Email from Ivy Rasquinha, Health Room Specialist, Endeavour Elementary.)
+
 ## 2026-03-03
 - **Regulation Tool:** Ciara assigned the 'impulse stoplight' homework (red = stop and think, yellow = double-check the impulse, green = act) to help him slow down before reacting; plan to practice it together during transitions.
 - **Stop-Think-Choose Worksheet:** She also provided a stoplight sheet prompting him to notice his feelings, brainstorm at least two choices, and then pick the best action before he moves.
