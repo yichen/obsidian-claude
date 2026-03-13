@@ -227,6 +227,8 @@
   },
   "active": "6f09735df8cb3e99",
   "lastOpenFiles": [
+    "Projects/2_personal-finance-llm/execution-log.md",
+    "Projects/2_personal-finance-llm/execution-spec.md",
     "Finance/reports/top_merchants_1773414879801.png",
     "Finance/reports/monthly_cashflow_1773414877563.png",
     "Finance/reports/spending_by_category_1773414875177.png",
@@ -243,7 +245,6 @@
     "Projects/2_personal-finance-llm/demo-app/tests/audit-baseline.png",
     "Finance/reports/top_merchants_1773382742579.png",
     "Finance/reports/monthly_cashflow_1773382740610.png",
-    "Finance/reports/spending_by_category_1773382738190.png",
     "Projects/2_personal-finance-llm/demo-app/test-results",
     "Projects/2_personal-finance-llm/demo-app/tests",
     "Projects/2_personal-finance-llm/demo-app/node_modules/@playwright/test/README.md",
@@ -272,7 +273,6 @@
     "Projects/2_personal-finance-llm/demo-app/node_modules/autoprefixer/README.md",
     "Projects/2_personal-finance-llm/demo-app/node_modules/fraction.js/CHANGELOG.md",
     "Projects/2_personal-finance-llm/demo-app/node_modules/qs/CHANGELOG.md",
-    "Projects/2_personal-finance-llm/demo-app/node_modules/object-inspect/CHANGELOG.md",
     "Untitled 1.canvas",
     "Untitled.canvas"
   ]
