@@ -1,0 +1,10 @@
+{
+  "name": "personal-finance-llm-root",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Proxy package.json for project-level commands",
+  "scripts": {
+    "test": "npm --prefix demo-app test",
+    "dev": "npm --prefix demo-app run dev"
+  }
+}

@@ -1,14 +1,13 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { MessageBubble } from './MessageBubble'
-import { Message, ToolResult } from '../lib/types'
+import { Message, ToolResult, PinnedChart } from '../lib/types'
+import { Send, Eraser, Sparkles, PieChart, Baby, Tag, LineChart, Loader2 } from 'lucide-react'
 
 const SUGGESTIONS = [
-  'Show me a spending dashboard',
-  'How much did I spend on kids last 3 months?',
-  'What are my top spending categories this year?',
-  'Show monthly cash flow for 2025',
-  'What did I spend on dining vs groceries?',
-  'Generate a chart of monthly spending by category'
+  { label: 'Spending Dashboard', icon: <PieChart size={18} className="text-blue-500" />, prompt: 'Show me a spending dashboard' },
+  { label: 'Kids Spending', icon: <Baby size={18} className="text-rose-500" />, prompt: 'How much did I spend on kids last 3 months?' },
+  { label: 'Top Categories', icon: <Tag size={18} className="text-amber-500" />, prompt: 'What are my top spending categories this year?' },
+  { label: 'Monthly Cashflow', icon: <LineChart size={18} className="text-emerald-500" />, prompt: 'Show monthly cash flow for 2025' }
 ]
 
 let msgCounter = 0
@@ -29,29 +28,68 @@ declare global {
   }
 }
 
-export function ChatInterface(): React.ReactElement {
-  const [messages, setMessages] = useState<Message[]>([
+interface ChatInterfaceProps {
+  initialMessage?: string
+  onClearInitial?: () => void
+  persistedMessages?: Message[]
+  onMessagesChange?: (messages: Message[]) => void
+  onPinChart?: (chart: Omit<PinnedChart, 'id' | 'timestamp'>) => void
+}
+
+export function ChatInterface({ 
+  initialMessage, 
+  onClearInitial, 
+  persistedMessages, 
+  onMessagesChange,
+  onPinChart
+}: ChatInterfaceProps): React.ReactElement {
+  const [messages, setMessages] = useState<Message[]>(persistedMessages?.length ? persistedMessages : [
     {
       id: nextId(),
       role: 'assistant',
-      content:
-        "Hi! I'm your personal finance AI. I have access to your transactions, payslips, Amazon orders, and tax documents. What would you like to know?"
+      content: "Hi! I'm your personal finance AI. I've analyzed your local transactions and records. How can I help you optimize your finances today?"
     }
   ])
   const [input, setInput] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [activeTool, setActiveTool] = useState<string | null>(null)
+  
   const bottomRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
 
   useEffect(() => {
+    onMessagesChange?.(messages)
+  }, [messages, onMessagesChange])
+
+  useEffect(() => {
+    if (initialMessage && !isLoading) {
+      const lastUserMsg = [...messages].reverse().find(m => m.role === 'user')
+      if (lastUserMsg?.content !== initialMessage) {
+        sendMessage(initialMessage)
+      }
+      onClearInitial?.()
+    }
+  }, [initialMessage, messages, isLoading])
+
+  useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }, [messages])
+  }, [messages, activeTool])
+
+  const clearSession = () => {
+    if (isLoading) return
+    setMessages([{
+      id: nextId(),
+      role: 'assistant',
+      content: "Workspace reset. What's on your mind?"
+    }])
+  }
 
   const sendMessage = useCallback(
     async (text: string) => {
       if (!text.trim() || isLoading) return
       setInput('')
       setIsLoading(true)
+      setActiveTool(null)
 
       const userMsg: Message = { id: nextId(), role: 'user', content: text }
       const loadingId = nextId()
@@ -59,25 +97,19 @@ export function ChatInterface(): React.ReactElement {
 
       setMessages((prev) => [...prev, userMsg, loadingMsg])
 
-      // Collect the history for the API (exclude tool messages and loading)
       const history = [...messages, userMsg]
         .filter((m) => m.role === 'user' || m.role === 'assistant')
         .filter((m) => !m.isLoading && m.content !== '')
         .map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content }))
 
-      // Listen for live tool-call progress updates
       const cleanupTool = window.api.onToolResult((data) => {
-        const label =
-          data.tool === 'execute_sql'
-            ? `Running SQL: ${String(data.sql ?? '').substring(0, 60)}…`
-            : data.tool === 'run_finance_command'
-              ? `Running: ${data.command}`
-              : `Generating chart…`
-        setMessages((prev) => [...prev, { id: nextId(), role: 'tool', content: label }])
+        const label = data.tool === 'execute_sql' ? 'Analyzing database...' : 
+                     data.tool === 'run_finance_command' ? `Executing ${data.command}...` : 
+                     'Visualizing data...'
+        setActiveTool(label)
       })
 
       try {
-        // Final response comes back as the resolved Promise value — no race condition
         const result = await window.api.sendChat(history)
         setMessages((prev) =>
           prev.map((m) =>
@@ -89,14 +121,13 @@ export function ChatInterface(): React.ReactElement {
       } catch (err) {
         setMessages((prev) =>
           prev.map((m) =>
-            m.id === loadingId
-              ? { ...m, isLoading: false, content: `Error: ${String(err)}` }
-              : m
+            m.id === loadingId ? { ...m, isLoading: false, content: `System Error: ${String(err)}` } : m
           )
         )
       } finally {
         cleanupTool()
         setIsLoading(false)
+        setActiveTool(null)
       }
     },
     [messages, isLoading]
@@ -109,56 +140,65 @@ export function ChatInterface(): React.ReactElement {
     }
   }
 
-  const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>): void => {
-    setInput(e.target.value)
-    const ta = textareaRef.current
-    if (ta) {
-      ta.style.height = 'auto'
-      ta.style.height = `${Math.min(ta.scrollHeight, 160)}px`
-    }
-  }
-
   return (
     <div className="chat-container">
-      <div className="chat-header">
-        <h1>Finance AI</h1>
-        <span className="model-badge">claude-sonnet via OpenRouter</span>
-      </div>
+      <header className="chat-header">
+        <div className="flex items-center gap-2">
+          <Sparkles size={16} className="text-emerald-500" />
+          <h1>Financial Analyst</h1>
+        </div>
+        <button 
+          onClick={clearSession} 
+          disabled={isLoading}
+          className="new-session-btn"
+        >
+          <Eraser size={14} /> Reset Session
+        </button>
+      </header>
 
       <div className="messages-area">
         {messages.map((msg) => (
-          <MessageBubble key={msg.id} message={msg} />
+          <MessageBubble key={msg.id} message={msg} onPinChart={onPinChart} />
         ))}
-        <div ref={bottomRef} />
+        {activeTool && (
+          <div className="thinking-indicator">
+            <span className="spinner-dot" />
+            <span className="thinking-text">{activeTool}</span>
+          </div>
+        )}
+        <div ref={bottomRef} className="h-4" />
       </div>
 
       {messages.length === 1 && (
-        <div className="suggestions">
+        <div className="suggestions-grid">
           {SUGGESTIONS.map((s) => (
-            <button key={s} className="suggestion-chip" onClick={() => sendMessage(s)}>
-              {s}
+            <button key={s.prompt} className="suggestion-card" onClick={() => sendMessage(s.prompt)}>
+              <span className="suggestion-icon">{s.icon}</span>
+              <span className="suggestion-label">{s.label}</span>
             </button>
           ))}
         </div>
       )}
 
       <div className="input-area">
-        <textarea
-          ref={textareaRef}
-          value={input}
-          onChange={handleInput}
-          onKeyDown={handleKeyDown}
-          placeholder="Ask about your finances… (Enter to send, Shift+Enter for new line)"
-          disabled={isLoading}
-          rows={1}
-        />
-        <button
-          className="send-btn"
-          onClick={() => sendMessage(input)}
-          disabled={isLoading || !input.trim()}
-        >
-          {isLoading ? '⏳' : '↑'}
-        </button>
+        <div className="input-wrapper">
+          <textarea
+            ref={textareaRef}
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={handleKeyDown}
+            placeholder="Ask about your finances or search records..."
+            disabled={isLoading}
+            rows={1}
+          />
+          <button
+            className="send-btn"
+            onClick={() => sendMessage(input)}
+            disabled={isLoading || !input.trim()}
+          >
+            {isLoading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
+          </button>
+        </div>
       </div>
     </div>
   )

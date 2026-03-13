@@ -70,6 +70,15 @@ export function initConfig(deps?: Partial<FinanceDeps>): void {
   PYTHON_BIN = deps?.pythonBin || `${VAULT_PATH}/Scripts/venv/bin/python3`
   FINANCE_SCRIPT = deps?.financeScript || `${VAULT_PATH}/.claude/scripts/finance_db.py`
 
+  // ── Validation ─────────────────────────────────────────────────────────
+  const fsImpl = deps?.fs || fs
+  if (!fsImpl.existsSync(PYTHON_BIN)) {
+    throw new Error(`Python binary not found at ${PYTHON_BIN}. Please check your environment or VAULT_PATH.`)
+  }
+  if (!fsImpl.existsSync(FINANCE_SCRIPT)) {
+    throw new Error(`Finance script not found at ${FINANCE_SCRIPT}. Please check your environment or VAULT_PATH.`)
+  }
+
   if (deps?.openai) {
     openrouterClient = deps.openai
   } else {
@@ -158,6 +167,25 @@ export const TOOLS: OpenAI.Chat.ChatCompletionTool[] = [
   {
     type: 'function',
     function: {
+      name: 'execute_batch_sql',
+      description:
+        'Execute multiple SQL SELECT statements in parallel. Use this to fetch all required data for a dashboard or complex question in a single round trip.',
+      parameters: {
+        type: 'object',
+        properties: {
+          queries: {
+            type: 'array',
+            items: { type: 'string' },
+            description: 'Array of SQL SELECT statements'
+          }
+        },
+        required: ['queries']
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
       name: 'execute_sql',
       description:
         'Execute a SQL query against the local finance SQLite database. Use this to answer spending questions, look up transactions, compute totals, etc.',
@@ -188,6 +216,30 @@ export const TOOLS: OpenAI.Chat.ChatCompletionTool[] = [
           }
         },
         required: ['command']
+      }
+    }
+  },
+  {
+    type: 'function',
+    function: {
+      name: 'generate_standard_chart',
+      description:
+        'Generate a pre-defined financial chart (spending_by_category, monthly_cashflow, or top_merchants) instantly.',
+      parameters: {
+        type: 'object',
+        properties: {
+          type: {
+            type: 'string',
+            enum: ['spending_by_category', 'monthly_cashflow', 'top_merchants'],
+            description: 'The type of chart to generate'
+          },
+          months: {
+            type: 'number',
+            description: 'Months of history (default 6)',
+            default: 6
+          }
+        },
+        required: ['type']
       }
     }
   },
@@ -240,11 +292,19 @@ export const SYSTEM_PROMPT = `You are a personal finance analyst with access to 
 
 **Tax**: tax_documents (form_type, tax_year, payer_name) + tax_line_items (box_name, box_value). W-2 box 1_wages, box 2_fed_tax_withheld, box 12_D (401k). 1040 has summary.adjusted_gross_income, summary.total_tax, summary.refund_or_owed.
 
-Always run execute_sql or run_finance_command to get real data before answering. Do not make up numbers. Present results as clean markdown tables.
+Always run tools to get real data before answering. Do not make up numbers. Present results as clean markdown tables.
 
-**CHARTS**: When the user asks for any chart, graph, or visualization — ALWAYS call the generate_chart tool to produce a matplotlib PNG. NEVER render charts as ASCII art, Unicode characters, or text diagrams. The app renders the PNG image inline in the chat, so text-based charts are unnecessary and harder to read.
+**HEADLESS ANALYST MODE**:
+1. DO NOT speak to the user (no "I will look that up") until you have ALL the data. 
+2. If a request requires multiple queries, you MUST use 'execute_batch_sql' or call multiple tools at once in your VERY FIRST response.
+3. Batching is CRITICAL for low latency. Aim for a maximum of 2 tool rounds total.
 
-Start each session by running run_finance_command("dashboard") to check data freshness.`
+**SQL LIMITS**: Always use LIMIT 15 in your SQL queries unless you are aggregating data (e.g. GROUP BY), to prevent massive context bloat.
+
+**CHARTS**: When the user asks for any chart, graph, or visualization:
+1.  **ALWAYS check if 'generate_standard_chart' can fulfill the request.** If the user asks for "cashflow", "spending by category", or "top merchants", YOU MUST use 'generate_standard_chart'. This is 10x faster.
+2.  Only use the manual 'generate_chart' tool for highly custom requests that are not covered by the standard types.
+3.  NEVER render charts as ASCII art, Unicode characters, or text diagrams. The app renders the PNG image inline in the chat. You have access to: 'sqlite3', 'matplotlib', 'pandas', and 'numpy'.`
 
 // ── Chat handler ─────────────────────────────────────────────────────────
 
@@ -253,14 +313,83 @@ interface Message {
   content: string
 }
 
+// ── Local Intent Router (The Latency Killer) ──────────────────────────────
+
+/**
+ * Intercepts common user queries and provides instant local context
+ * before the first cloud API call. This eliminates the "Planning" round trip.
+ */
+async function localIntentRouter(
+  messages: Message[],
+  deps: FinanceDeps
+): Promise<string | null> {
+  const lastUserMsg = [...messages].reverse().find(m => m.role === 'user')?.content.toLowerCase() || ''
+  
+  // ── Optimization: Only inject if NOT already in recent history ──────────
+  const hasRecentContext = messages.some(m => m.content.includes('[LOCAL CONTEXT ACQUIRED]'))
+  if (hasRecentContext) return null
+
+  // If user asks for dashboard or summary, pre-fetch local aggregated context
+  if (lastUserMsg.includes('dashboard') || lastUserMsg.includes('summary') || lastUserMsg.includes('how am i doing') || lastUserMsg.includes('spending by category') || lastUserMsg.includes('cash flow')) {
+    console.log('[router] Intercepted dashboard intent. Fetching local summary...')
+    
+    // For now, we call the summary logic directly since it's in the same process
+    // In a full MCP setup, this would be a tool call to the sidecar.
+    try {
+      const summary = await generateLocalSummary(deps)
+      return `[LOCAL CONTEXT ACQUIRED]\n${summary}`
+    } catch (e) {
+      console.warn('[router] Failed to generate local summary:', e)
+    }
+  }
+  
+  return null
+}
+
+async function generateLocalSummary(deps: FinanceDeps): Promise<string> {
+  // Use the existing queryDB helper to get 4 key pieces of data in parallel
+  const [categories, trend, merchants, income] = await Promise.all([
+    queryDB("SELECT COALESCE(cp.name, c.name) as name, SUM(ABS(t.amount)) as total FROM transactions t LEFT JOIN categories c ON c.id = t.category_id LEFT JOIN categories cp ON cp.id = c.parent_id WHERE t.is_transfer = 0 AND t.date >= date('now', '-3 months') GROUP BY 1 ORDER BY total DESC LIMIT 8", deps),
+    queryDB("SELECT strftime('%Y-%m', t.date) as month, SUM(ABS(t.amount)) as total FROM transactions t WHERE t.is_transfer = 0 AND t.date >= date('now', '-12 months') GROUP BY 1 ORDER BY 1 DESC", deps),
+    queryDB("SELECT description, SUM(ABS(amount)) as total FROM transactions WHERE is_transfer = 0 AND date >= date('now', '-1 month') GROUP BY 1 ORDER BY total DESC LIMIT 10", deps),
+    queryDB("SELECT strftime('%Y-%m', pay_date) as month, SUM(net_pay) as total FROM payslips WHERE pay_date >= date('now', '-6 months') GROUP BY 1 ORDER BY 1 DESC", deps)
+  ])
+
+  let s = "## Local Financial Intelligence (Pre-fetched Context)\n"
+  
+  if ('rows' in categories && categories.rows.length > 0) {
+    s += "\n### Top Spending Categories (Last 3 Months):\n" + categories.rows.map(r => `- ${r[0]}: $${Number(r[1]).toFixed(2)}`).join('\n')
+  }
+  
+  if ('rows' in income && income.rows.length > 0) {
+    s += "\n\n### Income History (Last 6 Months):\n" + income.rows.map(r => `- ${r[0]}: $${Number(r[1]).toFixed(2)}`).join('\n')
+  }
+
+  if ('rows' in trend && trend.rows.length > 0) {
+    s += "\n\n### Monthly Spending Trend:\n" + trend.rows.map(r => `- ${r[0]}: $${Number(r[1]).toFixed(2)}`).join('\n')
+  }
+  
+  s += "\n\n**INSTRUCTION**: Use the data above to answer the user immediately. Do not run these queries again. If charts are needed, call 'generate_standard_chart' now."
+  return s
+}
+
 export async function handleChat(
   messages: Message[],
   eventSender: EventSender,
   deps: FinanceDeps
 ): Promise<ChatResult> {
+  // ── STEP 0: Check Local Router ──────────────────────────────────────────
+  const localContext = await localIntentRouter(messages, deps)
+  const augmentedMessages = [...messages]
+  if (localContext) {
+    augmentedMessages.push({ role: 'assistant', content: localContext })
+  }
+
+  // Prune history to keep context small and fast: last 10 messages only
+  const history = augmentedMessages.slice(-10)
   const apiMessages: OpenAI.Chat.ChatCompletionMessageParam[] = [
     { role: 'system', content: SYSTEM_PROMPT },
-    ...messages.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content }))
+    ...history.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content }))
   ]
 
   let continueLoop = true
@@ -284,9 +413,21 @@ export async function handleChat(
   }
 
   while (continueLoop && rounds++ < MAX_TOOL_ROUNDS) {
+    // ── DEBUG: Log full request payload ──────────────────────────────────
+    try {
+      const debugDir = `${deps.vaultPath}/Finance/reports/debug`
+      if (!deps.fs.existsSync(debugDir)) deps.fs.mkdirSync(debugDir, { recursive: true })
+      const debugFile = `${debugDir}/chat_request_round_${rounds}.json`
+      deps.fs.writeFileSync(debugFile, JSON.stringify({ model: 'anthropic/claude-3.7-sonnet', messages: apiMessages, tools: TOOLS }, null, 2))
+      console.log(`[debug] Request payload saved to ${debugFile}`)
+    } catch (e) {
+      console.warn(`[debug] Failed to save request payload: ${e}`)
+    }
+    // ──────────────────────────────────────────────────────────────────────
+
     const response = await timed(`API call #${rounds}`, () =>
       deps.openai.chat.completions.create({
-        model: 'anthropic/claude-sonnet-4-5',
+        model: 'anthropic/claude-3.7-sonnet',
         messages: apiMessages,
         tools: TOOLS,
         max_tokens: 4096
@@ -294,32 +435,113 @@ export async function handleChat(
     )
     const choice = response.choices[0]
     const msg = choice.message
+    const usage = response.usage
+    
+    // ── STRIP CONVERSATIONAL FILLER ──────────────────────────────────────────
+    // If Claude outputs "I will fetch that..." alongside tool calls, strip the text.
+    // This prevents the text from re-entering the prompt in the next round,
+    // which otherwise tricks Claude out of its "Headless" mode.
+    if (msg.tool_calls && msg.tool_calls.length > 0 && msg.content) {
+      console.log(`[debug] Stripping conversational filler: ${msg.content.substring(0, 50)}...`)
+      msg.content = ''
+    }
+    
     apiMessages.push(msg)
-    console.log(`[chat] round ${rounds}: ${choice.finish_reason}, ${msg.tool_calls?.length ?? 0} tool call(s), elapsed ${elapsed()}ms`)
+
+    // Log detailed trace to console for debugging
+    const trace = `round ${rounds}: ${choice.finish_reason}, ${msg.tool_calls?.length ?? 0} tool call(s), tokens: ${usage?.prompt_tokens} in / ${usage?.completion_tokens} out, elapsed ${elapsed()}ms`
+    console.log(`[chat] ${trace}`)
+
+    // Add usage info to the timing label so it appears in the UI
+    const lastTiming = timings[timings.length - 1]
+    if (lastTiming && lastTiming.label.startsWith('API call')) {
+      lastTiming.label += ` [${usage?.prompt_tokens}↑/${usage?.completion_tokens}↓ ${choice.finish_reason}]`
+    }
 
     if (choice.finish_reason === 'tool_calls' && msg.tool_calls) {
-      for (const toolCall of msg.tool_calls) {
+      const toolResults = await Promise.all(msg.tool_calls.map(async (toolCall) => {
         let args: Record<string, string>
         try {
-          args = JSON.parse(toolCall.function.arguments)
+          // Claude sometimes wraps JSON in markdown blocks (e.g. ```json ... ```)
+          let rawArgs = toolCall.function.arguments.trim()
+          if (rawArgs.startsWith('```')) {
+            rawArgs = rawArgs.replace(/^```[a-z]*\n/, '').replace(/\n```$/, '')
+          }
+          args = JSON.parse(rawArgs)
         } catch {
-          apiMessages.push({ role: 'tool', tool_call_id: toolCall.id, content: JSON.stringify({ error: 'Failed to parse tool arguments' }) })
-          continue
+          const errRes = await timed(`Error parsing tool args: ${toolCall.function.name}`, () => Promise.resolve(''))
+          return { role: 'tool' as const, tool_call_id: toolCall.id, content: JSON.stringify({ error: 'Failed to parse tool arguments' }) }
         }
         let result: string
 
-        if (toolCall.function.name === 'execute_sql') {
+        if (toolCall.function.name === 'execute_batch_sql') {
+          const queries = (args as any).queries as string[]
+          const batchResults = await Promise.all(queries.map(async (sql) => {
+            const shortSql = sql.replace(/\s+/g, ' ').substring(0, 50)
+            const dbResult = await timed(`SQL: ${shortSql}…`, () => queryDB(sql, deps))
+            eventSender.send('chat:tool-result', { tool: 'execute_sql', sql, result: dbResult })
+            return dbResult
+          }))
+          result = JSON.stringify(batchResults)
+          if (result.length > 8000) {
+            result = result.substring(0, 8000) + '... [TRUNCATED - USE LIMITS]'
+          }
+        } else if (toolCall.function.name === 'generate_standard_chart') {
+          const type = args.type
+          const months = Number(args.months || 6)
+          const filename = `${type}_${Date.now()}.png`
+          const reportDir = `${deps.vaultPath}/Finance/reports`
+          if (!deps.fs.existsSync(reportDir)) deps.fs.mkdirSync(reportDir, { recursive: true })
+          const chartPath = `${reportDir}/${filename}`
+          
+          let script = ""
+          if (type === "monthly_cashflow") {
+            script = `import sqlite3\nimport matplotlib.pyplot as plt\nimport pandas as pd\nimport numpy as np\nconn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')\ninc = pd.read_sql_query("SELECT strftime('%Y-%m', pay_date) as m, SUM(net_pay) as v FROM payslips GROUP BY 1", conn)\nexp = pd.read_sql_query("SELECT strftime('%Y-%m', date) as m, SUM(ABS(amount)) as v FROM transactions WHERE is_transfer=0 AND amount < 0 GROUP BY 1", conn)\ndf = pd.merge(inc, exp, on='m', how='outer', suffixes=('_i', '_e')).fillna(0).sort_values('m').tail(${months})\nplt.figure(figsize=(10, 6))\nx = np.arange(len(df))\nplt.bar(x-0.2, df['v_i'], 0.4, label='Income', color='green')\nplt.bar(x+0.2, df['v_e'], 0.4, label='Spending', color='red')\nplt.xticks(x, df['m'], rotation=45)\nplt.legend()\nplt.tight_layout()\nplt.savefig('${chartPath}')`
+          } else {
+            script = `import sqlite3\nimport matplotlib.pyplot as plt\nimport pandas as pd\nconn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')\ndf = pd.read_sql_query("SELECT COALESCE(cp.name, c.name) as n, SUM(ABS(t.amount)) as v FROM transactions t LEFT JOIN categories c ON c.id = t.category_id LEFT JOIN categories cp ON cp.id = c.parent_id WHERE t.is_transfer=0 AND t.amount < 0 AND t.date >= date('now', '-${months} months') GROUP BY 1 ORDER BY 2 DESC LIMIT 8", conn)\nplt.figure(figsize=(10, 6))\nplt.pie(df['v'], labels=df['n'], autopct='%1.1f%%')\nplt.title('Spending by Category (Last ${months} Months)')\nplt.tight_layout()\nplt.savefig('${chartPath}')`
+          }
+
+          const tmpScript = `/tmp/std_chart_${Date.now()}.py`
+          try {
+            deps.fs.writeFileSync(tmpScript, script)
+            await timed(`std_chart: ${type}`, () =>
+              deps.execFile(deps.pythonBin, [tmpScript], {
+                cwd: deps.vaultPath,
+                env: { ...process.env, MPLBACKEND: 'Agg' }
+              })
+            )
+            if (deps.fs.existsSync(chartPath)) {
+              lastChartPath = chartPath
+              const b64 = fs.readFileSync(chartPath).toString('base64')
+              lastChartData = `data:image/png;base64,${b64}`
+              result = JSON.stringify({ success: true, path: chartPath })
+            } else {
+              result = JSON.stringify({ success: false, error: 'File not generated' })
+            }
+          } catch (err) {
+            result = JSON.stringify({ error: String(err) })
+          } finally {
+            if (deps.fs.existsSync(tmpScript)) deps.fs.unlinkSync(tmpScript)
+          }
+        } else if (toolCall.function.name === 'execute_sql') {
           const shortSql = args.sql.replace(/\s+/g, ' ').substring(0, 50)
           const dbResult = await timed(`SQL: ${shortSql}…`, () => queryDB(args.sql, deps))
           result = JSON.stringify(dbResult)
+          // Truncate massive results to prevent context explosion
+          if (result.length > 4000) {
+            result = result.substring(0, 4000) + '... [TRUNCATED - USE LIMIT OR AGGREGATION]'
+          }
           eventSender.send('chat:tool-result', { tool: 'execute_sql', sql: args.sql, result: dbResult })
         } else if (toolCall.function.name === 'run_finance_command') {
           result = await timed(`cmd: ${args.command}`, () => runFinanceCommand(args.command, [], deps))
+          if (result.length > 15000) {
+            result = result.substring(0, 15000) + '... [TRUNCATED]'
+          }
           eventSender.send('chat:tool-result', { tool: 'run_finance_command', command: args.command, result })
         } else if (toolCall.function.name === 'generate_chart') {
           const reportDir = `${deps.vaultPath}/Finance/reports`
           if (!deps.fs.existsSync(reportDir)) deps.fs.mkdirSync(reportDir, { recursive: true })
-          const tmpScript = `/tmp/chart_${Date.now()}.py`
+          const tmpScript = `/tmp/chart_${Date.now()}_${Math.random().toString(36).substring(7)}.py`
           try {
             deps.fs.writeFileSync(tmpScript, args.script)
             const { stdout, stderr } = await timed(`chart: ${args.filename}`, () =>
@@ -344,11 +566,12 @@ export async function handleChat(
             if (deps.fs.existsSync(tmpScript)) deps.fs.unlinkSync(tmpScript)
           }
         } else {
+          await timed(`Unknown tool: ${toolCall.function.name}`, () => Promise.resolve(''))
           result = JSON.stringify({ error: 'Unknown tool' })
         }
-
-        apiMessages.push({ role: 'tool', tool_call_id: toolCall.id, content: result })
-      }
+        return { role: 'tool' as const, tool_call_id: toolCall.id, content: result }
+      }))
+      apiMessages.push(...toolResults)
     } else {
       continueLoop = false
       const totalMs = elapsed()

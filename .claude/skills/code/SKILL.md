@@ -31,6 +31,15 @@ $ARGUMENTS
 
 ---
 
+## Technical Integrity Mandate
+
+**CRITICAL**: You are responsible for the entire lifecycle of the code you produce.
+1. **Verification**: If the project has an existing test suite (e.g., `npm test`, `pytest`, `cargo test`), you MUST run it after every significant change and BEFORE handing off the task to the user.
+2. **Automated Testing**: You must add a new test case to the existing test file (if one exists) or create a new test file to verify your changes. A task is NOT complete until its behavioral correctness has been verified by automated tests.
+3. **No regressions**: Ensure your changes do not break existing functionality.
+
+---
+
 ## Workflow Tracking
 
 **IMPORTANT**: Track the following metrics throughout the workflow:

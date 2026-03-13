@@ -15,3 +15,11 @@ export interface ToolResult {
   command?: string
   result: unknown
 }
+
+export interface PinnedChart {
+  id: string
+  title: string
+  chartData: string
+  chartPath?: string
+  timestamp: number
+}

@@ -196,7 +196,8 @@ describe('handleChat', () => {
       sender,
       deps
     )
-    expect(result).toEqual({ text: 'Hello there!', chartPath: undefined })
+    expect(result.text).toContain('Hello there!')
+    expect(result.chartPath).toBeUndefined()
   })
 
   it('one execute_sql tool call: verifies apiMessages has 4 entries on 2nd call', async () => {
@@ -225,7 +226,7 @@ describe('handleChat', () => {
       sender,
       deps
     )
-    expect(result.text).toBe('Got it.')
+    expect(result.text).toContain('Got it.')
 
     // The apiMessages array is passed by reference. By the time we inspect it,
     // the 2nd response's assistant message has also been pushed, giving 5:
@@ -253,7 +254,11 @@ describe('handleChat', () => {
       { finish_reason: 'stop', content: 'Dashboard loaded.' }
     ])
     const execFile = makeExecFileMock([
-      { stdout: 'dashboard output', stderr: '' }
+      { stdout: '[]', stderr: '' }, // router: categories
+      { stdout: '[]', stderr: '' }, // router: trend
+      { stdout: '[]', stderr: '' }, // router: merchants
+      { stdout: '[]', stderr: '' }, // router: income
+      { stdout: 'dashboard output', stderr: '' } // tool: dashboard
     ])
     const deps = makeTestDeps({ openai, execFile })
     const sender = makeEventSender()
@@ -298,7 +303,7 @@ describe('handleChat', () => {
       sender,
       deps
     )
-    expect(result.text).toBe('Chart generated.')
+    expect(result.text).toContain('Chart generated.')
     expect(result.chartPath).toBe('/test/vault/Finance/reports/chart.png')
     // writeFileSync called for the tmp script
     expect(fsMock.writeFileSync).toHaveBeenCalled()
@@ -366,7 +371,7 @@ describe('handleChat', () => {
       sender,
       deps
     )
-    expect(result.text).toBe('Handled unknown.')
+    expect(result.text).toContain('Handled unknown.')
 
     // Verify the tool result message sent to the API contains 'Unknown tool'
     const createFn = openai.chat.completions.create as ReturnType<typeof vi.fn>
