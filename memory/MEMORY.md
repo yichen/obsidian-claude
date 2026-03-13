@@ -15,7 +15,7 @@
 - Schedule H ↔ nanny W-2: exact match both years; 2025 Salesforce W-2 fed withholding ↔ payslip DB: exact match ($160,668.34)
 - **Team agents pattern**: Used 4 parallel agents (parser-1099int, parser-5498, parser-schedule-h, parser-1040) + 1 sequential (cross-validator). Each agent edits different functions in same file — minimal conflicts. TaskCreate with blockedBy for dependencies.
 
-### Personal Finance Database & Analysis Skill (2026-03-01, updated 2026-03-06)
+### Personal Finance Database & Analysis Skill (2026-03-01)
 - Created `/finance` slash command + Python script at `.claude/scripts/finance_db.py`
 - SQLite database at `Finance/finance.db` — schema: transactions, categories, accounts, categorization_rules, import_log, **amazon_orders**, **payslips, payslip_line_items**
 - **5,620 CC transactions** imported from 163 CSVs (Dec 2022 – Feb 2026, 6 cards)
@@ -28,11 +28,9 @@
 - **Amazon subcategories added (Mar 2026)**: Kids Books, Kids Toys and Games, Kids Food, Kids Gear, Baby and Infant, Tech and Electronics, Camping and Outdoor, Photography, Office, Supplements
 - `backup_db()` creates `.db.bak` + auto-exports `Finance/categorization_rules.json` (1,239 rules) before every import
 - `backup-rules` / `restore-rules` commands for manual export/import of categorization rules
-- **Full rebuild**: `finance_db.py rebuild` (single command — parallel parse + sequential import). Flags: `--force`, `--import-only`, `--parse-only`
-- **Pipeline observability**: `dashboard` (per-source status, pending files, freshness, categorization), `preflight` (pre-rebuild checks), `validate` (balance validation)
-- **Retry budget**: All 6 ingest scripts have `MAX_PARSE_ATTEMPTS = 3` — retries transient pdfminer failures
+- **Full rebuild**: `init` → `restore-rules` → `import` → `categorize` → `import-amazon` → `categorize-amazon` → `import-payslips` → `import-tax` → `import-fidelity` → `import-sofi` → `import-becu`
+- `finance_db.py validate` — post-import balance validation against PDF balance summaries
 - `/finance <question>` translates natural language to SQL queries — supports payslip/income/cash-flow queries
-- `/finance` context priming now runs `dashboard` first to detect stale/pending data before answering queries
 - matplotlib installed in venv for chart generation to `Finance/reports/`
 - **Finance CLAUDE.md** at `Finance/CLAUDE.md` documents all data sources, schema, tax facts, query patterns; root CLAUDE.md routes to it
 
@@ -58,50 +56,8 @@
 - **Safe harbor strategy**: keep current withholding, re-evaluate in October, adjust W-4 or make Q4 payment; W-2 withholding counts as paid evenly across all quarters (unlike estimated payments)
 - 110% of prior year tax safe harbor: need ~$180-185K in total 2026 withholding
 
-### Pending Transaction Log System (2026-03-11)
-- **File**: `Finance/pending-transactions.yaml` — pre-log transactions before statements arrive
-- **Log command**: `/finance log <description>` — parses input, appends YAML entry
-- **Match command**: `finance_db.py match-pending` — matches pending entries against DB by account + date (±5 days) + amount (±$1)
-- **Duplicate detection**: Skill checks before appending (account + amount + date ±1 day); script warns on duplicates in output
-- Supports all accounts: cma, apple-card, chase-prime/sapphire/freedom, fidelity-cc, bofa-atmos, becu-checking, amazon
-- Statuses: `pending` → `matched` | `stale` (45+ days). Entries kept forever as audit trail.
-- **Documented in**: `Finance/CLAUDE.md` under "Pending Transaction Log"
-
-### Stripe Tender Offer & Investment Decision (2026-03-10)
-- **Stripe valuation**: $159B (Feb 2026), up 74% from $91.5B (Feb 2025). Tender at $63/share.
-- **Holdings**: 8,946 eligible shares across 2 grants (CS-251512 Aug 2023 @ $20.13, CS-89887 Nov 2023 @ $21.15)
-- **Decision**: Sell $311K (55%), keep $249K (~4,013 shares) for IPO upside
-- Both grants held >1 year → LTCG (20% + 3.8% NIIT = 23.8%). Tax ~$50K, net ~$261K.
-- **Settles Apr 3, 2026**. Plan: pay off SoFi ($41K) + Tesla ($46K) immediately, keep $174K reserve.
-- $249K kept = 5.6% of ~$4.4M net worth — within safe concentration limits
-- Stripe has annual tender offers; no IPO planned ("not in top 20 priorities" — John Collison)
-
-### Net Worth Snapshot (2026-03-10)
-- **Retirement**: $2,238,076 (Roth IRA $930K, Microsoft 401k $1.02M diversified in index funds, SF 401k $188K, Airbnb 401k $83K, ST 401k $13K)
-- **Microsoft 401k holdings**: Vanguard 500 (10%), Vanguard Russell 1000 Growth (29%), Fidelity Growth Company Pool (32%), Fidelity Contrafund Pool (30%) — NO MSFT stock
-- **Real estate**: primary ~$1M equity, rental ~$540K equity
-- **Stripe RSUs**: $560K (pre-sale)
-- **Fidelity non-retirement**: $161K
-- **Estimated total**: ~$4.4M
-
-### Updated Spousal Support Schedule (2026-03-10)
-- $10K/mo through Jun 2026, then **$8K/mo Jul 2026 – Jun 2028**, then $0
-- Previously assumed $10K/mo through late 2028 — this is $2K/mo better starting Jul 2026
-
-### Revised CC Baseline (2026-03-10)
-- Original $2,723/mo estimate was too aggressive — missed Kids Education ($1,225/mo) and Kids Activities ($817/mo)
-- LingoAce Chinese lessons: ~$3,088 semi-annual prepay → amortized ~$515/mo
-- **Realistic CC baseline**: ~$4,800/mo (not $2,723)
-- Kids Education normalized: ~$720/mo (LingoAce $515 + school fees $148 + tutoring $58)
-
-### Cash Flow Analysis (2026-03-01, updated 2026-03-10)
-- **Full analysis saved to**: `Finance/Planning/2026-03-01_Cash-Flow-Analysis-and-Rental-Sale-Decision.md`
-- **Updated projection** with Stripe $311K sale + rental sale + revised spousal ($8K from Jul 2026):
-- Apr 3: Stripe settles → pay SoFi+Tesla → $174K reserve, burn -$3.3K/mo
-- Jun: ESPP freed → flip positive +$2.8K/mo
-- Aug: Rental sold → HELOC paid → $397K reserve, +$6.6K/mo
-- Jul 2028: Spousal ends → +$14.6K/mo
-- **Realistic CC baseline**: $4,800/mo (not $2,723)
+### Cash Flow Analysis (2026-03-01, updated)
+- **Full analysis saved to**: `Finance/Planning/2026-03-01-Cash-Flow-Analysis-and-Rental-Sale-Decision.md`
 - **Monthly take-home (Feb 2026)**: SF $10,817 + ST $9,736 + rental $1,995 = $22,548
 - **Monthly fixed obligations**: $23,833 (spousal $10K, primary mortgage $4,957, rental mortgage $1,780, SoFi $1,764, HELOC $1,358, child support $1,254, Tesla $1,000, rental HOA $620, insurance $550, kids ~$500, primary HOA $50)
 - **After-tax 401k**: already $0 at both employers (confirmed from Feb 2026 payslips)
@@ -113,7 +69,7 @@
 - **No longer need to sell rental** for survival — rental sale becomes optional deleveraging
 - **HELOC**: $150,904 balance, 6.99%, $230K limit, $79K available — runway now ~19 months at -$733/mo (was ~Oct 2026)
 - **Two mortgages via Mr. Cooper**: primary $4,957/mo + rental $1,780/mo
-- **Tesla loan**: Wells Fargo Auto #1313987526, $46,391 balance (Feb 2026), $897.79/mo required + $102.21 extra principal = $1,000/mo via BECU auto-draft (NOT from CMA)
+- **Tesla loan**: Wells Fargo, ~$45K balance, $1,000/mo via BECU auto-draft
 
 ### Rental Property (2026-03-01)
 - **Address**: 2516 175th Ave NE
@@ -201,9 +157,6 @@
 - Always check Trips/Lessons Learned.md before planning
 - Validate all URLs before including in itineraries
 
-## MCP Tool Constraints
-- **Brave Search API (Free plan)**: rate limit = 1 req/sec. NEVER call `mcp__brave-search__brave_web_search` in parallel — always sequential.
-
 ## User Preferences
 
 - Prefers concise financial analysis with tables over narrative
@@ -242,42 +195,10 @@
 - Car: Alamo intermediate (Toyota Corolla), Conf: 68668670
 - Extras: $141 Costco shop card, $100 F&B credit, waived resort fee, free valet
 
-### Finance Pipeline Minions Improvements (2026-03-06) `(COMPLETED)`
-- Implemented 6 changes inspired by Stripe's "Minions" article for reliable one-shot coding agents
-- Added `dashboard`, `preflight`, `rebuild` commands to `finance_db.py`
-- Added `MAX_PARSE_ATTEMPTS = 3` retry budget to all 6 ingest scripts
-- Updated `/finance` context priming to use `dashboard` before answering queries (Data Completeness Guard)
-- Updated `Finance/CLAUDE.md` and `.claude/commands/finance.md` documentation
-
-### Rental Sale Spec Execution (2026-03-02) `(active)`
-- **Spec**: `Projects/1_selling-rental/spec.md` — 11 sub-tasks, 6 acceptance criteria
-- **Execution started** via `/execute-spec` — Phase 2 (plan presented, awaiting user approval)
-- **MetLife Legal Plan** covers real estate transaction review — use before cancelling the benefit
-- **Revised Mar 2026**: deficit -$733/mo (near breakeven), sale is optional deleveraging not survival
-- **HELOC runway**: $79K available / $733/mo = ~9 years — no longer urgent
-
-### BASC After-School Care (2026-03-10) `(active)`
-- ~$615/mo from CMA (53% of $1,160). Details in `memory/topics/cma-categorization-hints.md` — load when ingesting Fidelity CMA or categorizing.
-
-### Stripe Tender Offer Execution (2026-03-10) `(active)`
-- Selling $311K of $560K eligible. Settles Apr 3, 2026.
-- Plan: pay off SoFi + Tesla immediately, keep HELOC open until rental sale covers it (~Aug 2026)
-
-### Rental Sale Timeline (2026-03-10) `(active)`
-- Give tenant 90-day notice → vacancy ~Jun 2026 → list+sell → close ~Aug-Sep 2026
-- Net after tax: ~$374K → pay off HELOC ($151K) → $223K to reserve
-- Eastside market softening: prices -16% YoY, inventory +49% — sell sooner not later
-- Research saved to: `Finance/Planning/2026-03-10_Rental-Property-Inflation-Hedge-Research.md`
-
-### Slash Commands Created (2026-03-11) `(COMPLETED)`
-- `/ruby` — log to `Children/Ruby.md` (### headers, auto-tag)
-- `/laurence` — log to `Children/Laurence.md` (## headers, copyedits input)
-- `/sleep` — log to `Health/Yi's Mental Health, Anxiety, SAD.md` (splits into tagged bullets)
-- `/finance-log` renamed to `/finance-todo` — tracks activities needing follow-up
-
-### Local AI Desktop App Research (2026-03-11) `(active)`
-- Exploring product idea: privacy-focused financial document parsing desktop app
-- **Architecture**: Tauri + llama.cpp sidecar + Phi-4-mini (3.8B, 2.5GB) for local inference
-- **Hybrid approach**: deterministic PDF parsing (pdfplumber) + local LLM for classification/new formats + cloud API fallback for complex docs
-- **Market gap**: no desktop app exists with bundled local LLM for financial doc parsing
-- **Business model**: ship with local model (handles ~70% of formats free), charge for cloud API fallback ($0.50/parser), community parser library as moat
+### Cash Flow / Rental Sale Decision (2026-03-01) `(active)`
+- **Revised Mar 2026**: After hobby freeze + legal eliminated + ESPP stopped + subscription cuts, deficit went from -$6,785/mo to **-$733/mo** (near breakeven)
+- **HELOC runway**: $79K available / $733/mo = ~9 years (was ~Oct 2026) — no longer urgent
+- **Rental sale**: still beneficial (+$5,882/mo surplus, $137K reserve) but **no longer required for survival**
+- **Remaining levers**: cut dining 50% (+$300), audit Apple subs (+$50-100) → would flip to positive
+- **Spousal maintenance ends ~late 2028**: +$10K/mo — everything becomes very comfortable
+- Re-evaluate withholding in October per safe harbor strategy
