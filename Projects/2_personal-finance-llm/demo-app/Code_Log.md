@@ -11,13 +11,13 @@ Status: READY_FOR_REVIEW
 
 | ID | File/Component | Status | Entry | Notes |
 |----|---------------|--------|-------|-------|
-| 1 | electron/finance-core.ts | COMPLETED | #6 | Performance + Validation + Model 3.7 |
+| 1 | electron/finance-core.ts | COMPLETED | #9 | Aggressive Context Reduction |
 | 2 | electron/index.ts | COMPLETED | #2 | Thin Electron shell after extraction |
 | 3 | vitest.config.ts | COMPLETED | #2 | NEW — test runner config |
 | 4 | electron/__tests__/electron-mock.ts | COMPLETED | #3 | NEW — mock factories |
 | 5 | electron/__tests__/finance-core.test.ts | COMPLETED | #5 | Updated for timing info |
 | 6 | electron/__tests__/config.test.ts | COMPLETED | #5 | NEW — path validation tests |
-| 7 | Implementation.md | COMPLETED | #6 | Updated for new features |
+| 7 | Implementation.md | COMPLETED | #9 | Updated |
 
 ## Design Decisions
 
@@ -33,6 +33,14 @@ Status: READY_FOR_REVIEW
 | Switch to Sonnet 3.7 | Faster response times and better reasoning for tool batching | Sonnet 3.5 (slower RTT) | #6 |
 | Context Pruning (10 msgs) | Keeps prompt size small for faster processing | Full history (grows latency over time) | #6 |
 | Tool Batching Instructions | Explicitly tells model to call multiple tools at once | Implicit behavior (resulted in sequential rounds) | #6 |
+| Tool Error Logging | Wrap parse failures and unknown tools in timed() to expose "ghost" rounds | Silent failures | #7 |
+| Markdown Stripping | Clean tool arguments of ```json blocks | Strict JSON parse | #7 |
+| Result Truncation | Limit SQL results to 15k chars to prevent context bloat | Unlimited results | #7 |
+| execute_batch_sql tool | Structural forcing of parallel execution | Purely prompt-based batching | #8 |
+| Headless Analyst Mode | Prohibit conversational filler to prevent turn-ending | Mixed content (text + tools) | #8 |
+| Strip Conversational Filler | Clear `msg.content` if tool calls exist to prevent history pollution | Feeding filler back to LLM | #9 |
+| Aggressive Truncation | Lowered SQL truncation limits from 15k/25k to 4k/8k to prevent bloat | Leaving massive JSON in prompt | #9 |
+| Lower SQL Limits | Prompt instructs `LIMIT 15` instead of 50 | Allowing 50 rows per query | #9 |
 
 ## Conventions Verified
 
@@ -60,69 +68,47 @@ Status: READY_FOR_REVIEW
 
 ## Implementation Log (Append-Only)
 
-### Entry #1 — 2026-03-12 — Phase 1: Architecture Design
+...
 
-**What**: Architect explored all source files and designed test infrastructure.
+### Entry #7 — 2026-03-12 — Phase 2: Implementation (Robustness & Traceability)
+
+**What**: Orchestrator improved tool parsing robustness and timing trace visibility.
 **Findings**:
-- CRITICAL: `queryDB` calls `runFinanceCommand("query \"<sql>\"")` which splits on whitespace, shattering the SQL into broken argv tokens. Every `execute_sql` tool call is broken.
-- MEDIUM: `generate_chart` `finally` block calls `unlinkSync` unconditionally — if `writeFileSync` never created the file, `unlinkSync` throws a masking error.
-- LOW: `openrouter` is `undefined` until `initConfig()` runs; safe in production lifecycle but blocks unit testing.
-- `SYSTEM_PROMPT` and `handleChat` ordering is fine (no bug).
-- `electron/index.ts` conflates Electron lifecycle + business logic — needs extraction for testability.
-**Changes**: None (design phase only). Code_Log.md created.
-**Next**: Implement in order: finance-core.ts, index.ts refactor, vitest.config.ts, mock helpers, test suite.
-**Status**: Proceeding to Phase 2 (Implementation)
-
-### Entry #2 — 2026-03-12 — Phase 2: Implementation
-
-**What**: Implementer extracted `finance-core.ts`, rewrote `electron/index.ts` as thin shell, created `vitest.config.ts`, `electron/__tests__/electron-mock.ts`, `electron/__tests__/finance-core.test.ts`.
-**Findings**: All 22 tests pass on first run (242ms). CRITICAL SQL bug fixed in `runFinanceCommand`. MEDIUM `unlinkSync` bug fixed in `generate_chart`.
-**Changes**: 5 files created/modified.
-**Next**: Code Review + Convention Check.
-**Status**: Completed
-
-### Entry #3 — 2026-03-12 — Phase 3+5: Code Review + Convention Check
-
-**What**: Code Reviewer (opus) audited all files. Convention Checker (sonnet) verified patterns.
-**Findings**:
-- Code Reviewer: ACCEPT WITH CHANGES — 2 required fixes (JSON.parse try/catch; API key log reduction), 3 recommended (loop cap, dead code, spread bug)
-- Convention Checker: ACCEPT — all 7 dimensions pass
-**Changes**: Applied all 5 fixes. Tests still 22/22 green.
-**Next**: Tester writes Implementation.md.
-**Status**: Completed
-
-### Entry #4 — 2026-03-12 — Phase 6: Test & Documentation
-
-**What**: Tester ran final `npm test`, wrote `Implementation.md`.
-**Findings**: 22/22 tests, 231ms. Implementation.md covers architecture, bugs fixed, test approach.
-**Changes**: `Implementation.md` created.
-**Next**: Human review.
-**Status**: READY_FOR_REVIEW
-
-### Entry #5 — 2026-03-12 — Phase 2: Implementation (Performance & Validation)
-
-**What**: Orchestrator implemented performance optimizations and startup validation.
-**Findings**:
-- Sequential tool calls were causing 20s+ latency. Parallelizing reduced this for multiple queries.
-- Removing mandatory "dashboard" call saved one full API round trip (~3.5s).
-- Missing Python/script files caused obscure errors; added explicit `existsSync` checks in `initConfig`.
+- Claude sometimes wrapped JSON arguments in markdown blocks (e.g. ` ```json `), causing silent parse failures and "ghost" API calls (10s+ latency with no visible tool execution).
+- Massive SQL results were bloating the context window, causing subsequent API calls to take 10-12s.
+- The `SYSTEM_PROMPT` still implicitly encouraged sequential tool execution.
 **Changes**:
-- `electron/finance-core.ts`: Parallelized `handleChat`, added timing info to response, added `initConfig` validation, optimized `SYSTEM_PROMPT`.
-- `electron/__tests__/finance-core.test.ts`: Updated to handle new response format.
-- `electron/__tests__/config.test.ts`: Created new test suite for path validation.
-**Next**: Finalize Implementation.md and run full test suite.
+- `electron/finance-core.ts`: Updated `SYSTEM_PROMPT` to aggressively ban conversational filler and mandate LIMIT 50.
+- `electron/finance-core.ts`: Added markdown stripping to the tool arguments JSON parser.
+- `electron/finance-core.ts`: Wrapped parse errors and unknown tool fallbacks in `timed()` to expose them in the timing trace.
+- `electron/finance-core.ts`: Added 15,000 character truncation to massive SQL results to prevent context explosion.
+**Next**: Human review.
 **Status**: COMPLETED
 
-### Entry #6 — 2026-03-12 — Phase 2: Implementation (Model & Context Optimization)
+### Entry #8 — 2026-03-12 — Phase 2: Implementation (Structural Parallelism)
 
-**What**: Orchestrator upgraded model and optimized context handling to further reduce latency.
+**What**: Orchestrator introduced a new tool and a "Headless" prompt mode to force tool batching.
 **Findings**:
-- Sonnet 3.5 on OpenRouter was occasionally slow; 3.7 offers better performance.
-- Unlimited context history increases per-token latency; pruning to 10 messages keeps it snappy.
-- The model needed explicit "EFFICIENCY" instructions to favor batching tool calls.
+- Claude 3.7 was ignoring "EFFICIENCY" prompts and doing 8 sequential rounds for a dashboard.
+- Conversational filler text like "I'll pull that data..." was triggering model-side stops, preventing batching.
+- Multi-tool parallelism is supported by the code but the model needs a structural hint (single tool with array) to use it reliably.
 **Changes**:
-- `electron/finance-core.ts`: Switched model to `anthropic/claude-3.7-sonnet`.
-- `electron/finance-core.ts`: Added `messages.slice(-10)` pruning in `handleChat`.
-- `electron/finance-core.ts`: Added `EFFICIENCY` section to `SYSTEM_PROMPT`.
-**Next**: Human review and verification of batching behavior.
+- `electron/finance-core.ts`: Added `execute_batch_sql` tool taking an array of queries.
+- `electron/finance-core.ts`: Refactored `handleChat` to process batched queries in parallel via `Promise.all`.
+- `electron/finance-core.ts`: Switched to "HEADLESS ANALYST MODE" in `SYSTEM_PROMPT`, strictly prohibiting conversational filler before data is ready.
+**Next**: Human review.
+**Status**: COMPLETED
+
+### Entry #9 — 2026-03-12 — Phase 2: Implementation (Aggressive Context Reduction)
+
+**What**: Orchestrator implemented extreme measures to prevent context bloat and sequential rounds.
+**Findings**:
+- Claude was *still* generating conversational filler ("I'll fetch that...") before executing tools, which we discovered by reading the `debug/chat_request_round_*.json` files. This text was fed back into the context in the next round, tricking the LLM out of "Headless" mode and causing it to execute sequentially.
+- The 15k/25k character truncation limits were too generous. 25,000 characters is ~6,000 tokens, which was causing the massive latency spikes.
+**Changes**:
+- `electron/finance-core.ts`: Added logic to actively strip `msg.content` if `msg.tool_calls` exists, entirely removing the conversational filler from the history loop.
+- `electron/finance-core.ts`: Lowered `execute_sql` truncation limit to 4,000 characters.
+- `electron/finance-core.ts`: Lowered `execute_batch_sql` truncation limit to 8,000 characters.
+- `electron/finance-core.ts`: Updated `SYSTEM_PROMPT` to mandate `LIMIT 15` instead of `LIMIT 50`.
+**Next**: Human review and latency verification.
 **Status**: READY_FOR_REVIEW
