@@ -26,3 +26,4 @@ __pycache__/
 #!/.gitignoreFinance/reports/
 Projects/2_personal-finance-llm/demo-app/out/
 Finance/reports/
+Projects/2_personal-finance-llm/demo-app/node_modules
