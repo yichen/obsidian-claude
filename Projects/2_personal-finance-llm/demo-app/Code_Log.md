@@ -11,12 +11,13 @@ Status: READY_FOR_REVIEW
 
 | ID | File/Component | Status | Entry | Notes |
 |----|---------------|--------|-------|-------|
-| 1 | electron/finance-core.ts | COMPLETED | #2 | NEW — extracted logic + bug fixes |
+| 1 | electron/finance-core.ts | COMPLETED | #6 | Performance + Validation + Model 3.7 |
 | 2 | electron/index.ts | COMPLETED | #2 | Thin Electron shell after extraction |
 | 3 | vitest.config.ts | COMPLETED | #2 | NEW — test runner config |
 | 4 | electron/__tests__/electron-mock.ts | COMPLETED | #3 | NEW — mock factories |
-| 5 | electron/__tests__/finance-core.test.ts | COMPLETED | #2 | NEW — unit tests |
-| 6 | Implementation.md | COMPLETED | #4 | NEW — stakeholder documentation |
+| 5 | electron/__tests__/finance-core.test.ts | COMPLETED | #5 | Updated for timing info |
+| 6 | electron/__tests__/config.test.ts | COMPLETED | #5 | NEW — path validation tests |
+| 7 | Implementation.md | COMPLETED | #6 | Updated for new features |
 
 ## Design Decisions
 
@@ -26,6 +27,12 @@ Status: READY_FOR_REVIEW
 | Dependency injection via FinanceDeps | Enables mocking execFile and openai in tests | Module-level monkey-patching | #1 |
 | Fix runFinanceCommand to accept pre-split args | CRITICAL: whitespace split breaks SQL queries | Shell escaping (no shell used) | #1 |
 | eventSender interface instead of IpcMainInvokeEvent | Allows plain-object mock in tests | Importing electron types in tests | #1 |
+| Parallelize tool calls | Reduces latency for multiple independent SQL queries | Sequential execution | #5 |
+| Remove dashboard instruction | Avoids unnecessary 3.5s API round trip at startup | Keep dashboard for "freshness" | #5 |
+| Path validation in initConfig | Prevent obscure ENOENT errors on startup/tests | No validation (silent failure) | #5 |
+| Switch to Sonnet 3.7 | Faster response times and better reasoning for tool batching | Sonnet 3.5 (slower RTT) | #6 |
+| Context Pruning (10 msgs) | Keeps prompt size small for faster processing | Full history (grows latency over time) | #6 |
+| Tool Batching Instructions | Explicitly tells model to call multiple tools at once | Implicit behavior (resulted in sequential rounds) | #6 |
 
 ## Conventions Verified
 
@@ -35,16 +42,19 @@ Status: READY_FOR_REVIEW
 
 | ID | Description | Type | Status | Entry |
 |----|-------------|------|--------|-------|
-| T1 | loadEnv parses KEY=VALUE correctly | Unit | PENDING | #1 |
-| T2 | loadEnv strips trailing whitespace/comments | Unit | PENDING | #1 |
-| T3 | runFinanceCommand passes args correctly | Unit | PENDING | #1 |
-| T4 | queryDB SQL with spaces passes as single arg | Unit/Regression | PENDING | #1 |
-| T5 | queryDB parses JSON result to columns/rows | Unit | PENDING | #1 |
-| T6 | handleChat single-turn no tool calls | Unit | PENDING | #1 |
-| T7 | handleChat execute_sql tool loop | Unit | PENDING | #1 |
-| T8 | handleChat run_finance_command tool loop | Unit | PENDING | #1 |
-| T9 | generate_chart unlinkSync guarded in finally | Unit/Regression | PENDING | #1 |
-| T10 | handleChat API error propagates | Unit | PENDING | #1 |
+| T1 | loadEnv parses KEY=VALUE correctly | Unit | COMPLETED | #1 |
+| T2 | loadEnv strips trailing whitespace/comments | Unit | COMPLETED | #1 |
+| T3 | runFinanceCommand passes args correctly | Unit | COMPLETED | #1 |
+| T4 | queryDB SQL with spaces passes as single arg | Unit/Regression | COMPLETED | #1 |
+| T5 | queryDB parses JSON result to columns/rows | Unit | COMPLETED | #1 |
+| T6 | handleChat single-turn no tool calls | Unit | COMPLETED | #1 |
+| T7 | handleChat execute_sql tool loop | Unit | COMPLETED | #1 |
+| T8 | handleChat run_finance_command tool loop | Unit | COMPLETED | #1 |
+| T9 | generate_chart unlinkSync guarded in finally | Unit/Regression | COMPLETED | #1 |
+| T10 | handleChat API error propagates | Unit | COMPLETED | #1 |
+| T11 | initConfig throws if Python missing | Unit | COMPLETED | #5 |
+| T12 | initConfig throws if finance script missing | Unit | COMPLETED | #5 |
+| T13 | handleChat response includes timing info | Unit | COMPLETED | #5 |
 
 ---
 
@@ -87,4 +97,32 @@ Status: READY_FOR_REVIEW
 **Findings**: 22/22 tests, 231ms. Implementation.md covers architecture, bugs fixed, test approach.
 **Changes**: `Implementation.md` created.
 **Next**: Human review.
+**Status**: READY_FOR_REVIEW
+
+### Entry #5 — 2026-03-12 — Phase 2: Implementation (Performance & Validation)
+
+**What**: Orchestrator implemented performance optimizations and startup validation.
+**Findings**:
+- Sequential tool calls were causing 20s+ latency. Parallelizing reduced this for multiple queries.
+- Removing mandatory "dashboard" call saved one full API round trip (~3.5s).
+- Missing Python/script files caused obscure errors; added explicit `existsSync` checks in `initConfig`.
+**Changes**:
+- `electron/finance-core.ts`: Parallelized `handleChat`, added timing info to response, added `initConfig` validation, optimized `SYSTEM_PROMPT`.
+- `electron/__tests__/finance-core.test.ts`: Updated to handle new response format.
+- `electron/__tests__/config.test.ts`: Created new test suite for path validation.
+**Next**: Finalize Implementation.md and run full test suite.
+**Status**: COMPLETED
+
+### Entry #6 — 2026-03-12 — Phase 2: Implementation (Model & Context Optimization)
+
+**What**: Orchestrator upgraded model and optimized context handling to further reduce latency.
+**Findings**:
+- Sonnet 3.5 on OpenRouter was occasionally slow; 3.7 offers better performance.
+- Unlimited context history increases per-token latency; pruning to 10 messages keeps it snappy.
+- The model needed explicit "EFFICIENCY" instructions to favor batching tool calls.
+**Changes**:
+- `electron/finance-core.ts`: Switched model to `anthropic/claude-3.7-sonnet`.
+- `electron/finance-core.ts`: Added `messages.slice(-10)` pruning in `handleChat`.
+- `electron/finance-core.ts`: Added `EFFICIENCY` section to `SYSTEM_PROMPT`.
+**Next**: Human review and verification of batching behavior.
 **Status**: READY_FOR_REVIEW

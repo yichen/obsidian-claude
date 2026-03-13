@@ -4,6 +4,8 @@
 
 The original `electron/index.ts` monolith mixed Electron lifecycle code with all business logic, making it impossible to unit test without spawning a real Electron window. The refactor extracted all testable logic into `electron/finance-core.ts` using dependency injection, leaving `electron/index.ts` as a thin shell. A full Vitest test suite covers every public function with mocks — no Electron runtime, no network, no filesystem required.
 
+Recent updates added performance optimizations for tool call handling and robust startup validation to prevent obscure environment errors.
+
 ## Architecture
 
 ### Before (electron/index.ts monolith)
@@ -18,14 +20,26 @@ The original `electron/index.ts` monolith mixed Electron lifecycle code with all
 
 | Bug | Severity | Location | Fix |
 |-----|----------|----------|-----|
-| SQL split on whitespace | Critical | `runFinanceCommand` (old monolith) | Accept `subcommand` and `args: string[]` separately; SQL passed as a single argv element instead of one string that gets word-split by the shell |
+| SQL split on whitespace | Critical | `runFinanceCommand` | Accept `subcommand` and `args: string[]` separately; SQL passed as a single argv element instead of one string that gets word-split by the shell |
 | `unlinkSync` called unconditionally in `finally` | Medium | `generate_chart` handler | Guard with `existsSync(tmpScript)` before calling `unlinkSync`; if `writeFileSync` never created the file, no unlink attempt is made |
+| Sequential tool calls latency | High | `handleChat` | Refactored tool execution loop to use `Promise.all` for parallel execution of multiple independent tool calls (e.g., 4x SQL queries) |
+| Mandatory dashboard latency | Medium | `SYSTEM_PROMPT` | Removed mandatory "dashboard" instruction at startup; Claude now goes straight to relevant data, saving ~3.5s per session |
+| Obscure ENOENT on startup | Medium | `initConfig` | Added explicit `existsSync` validation for Python binary and finance script with descriptive error messages |
+
+## Performance Optimizations
+
+### Parallel Tool Execution
+The `handleChat` loop now processes `msg.tool_calls` concurrently. For complex questions that require multiple SQL queries (e.g., comparing spending across several categories), all queries run in parallel. This reduces total latency from `Sum(tool_times)` to `Max(tool_times)`.
+
+### System Prompt Streamlining
+Removed the "Start each session by running run_finance_command('dashboard')" instruction. While useful for freshness, it forced a 3rd API round trip for every single interaction. Claude now decides when it needs the dashboard versus when it can jump straight to SQL queries.
 
 ## Test Infrastructure
 
 ### Running Tests
 
-```
+```bash
+cd demo-app
 npm test
 ```
 
@@ -33,28 +47,30 @@ npm test
 
 | Area | Tests | Description |
 |------|-------|-------------|
-| `loadEnv` | 5 | Parses KEY=VALUE, strips trailing whitespace, skips `#` comment lines, skips blank lines, silent no-op when file is absent |
-| `runFinanceCommand` | 5 | Correct argv construction, stdout returned, stderr fallback, error string on throw, SQL-with-spaces regression |
-| `queryDB` | 5 | JSON array → `{columns, rows}`, empty array, `{error}` passthrough, exception handling, SQL-as-single-arg regression |
-| `handleChat` | 7 | Single-turn stop, `execute_sql` tool loop (message count), `run_finance_command` event emission, `generate_chart` fs calls, `generate_chart` writeFileSync-throw regression, unknown tool passthrough, API error propagation |
+| `loadEnv` | 5 | Parses KEY=VALUE, strips trailing whitespace, skips `#` comment lines, skips blank lines |
+| `runFinanceCommand` | 5 | Correct argv construction, stdout returned, stderr fallback, error string on throw |
+| `queryDB` | 5 | JSON array → `{columns, rows}`, empty array, `{error}` passthrough, exception handling |
+| `handleChat` | 7 | Single-turn stop, `execute_sql` tool loop, `run_finance_command` event emission, `generate_chart` fs calls, timing info validation |
+| `initConfig` | 3 | **NEW**: Validates existence of Python binary and finance script, throws descriptive errors on failure |
 
 ### Testing Without the Electron Window
 
-`finance-core.ts` has no `import ... from 'electron'` at the module level. Vitest is configured with `environment: 'node'` and `server.deps.external: ['electron']` so even if `electron` were referenced it would be excluded. Tests inject all external dependencies (subprocess execution, OpenAI client, filesystem, vault paths) via the `FinanceDeps` interface. `electron-mock.ts` provides four factory functions (`makeOpenAIMock`, `makeExecFileMock`, `makeFsMock`, `makeEventSender`) and a convenience `makeTestDeps` that wires them together. The OpenAI mock accepts a queue of pre-scripted responses, consuming one per `create()` call, allowing multi-round tool-call loops to be scripted deterministically.
+`finance-core.ts` has no `import ... from 'electron'` at the module level. Vitest is configured with `environment: 'node'` and `server.deps.external: ['electron']`. Tests inject all external dependencies (subprocess execution, OpenAI client, filesystem, vault paths) via the `FinanceDeps` interface. `electron-mock.ts` provides four factory functions (`makeOpenAIMock`, `makeExecFileMock`, `makeFsMock`, `makeEventSender`) and a convenience `makeTestDeps` that wires them together.
 
 ## Key Design Decisions
 
-- **Dependency injection over module-level state**: `FinanceDeps` passed explicitly to every function means tests can swap any dependency without monkey-patching module globals or using `vi.mock()` for the entire openai package.
-- **`EventSender` minimal interface**: Defining `{ send(channel, data): void }` instead of importing `IpcMainInvokeEvent` from Electron keeps `finance-core.ts` free of Electron imports and lets tests pass a simple `vi.fn()` mock object.
+- **Dependency injection over module-level state**: `FinanceDeps` passed explicitly to every function means tests can swap any dependency without monkey-patching module globals.
+- **Parallel safety in `generate_chart`**: Added unique random suffixes to temporary Python script filenames to prevent collisions during parallel execution.
 - **`initConfig()` lazy Electron require**: The `require('electron')` call inside `initConfig()` only executes when called with no arguments (production path), so importing `finance-core.ts` in tests never triggers an Electron module load.
 
 ## Files Changed
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `electron/finance-core.ts` | New | All business logic: `loadEnv`, `initConfig`, `makeDeps`, `runFinanceCommand`, `queryDB`, `handleChat`, `TOOLS`, `SYSTEM_PROMPT`, `FinanceDeps`/`EventSender` interfaces |
-| `electron/index.ts` | Refactored | Thin Electron shell: window creation + three `ipcMain.handle` wrappers delegating to `finance-core.ts` |
-| `vitest.config.ts` | New | Vitest configuration: `node` environment, `electron/__tests__/**/*.test.ts` include pattern, electron externalized |
-| `electron/__tests__/electron-mock.ts` | New | Mock factories: `makeOpenAIMock` (queued responses), `makeExecFileMock` (queued outputs), `makeFsMock` (in-memory store), `makeEventSender`, `makeTestDeps` |
-| `electron/__tests__/finance-core.test.ts` | New | 22 unit tests across `loadEnv`, `runFinanceCommand`, `queryDB`, `handleChat` |
-| `Code_Log.md` | New | Append-only implementation log tracking design decisions, bugs found, and test case status |
+| `electron/finance-core.ts` | Modified | Added parallel tool execution, timing info, and path validation |
+| `electron/index.ts` | Refactored | Thin Electron shell delegating to `finance-core.ts` |
+| `vitest.config.ts` | New | Vitest configuration |
+| `electron/__tests__/finance-core.test.ts` | Modified | Updated tests for new response format (timing info) |
+| `electron/__tests__/config.test.ts` | New | Unit tests for `initConfig` validation logic |
+| `Code_Log.md` | Modified | Append-only implementation log tracking design decisions and performance optimizations |
+| `start.sh` | New | Root-level script for environment pre-flight checks and safe startup |
