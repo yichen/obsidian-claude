@@ -9,7 +9,7 @@ import './styles.css'
 export default function App(): React.ReactElement {
   const [activeView, setActiveView] = useState<'dashboard' | 'chat' | 'transactions'>('dashboard')
   const [initialChatMessage, setInitialChatMessage] = useState<string | undefined>()
-  const [prefetchedTransactions, setPrefetchedTransactions] = useState<any[] | undefined>()
+  const [prefetchedTransactions, setPrefetchedTransactions] = useState<unknown[][] | undefined>()
   const [chatHistory, setChatHistory] = useState<Message[]>([])
   const [pinnedCharts, setPinnedCharts] = useState<PinnedChart[]>([])
 
@@ -59,7 +59,7 @@ export default function App(): React.ReactElement {
           ORDER BY t.date DESC
           LIMIT 100
         `
-        const result = await window.api.dbQuery(sql) as any
+        const result = await window.api.dbQuery(sql) as { rows?: unknown[][] }
         if (result.rows) {
           setPrefetchedTransactions(result.rows)
         }

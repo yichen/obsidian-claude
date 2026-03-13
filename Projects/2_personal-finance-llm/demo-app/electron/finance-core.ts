@@ -41,6 +41,14 @@ export let PYTHON_BIN: string = `${VAULT_PATH}/Scripts/venv/bin/python3`
 export let FINANCE_SCRIPT: string = `${VAULT_PATH}/.claude/scripts/finance_db.py`
 export let openrouterClient: OpenAI | undefined
 
+// ── Category context (populated at startup) ──────────────────────────────
+let CATEGORY_CONTEXT = ''
+
+// ── Finance cache ────────────────────────────────────────────────────────
+interface FinanceCache { summary: string; ts: number }
+let financeCache: FinanceCache | null = null
+const CACHE_TTL_MS = 10 * 60 * 1000
+
 // ── Environment loading ──────────────────────────────────────────────────
 
 export function loadEnv(envPath: string, fsImpl: Pick<typeof fs, 'existsSync' | 'readFileSync'> = fs): void {
@@ -116,6 +124,29 @@ export function makeDeps(): FinanceDeps {
     vaultPath: VAULT_PATH,
     pythonBin: PYTHON_BIN,
     financeScript: FINANCE_SCRIPT
+  }
+}
+
+// ── Startup initializers ─────────────────────────────────────────────────
+
+export async function initCategoryContext(deps: FinanceDeps): Promise<void> {
+  try {
+    const result = await queryDB(`SELECT DISTINCT name FROM categories ORDER BY name`, deps)
+    if ('rows' in result && result.rows.length > 0) {
+      CATEGORY_CONTEXT = result.rows.map((r) => String(r[0])).join(', ')
+      console.log(`[init] Category context loaded: ${result.rows.length} categories`)
+    }
+  } catch (e) {
+    console.warn('[init] Failed to load category context:', e)
+  }
+}
+
+export async function initFinanceCache(deps: FinanceDeps): Promise<void> {
+  try {
+    financeCache = { summary: await buildSummary(deps), ts: Date.now() }
+    console.log('[init] Finance cache populated')
+  } catch (e) {
+    console.warn('[init] Failed to populate finance cache:', e)
   }
 }
 
@@ -329,8 +360,14 @@ async function localIntentRouter(
   const hasRecentContext = messages.some(m => m.content.includes('[LOCAL CONTEXT ACQUIRED]'))
   if (hasRecentContext) return null
 
-  // If user asks for dashboard or summary, pre-fetch local aggregated context
-  if (lastUserMsg.includes('dashboard') || lastUserMsg.includes('summary') || lastUserMsg.includes('how am i doing') || lastUserMsg.includes('spending by category') || lastUserMsg.includes('cash flow')) {
+  // If user asks for dashboard/summary/spending/kids/etc., pre-fetch local aggregated context
+  const routerKeywords = [
+    'dashboard', 'summary', 'how am i doing', 'spending by category', 'cash flow',
+    'kids', 'children', 'spending', 'save', 'savings', 'projection', 'forecast',
+    'runway', 'categories', 'top', 'merchants', 'month', 'cashflow', 'income',
+    'salary', 'invest', 'fidelity', 'portfolio'
+  ]
+  if (routerKeywords.some(kw => lastUserMsg.includes(kw))) {
     console.log('[router] Intercepted dashboard intent. Fetching local summary...')
     
     // For now, we call the summary logic directly since it's in the same process
@@ -346,8 +383,7 @@ async function localIntentRouter(
   return null
 }
 
-async function generateLocalSummary(deps: FinanceDeps): Promise<string> {
-  // Use the existing queryDB helper to get 4 key pieces of data in parallel
+async function buildSummary(deps: FinanceDeps): Promise<string> {
   const [categories, trend, merchants, income] = await Promise.all([
     queryDB("SELECT COALESCE(cp.name, c.name) as name, SUM(ABS(t.amount)) as total FROM transactions t LEFT JOIN categories c ON c.id = t.category_id LEFT JOIN categories cp ON cp.id = c.parent_id WHERE t.is_transfer = 0 AND t.date >= date('now', '-3 months') GROUP BY 1 ORDER BY total DESC LIMIT 8", deps),
     queryDB("SELECT strftime('%Y-%m', t.date) as month, SUM(ABS(t.amount)) as total FROM transactions t WHERE t.is_transfer = 0 AND t.date >= date('now', '-12 months') GROUP BY 1 ORDER BY 1 DESC", deps),
@@ -356,11 +392,11 @@ async function generateLocalSummary(deps: FinanceDeps): Promise<string> {
   ])
 
   let s = "## Local Financial Intelligence (Pre-fetched Context)\n"
-  
+
   if ('rows' in categories && categories.rows.length > 0) {
     s += "\n### Top Spending Categories (Last 3 Months):\n" + categories.rows.map(r => `- ${r[0]}: $${Number(r[1]).toFixed(2)}`).join('\n')
   }
-  
+
   if ('rows' in income && income.rows.length > 0) {
     s += "\n\n### Income History (Last 6 Months):\n" + income.rows.map(r => `- ${r[0]}: $${Number(r[1]).toFixed(2)}`).join('\n')
   }
@@ -368,9 +404,19 @@ async function generateLocalSummary(deps: FinanceDeps): Promise<string> {
   if ('rows' in trend && trend.rows.length > 0) {
     s += "\n\n### Monthly Spending Trend:\n" + trend.rows.map(r => `- ${r[0]}: $${Number(r[1]).toFixed(2)}`).join('\n')
   }
-  
+
   s += "\n\n**INSTRUCTION**: Use the data above to answer the user immediately. Do not run these queries again. If charts are needed, call 'generate_standard_chart' now."
   return s
+}
+
+async function generateLocalSummary(deps: FinanceDeps): Promise<string> {
+  if (financeCache && Date.now() - financeCache.ts < CACHE_TTL_MS) {
+    console.log('[router] Finance cache hit (<1ms)')
+    return financeCache.summary
+  }
+  const summary = await buildSummary(deps)
+  financeCache = { summary, ts: Date.now() }
+  return summary
 }
 
 export async function handleChat(
@@ -380,15 +426,32 @@ export async function handleChat(
 ): Promise<ChatResult> {
   // ── STEP 0: Check Local Router ──────────────────────────────────────────
   const localContext = await localIntentRouter(messages, deps)
-  const augmentedMessages = [...messages]
+  let augmentedMessages: typeof messages
   if (localContext) {
-    augmentedMessages.push({ role: 'assistant', content: localContext })
+    // Insert context BEFORE the last user message so the conversation ends on the user's turn.
+    // Appending after the user message causes the API to try to continue an already-complete
+    // assistant message, returning empty content with finish_reason: 'stop'.
+    const lastUserIdx = messages.reduceRight((found, m, i) => found === -1 && m.role === 'user' ? i : found, -1)
+    if (lastUserIdx >= 0) {
+      augmentedMessages = [
+        ...messages.slice(0, lastUserIdx),
+        { role: 'assistant' as const, content: localContext },
+        messages[lastUserIdx]
+      ]
+    } else {
+      augmentedMessages = [...messages, { role: 'assistant' as const, content: localContext }]
+    }
+  } else {
+    augmentedMessages = [...messages]
   }
 
   // Prune history to keep context small and fast: last 10 messages only
   const history = augmentedMessages.slice(-10)
+  const dynamicSystemPrompt = CATEGORY_CONTEXT
+    ? `${SYSTEM_PROMPT}\n\nValid spending categories: ${CATEGORY_CONTEXT}`
+    : SYSTEM_PROMPT
   const apiMessages: OpenAI.Chat.ChatCompletionMessageParam[] = [
-    { role: 'system', content: SYSTEM_PROMPT },
+    { role: 'system', content: dynamicSystemPrompt },
     ...history.map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content }))
   ]
 
@@ -425,41 +488,70 @@ export async function handleChat(
     }
     // ──────────────────────────────────────────────────────────────────────
 
-    const response = await timed(`API call #${rounds}`, () =>
-      deps.openai.chat.completions.create({
-        model: 'anthropic/claude-3.7-sonnet',
-        messages: apiMessages,
-        tools: TOOLS,
-        max_tokens: 4096
-      })
-    )
-    const choice = response.choices[0]
-    const msg = choice.message
-    const usage = response.usage
-    
-    // ── STRIP CONVERSATIONAL FILLER ──────────────────────────────────────────
-    // If Claude outputs "I will fetch that..." alongside tool calls, strip the text.
-    // This prevents the text from re-entering the prompt in the next round,
-    // which otherwise tricks Claude out of its "Headless" mode.
-    if (msg.tool_calls && msg.tool_calls.length > 0 && msg.content) {
-      console.log(`[debug] Stripping conversational filler: ${msg.content.substring(0, 50)}...`)
-      msg.content = ''
-    }
-    
-    apiMessages.push(msg)
+    // ── Streaming API call ────────────────────────────────────────────────
+    const apiStart = Date.now()
+    const stream = await deps.openai.chat.completions.create({
+      model: 'anthropic/claude-3.7-sonnet',
+      messages: apiMessages,
+      tools: TOOLS,
+      max_tokens: 4096,
+      stream: true
+    })
 
-    // Log detailed trace to console for debugging
-    const trace = `round ${rounds}: ${choice.finish_reason}, ${msg.tool_calls?.length ?? 0} tool call(s), tokens: ${usage?.prompt_tokens} in / ${usage?.completion_tokens} out, elapsed ${elapsed()}ms`
+    let streamContent = ''
+    let streamFinishReason: string | null = null
+    const streamToolCallMap: Record<number, { id: string; type: 'function'; function: { name: string; arguments: string } }> = {}
+
+    for await (const chunk of stream) {
+      const delta = chunk.choices[0]?.delta
+      if (chunk.choices[0]?.finish_reason) streamFinishReason = chunk.choices[0].finish_reason
+
+      if (delta?.content) {
+        streamContent += delta.content
+        eventSender.send('chat:stream-token', { token: delta.content })
+      }
+
+      if (delta?.tool_calls) {
+        for (const tc of delta.tool_calls) {
+          if (!streamToolCallMap[tc.index]) {
+            streamToolCallMap[tc.index] = { id: '', type: 'function', function: { name: '', arguments: '' } }
+          }
+          if (tc.id) streamToolCallMap[tc.index].id = tc.id
+          if (tc.function?.name) streamToolCallMap[tc.index].function.name += tc.function.name
+          if (tc.function?.arguments) streamToolCallMap[tc.index].function.arguments += tc.function.arguments
+        }
+      }
+    }
+
+    const apiMs = Date.now() - apiStart
+    const toolCallsList = Object.entries(streamToolCallMap)
+      .sort(([a], [b]) => Number(a) - Number(b))
+      .map(([, tc]) => tc)
+
+    // Strip conversational filler alongside tool calls
+    let msgContent = streamContent
+    if (toolCallsList.length > 0 && streamContent) {
+      console.log(`[debug] Stripping conversational filler: ${streamContent.substring(0, 50)}...`)
+      msgContent = ''
+    }
+
+    const msg: OpenAI.Chat.ChatCompletionMessageParam = {
+      role: 'assistant',
+      content: msgContent || null,
+      ...(toolCallsList.length > 0 ? {
+        tool_calls: toolCallsList.map(tc => ({ id: tc.id || `tc_${Math.random()}`, type: 'function' as const, function: tc.function }))
+      } : {})
+    }
+
+    apiMessages.push(msg)
+    timings.push({ label: `API call #${rounds} [${streamFinishReason}]`, ms: apiMs })
+    console.log(`[timing] API call #${rounds}: ${apiMs}ms`)
+
+    const trace = `round ${rounds}: ${streamFinishReason}, ${toolCallsList.length} tool call(s), elapsed ${elapsed()}ms`
     console.log(`[chat] ${trace}`)
 
-    // Add usage info to the timing label so it appears in the UI
-    const lastTiming = timings[timings.length - 1]
-    if (lastTiming && lastTiming.label.startsWith('API call')) {
-      lastTiming.label += ` [${usage?.prompt_tokens}↑/${usage?.completion_tokens}↓ ${choice.finish_reason}]`
-    }
-
-    if (choice.finish_reason === 'tool_calls' && msg.tool_calls) {
-      const toolResults = await Promise.all(msg.tool_calls.map(async (toolCall) => {
+    if (streamFinishReason === 'tool_calls' && toolCallsList.length > 0) {
+      const toolResults = await Promise.all(toolCallsList.map(async (toolCall) => {
         let args: Record<string, string>
         try {
           // Claude sometimes wraps JSON in markdown blocks (e.g. ```json ... ```)
@@ -577,7 +669,7 @@ export async function handleChat(
       const totalMs = elapsed()
       const timingLine = buildTimingLine(timings, totalMs)
       console.log(`[timing] total: ${totalMs}ms — ${timingLine}`)
-      const text = (msg.content || '') + '\n\n' + timingLine
+      const text = (streamContent || '') + '\n\n' + timingLine
       return { text, chartPath: lastChartPath, chartData: lastChartData }
     }
   }

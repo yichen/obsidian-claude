@@ -1,9 +1,9 @@
 /* ── Modern SaaS Standard CSS (Zero-Build) ─────────────────────────────── */
 
 :root {
-  --bg-page: #f9fafb;
+  --bg-app: #f9fafb;
   --bg-card: #ffffff;
-  --bg-sidebar: #ffffff;
+  --bg-surface: #ffffff;
   --primary: #2563eb;
   --text-main: #111827;
   --text-muted: #6b7280;
@@ -18,7 +18,7 @@ html, body, #root { height: 100%; margin: 0; padding: 0; }
 
 body {
   font-family: 'Inter', -apple-system, system-ui, sans-serif;
-  background-color: var(--bg-page);
+  background-color: var(--bg-app);
   color: var(--text-main);
   overflow: hidden;
   -webkit-font-smoothing: antialiased;
@@ -29,7 +29,7 @@ body {
 /* ── Sidebar ────────────────────────────────────────────────────────────── */
 .sidebar {
   width: 240px;
-  background-color: var(--bg-sidebar);
+  background-color: var(--bg-surface);
   border-right: 1px solid var(--border);
   display: flex;
   flex-direction: column;
@@ -37,7 +37,7 @@ body {
   z-index: 20;
 }
 
-.sidebar-header { padding: 24px; display: flex; align-items: center; gap: 12px; }
+.sidebar-header { padding: 28px 24px 24px 24px; display: flex; align-items: center; gap: 12px; }
 .app-logo {
   width: 32px; height: 32px; background-color: var(--primary); color: white;
   display: flex; align-items: center; justify-content: center; border-radius: 6px; font-weight: 800;
@@ -50,10 +50,10 @@ body {
   display: flex; align-items: center; gap: 12px;
   background: none; border: none; border-radius: var(--radius);
   cursor: pointer; color: var(--text-muted); font-size: 13px; font-weight: 500;
-  transition: all 0.2s;
+  transition: all 0.2s; outline: none;
 }
 .nav-item:hover { background-color: #f3f4f6; color: var(--text-main); }
-.nav-item.active { background-color: #eff6ff; color: var(--primary); font-weight: 600; }
+.nav-item.active { background-color: #eff6ff; color: var(--primary); font-weight: 600; border-left: 3px solid var(--primary); padding-left: 9px; }
 
 /* ── Main Content ───────────────────────────────────────────────────────── */
 .main-content {
@@ -90,10 +90,10 @@ h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px
 }
 .metric-card {
   background: var(--bg-card); padding: 20px; border-radius: 12px;
-  border: 1px solid var(--border); shadow: var(--shadow);
+  border: 1px solid var(--border); box-shadow: var(--shadow);
 }
 .metric-label { font-size: 12px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
-.metric-value { font-size: 28px; font-weight: 800; letter-spacing: -0.03em; }
+.metric-value { font-size: 24px; font-weight: 700; letter-spacing: -0.02em; }
 
 /* ── Chat Page Redesign ─────────────────────────────────────────────────── */
 .chat-container {
@@ -101,7 +101,7 @@ h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: var(--bg-page);
+  background-color: var(--bg-app);
 }
 
 .chat-header {
@@ -235,3 +235,193 @@ textarea {
 }
 .send-btn:hover { background: #1d4ed8; scale: 1.05; }
 .send-btn:disabled { background: #e5e7eb; cursor: not-allowed; }
+
+/* ── Sidebar Footer ─────────────────────────────────────────────────────── */
+.sidebar-footer {
+  padding: 16px; border-top: 1px solid var(--border);
+}
+.user-goal { display: flex; flex-direction: column; gap: 2px; }
+.goal-label {
+  font-size: 11px; font-weight: 400; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-muted);
+}
+.goal-value { font-size: 13px; font-weight: 600; color: var(--text-main); }
+
+/* ── Section Headers ────────────────────────────────────────────────────── */
+.section-header { margin-bottom: 12px; }
+.section-header > h2 {
+  margin: 0; font-size: 11px; font-weight: 400; text-transform: uppercase;
+  letter-spacing: 0.08em; color: var(--text-muted); line-height: 1;
+}
+
+/* ── Insights Grid ──────────────────────────────────────────────────────── */
+.insights-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+.insight-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; box-shadow: var(--shadow);
+}
+.insight-card.success { border-left: 3px solid #22c55e; }
+.insight-card.alert { border-left: 3px solid #f59e0b; }
+.insight-content { display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; }
+.insight-content p { margin: 0; font-size: 13px; line-height: 1.5; flex: 1; }
+.insight-action {
+  flex-shrink: 0; padding: 6px 14px; border-radius: 6px; font-size: 12px; font-weight: 600;
+  background: transparent; border: 1px solid var(--border); color: var(--primary);
+  cursor: pointer; transition: all 0.2s; white-space: nowrap;
+}
+.insight-action:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+/* ── Metric Deep Dive Button ────────────────────────────────────────────── */
+.deep-dive-btn {
+  margin-top: 12px; width: 100%; padding: 6px 14px; border-radius: 6px;
+  font-size: 12px; font-weight: 600; background: transparent;
+  border: 1px solid var(--border); color: var(--primary);
+  cursor: pointer; transition: all 0.2s;
+}
+.deep-dive-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+
+/* ── Pinned Charts ──────────────────────────────────────────────────────── */
+.pins-section { margin-top: 24px; }
+.pins-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
+.pin-card {
+  background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px;
+  padding: 16px; box-shadow: var(--shadow);
+}
+.pin-card.placeholder { grid-column: 1 / -1; }
+.pin-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.pin-title { font-size: 13px; font-weight: 600; color: var(--text-main); }
+.unpin-btn {
+  background: none; border: none; color: var(--text-muted); cursor: pointer;
+  font-size: 12px; padding: 2px 6px; border-radius: 4px; transition: all 0.2s;
+}
+.unpin-btn:hover { background: #fee2e2; color: #dc2626; }
+.pin-body { display: flex; justify-content: center; }
+.pin-image { max-width: 100%; height: auto; border-radius: 4px; }
+.pin-empty-state {
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  padding: 32px; color: var(--text-muted); font-size: 13px; text-align: center;
+}
+.pin-empty-state p { margin: 0; }
+
+/* ── Transactions Page ──────────────────────────────────────────────────── */
+.txn-container {
+  flex: 1; display: flex; flex-direction: column; overflow: hidden;
+  background-color: var(--bg-app);
+}
+
+.txn-top-bar {
+  padding: 32px 32px 16px 32px;
+}
+
+.txn-top-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  flex-wrap: wrap;
+}
+
+.txn-header { display: flex; flex-direction: column; gap: 2px; }
+.txn-title { font-size: 20px; font-weight: 700; color: var(--text-main); margin: 0; }
+.txn-subtitle { font-size: 13px; color: var(--text-muted); font-weight: 500; margin: 0; }
+
+.txn-controls { display: flex; align-items: center; gap: 8px; }
+
+.txn-search-wrap {
+  position: relative;
+}
+.txn-search-icon {
+  position: absolute; left: 10px; top: 50%; transform: translateY(-50%);
+  color: var(--text-muted); pointer-events: none;
+  display: flex; align-items: center;
+}
+.txn-search-input {
+  width: 360px; padding: 8px 12px 8px 34px;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; font-size: 13px; color: var(--text-main);
+  outline: none; transition: border-color 0.15s; box-shadow: var(--shadow);
+}
+.txn-search-input:focus { border-color: var(--primary); }
+.txn-search-input::placeholder { color: var(--text-muted); }
+
+.txn-icon-btn {
+  padding: 8px; background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 8px; color: var(--text-muted); cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.15s; box-shadow: var(--shadow);
+}
+.txn-icon-btn:hover { background: #f3f4f6; }
+
+.txn-body {
+  flex: 1; overflow: auto; padding: 0 32px 32px 32px;
+}
+.txn-table-wrap {
+  max-width: 1200px; margin: 0 auto;
+  background: var(--bg-card); border: 1px solid var(--border);
+  border-radius: 12px; overflow: hidden; box-shadow: var(--shadow);
+}
+
+.txn-table {
+  width: 100%; border-collapse: collapse; font-size: 13px;
+}
+
+.txn-table thead tr {
+  border-bottom: 1px solid var(--border);
+}
+.txn-th {
+  padding: 12px 16px; background: #f9fafb;
+  text-align: left; font-size: 10px; font-weight: 700;
+  color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.08em;
+  white-space: nowrap;
+}
+.txn-th-right { text-align: right; }
+
+.txn-table tbody tr {
+  border-top: 1px solid #f3f4f6; transition: background 0.1s;
+}
+.txn-table tbody tr:hover { background: #f9fafb; }
+
+.txn-td { padding: 12px 16px; vertical-align: middle; }
+.txn-td-date { white-space: nowrap; color: var(--text-muted); font-size: 12px; font-family: monospace; }
+.txn-td-desc { font-weight: 600; color: var(--text-main); max-width: 280px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.txn-td-amount { text-align: right; white-space: nowrap; }
+
+.txn-category-badge {
+  display: inline-flex; align-items: center;
+  padding: 2px 8px; border-radius: 99px;
+  font-size: 11px; font-weight: 600;
+  background: #f3f4f6; color: var(--text-muted);
+  border: 1px solid var(--border); white-space: nowrap;
+}
+
+.txn-amount-out {
+  display: inline-flex; align-items: center; gap: 4px;
+  color: #e11d48; font-weight: 700; font-family: monospace;
+}
+.txn-amount-in {
+  display: inline-flex; align-items: center; gap: 4px;
+  color: #059669; font-weight: 700; font-family: monospace;
+}
+
+.txn-empty {
+  padding: 48px 16px; text-align: center; color: var(--text-muted);
+}
+.txn-empty-inner { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.txn-spinner {
+  width: 20px; height: 20px; border: 2px solid var(--primary);
+  border-top-color: transparent; border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* ── Chat: new-session button ───────────────────────────────────────────── */
+.new-session-btn {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;
+  background: transparent; border: 1px solid var(--border); color: var(--text-muted);
+  cursor: pointer; transition: all 0.2s;
+}
+.new-session-btn:hover { background: #f3f4f6; color: var(--text-main); }
+.new-session-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+/* ── Chat: header flex layout ───────────────────────────────────────────── */
+.chat-header-left { display: flex; align-items: center; gap: 8px; }
+.chat-header-icon { color: #10b981; display: flex; align-items: center; }
+.loader-spin { animation: spin 0.8s linear infinite; }

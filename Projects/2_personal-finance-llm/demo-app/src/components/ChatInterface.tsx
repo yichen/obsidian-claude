@@ -4,10 +4,10 @@ import { Message, ToolResult, PinnedChart } from '../lib/types'
 import { Send, Eraser, Sparkles, PieChart, Baby, Tag, LineChart, Loader2 } from 'lucide-react'
 
 const SUGGESTIONS = [
-  { label: 'Spending Dashboard', icon: <PieChart size={18} className="text-blue-500" />, prompt: 'Show me a spending dashboard' },
-  { label: 'Kids Spending', icon: <Baby size={18} className="text-rose-500" />, prompt: 'How much did I spend on kids last 3 months?' },
-  { label: 'Top Categories', icon: <Tag size={18} className="text-amber-500" />, prompt: 'What are my top spending categories this year?' },
-  { label: 'Monthly Cashflow', icon: <LineChart size={18} className="text-emerald-500" />, prompt: 'Show monthly cash flow for 2025' }
+  { label: 'Spending Dashboard', icon: <PieChart size={18} style={{ color: '#3b82f6' }} />, prompt: 'Show me a spending dashboard' },
+  { label: 'Kids Spending', icon: <Baby size={18} style={{ color: '#f43f5e' }} />, prompt: 'How much did I spend on kids last 3 months?' },
+  { label: 'Top Categories', icon: <Tag size={18} style={{ color: '#f59e0b' }} />, prompt: 'What are my top spending categories this year?' },
+  { label: 'Monthly Cashflow', icon: <LineChart size={18} style={{ color: '#10b981' }} />, prompt: 'Show monthly cash flow for 2025' }
 ]
 
 let msgCounter = 0
@@ -22,6 +22,7 @@ declare global {
         messages: { role: string; content: string }[]
       ) => Promise<{ text: string; chartPath?: string; chartData?: string }>
       onToolResult: (cb: (data: ToolResult) => void) => () => void
+      onStreamToken: (cb: (data: { token: string }) => void) => () => void
       dbQuery: (sql: string) => Promise<unknown>
       financeCommand: (command: string) => Promise<string>
     }
@@ -103,10 +104,20 @@ export function ChatInterface({
         .map((m) => ({ role: m.role as 'user' | 'assistant', content: m.content }))
 
       const cleanupTool = window.api.onToolResult((data) => {
-        const label = data.tool === 'execute_sql' ? 'Analyzing database...' : 
-                     data.tool === 'run_finance_command' ? `Executing ${data.command}...` : 
+        const label = data.tool === 'execute_sql' ? 'Analyzing database...' :
+                     data.tool === 'run_finance_command' ? `Executing ${data.command}...` :
                      'Visualizing data...'
         setActiveTool(label)
+      })
+
+      let streamedText = ''
+      const cleanupStream = window.api.onStreamToken(({ token }) => {
+        streamedText += token
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === loadingId ? { ...m, content: streamedText } : m
+          )
+        )
       })
 
       try {
@@ -126,6 +137,7 @@ export function ChatInterface({
         )
       } finally {
         cleanupTool()
+        cleanupStream()
         setIsLoading(false)
         setActiveTool(null)
       }
@@ -143,12 +155,12 @@ export function ChatInterface({
   return (
     <div className="chat-container">
       <header className="chat-header">
-        <div className="flex items-center gap-2">
-          <Sparkles size={16} className="text-emerald-500" />
+        <div className="chat-header-left">
+          <span className="chat-header-icon"><Sparkles size={16} /></span>
           <h1>Financial Analyst</h1>
         </div>
-        <button 
-          onClick={clearSession} 
+        <button
+          onClick={clearSession}
           disabled={isLoading}
           className="new-session-btn"
         >
@@ -166,7 +178,7 @@ export function ChatInterface({
             <span className="thinking-text">{activeTool}</span>
           </div>
         )}
-        <div ref={bottomRef} className="h-4" />
+        <div ref={bottomRef} style={{ height: '16px' }} />
       </div>
 
       {messages.length === 1 && (
@@ -196,7 +208,7 @@ export function ChatInterface({
             onClick={() => sendMessage(input)}
             disabled={isLoading || !input.trim()}
           >
-            {isLoading ? <Loader2 size={18} className="animate-spin" /> : <Send size={18} />}
+            {isLoading ? <Loader2 size={18} className="loader-spin" /> : <Send size={18} />}
           </button>
         </div>
       </div>

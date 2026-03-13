@@ -1,7 +1,7 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { initConfig, makeDeps, handleChat, queryDB, runFinanceCommand } from './finance-core'
+import { initConfig, makeDeps, handleChat, queryDB, runFinanceCommand, initCategoryContext, initFinanceCache } from './finance-core'
 
 // ── Electron app setup ─────────────────────────────────────────────────────
 
@@ -32,8 +32,11 @@ function createWindow(): void {
   }
 }
 
-app.whenReady().then(() => {
+app.whenReady().then(async () => {
   initConfig()
+  const startupDeps = makeDeps()
+  initCategoryContext(startupDeps).catch(e => console.warn('[startup] initCategoryContext failed:', e))
+  initFinanceCache(startupDeps).catch(e => console.warn('[startup] initFinanceCache failed:', e))
   electronApp.setAppUserModelId('com.finance.demo')
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)

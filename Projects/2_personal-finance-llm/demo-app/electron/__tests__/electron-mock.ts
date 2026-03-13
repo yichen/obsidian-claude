@@ -12,28 +12,58 @@ export interface MockAPIResponse {
 
 // ── Factory: OpenAI mock ─────────────────────────────────────────────────
 
+/** Convert a MockAPIResponse into an async-iterable stream of chunks */
+function makeStreamChunks(resp: MockAPIResponse): object[] {
+  const chunks: object[] = []
+
+  if (resp.finish_reason === 'tool_calls' && resp.tool_calls) {
+    // Optional filler content alongside tool calls
+    if (resp.content) {
+      chunks.push({ choices: [{ delta: { content: resp.content }, finish_reason: null }] })
+    }
+    // One chunk per tool call: id + name in first chunk, arguments in second
+    for (let i = 0; i < resp.tool_calls.length; i++) {
+      const tc = resp.tool_calls[i]
+      chunks.push({
+        choices: [{
+          delta: {
+            tool_calls: [{ index: i, id: tc.id, type: 'function', function: { name: tc.function.name, arguments: '' } }]
+          },
+          finish_reason: null
+        }]
+      })
+      if (tc.function.arguments) {
+        chunks.push({
+          choices: [{
+            delta: { tool_calls: [{ index: i, function: { arguments: tc.function.arguments } }] },
+            finish_reason: null
+          }]
+        })
+      }
+    }
+    chunks.push({ choices: [{ delta: {}, finish_reason: 'tool_calls' }] })
+  } else {
+    if (resp.content) {
+      chunks.push({ choices: [{ delta: { content: resp.content }, finish_reason: null }] })
+    }
+    chunks.push({ choices: [{ delta: {}, finish_reason: 'stop' }] })
+  }
+
+  return chunks
+}
+
 export function makeOpenAIMock(responses: MockAPIResponse[]): OpenAI {
   const queue = [...responses]
   const createFn = vi.fn().mockImplementation(async () => {
     const resp = queue.shift()
     if (!resp) throw new Error('No more mock API responses in queue')
+    const chunks = makeStreamChunks(resp)
     return {
-      choices: [
-        {
-          finish_reason: resp.finish_reason,
-          message: {
-            role: 'assistant',
-            content: resp.content ?? null,
-            tool_calls: resp.tool_calls
-              ? resp.tool_calls.map((tc) => ({
-                  id: tc.id,
-                  type: 'function' as const,
-                  function: tc.function
-                }))
-              : undefined
-          }
+      [Symbol.asyncIterator]: async function* () {
+        for (const chunk of chunks) {
+          yield chunk
         }
-      ]
+      }
     }
   })
 

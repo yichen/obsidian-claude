@@ -13,6 +13,13 @@ contextBridge.exposeInMainWorld('api', {
     return (): void => { ipcRenderer.removeListener('chat:tool-result', handler) }
   },
 
+  // Streaming tokens — subscribe for live text updates during final response
+  onStreamToken: (cb: (data: { token: string }) => void) => {
+    const handler = (_e: Electron.IpcRendererEvent, data: { token: string }): void => cb(data)
+    ipcRenderer.on('chat:stream-token', handler)
+    return (): void => { ipcRenderer.removeListener('chat:stream-token', handler) }
+  },
+
   dbQuery: (sql: string) => ipcRenderer.invoke('db:query', sql),
   financeCommand: (command: string) => ipcRenderer.invoke('finance:command', command)
 })

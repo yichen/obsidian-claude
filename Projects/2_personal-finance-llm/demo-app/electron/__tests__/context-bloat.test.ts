@@ -36,8 +36,8 @@ describe('handleChat: Context Bloat & Performance Regressions', () => {
     const secondCallMessages = createFn.mock.calls[1][0].messages
     const assistantMsg = secondCallMessages.find((m: any) => m.role === 'assistant' && m.tool_calls)
     
-    // The filler text should be GONE (stripped to empty string)
-    expect(assistantMsg.content).toBe('')
+    // The filler text should be GONE (stripped; content is null or empty)
+    expect(assistantMsg.content).toBeFalsy()
   })
 
   it('truncates massive SQL results to 4000 characters', async () => {

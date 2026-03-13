@@ -20,4 +20,5 @@ __pycache__/
 # If you want to be extra sure your AI config is tracked
 !/.claude/
 !/.claude/**
-!/.gitignore
+!/.gitignoreFinance/reports/debug/
+Finance/reports/
