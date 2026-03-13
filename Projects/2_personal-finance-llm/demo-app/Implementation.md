@@ -4,7 +4,7 @@
 
 The original `electron/index.ts` monolith mixed Electron lifecycle code with all business logic, making it impossible to unit test without spawning a real Electron window. The refactor extracted all testable logic into `electron/finance-core.ts` using dependency injection, leaving `electron/index.ts` as a thin shell. A full Vitest test suite covers every public function with mocks — no Electron runtime, no network, no filesystem required.
 
-Recent updates added performance optimizations for tool call handling, robust startup validation, and aggressive context bloat reduction.
+Recent updates transformed the app into a high-performance **Hybrid Dashboard + Chat** application with local intelligence and standardized charting.
 
 ## Architecture
 
@@ -22,59 +22,64 @@ Recent updates added performance optimizations for tool call handling, robust st
 | Mandatory dashboard latency | Medium | `SYSTEM_PROMPT` | Removed mandatory "dashboard" instruction at startup; Claude now goes straight to relevant data, saving ~3.5s per session |
 | Obscure ENOENT on startup | Medium | `initConfig` | Added explicit `existsSync` validation for Python binary and finance script with descriptive error messages |
 | "Ghost" API calls | Medium | `handleChat` | Stripped ` ```json ` blocks from tool arguments; wrapped parse errors and `Unknown tool` fallbacks in `timed()` to expose them in the timing trace. |
+| Standard Chart Unknown Tool | High | `handleChat` | Implemented missing backend execution loop for `generate_standard_chart`, enabling the fast local path. |
+| Chart Resizing Overflow | Low | `styles.css` | Added responsive CSS to ensure charts fit within message bubbles without horizontal scrolling. |
 
 ## Performance Optimizations
 
-### Structural Parallelism (Entry #8)
-To force batching in Claude 3.7 Sonnet, I introduced the `execute_batch_sql` tool. This allows the model to specify multiple queries in a single tool call, which the backend then executes in parallel via `Promise.all`. This structurally prevents the model from waiting for individual query results.
+### Local Intent Router (Entry #11)
+To eliminate the "Planning" round trip, I added a `localIntentRouter` that intercepts common dashboard requests. It pre-fetches the 3 most important SQL datasets locally and injects them as `assistant` context before the first cloud API call.
 
-### Headless Analyst Mode & Filler Stripping (Entry #9)
-The `SYSTEM_PROMPT` was updated to **Headless Analyst Mode**. The model is strictly prohibited from speaking to the user (no conversational filler) until all data is collected. Because Claude sometimes ignores this and outputs "I will pull that data..." alongside a tool call, we now actively **strip `msg.content`** before pushing it to the history array. This prevents the filler text from tricking the model out of its headless state in subsequent rounds.
+### Standardized Charts (Entry #12)
+Instead of Claude writing 100+ lines of Python code (which takes 10s+ to type), I added `generate_standard_chart`. This tool uses pre-baked local Python templates for "monthly_cashflow" and "spending_by_category," executing them in milliseconds.
 
-### Aggressive Context Reduction (Entry #9)
-- **Result Truncation**: Massive SQL results are now truncated at **4,000 characters** for single queries and **8,000 characters** for batch queries to prevent the context window from bloating, which was previously causing subsequent API calls to take 10-12s.
-- **Message Pruning**: The message history is pruned to the last 10 messages (`messages.slice(-10)`) to keep the prompt small and processing times fast.
-- **SQL Limits**: The prompt now instructs the model to "Always use **LIMIT 15**... unless you are aggregating data."
+### Headless Analyst Mode & Filler Stripping
+The `SYSTEM_PROMPT` was updated to **Headless Analyst Mode**. We now actively **strip `msg.content`** from assistant messages containing tool calls. This prevents Claude from reading its own conversational filler, which previously tricked it into sequential "chatty" behavior.
 
-### Model Upgrade
-Switched to `anthropic/claude-3.7-sonnet` via OpenRouter for faster reasoning and better tool batching adherence.
+### Aggressive Context Reduction
+- **Result Truncation**: SQL results are truncated at **4,000 characters** (single) and **8,000 characters** (batch) to prevent context window bloat.
+- **Message Pruning**: History is pruned to the last 10 messages (`messages.slice(-10)`).
+- **SQL Limits**: The prompt enforces **LIMIT 15** on all queries.
+
+## New UX Features
+
+### Home Dashboard
+A new landing page displaying high-level metrics (Savings Rate, Runway, Cashflow) with one-click "Ask AI" deep-dive buttons.
+
+### Searchable Transactions
+A unified view to search across all accounts, categories, and descriptions in real-time using local SQL `LIKE` queries.
+
+### Sidebar Navigation
+Persistent navigation to toggle between Home, Transactions, and Chat.
 
 ## Test Infrastructure
 
 ### Running Tests
 
 ```bash
-cd demo-app
 npm test
 ```
-*(You can also run `npm test` from the project root thanks to a proxy `package.json`)*
+*(Runs from project root or `demo-app` directory)*
 
 ### Test Coverage
 
 | Area | Tests | Description |
 |------|-------|-------------|
-| `loadEnv` | 5 | Parses KEY=VALUE, strips trailing whitespace, skips `#` comment lines, skips blank lines |
-| `runFinanceCommand` | 5 | Correct argv construction, stdout returned, stderr fallback, error string on throw |
-| `queryDB` | 5 | JSON array → `{columns, rows}`, empty array, `{error}` passthrough, exception handling |
-| `handleChat` | 7 | Single-turn stop, `execute_sql` tool loop, `run_finance_command` event emission, `generate_chart` fs calls, timing info validation |
-| `initConfig` | 3 | **NEW**: Validates existence of Python binary and finance script, throws descriptive errors on failure |
-
-## Key Design Decisions
-
-- **Dependency injection over module-level state**: `FinanceDeps` passed explicitly to every function means tests can swap any dependency without monkey-patching module globals.
-- **Parallel safety in `generate_chart`**: Added unique random suffixes to temporary Python script filenames to prevent collisions during parallel execution.
-- **`initConfig()` lazy Electron require**: The `require('electron')` call inside `initConfig()` only executes when called with no arguments (production path), so importing `finance-core.ts` in tests never triggers an Electron module load.
-- **Debug Traceability**: Full request payloads are saved to `Finance/reports/debug/*.json` before every API call, including token usage and `finish_reason` in the timing output.
+| `loadEnv` | 5 | Parses KEY=VALUE, strips whitespace, skips comments. |
+| `runFinanceCommand` | 5 | Correct argv construction, stdout returned. |
+| `queryDB` | 5 | JSON array → `{columns, rows}`, exception handling. |
+| `handleChat` | 7 | Single-turn stop, tool loops, timing info validation. |
+| `initConfig` | 3 | Validates critical paths (Python, scripts). |
+| `Context Bloat` | 4 | **NEW**: Filler stripping, truncation, history pruning. |
+| `Integrity` | 2 | **NEW**: Validates `SYSTEM_PROMPT` and `TOOLS` load correctly. |
 
 ## Files Changed
 
 | File | Change | Purpose |
 |------|--------|---------|
-| `electron/finance-core.ts` | Modified | Added parallel tool execution, timing info, path validation, result truncation, markdown stripping, `execute_batch_sql` tool, headless prompt mode, and filler stripping. |
-| `electron/index.ts` | Refactored | Thin Electron shell delegating to `finance-core.ts` |
-| `vitest.config.ts` | New | Vitest configuration |
-| `electron/__tests__/finance-core.test.ts` | Modified | Updated tests for new response format (timing info) |
-| `electron/__tests__/config.test.ts` | New | Unit tests for `initConfig` validation logic |
-| `Code_Log.md` | Modified | Append-only implementation log tracking design decisions and performance optimizations |
-| `start.sh` | New | Root-level script for environment pre-flight checks and safe startup |
-| `package.json` | New | Project root proxy for delegating `npm test` and `npm run dev` to `demo-app` |
+| `electron/finance-core.ts` | Modified | Core engine with local router, parallel tools, and filler stripping. |
+| `src/components/*` | New | `Sidebar`, `Dashboard`, `TransactionsView` components. |
+| `src/styles.css` | Modified | Complete layout and responsive chart styling. |
+| `electron/mcp-server.ts` | New | Reference implementation for a standalone MCP sidecar. |
+| `start.sh` | New | Pre-flight environment checks. |
+| `package.json` | Modified | Root proxy for easy command execution. |
