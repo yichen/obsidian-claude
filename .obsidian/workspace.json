@@ -227,6 +227,10 @@
   },
   "active": "6f09735df8cb3e99",
   "lastOpenFiles": [
+    "Projects/2_personal-finance-llm/SPEC.md",
+    "Projects/2_personal-finance-llm/FINANCE_AI_SPEC.md",
+    "Finance/reports/debug",
+    "Projects/2_personal-finance-llm/spec2.md",
     "Finance/reports/top_merchants_1773411222830.png",
     "Finance/reports/monthly_cashflow_1773411220860.png",
     "Finance/reports/spending_by_category_1773411218137.png",
@@ -243,7 +247,6 @@
     "Projects/2_personal-finance-llm/demo-app/node_modules/@playwright/test/README.md",
     "Projects/2_personal-finance-llm/demo-app/node_modules/playwright/README.md",
     "Projects/2_personal-finance-llm/demo-app/node_modules/playwright-core/lib/vite/traceViewer/playwright-logo.svg",
-    "Projects/2_personal-finance-llm/demo-app/node_modules/playwright-core/lib/vite/recorder/playwright-logo.svg",
     "Projects/2_personal-finance-llm/demo-app/node_modules/playwright/lib/agents/playwright-test-generator.agent.md",
     "Projects/2_personal-finance-llm/demo-app/node_modules/playwright/lib/agents/playwright-test-healer.agent.md",
     "Projects/2_personal-finance-llm/demo-app/node_modules/playwright/lib/agents/playwright-test-planner.agent.md",
@@ -258,7 +261,6 @@
     "Projects/2_personal-finance-llm/demo-app/node_modules/playwright-core/lib/vite/traceViewer/assets",
     "Projects/2_personal-finance-llm/demo-app/node_modules/playwright-core/lib/utils/isomorphic/trace",
     "Projects/2_personal-finance-llm/demo-app/node_modules/playwright-core/lib/server/trace/recorder",
-    "Projects/2_personal-finance-llm/demo-app/node_modules/playwright-core/lib/vite/recorder/assets",
     "Projects/2_personal-finance-llm/demo-app/node_modules/lucide-react/README.md",
     "Projects/2_personal-finance-llm/demo-app/node_modules/tailwind-merge/README.md",
     "Projects/2_personal-finance-llm/demo-app/node_modules/tailwind-merge/LICENSE.md",
@@ -270,9 +272,6 @@
     "Projects/2_personal-finance-llm/demo-app/node_modules/fraction.js/CHANGELOG.md",
     "Projects/2_personal-finance-llm/demo-app/node_modules/qs/CHANGELOG.md",
     "Projects/2_personal-finance-llm/demo-app/node_modules/object-inspect/CHANGELOG.md",
-    "Projects/2_personal-finance-llm/demo-app/node_modules/zod-to-json-schema/README.md",
-    "Projects/2_personal-finance-llm/demo-app/node_modules/zod-to-json-schema/changelog.md",
-    "Projects/2_personal-finance-llm/demo-app/node_modules/qs/README.md",
     "Untitled 1.canvas",
     "Untitled.canvas"
   ]
