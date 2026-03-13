@@ -3,19 +3,34 @@
 ```yaml
 - generic [ref=e3]:
   - generic [ref=e4]:
-    - heading "Finance AI" [level=1] [ref=e5]
-    - generic [ref=e6]: claude-sonnet via OpenRouter
-  - generic [ref=e8]:
-    - generic [ref=e9]: AI
-    - paragraph [ref=e11]: Hi! I'm your personal finance AI. I have access to your transactions, payslips, Amazon orders, and tax documents. What would you like to know?
-  - generic [ref=e12]:
-    - button "Show me a spending dashboard" [ref=e13] [cursor=pointer]
-    - button "How much did I spend on kids last 3 months?" [ref=e14] [cursor=pointer]
-    - button "What are my top spending categories this year?" [ref=e15] [cursor=pointer]
-    - button "Show monthly cash flow for 2025" [ref=e16] [cursor=pointer]
-    - button "What did I spend on dining vs groceries?" [ref=e17] [cursor=pointer]
-    - button "Generate a chart of monthly spending by category" [ref=e18] [cursor=pointer]
-  - generic [ref=e19]:
-    - textbox "Ask about your finances… (Enter to send, Shift+Enter for new line)" [ref=e20]
-    - button "↑" [disabled] [ref=e21]
+    - generic [ref=e5]:
+      - generic [ref=e6]: "Y"
+      - heading "Finance AI" [level=2] [ref=e7]
+    - navigation [ref=e8]:
+      - button "🏠 Dashboard" [ref=e9] [cursor=pointer]:
+        - generic [ref=e10]: 🏠
+        - generic [ref=e11]: Dashboard
+      - button "📋 Transactions" [ref=e12] [cursor=pointer]:
+        - generic [ref=e13]: 📋
+        - generic [ref=e14]: Transactions
+      - button "💬 AI Chat" [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 💬
+        - generic [ref=e17]: AI Chat
+    - generic [ref=e19]: Active GoalCashflow Positive
+  - main [ref=e20]:
+    - generic [ref=e21]:
+      - generic [ref=e22]:
+        - heading "Finance AI" [level=1] [ref=e23]
+        - text: claude-sonnet via OpenRouter
+      - generic [ref=e24]:
+        - generic [ref=e25]:
+          - generic [ref=e26]: AI
+          - paragraph [ref=e28]: Hi! I'm your personal finance AI. I have access to your transactions, payslips, Amazon orders, and tax documents. What would you like to know?
+        - generic [ref=e29]:
+          - paragraph [ref=e31]: Show me a spending dashboard
+          - generic [ref=e32]: Yi
+        - generic [ref=e34]: AI
+      - generic [ref=e35]:
+        - textbox "Ask about your finances… (Enter to send, Shift+Enter for new line)" [disabled] [ref=e36]
+        - button "⏳" [disabled] [ref=e37]
 ```
