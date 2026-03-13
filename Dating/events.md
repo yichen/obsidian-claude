@@ -1,4 +1,4 @@
-> Last Updated: 2026-03-12 04:02:15
+> Last Updated: 2026-03-13 04:02:01
 
 
 
@@ -79,25 +79,7 @@
 
 
 
-## Mar 12, Thursday
 
-*   **[Latin] PIVOT’s Thursday Bachata Social**
-    *   **Time:** March 12 @ 7:30 pm - 11:00 pm
-    *   **Loc:** PIVOT Dance Emporium, 3220 1ST AVE S STE B600, Seattle, WA, United States
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/3220%201ST%20AVE%20S%20STE%20B600%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/pivots-thursday-bachata-social/2026-03-12/
-*   **[Latin] Latin Dance & DJ Thursday Nights**
-    *   **Time:** March 12 @ 8:30 pm - 12:00 am
-    *   **Loc:** Aurora Borealis Restaurant, 16708 Aurora Ave N, Shoreline, WA, United States
-    *   **Drive:** 47m (31.2 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/16708%20Aurora%20Ave%20N%2C%20Shoreline%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/latin-dance-dj-thursday-nights/2026-03-12/
-*   **[Latin] Bachata Night at Reverie Ballroom**
-    *   **Time:** March 12 @ 9:00 pm - 1:00 am
-    *   **Loc:** Reverie Ballroom - Seattle, 915 E Pine St, Seattle, WA, United States
-    *   **Drive:** 33m (20.7 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/bachata-night-at-reverie-ballroom/2026-03-12/
 
 ## Mar 13, Friday
 
@@ -151,6 +133,25 @@
     *   **Drive:** 33m (20.7 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
     *   **Link:** https://golatindance.com/event/second-saturday-bachata-social/2026-03-14/
+*   **[Latin] Rumba Tropical Sonidera**
+    *   **Time:** March 14 @ 9:00 pm - 2:00 am
+    *   **Loc:** Seattle Harbor, 2040 Westlake Ave N, Seattle, WA, United States
+    *   **Drive:** 37m (22.7 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2040%20Westlake%20Ave%20N%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/rumba-tropical-sonidera/2026-03-14/
+*   **[Latin] LA MÁQUINA del Tiempo (Noche Latina)**
+    *   **Time:** March 14 @ 9:30 pm - 1:30 am
+    *   **Loc:** The Fremont Social, 132 North Canal Street, Seattle, Washington, United States
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/132%20North%20Canal%20Street%2C%20Seattle%2C%20Washington%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/la-maquina-del-tiempo-noche-latina/
+
+## Mar 15, Sunday
+
+*   **[Latin] Salsaymotion Sunset Social**
+    *   **Time:** March 15 @ 6:00 pm - 8:30 pm
+    *   **Loc:** Bravo Dance School, 13635 NE 8th St Suite 104, Bellevue, WA, United States
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/13635%20NE%208th%20St%20Suite%20104%2C%20Bellevue%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/salsaymotion-sunset-social-2/2026-03-15/
 
 ## Mar 21, Saturday
 
@@ -167,7 +168,6 @@
 2 people going, including Danny Arias and Zach George
 Event by Zach George and PNW Singles Camping, Hiking, Paddling, And Other Outdoor Adventures
 Group
- 
  · Members of PNW Singles Camping, Hiking, Paddling, And Other Outdoor Adventures
 Come on out and join cohost Danny and I for a relaxed outdoor meetup!! We will be exploring one of Washington’s most unique landscapes in the Quincy Lakes Wilderness. This area is … See more
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Details%0A2%20people%20going%2C%20including%20Danny%20Arias%20and%20Zach%20George%0AEvent%20by%20Zach%20George%20and%20PNW%20Singles%20Camping%2C%20Hiking%2C%20Paddling%2C%20And%20Other%20Outdoor%20Adventures%0AGroup%0A%C2%A0%0A%20%C2%B7%20Members%20of%20PNW%20Singles%20Camping%2C%20Hiking%2C%20Paddling%2C%20And%20Other%20Outdoor%20Adventures%0ACome%20on%20out%20and%20join%20cohost%20Danny%20and%20I%20for%20a%20relaxed%20outdoor%20meetup%21%21%20We%20will%20be%20exploring%20one%20of%20Washington%E2%80%99s%20most%20unique%20landscapes%20in%20the%20Quincy%20Lakes%20Wilderness.%20This%20area%20is%20%E2%80%A6%20See%20more)
