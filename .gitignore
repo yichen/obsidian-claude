@@ -11,7 +11,7 @@
 .claude/settings.local.sync-conflict-*
 
 # System files
-.DS_Store
+**/.DS_Store
 *.pyc
 __pycache__/
 
@@ -23,4 +23,6 @@ __pycache__/
 # Explicitly track your AI config
 !/.claude/
 !/.claude/**
-!/.gitignore
+#!/.gitignoreFinance/reports/
+Projects/2_personal-finance-llm/demo-app/out/
+Finance/reports/
