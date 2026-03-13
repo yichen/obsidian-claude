@@ -1,0 +1,23 @@
+# Build outputs
+  out/
+  dist/
+
+  # Dependencies
+  node_modules/
+
+  # Electron build resources (binaries)
+  resources/
+
+  # Generated files
+  Finance/reports/
+  *.png
+  *.db
+  *.db-shm
+  *.db-wal
+
+  # Debug dumps
+  Finance/reports/debug/
+
+  # OS / editor
+  .DS_Store
+  *.local
