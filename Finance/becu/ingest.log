@@ -1,0 +1,217 @@
+2026-03-01 17:56:11,258 INFO Processing BECU-Statement-16-Jan-2025.PDF → 2025-01
+2026-03-01 17:56:11,353 WARNING   deposit: date count (2) != amount count (0)
+2026-03-01 17:56:11,354 DEBUG   Using computed beginning_balance=9932.41 (summary had 9930.36)
+2026-03-01 17:56:11,354 WARNING   Validation issues:
+2026-03-01 17:56:11,354 WARNING     - Checking balance: expected ending=9934.46, got 9932.41 (begin=9932.41 + dep=2.05 + div=0 + wdl=0)
+2026-03-01 17:56:11,354 WARNING     - Checking txn net (0) != summary net (2.05)
+2026-03-01 17:56:11,354 INFO Processing BECU-Statement-16-Feb-2025.PDF → 2025-02
+2026-03-01 17:56:11,447 WARNING   deposit: date count (1) != amount count (0)
+2026-03-01 17:56:11,447 WARNING   withdrawal: date count (1) != amount count (2)
+2026-03-01 17:56:11,447 DEBUG   Using computed beginning_balance=932.41 (summary had 9932.41)
+2026-03-01 17:56:11,448 WARNING   Validation issues:
+2026-03-01 17:56:11,448 WARNING     - Checking balance: expected ending=-8067.21, got 932.79 (begin=932.41 + dep=0.38 + div=0 + wdl=-9000.0)
+2026-03-01 17:56:11,448 WARNING     - Checking txn net (0.38) != summary net (-8999.62)
+2026-03-01 17:56:11,448 INFO Processing BECU-Statement-16-Mar-2025.PDF → 2025-03
+2026-03-01 17:56:11,553 INFO   ✓ All validations passed
+2026-03-01 17:56:11,553 INFO Processing BECU-Statement-16-Apr-2025.PDF → 2025-04
+2026-03-01 17:56:11,674 INFO   ✓ All validations passed
+2026-03-01 17:56:11,674 INFO Processing BECU-Statement-16-May-2025 (1).PDF → 2025-05
+2026-03-01 17:56:11,794 WARNING   deposit: date count (2) != amount count (0)
+2026-03-01 17:56:11,794 DEBUG   Using computed beginning_balance=1805.96 (summary had 1004.24)
+2026-03-01 17:56:11,795 WARNING   Validation issues:
+2026-03-01 17:56:11,795 WARNING     - Checking balance: expected ending=1748.66, got 946.94 (begin=1805.96 + dep=800.0 + div=1.72 + wdl=-859.02)
+2026-03-01 17:56:11,795 WARNING     - Checking txn net (-859.02) != summary net (-57.3)
+2026-03-01 17:56:11,795 INFO Processing BECU-Statement-16-Jun-2025 (1).PDF → 2025-06
+2026-03-01 17:56:11,918 WARNING   deposit: date count (2) != amount count (0)
+2026-03-01 17:56:11,918 DEBUG   Using computed beginning_balance=1748.6 (summary had 946.94)
+2026-03-01 17:56:11,919 WARNING   Validation issues:
+2026-03-01 17:56:11,919 WARNING     - Checking balance: expected ending=1791.24, got 989.58 (begin=1748.6 + dep=800.0 + div=1.66 + wdl=-759.02)
+2026-03-01 17:56:11,919 WARNING     - Checking txn net (-759.02) != summary net (42.64)
+2026-03-01 17:56:11,920 INFO Processing BECU-Statement-16-Jul-2025 (1).PDF → 2025-07
+2026-03-01 17:56:12,096 WARNING   deposit: date count (5) != amount count (0)
+2026-03-01 17:56:12,096 WARNING   withdrawal: date count (2) != amount count (7)
+2026-03-01 17:56:12,096 DEBUG   Using computed beginning_balance=-3659.02 (summary had 989.58)
+2026-03-01 17:56:12,098 WARNING   Validation issues:
+2026-03-01 17:56:12,099 WARNING     - Checking balance: expected ending=-1807.62, got 2840.98 (begin=-3659.02 + dep=8300.0 + div=1.4 + wdl=-6450.0)
+2026-03-01 17:56:12,099 WARNING     - Checking txn net (6500.0) != summary net (1851.4)
+2026-03-01 17:56:12,099 WARNING     - HELOC sub new sum (36530.53) != total new (0)
+2026-03-01 17:56:12,099 INFO Processing BECU-Statement-16-Aug-2025 (1).PDF → 2025-08
+2026-03-01 17:56:12,237 WARNING   Validation issues:
+2026-03-01 17:56:12,237 WARNING     - HELOC sub prev sum (36530.53) != total prev (0)
+2026-03-01 17:56:12,237 WARNING     - HELOC sub new sum (56530.53) != total new (0)
+2026-03-01 17:56:12,237 INFO Processing BECU-Statement-16-Sep-2025.PDF → 2025-09
+2026-03-01 17:56:12,403 WARNING   deposit: date count (6) != amount count (0)
+2026-03-01 17:56:12,403 WARNING   withdrawal: date count (7) != amount count (13)
+2026-03-01 17:56:12,403 DEBUG   Using computed beginning_balance=-36759.48 (summary had 3642.07)
+2026-03-01 17:56:12,406 WARNING   Validation issues:
+2026-03-01 17:56:12,406 WARNING     - Checking balance: expected ending=-32958.92, got 7442.63 (begin=-36759.48 + dep=48200.0 + div=2.11 + wdl=-44401.55)
+2026-03-01 17:56:12,406 WARNING     - Checking txn net (44202.11) != summary net (3800.56)
+2026-03-01 17:56:12,406 WARNING     - HELOC sub interest sum (803.1) != total (401.55)
+2026-03-01 17:56:12,406 INFO Processing BECU-Statement-16-Oct-2025.PDF → 2025-10
+2026-03-01 17:56:12,585 WARNING   deposit: date count (8) != amount count (4)
+2026-03-01 17:56:12,585 WARNING   withdrawal: date count (8) != amount count (12)
+2026-03-01 17:56:12,585 DEBUG   Using computed beginning_balance=-11237.01 (summary had 7442.63)
+2026-03-01 17:56:12,588 WARNING   Validation issues:
+2026-03-01 17:56:12,588 WARNING     - Checking balance: expected ending=-12814.64, got 5865.0 (begin=-11237.01 + dep=40100.0 + div=2.01 + wdl=-41679.64)
+2026-03-01 17:56:12,588 WARNING     - Checking txn net (17102.01) != summary net (-1577.63)
+2026-03-01 17:56:12,588 WARNING     - HELOC sub interest sum (646.74) != total (323.37)
+2026-03-01 17:56:12,588 INFO Processing BECU-Statement-16-Nov-2025.PDF → 2025-11
+2026-03-01 17:56:12,779 WARNING   deposit: date count (8) != amount count (0)
+2026-03-01 17:56:12,779 WARNING   withdrawal: date count (9) != amount count (17)
+2026-03-01 17:56:12,779 DEBUG   Using computed beginning_balance=-20888.25 (summary had -0.69)
+2026-03-01 17:56:12,781 WARNING   Validation issues:
+2026-03-01 17:56:12,782 WARNING     - Checking balance: expected ending=-23438.95, got 3314.3 (begin=-20888.25 + dep=21200.69 + div=1.86 + wdl=-23753.25)
+2026-03-01 17:56:12,782 WARNING     - Checking txn net (24202.55) != summary net (-2550.7)
+2026-03-01 17:56:12,782 INFO Processing BECU-Statement-16-Dec-2025.PDF → 2025-12
+2026-03-01 17:56:12,964 WARNING   deposit: date count (7) != amount count (4)
+2026-03-01 17:56:12,964 WARNING   withdrawal: date count (8) != amount count (11)
+2026-03-01 17:56:12,964 DEBUG   Using computed beginning_balance=-14050.62 (summary had 3314.3)
+2026-03-01 17:56:12,967 WARNING   Validation issues:
+2026-03-01 17:56:12,967 WARNING     - Checking balance: expected ending=-13641.28, got 3723.64 (begin=-14050.62 + dep=70680.53 + div=1.52 + wdl=-70272.71)
+2026-03-01 17:56:12,967 WARNING     - Checking txn net (17774.26) != summary net (409.34)
+2026-03-01 17:56:12,967 INFO Processing BECU-Statement-16-Jan-2026.PDF → 2026-01
+2026-03-01 17:56:13,155 WARNING   deposit: date count (5) != amount count (0)
+2026-03-01 17:56:13,155 WARNING   withdrawal: date count (4) != amount count (9)
+2026-03-01 17:56:13,155 DEBUG   Using computed beginning_balance=-35662.58 (summary had 3723.64)
+2026-03-01 17:56:13,158 WARNING   Validation issues:
+2026-03-01 17:56:13,158 WARNING     - Checking balance: expected ending=-33247.24, got 6138.98 (begin=-35662.58 + dep=46800.0 + div=1.56 + wdl=-44386.22)
+2026-03-01 17:56:13,158 WARNING     - Checking txn net (41801.56) != summary net (2415.34)
+2026-03-01 17:56:13,158 WARNING     - HELOC sub interest sum (772.44) != total (386.22)
+2026-03-01 17:56:13,158 INFO Processing BECU-Statement-16-Feb-2026.PDF → 2026-02
+2026-03-01 17:56:13,351 WARNING   deposit: date count (7) != amount count (4)
+2026-03-01 17:56:13,351 WARNING   withdrawal: date count (8) != amount count (11)
+2026-03-01 17:56:13,351 DEBUG   Using computed beginning_balance=-859.29 (summary had 6138.98)
+2026-03-01 17:56:13,354 WARNING   Validation issues:
+2026-03-01 17:56:13,354 WARNING     - Checking balance: expected ending=-4055.65, got 2942.62 (begin=-859.29 + dep=16800.0 + div=1.91 + wdl=-19998.27)
+2026-03-01 17:56:13,354 WARNING     - Checking txn net (3801.91) != summary net (-3196.36)
+2026-03-01 17:56:13,354 WARNING     - HELOC sub interest sum (905.9300000000001) != total (902.1)
+2026-03-01 18:09:29,919 INFO Processing BECU-Statement-16-Jan-2025.PDF → 2025-01
+2026-03-01 18:09:30,017 INFO   ✓ All validations passed
+2026-03-01 18:09:30,017 INFO Processing BECU-Statement-16-Feb-2025.PDF → 2025-02
+2026-03-01 18:09:30,112 INFO   ✓ All validations passed
+2026-03-01 18:09:30,112 INFO Processing BECU-Statement-16-Mar-2025.PDF → 2025-03
+2026-03-01 18:09:30,219 INFO   ✓ All validations passed
+2026-03-01 18:09:30,219 INFO Processing BECU-Statement-16-Apr-2025.PDF → 2025-04
+2026-03-01 18:09:30,342 INFO   ✓ All validations passed
+2026-03-01 18:09:30,342 INFO Processing BECU-Statement-16-May-2025 (1).PDF → 2025-05
+2026-03-01 18:09:30,467 INFO   ✓ All validations passed
+2026-03-01 18:09:30,467 INFO Processing BECU-Statement-16-Jun-2025 (1).PDF → 2025-06
+2026-03-01 18:09:30,590 INFO   ✓ All validations passed
+2026-03-01 18:09:30,590 INFO Processing BECU-Statement-16-Jul-2025 (1).PDF → 2025-07
+2026-03-01 18:09:30,773 INFO   ✓ All validations passed
+2026-03-01 18:09:30,773 INFO Processing BECU-Statement-16-Aug-2025 (1).PDF → 2025-08
+2026-03-01 18:09:30,915 INFO   ✓ All validations passed
+2026-03-01 18:09:30,915 INFO Processing BECU-Statement-16-Sep-2025.PDF → 2025-09
+2026-03-01 18:09:31,087 WARNING   Validation issues:
+2026-03-01 18:09:31,087 WARNING     - HELOC balance: expected new=96932.08, got 59530.53
+2026-03-01 18:09:31,087 WARNING     - HELOC sub prev sum (56530.53) != total prev (0)
+2026-03-01 18:09:31,087 WARNING     - HELOC sub interest sum (0.00) != total (401.55)
+2026-03-01 18:09:31,087 INFO Processing BECU-Statement-16-Oct-2025.PDF → 2025-10
+2026-03-01 18:09:31,268 WARNING   Validation issues:
+2026-03-01 18:09:31,268 WARNING     - HELOC sub interest sum (0.00) != total (323.37)
+2026-03-01 18:09:31,268 INFO Processing BECU-Statement-16-Nov-2025.PDF → 2025-11
+2026-03-01 18:09:31,458 WARNING   Validation issues:
+2026-03-01 18:09:31,458 WARNING     - HELOC sub interest sum (0.00) != total (353.25)
+2026-03-01 18:09:31,458 INFO Processing BECU-Statement-16-Dec-2025.PDF → 2025-12
+2026-03-01 18:09:31,646 WARNING   Validation issues:
+2026-03-01 18:09:31,646 WARNING     - HELOC balance: expected new=100532.66, got 100000.03
+2026-03-01 18:09:31,646 WARNING     - HELOC sub prev sum (116830.53) != total prev (0)
+2026-03-01 18:09:31,646 WARNING     - HELOC sub interest sum (0.00) != total (532.66)
+2026-03-01 18:09:31,646 INFO Processing BECU-Statement-16-Jan-2026.PDF → 2026-01
+2026-03-01 18:09:31,838 WARNING   Validation issues:
+2026-03-01 18:09:31,838 WARNING     - HELOC balance: expected new=270386.25, got 145000.03
+2026-03-01 18:09:31,838 WARNING     - HELOC sub prev sum (100000.03) != total prev (0)
+2026-03-01 18:09:31,838 WARNING     - HELOC sub interest sum (0.00) != total (386.22)
+2026-03-01 18:09:31,838 INFO Processing BECU-Statement-16-Feb-2026.PDF → 2026-02
+2026-03-01 18:09:32,040 WARNING   Validation issues:
+2026-03-01 18:09:32,040 WARNING     - HELOC balance: expected new=169902.13, got 150903.86
+2026-03-01 18:09:32,040 WARNING     - HELOC sub prev sum (145000.03) != total prev (0)
+2026-03-01 18:13:34,218 INFO Processing BECU-Statement-16-Jan-2025.PDF → 2025-01
+2026-03-01 18:13:34,316 INFO   ✓ All validations passed
+2026-03-01 18:13:34,316 INFO Processing BECU-Statement-16-Feb-2025.PDF → 2025-02
+2026-03-01 18:13:34,410 INFO   ✓ All validations passed
+2026-03-01 18:13:34,411 INFO Processing BECU-Statement-16-Mar-2025.PDF → 2025-03
+2026-03-01 18:13:34,515 INFO   ✓ All validations passed
+2026-03-01 18:13:34,515 INFO Processing BECU-Statement-16-Apr-2025.PDF → 2025-04
+2026-03-01 18:13:34,640 INFO   ✓ All validations passed
+2026-03-01 18:13:34,640 INFO Processing BECU-Statement-16-May-2025 (1).PDF → 2025-05
+2026-03-01 18:13:34,764 INFO   ✓ All validations passed
+2026-03-01 18:13:34,764 INFO Processing BECU-Statement-16-Jun-2025 (1).PDF → 2025-06
+2026-03-01 18:13:34,887 INFO   ✓ All validations passed
+2026-03-01 18:13:34,887 INFO Processing BECU-Statement-16-Jul-2025 (1).PDF → 2025-07
+2026-03-01 18:13:35,070 INFO   ✓ All validations passed
+2026-03-01 18:13:35,070 INFO Processing BECU-Statement-16-Aug-2025 (1).PDF → 2025-08
+2026-03-01 18:13:35,213 INFO   ✓ All validations passed
+2026-03-01 18:13:35,213 INFO Processing BECU-Statement-16-Sep-2025.PDF → 2025-09
+2026-03-01 18:13:35,386 WARNING   Validation issues:
+2026-03-01 18:13:35,386 WARNING     - HELOC sub interest sum (0.00) != total (401.55)
+2026-03-01 18:13:35,386 INFO Processing BECU-Statement-16-Oct-2025.PDF → 2025-10
+2026-03-01 18:13:35,567 WARNING   Validation issues:
+2026-03-01 18:13:35,567 WARNING     - HELOC sub interest sum (0.00) != total (323.37)
+2026-03-01 18:13:35,567 INFO Processing BECU-Statement-16-Nov-2025.PDF → 2025-11
+2026-03-01 18:13:35,759 WARNING   Validation issues:
+2026-03-01 18:13:35,759 WARNING     - HELOC sub interest sum (0.00) != total (353.25)
+2026-03-01 18:13:35,759 INFO Processing BECU-Statement-16-Dec-2025.PDF → 2025-12
+2026-03-01 18:13:35,945 WARNING   Validation issues:
+2026-03-01 18:13:35,945 WARNING     - HELOC sub interest sum (0.00) != total (532.66)
+2026-03-01 18:13:35,945 INFO Processing BECU-Statement-16-Jan-2026.PDF → 2026-01
+2026-03-01 18:13:36,139 WARNING   Validation issues:
+2026-03-01 18:13:36,139 WARNING     - HELOC sub interest sum (0.00) != total (386.22)
+2026-03-01 18:13:36,139 INFO Processing BECU-Statement-16-Feb-2026.PDF → 2026-02
+2026-03-01 18:13:36,339 INFO   ✓ All validations passed
+2026-03-01 18:14:25,541 INFO Processing BECU-Statement-16-Jan-2025.PDF → 2025-01
+2026-03-01 18:14:25,642 INFO   ✓ All validations passed
+2026-03-01 18:14:25,642 INFO Processing BECU-Statement-16-Feb-2025.PDF → 2025-02
+2026-03-01 18:14:25,741 INFO   ✓ All validations passed
+2026-03-01 18:14:25,741 INFO Processing BECU-Statement-16-Mar-2025.PDF → 2025-03
+2026-03-01 18:14:25,852 INFO   ✓ All validations passed
+2026-03-01 18:14:25,852 INFO Processing BECU-Statement-16-Apr-2025.PDF → 2025-04
+2026-03-01 18:14:25,978 INFO   ✓ All validations passed
+2026-03-01 18:14:25,978 INFO Processing BECU-Statement-16-May-2025 (1).PDF → 2025-05
+2026-03-01 18:14:26,107 INFO   ✓ All validations passed
+2026-03-01 18:14:26,107 INFO Processing BECU-Statement-16-Jun-2025 (1).PDF → 2025-06
+2026-03-01 18:14:26,235 INFO   ✓ All validations passed
+2026-03-01 18:14:26,235 INFO Processing BECU-Statement-16-Jul-2025 (1).PDF → 2025-07
+2026-03-01 18:14:26,420 INFO   ✓ All validations passed
+2026-03-01 18:14:26,420 INFO Processing BECU-Statement-16-Aug-2025 (1).PDF → 2025-08
+2026-03-01 18:14:26,557 INFO   ✓ All validations passed
+2026-03-01 18:14:26,558 INFO Processing BECU-Statement-16-Sep-2025.PDF → 2025-09
+2026-03-01 18:14:26,724 INFO   ✓ All validations passed
+2026-03-01 18:14:26,724 INFO Processing BECU-Statement-16-Oct-2025.PDF → 2025-10
+2026-03-01 18:14:26,899 INFO   ✓ All validations passed
+2026-03-01 18:14:26,899 INFO Processing BECU-Statement-16-Nov-2025.PDF → 2025-11
+2026-03-01 18:14:27,082 INFO   ✓ All validations passed
+2026-03-01 18:14:27,082 INFO Processing BECU-Statement-16-Dec-2025.PDF → 2025-12
+2026-03-01 18:14:27,267 INFO   ✓ All validations passed
+2026-03-01 18:14:27,267 INFO Processing BECU-Statement-16-Jan-2026.PDF → 2026-01
+2026-03-01 18:14:27,459 INFO   ✓ All validations passed
+2026-03-01 18:14:27,459 INFO Processing BECU-Statement-16-Feb-2026.PDF → 2026-02
+2026-03-01 18:14:27,658 INFO   ✓ All validations passed
+2026-03-01 18:15:59,206 INFO Processing BECU-Statement-16-Jan-2025.PDF → 2025-01
+2026-03-01 18:15:59,303 INFO   ✓ All validations passed
+2026-03-01 18:15:59,303 INFO Processing BECU-Statement-16-Feb-2025.PDF → 2025-02
+2026-03-01 18:15:59,396 INFO   ✓ All validations passed
+2026-03-01 18:15:59,396 INFO Processing BECU-Statement-16-Mar-2025.PDF → 2025-03
+2026-03-01 18:15:59,505 INFO   ✓ All validations passed
+2026-03-01 18:15:59,505 INFO Processing BECU-Statement-16-Apr-2025.PDF → 2025-04
+2026-03-01 18:15:59,627 INFO   ✓ All validations passed
+2026-03-01 18:15:59,627 INFO Processing BECU-Statement-16-May-2025 (1).PDF → 2025-05
+2026-03-01 18:15:59,748 INFO   ✓ All validations passed
+2026-03-01 18:15:59,748 INFO Processing BECU-Statement-16-Jun-2025 (1).PDF → 2025-06
+2026-03-01 18:15:59,867 INFO   ✓ All validations passed
+2026-03-01 18:15:59,867 INFO Processing BECU-Statement-16-Jul-2025 (1).PDF → 2025-07
+2026-03-01 18:16:00,045 INFO   ✓ All validations passed
+2026-03-01 18:16:00,045 INFO Processing BECU-Statement-16-Aug-2025 (1).PDF → 2025-08
+2026-03-01 18:16:00,187 INFO   ✓ All validations passed
+2026-03-01 18:16:00,187 INFO Processing BECU-Statement-16-Sep-2025.PDF → 2025-09
+2026-03-01 18:16:00,358 INFO   ✓ All validations passed
+2026-03-01 18:16:00,358 INFO Processing BECU-Statement-16-Oct-2025.PDF → 2025-10
+2026-03-01 18:16:00,537 INFO   ✓ All validations passed
+2026-03-01 18:16:00,537 INFO Processing BECU-Statement-16-Nov-2025.PDF → 2025-11
+2026-03-01 18:16:00,728 INFO   ✓ All validations passed
+2026-03-01 18:16:00,728 INFO Processing BECU-Statement-16-Dec-2025.PDF → 2025-12
+2026-03-01 18:16:00,914 INFO   ✓ All validations passed
+2026-03-01 18:16:00,914 INFO Processing BECU-Statement-16-Jan-2026.PDF → 2026-01
+2026-03-01 18:16:01,105 INFO   ✓ All validations passed
+2026-03-01 18:16:01,105 INFO Processing BECU-Statement-16-Feb-2026.PDF → 2026-02
+2026-03-01 18:16:01,301 INFO   ✓ All validations passed

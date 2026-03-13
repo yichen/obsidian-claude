@@ -1,0 +1,120 @@
+employer: Salesforce
+employee_id: '867738'
+pay_period_start: '2025-03-16'
+pay_period_end: '2025-03-31'
+pay_date: '2025-03-31'
+pay_type: salary
+summary:
+  current:
+    hours_worked: 86.67
+    gross_pay: 11666.67
+    pre_tax_deductions: 1295.51
+    employee_taxes: 2524.57
+    post_tax_deductions: 10.27
+    net_pay: 7836.32
+  ytd:
+    hours_worked: 520.02
+    gross_pay: 217687.13
+    pre_tax_deductions: 10390.17
+    employee_taxes: 81323.67
+    post_tax_deductions: 94924.00
+    net_pay: 31049.29
+earnings:
+- description: Group Term Life
+  dates: 03/16/2025 - 03/31/2025
+  amount: 71.53
+  ytd: 429.18
+- description: Rest Stock Unit Gain 0
+  amount: 0.00
+  ytd: 145915.80
+- description: Salary
+  dates: 03/16/2025 - 03/31/2025
+  hours: 86.67
+  amount: 11666.67
+  ytd: 70000.02
+- description: Spot Bonus 0
+  amount: 0.00
+  ytd: 1671.31
+- description: Wellness Reimbursement
+  amount: 0.00
+  ytd: 100.00
+total_earnings: 11738.20
+employee_taxes:
+- description: Social Security (OASDI)
+  amount: 0.00
+  ytd: 10918.20
+- description: Medicare
+  amount: 261.85
+  ytd: 3241.77
+- description: Federal Withholding
+  amount: 2185.95
+  ytd: 66691.44
+- description: WA PFL (S) - WSPFL
+  amount: 76.77
+  ytd: 472.26
+total_employee_taxes: 2524.57
+pre_tax_deductions:
+- description: Dental
+  amount: 25.00
+  ytd: 150.00
+- description: FSA Dependent Care
+  amount: 100.00
+  ytd: 600.00
+- description: FSA Health Care
+  amount: 42.00
+  ytd: 252.00
+- description: EE Hlth Saving Acct
+  amount: 272.50
+  ytd: 1635.00
+- description: Medical
+  amount: 156.00
+  ytd: 936.00
+- description: 401(k)
+  amount: 700.01
+  ytd: 6817.17
+total_pre_tax_deductions: 1295.51
+post_tax_deductions:
+- description: Child Supp AD&D Insur
+  amount: 0.20
+  ytd: 1.20
+- description: 401(k) After Tax
+  amount: 0.00
+  ytd: 6662.07
+- description: Child Suppl Life Ins
+  amount: 0.64
+  ytd: 3.84
+- description: ESPP 12/01/24 - 05/31/25
+  amount: 0.00
+  ytd: 7124.98
+- description: Metlife Legal Plan
+  amount: 9.43
+  ytd: 56.58
+- description: RSU After Tax Offset
+  amount: 0.00
+  ytd: 81075.33
+total_post_tax_deductions: 10.27
+employer_paid_benefits:
+- description: ER Contr Hlth Sav
+  amount: 0.00
+  ytd: 2000.00
+- description: 401(k) Employer Match
+  amount: 700.00
+  ytd: 4300.28
+total_employer_paid_benefits: 700.00
+deposit:
+  bank: UMB, NA
+  account: '******4983'
+  amount: 7836.32
+validation:
+  earnings_sum_check: true
+  taxes_sum_check: true
+  pre_tax_sum_check: true
+  post_tax_sum_check: true
+  net_pay_check: true
+  mismatches: []
+source:
+  file: 2025.pdf
+  pages:
+  - 13
+  - 14
+  processed_at: '2026-02-28T11:05:31'

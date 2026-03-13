@@ -1,0 +1,103 @@
+employer: ServiceTitan
+employee_id: '1400006870'
+pay_period_start: '2025-12-15'
+pay_period_end: '2025-12-28'
+pay_date: '2026-01-02'
+pay_type: salary
+summary:
+  current:
+    hours_worked: 64.00
+    gross_pay: 9615.39
+    pre_tax_deductions: 576.93
+    employee_taxes: 5678.09
+    post_tax_deductions: 1442.31
+    net_pay: 1968.06
+  ytd:
+    hours_worked: 64.00
+    gross_pay: 9615.39
+    pre_tax_deductions: 576.93
+    employee_taxes: 5678.09
+    post_tax_deductions: 1442.31
+    net_pay: 1968.06
+earnings:
+- description: BYOD
+  dates: 12/15/2025-12/28/2025
+  amount: 25.00
+  ytd: 25.00
+- description: Holiday
+  dates: 12/15/2025-12/28/2025
+  hours: 16.00
+  rate: 120.19
+  amount: 1923.08
+  ytd: 1923.08
+- description: Regular Pay
+  dates: 12/15/2025-12/28/2025
+  hours: 64.00
+  rate: 120.19
+  amount: 7692.31
+  ytd: 7692.31
+- description: WIFI
+  dates: 12/15/2025-12/28/2025
+  amount: 25.00
+  ytd: 25.00
+total_earnings: 9665.39
+employee_taxes:
+- description: OASDI
+  amount: 599.36
+  ytd: 599.36
+- description: Medicare
+  amount: 140.17
+  ytd: 140.17
+- description: Federal Withholding
+  amount: 4805.17
+  ytd: 4805.17
+- description: WACRF - WACF
+  amount: 55.77
+  ytd: 55.77
+- description: WA PFL (S) - WSPFL
+  amount: 77.62
+  ytd: 77.62
+total_employee_taxes: 5678.09
+pre_tax_deductions:
+- description: 401k Pretax
+  amount: 576.93
+  ytd: 576.93
+total_pre_tax_deductions: 576.93
+post_tax_deductions:
+- description: 401k After Tax
+  amount: 1442.31
+  ytd: 1442.31
+total_post_tax_deductions: 1442.31
+employer_paid_benefits:
+- description: ER - 401(k) Employer Match
+  amount: 288.47
+  ytd: 288.47
+- description: ER - Basic Life
+  amount: 11.00
+  ytd: 11.00
+- description: ER - LTD
+  amount: 9.30
+  ytd: 9.30
+- description: ER - STD Outside of CA
+  amount: 21.00
+  ytd: 21.00
+- description: Group Term Life
+  amount: 51.75
+  ytd: 51.75
+total_employer_paid_benefits: 381.52
+deposit:
+  bank: Fidelity/UMB
+  account: '***********4'
+  amount: 1968.06
+validation:
+  earnings_sum_check: true
+  taxes_sum_check: true
+  pre_tax_sum_check: true
+  post_tax_sum_check: true
+  net_pay_check: true
+  mismatches: []
+source:
+  file: 2025-12-28.pdf
+  pages:
+  - 1
+  processed_at: '2026-02-28T11:05:31'

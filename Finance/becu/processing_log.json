@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "last_run": "2026-03-07T07:12:34",
+  "pdfs": {
+    "BECU-Statement-16-Jan-2025.PDF": {
+      "statement_month": "2025-01",
+      "output": "2025-01.yaml",
+      "processed_at": "2026-03-01T18:15:59",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-Feb-2025.PDF": {
+      "statement_month": "2025-02",
+      "output": "2025-02.yaml",
+      "processed_at": "2026-03-01T18:15:59",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-Mar-2025.PDF": {
+      "statement_month": "2025-03",
+      "output": "2025-03.yaml",
+      "processed_at": "2026-03-01T18:15:59",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-Apr-2025.PDF": {
+      "statement_month": "2025-04",
+      "output": "2025-04.yaml",
+      "processed_at": "2026-03-01T18:15:59",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-May-2025 (1).PDF": {
+      "statement_month": "2025-05",
+      "output": "2025-05.yaml",
+      "processed_at": "2026-03-01T18:15:59",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-Jun-2025 (1).PDF": {
+      "statement_month": "2025-06",
+      "output": "2025-06.yaml",
+      "processed_at": "2026-03-01T18:15:59",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-Jul-2025 (1).PDF": {
+      "statement_month": "2025-07",
+      "output": "2025-07.yaml",
+      "processed_at": "2026-03-01T18:16:00",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-Aug-2025 (1).PDF": {
+      "statement_month": "2025-08",
+      "output": "2025-08.yaml",
+      "processed_at": "2026-03-01T18:16:00",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-Sep-2025.PDF": {
+      "statement_month": "2025-09",
+      "output": "2025-09.yaml",
+      "processed_at": "2026-03-01T18:16:00",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-Oct-2025.PDF": {
+      "statement_month": "2025-10",
+      "output": "2025-10.yaml",
+      "processed_at": "2026-03-01T18:16:00",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-Nov-2025.PDF": {
+      "statement_month": "2025-11",
+      "output": "2025-11.yaml",
+      "processed_at": "2026-03-01T18:16:00",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-Dec-2025.PDF": {
+      "statement_month": "2025-12",
+      "output": "2025-12.yaml",
+      "processed_at": "2026-03-01T18:16:00",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-Jan-2026.PDF": {
+      "statement_month": "2026-01",
+      "output": "2026-01.yaml",
+      "processed_at": "2026-03-01T18:16:01",
+      "validation_ok": true,
+      "mismatches": []
+    },
+    "BECU-Statement-16-Feb-2026.PDF": {
+      "statement_month": "2026-02",
+      "output": "2026-02.yaml",
+      "processed_at": "2026-03-01T18:16:01",
+      "validation_ok": true,
+      "mismatches": []
+    }
+  }
+}

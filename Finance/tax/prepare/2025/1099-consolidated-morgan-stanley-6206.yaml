@@ -1,0 +1,55 @@
+form_type: 1099-CONSOLIDATED
+tax_year: 2025
+institution: Morgan Stanley
+format: morgan_stanley
+recipient:
+  name: Yi Chen
+  ssn_last4: '2622'
+account_number: 146 745046 206
+forms:
+  1099-DIV:
+    1a_total_ordinary_dividends: 131.86
+    1b_qualified_dividends: 131.86
+    2a_total_capital_gain_dist: 0.00
+    4_fed_tax_withheld: 0.00
+    5_section_199a_dividends: 0.00
+    7_foreign_tax_paid: 0.00
+  1099-INT:
+    1_interest_income: 0.10
+    4_fed_tax_withheld: 0.00
+  1099-B:
+    short_term:
+      proceeds: 248709.67
+      cost_basis: 244397.42
+      market_discount: 0.00
+      wash_sales: 0.00
+      gain_loss: 4312.25
+    long_term:
+      proceeds: 0.00
+      cost_basis: 0.00
+      market_discount: 0.00
+      wash_sales: 0.00
+      gain_loss: 0.00
+    total:
+      proceeds: 248709.67
+      cost_basis: 244397.42
+      market_discount: 0.00
+      wash_sales: 0.00
+      gain_loss: 4312.25
+validation:
+  checks_passed: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2025/MS_2025_1099-CONS_MSSB_LLC_5046_20260203.pdf
+  pages:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  processed_at: '2026-03-07T07:12:37'

@@ -1,0 +1,25 @@
+form_type: '1098'
+tax_year: 2023
+lender:
+  name: Mr. Cooper
+  tin: ''
+borrower:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_mortgage_interest: 8222.88
+  2_outstanding_principal: 237342.82
+  5_mortgage_insurance: 0.00
+  10_property_tax: 6697.90
+validation:
+  has_interest: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-MrCooper-FORM-1098.pdf
+  pages:
+  - 1
+  - 2
+  processed_at: '2026-03-07T07:12:47'
+loan_number: 0694006164
+ending_balance: 232064.86
+principal_applied: 5277.96

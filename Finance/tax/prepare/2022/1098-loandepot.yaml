@@ -1,0 +1,21 @@
+form_type: '1098'
+tax_year: 2022
+lender:
+  name: loanDepot
+  tin: 21-0534340
+borrower:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_mortgage_interest: 2117.69
+  2_outstanding_principal: 242439.51
+  5_mortgage_insurance: 0.00
+  10_property_tax: 0.00
+validation:
+  has_interest: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-loandepot-1098.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-07T07:12:52'

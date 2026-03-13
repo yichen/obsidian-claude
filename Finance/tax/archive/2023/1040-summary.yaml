@@ -1,0 +1,44 @@
+form_type: '1040'
+tax_year: 2023
+filing_status: Married Filing Jointly
+taxpayer:
+  name: Yi Chen
+  ssn_last4: '2622'
+spouse:
+  name: Sheri Martin
+  ssn_last4: '3457'
+dependents:
+- name: Laurence Chen
+  ssn_last4: '6094'
+  relationship: Son
+- name: Ruby Chen
+  ssn_last4: '9707'
+  relationship: Daughter
+income:
+  1a_w2_wages: 677795.00
+  1z_total_wages: 678775.00
+  2b_taxable_interest: 4398.00
+  3b_ordinary_dividends: 4560.00
+  7_capital_gain_loss: 29189.00
+  8_additional_income: -15.00
+summary:
+  total_income: 716907.00
+  adjusted_gross_income: 716907.00
+  deductions: 30774.00
+  taxable_income: 686133.00
+  tax_line16: 179406.00
+  total_tax: 186104.00
+  w2_withholding: 172189.00
+  total_withholding: 176154.00
+  estimated_payments: 176154.00
+  total_payments: 186674.00
+  refund_or_owed: -570.00
+validation:
+  all_key_fields_present: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/3-archive/2023/2023-tax-final.pdf
+  pages:
+  - 3
+  - 4
+  processed_at: '2026-02-28T21:35:12'

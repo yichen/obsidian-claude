@@ -1,0 +1,23 @@
+form_type: 5498-SA
+tax_year: 2025
+trustee:
+  name: ''
+  tin: ''
+participant:
+  name: Yi Chen
+  ssn_last4: '2622'
+account_type: HSA
+boxes:
+  1_employee_contributions: 0.00
+  2_total_contributions: 0.00
+  3_contributions_following_year: 0.00
+  4_rollover_contributions: 0.00
+  5_fair_market_value: 0.00
+validation:
+  has_contributions: false
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2025/2025-5498-SA-original.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-07T07:12:34'

@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Read",
+      "Glob",
+      "Grep",
+      "Bash",
+      "WebSearch",
+      "WebFetch",
+      "mcp__claude-context__index_codebase",
+      "mcp__claude-context__get_indexing_status",
+      "mcp__claude-context__search_code",
+      "mcp__firecrawl__firecrawl_search",
+      "mcp__firecrawl__firecrawl_scrape",
+      "mcp__voicemode__converse",
+      "mcp__slack__slack_list_channels",
+      "Skill(sync-notes)",
+      "Skill(sync)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

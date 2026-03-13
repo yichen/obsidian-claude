@@ -1,0 +1,32 @@
+form_type: 1099-CONSOLIDATED
+tax_year: 2024
+institution: Fidelity
+format: fidelity
+recipient:
+  name: Yi Chen
+  ssn_last4: '2622'
+account_number: X91-954267
+forms:
+  1099-DIV:
+    1a_total_ordinary_dividends: 0.00
+    1b_qualified_dividends: 0.00
+    2a_total_capital_gain_dist: 0.00
+    4_fed_tax_withheld: 0.00
+    5_section_199a_dividends: 0.00
+    7_foreign_tax_paid: 0.00
+  1099-INT:
+    1_interest_income: 26.91
+    4_fed_tax_withheld: 0.00
+validation:
+  checks_passed: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/2024-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf
+  pages:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  processed_at: '2026-03-07T07:12:39'

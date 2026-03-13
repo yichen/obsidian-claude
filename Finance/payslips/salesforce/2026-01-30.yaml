@@ -1,0 +1,111 @@
+employer: Salesforce
+employee_id: '867738'
+pay_period_start: '2026-01-16'
+pay_period_end: '2026-01-31'
+pay_date: '2026-01-30'
+pay_type: salary
+summary:
+  current:
+    hours_worked: 86.67
+    gross_pay: 12250.00
+    pre_tax_deductions: 794.83
+    employee_taxes: 4299.35
+    post_tax_deductions: 4423.27
+    net_pay: 2732.55
+  ytd:
+    hours_worked: 173.34
+    gross_pay: 24500.00
+    pre_tax_deductions: 1589.66
+    employee_taxes: 9298.71
+    post_tax_deductions: 8846.54
+    net_pay: 4765.09
+earnings:
+- description: Group Term Life
+  dates: 01/16/2026 - 01/31/2026
+  amount: 75.44
+  ytd: 150.88
+- description: Salary
+  dates: 01/16/2026 - 01/31/2026
+  hours: 86.67
+  amount: 12250.00
+  ytd: 24500.00
+total_earnings: 12325.44
+employee_taxes:
+- description: Social Security (OASDI)
+  amount: 730.09
+  ytd: 1460.18
+- description: Medicare
+  amount: 170.74
+  ytd: 341.49
+- description: Federal Withholding
+  amount: 3299.64
+  ytd: 7299.28
+- description: WA PFL (S) - WSPFL
+  amount: 98.88
+  ytd: 197.76
+total_employee_taxes: 4299.35
+pre_tax_deductions:
+- description: Dental
+  amount: 13.50
+  ytd: 27.00
+- description: FSA Dependent Care
+  amount: 156.25
+  ytd: 312.50
+- description: FSA Health Care
+  amount: 20.83
+  ytd: 41.66
+- description: EE Hlth Saving Acct
+  amount: 281.25
+  ytd: 562.50
+- description: Medical
+  amount: 78.00
+  ytd: 156.00
+- description: 401(k)
+  amount: 245.00
+  ytd: 490.00
+total_pre_tax_deductions: 794.83
+post_tax_deductions:
+- description: Child Supp AD&D Insur
+  amount: 0.20
+  ytd: 0.40
+- description: EE Supp AD&D Insur
+  amount: 3.00
+  ytd: 6.00
+- description: 401(k) After Tax
+  amount: 2572.50
+  ytd: 5145.00
+- description: Child Suppl Life Ins
+  amount: 0.64
+  ytd: 1.28
+- description: ESPP 12/01/25 - 05/31/26
+  amount: 1837.50
+  ytd: 3675.00
+- description: Metlife Legal Plan
+  amount: 9.43
+  ytd: 18.86
+total_post_tax_deductions: 4423.27
+employer_paid_benefits:
+- description: ER Contr Hlth Sav
+  amount: 0.00
+  ytd: 2000.00
+- description: 401(k) Employer Match
+  amount: 245.00
+  ytd: 490.00
+total_employer_paid_benefits: 245.00
+deposit:
+  bank: UMB, NA
+  account: '******4983'
+  amount: 2732.55
+validation:
+  earnings_sum_check: true
+  taxes_sum_check: true
+  pre_tax_sum_check: true
+  post_tax_sum_check: true
+  net_pay_check: true
+  mismatches: []
+source:
+  file: 2026-01-31.pdf
+  pages:
+  - 1
+  - 2
+  processed_at: '2026-02-28T11:05:31'

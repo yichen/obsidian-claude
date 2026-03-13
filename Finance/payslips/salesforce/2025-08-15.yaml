@@ -1,0 +1,135 @@
+employer: Salesforce
+employee_id: '867738'
+pay_period_start: '2025-08-01'
+pay_period_end: '2025-08-15'
+pay_date: '2025-08-15'
+pay_type: salary
+summary:
+  current:
+    hours_worked: 86.67
+    gross_pay: 12250.00
+    pre_tax_deductions: 504.21
+    employee_taxes: 2927.63
+    post_tax_deductions: 4910.27
+    net_pay: 3907.89
+  ytd:
+    hours_worked: 1300.05
+    gross_pay: 411780.69
+    pre_tax_deductions: 28451.05
+    employee_taxes: 129273.36
+    post_tax_deductions: 138204.88
+    net_pay: 115851.40
+earnings:
+- description: Group Term Life
+  dates: 08/01/2025 - 08/15/2025
+  amount: 75.44
+  ytd: 1108.14
+- description: Annual Performance Bonus
+  amount: 0.00
+  ytd: 50400.00
+- description: Rest Stock Unit Gain 0
+  amount: 0.00
+  ytd: 179359.36
+- description: Salary
+  dates: 08/01/2025 - 08/15/2025
+  hours: 86.67
+  amount: 12250.00
+  ytd: 180250.02
+- description: Spot Bonus 0
+  amount: 0.00
+  ytd: 1671.31
+- description: Wellness Reimbursement
+  amount: 0.00
+  ytd: 100.00
+total_earnings: 12325.44
+employee_taxes:
+- description: Social Security (OASDI)
+  amount: 0.00
+  ytd: 10918.20
+- description: Medicare
+  amount: 277.81
+  ytd: 7703.71
+- description: Federal Withholding
+  amount: 2649.82
+  ytd: 109492.71
+- description: WA PFL (S) - WSPFL
+  amount: 0.00
+  ytd: 1158.74
+total_employee_taxes: 2927.63
+pre_tax_deductions:
+- description: Dental
+  amount: 13.50
+  ytd: 317.50
+- description: FSA Dependent Care
+  amount: 100.00
+  ytd: 1500.00
+- description: FSA Health Care
+  amount: 42.00
+  ytd: 630.00
+- description: EE Hlth Saving Acct
+  amount: 273.21
+  ytd: 4091.05
+- description: Medical
+  amount: 75.50
+  ytd: 1937.50
+- description: 401(k) Catch-Up
+  amount: 0.00
+  ytd: 3825.00
+- description: 401(k)
+  amount: 0.00
+  ytd: 16150.00
+total_pre_tax_deductions: 504.21
+post_tax_deductions:
+- description: Child Supp AD&D Insur
+  amount: 0.20
+  ytd: 3.00
+- description: 401(k) After Tax
+  amount: 3062.50
+  ytd: 9724.57
+- description: Child Suppl Life Ins
+  amount: 0.64
+  ytd: 9.60
+- description: ESPP 12/01/24 - 05/31/25
+  amount: 0.00
+  ytd: 6948.88
+- description: ESPP 06/01/25 - 11/30/25
+  amount: 1837.50
+  ytd: 9187.50
+- description: Metlife Legal Plan
+  amount: 9.43
+  ytd: 141.45
+- description: 401(k) Roth Catch-Up
+  amount: 0.00
+  ytd: 3675.00
+- description: 401(k) Roth
+  amount: 0.00
+  ytd: 7350.00
+- description: RSU After Tax Offset
+  amount: 0.00
+  ytd: 101164.88
+total_post_tax_deductions: 4910.27
+employer_paid_benefits:
+- description: ER Contr Hlth Sav
+  amount: 0.00
+  ytd: 2000.00
+- description: 401(k) Employer Match
+  amount: 0.00
+  ytd: 6000.00
+total_employer_paid_benefits: 0.00
+deposit:
+  bank: UMB, NA
+  account: '******4983'
+  amount: 3907.89
+validation:
+  earnings_sum_check: true
+  taxes_sum_check: true
+  pre_tax_sum_check: true
+  post_tax_sum_check: true
+  net_pay_check: true
+  mismatches: []
+source:
+  file: 2025.pdf
+  pages:
+  - 35
+  - 36
+  processed_at: '2026-02-28T11:05:31'

@@ -1,0 +1,114 @@
+employer: Salesforce
+employee_id: '867738'
+pay_period_start: '2025-02-01'
+pay_period_end: '2025-02-15'
+pay_date: '2025-02-14'
+pay_type: salary
+summary:
+  current:
+    hours_worked: 86.67
+    gross_pay: 11666.67
+    pre_tax_deductions: 1812.17
+    employee_taxes: 2945.97
+    post_tax_deductions: 1765.41
+    net_pay: 5143.12
+  ytd:
+    hours_worked: 260.01
+    gross_pay: 36771.32
+    pre_tax_deductions: 6036.98
+    employee_taxes: 9228.78
+    post_tax_deductions: 10443.59
+    net_pay: 11061.97
+earnings:
+- description: Group Term Life
+  dates: 02/01/2025 - 02/15/2025
+  amount: 71.53
+  ytd: 214.59
+- description: Salary
+  dates: 02/01/2025 - 02/15/2025
+  hours: 86.67
+  amount: 11666.67
+  ytd: 35000.01
+- description: Spot Bonus 0
+  amount: 0.00
+  ytd: 1671.31
+- description: Wellness Reimbursement
+  amount: 0.00
+  ytd: 100.00
+total_earnings: 11738.20
+employee_taxes:
+- description: Social Security (OASDI)
+  amount: 687.74
+  ytd: 2182.36
+- description: Medicare
+  amount: 160.84
+  ytd: 510.39
+- description: Federal Withholding
+  amount: 2020.62
+  ytd: 6294.07
+- description: WA PFL (S) - WSPFL
+  amount: 76.77
+  ytd: 241.96
+total_employee_taxes: 2945.97
+pre_tax_deductions:
+- description: Dental
+  amount: 25.00
+  ytd: 75.00
+- description: FSA Dependent Care
+  amount: 150.00
+  ytd: 300.00
+- description: FSA Health Care
+  amount: 42.00
+  ytd: 126.00
+- description: EE Hlth Saving Acct
+  amount: 272.50
+  ytd: 817.50
+- description: Medical
+  amount: 156.00
+  ytd: 468.00
+- description: 401(k)
+  amount: 1166.67
+  ytd: 4250.48
+total_pre_tax_deductions: 1812.17
+post_tax_deductions:
+- description: Child Supp AD&D Insur
+  amount: 0.30
+  ytd: 0.60
+- description: 401(k) After Tax
+  amount: 0.00
+  ytd: 6662.07
+- description: Child Suppl Life Ins
+  amount: 0.96
+  ytd: 1.92
+- description: ESPP 12/01/24 - 05/31/25
+  amount: 1750.01
+  ytd: 3750.71
+- description: Metlife Legal Plan
+  amount: 14.14
+  ytd: 28.29
+total_post_tax_deductions: 1765.41
+employer_paid_benefits:
+- description: ER Contr Hlth Sav
+  amount: 0.00
+  ytd: 2000.00
+- description: 401(k) Employer Match
+  amount: 700.00
+  ytd: 2200.28
+total_employer_paid_benefits: 700.00
+deposit:
+  bank: UMB, NA
+  account: '******4983'
+  amount: 5143.12
+validation:
+  earnings_sum_check: true
+  taxes_sum_check: true
+  pre_tax_sum_check: true
+  post_tax_sum_check: true
+  net_pay_check: true
+  mismatches: []
+source:
+  file: 2025.pdf
+  pages:
+  - 5
+  - 6
+  processed_at: '2026-02-28T11:05:31'

@@ -1,0 +1,93 @@
+{
+  "Statement1312025.pdf": {
+    "statement_date": "2025-01-31",
+    "output_file": "Finance/fidelity-accounts/2025-01-31.yaml",
+    "processed_at": "2026-03-01T09:26:01.865941",
+    "accounts": 8,
+    "validation_passed": true
+  },
+  "Statement2282025.pdf": {
+    "statement_date": "2025-02-28",
+    "output_file": "Finance/fidelity-accounts/2025-02-28.yaml",
+    "processed_at": "2026-03-01T09:26:02.898395",
+    "accounts": 8,
+    "validation_passed": true
+  },
+  "Statement3312025.pdf": {
+    "statement_date": "2025-03-31",
+    "output_file": "Finance/fidelity-accounts/2025-03-31.yaml",
+    "processed_at": "2026-03-01T09:26:04.093970",
+    "accounts": 8,
+    "validation_passed": true
+  },
+  "Statement4302025.pdf": {
+    "statement_date": "2025-04-30",
+    "output_file": "Finance/fidelity-accounts/2025-04-30.yaml",
+    "processed_at": "2026-03-01T09:26:05.159675",
+    "accounts": 8,
+    "validation_passed": true
+  },
+  "Statement5312025.pdf": {
+    "statement_date": "2025-05-31",
+    "output_file": "Finance/fidelity-accounts/2025-05-31.yaml",
+    "processed_at": "2026-03-01T09:26:06.138072",
+    "accounts": 8,
+    "validation_passed": true
+  },
+  "Statement6302025.pdf": {
+    "statement_date": "2025-06-30",
+    "output_file": "Finance/fidelity-accounts/2025-06-30.yaml",
+    "processed_at": "2026-03-01T09:26:07.117568",
+    "accounts": 7,
+    "validation_passed": true
+  },
+  "Statement7312025.pdf": {
+    "statement_date": "2025-07-31",
+    "output_file": "Finance/fidelity-accounts/2025-07-31.yaml",
+    "processed_at": "2026-03-01T09:26:07.967713",
+    "accounts": 7,
+    "validation_passed": true
+  },
+  "Statement8312025.pdf": {
+    "statement_date": "2025-08-31",
+    "output_file": "Finance/fidelity-accounts/2025-08-31.yaml",
+    "processed_at": "2026-03-01T09:26:08.936930",
+    "accounts": 7,
+    "validation_passed": true
+  },
+  "Statement9302025.pdf": {
+    "statement_date": "2025-09-30",
+    "output_file": "Finance/fidelity-accounts/2025-09-30.yaml",
+    "processed_at": "2026-03-01T09:26:09.966297",
+    "accounts": 7,
+    "validation_passed": true
+  },
+  "Statement10312025.pdf": {
+    "statement_date": "2025-10-31",
+    "output_file": "Finance/fidelity-accounts/2025-10-31.yaml",
+    "processed_at": "2026-03-01T09:26:10.836602",
+    "accounts": 7,
+    "validation_passed": true
+  },
+  "Statement11302025.pdf": {
+    "statement_date": "2025-11-30",
+    "output_file": "Finance/fidelity-accounts/2025-11-30.yaml",
+    "processed_at": "2026-03-01T09:26:11.801242",
+    "accounts": 7,
+    "validation_passed": true
+  },
+  "Statement12312025.pdf": {
+    "statement_date": "2025-12-31",
+    "output_file": "Finance/fidelity-accounts/2025-12-31.yaml",
+    "processed_at": "2026-03-01T09:26:12.923246",
+    "accounts": 7,
+    "validation_passed": true
+  },
+  "Statement1312026.pdf": {
+    "statement_date": "2026-01-31",
+    "output_file": "Finance/fidelity-accounts/2026-01-31.yaml",
+    "processed_at": "2026-03-01T09:26:13.852915",
+    "accounts": 7,
+    "validation_passed": true
+  }
+}

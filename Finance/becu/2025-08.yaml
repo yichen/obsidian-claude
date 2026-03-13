@@ -1,0 +1,79 @@
+statement_month: 2025-08
+period_start: '2025-07-17'
+period_end: '2025-08-16'
+checking:
+  account_number: '3588947679'
+  beginning_balance: 2840.98
+  withdrawals_fees: -20000.0
+  deposits: 20800.0
+  dividends_interest: 1.09
+  ending_balance: 3642.07
+  apy: 0.49
+  average_daily_balance: 4080.22
+  ytd_dividends: 10.72
+  transactions:
+  - date: '2025-07-25'
+    amount: 800.0
+    description: External Deposit FID BKG SVC LLC - MONEYLINE
+    type: deposit
+  - date: '2025-08-01'
+    amount: 1.09
+    description: Dividend/Interest
+    type: deposit
+  - date: '2025-08-05'
+    amount: 10000.0
+    description: Deposit Online Banking Transfer from 2019617868 CNS
+    type: deposit
+  - date: '2025-08-06'
+    amount: 10000.0
+    description: Deposit Online Banking Transfer from 2019617868 CNS
+    type: deposit
+  - date: '2025-08-06'
+    amount: -10000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-08-07'
+    amount: -10000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+heloc:
+  account_number: '2019617876'
+  previous_balance: 36530.53
+  available_credit: 173469.47
+  credit_limit: 230000.0
+  new_balance: 56530.53
+  payments: 0.0
+  other_credits: 0.0
+  advances: 20000.0
+  fees_charged: 0.0
+  interest_charged: 0.0
+  apr: 5.99
+  ytd_fees: 0.0
+  ytd_interest: 0.0
+  minimum_payment: 401.55
+  payment_date: '2025-09-15'
+  total_interest_this_period: 0.0
+  transactions: []
+  sub_accounts:
+  - name: HE Variable Line of Credit
+    previous_balance: 36530.53
+    new_balance: 56530.53
+    apr: 5.99
+    transactions:
+    - date: '2025-08-05'
+      description: Principal Disbursement
+      amount: 10000.0
+    - date: '2025-08-06'
+      description: Principal Disbursement
+      amount: 10000.0
+    interest_paid: 0.0
+validation:
+  checking_balance_ok: true
+  checking_txn_totals_ok: true
+  heloc_balance_ok: true
+  heloc_sub_balance_ok: true
+  heloc_sub_interest_ok: true
+  mismatches: []
+source:
+  file: BECU-Statement-16-Aug-2025 (1).PDF
+  processed_at: '2026-03-01T18:16:00'

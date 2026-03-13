@@ -1,0 +1,117 @@
+statement_month: 2025-09
+period_start: '2025-08-17'
+period_end: '2025-09-16'
+checking:
+  account_number: '3588947679'
+  beginning_balance: 3642.07
+  withdrawals_fees: -44401.55
+  deposits: 48200.0
+  dividends_interest: 2.11
+  ending_balance: 7442.63
+  apy: 0.27
+  average_daily_balance: 9442.72
+  ytd_dividends: 12.83
+  transactions:
+  - date: '2025-08-25'
+    amount: 800.0
+    description: External Deposit FID BKG SVC LLC - MONEYLINE
+    type: deposit
+  - date: '2025-09-01'
+    amount: 10000.0
+    description: Deposit Online Banking Transfer from 2019617868 CNS
+    type: deposit
+  - date: '2025-09-01'
+    amount: 10000.0
+    description: Deposit Online Banking Transfer from 2019617868 CNS
+    type: deposit
+  - date: '2025-09-05'
+    amount: 10000.0
+    description: External Deposit Z264749831FTCNB - MONEYLINE
+    type: deposit
+  - date: '2025-09-05'
+    amount: 2.11
+    description: Dividend/Interest
+    type: deposit
+  - date: '2025-09-09'
+    amount: 17400.0
+    description: External Deposit MSPBNA E*TRADE SECURITIES - ACH TRNSFR
+    type: deposit
+  - date: '2025-09-02'
+    amount: -4000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-09-02'
+    amount: -4000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-09-02'
+    amount: -4000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-09-08'
+    amount: -10000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-09-08'
+    amount: -5000.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+  - date: '2025-09-11'
+    amount: -17000.0
+    description: Withdrawal Online Banking Transfer To 2019617868 CNS
+    type: withdrawal
+  - date: '2025-09-15'
+    amount: -401.55
+    description: Withdrawal Transfer to 2019617876
+    type: withdrawal
+heloc:
+  account_number: '2019617876'
+  previous_balance: 56530.53
+  available_credit: 170469.47
+  credit_limit: 230000.0
+  new_balance: 59530.53
+  payments: -17401.55
+  other_credits: 0.0
+  advances: 20000.0
+  fees_charged: 0.0
+  interest_charged: 401.55
+  apr: 5.99
+  ytd_fees: 0.0
+  ytd_interest: 401.55
+  minimum_payment: 323.37
+  payment_date: '2025-10-15'
+  total_interest_this_period: 401.55
+  transactions:
+  - date: '2025-09-15'
+    description: Master Line Scheduled Payment
+    amount: -401.55
+  sub_accounts:
+  - name: HE Variable Line of Credit
+    previous_balance: 56530.53
+    new_balance: 59530.53
+    avg_daily_balance: 63562.79
+    apr: 5.99
+    transactions:
+    - date: '2025-09-01'
+      description: Principal Disbursement
+      amount: 10000.0
+    - date: '2025-09-01'
+      description: Principal Disbursement
+      amount: 10000.0
+    - date: '2025-09-11'
+      description: Principal Receipt
+      amount: -17000.0
+    - date: '2025-09-15'
+      description: Regular Payment
+      amount: -401.55
+    interest_paid: 401.55
+validation:
+  checking_balance_ok: true
+  checking_txn_totals_ok: true
+  heloc_balance_ok: true
+  heloc_sub_balance_ok: true
+  heloc_sub_interest_ok: true
+  mismatches: []
+source:
+  file: BECU-Statement-16-Sep-2025.PDF
+  processed_at: '2026-03-01T18:16:00'

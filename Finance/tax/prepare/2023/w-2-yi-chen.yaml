@@ -1,0 +1,30 @@
+form_type: W-2
+tax_year: 2023
+employer:
+  name: Yi Chen
+  ein: ''
+employee:
+  name: Margaret          Kimani
+  ssn_last4: '4700'
+boxes:
+  1_wages: 3660.00
+  2_fed_tax_withheld: 524.42
+  3_ss_wages: 3660.00
+  4_ss_tax_withheld: 226.92
+  5_medicare_wages: 3660.00
+  6_medicare_tax_withheld: 53.08
+  '13':
+    retirement_plan: false
+    statutory_employee: false
+    third_party_sick_pay: false
+  15_state: WA
+  16_state_wages: 0.00
+  17_state_tax: 0.00
+validation:
+  checks_passed: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2023/nanny-on-w2/diana.w2.20231231.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-07T07:12:50'

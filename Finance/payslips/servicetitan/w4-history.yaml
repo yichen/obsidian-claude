@@ -1,0 +1,53 @@
+employer: ServiceTitan
+elections:
+- effective_date: '2026-01-03'
+  marital_status: Single or Married filing separately
+  number_of_allowances: 0
+  extra_withholding: 100.00
+  multiple_jobs_or_spouse_works: false
+  total_dependent_amount: 0.00
+  other_income: 0.00
+  deductions: 0.00
+  nonresident_alien: false
+  exempt: false
+  last_updated: '2026-01-03T18:36:40'
+  last_updated_by: Yi Chen
+
+- effective_date: '2026-01-03'
+  marital_status: Single or Married filing separately
+  number_of_allowances: 0
+  extra_withholding: 1600.00
+  multiple_jobs_or_spouse_works: false
+  total_dependent_amount: 0.00
+  other_income: 0.00
+  deductions: 0.00
+  nonresident_alien: false
+  exempt: false
+  last_updated: '2026-01-03T18:32:12'
+  last_updated_by: Yi Chen
+
+- effective_date: '2025-12-03'
+  marital_status: Single or Married filing separately
+  number_of_allowances: 0
+  extra_withholding: 3000.00
+  multiple_jobs_or_spouse_works: false
+  total_dependent_amount: 0.00
+  other_income: 0.00
+  deductions: 0.00
+  nonresident_alien: false
+  exempt: false
+  last_updated: '2025-12-03T05:09:46'
+  last_updated_by: Yi Chen
+
+- effective_date: '2025-12-01'
+  marital_status: Head of Household
+  number_of_allowances: 0
+  extra_withholding: 1000.00
+  multiple_jobs_or_spouse_works: true
+  total_dependent_amount: 0.00
+  other_income: 0.00
+  deductions: 0.00
+  nonresident_alien: false
+  exempt: false
+  last_updated: '2025-11-15T07:02:47'
+  last_updated_by: Yi Chen

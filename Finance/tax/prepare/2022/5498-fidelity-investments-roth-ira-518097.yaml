@@ -1,0 +1,26 @@
+form_type: '5498'
+tax_year: 2022
+trustee:
+  name: Fidelity Investments
+  tin: 04-3523567
+participant:
+  name: Yi Chen
+  ssn_last4: '2622'
+ira_type: ROTH IRA
+boxes:
+  1_ira_contributions: 0.00
+  2_rollover_contributions: 0.00
+  3_roth_conversion: 6000.00
+  4_recharacterized: 0.00
+  5_fair_market_value: 416861.96
+  15a_fmv_specified_assets: 36374.05
+  15b_code: A
+validation:
+  has_data: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2022/2023-03-31/2022-YI-CHEN-ROTH-IRA-8097-Form-5498.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-07T07:12:53'
+account_number: 226-518097

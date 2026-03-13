@@ -1,0 +1,65 @@
+2026-02-28 11:05:29,779 INFO Payslip Ingestion — 2026-02-28 11:05:29
+2026-02-28 11:05:29,779 INFO 
+  Processing Salesforce (6 PDFs)...
+2026-02-28 11:05:31,455 INFO     OK 2025.pdf p[1, 2] -> 2025-01-15.yaml [salary] gross=$11,766.67 net=$0.00
+2026-02-28 11:05:31,457 INFO     OK 2025.pdf p[3, 4] -> 2025-01-31.yaml [salary] gross=$13,337.98 net=$5,918.85
+2026-02-28 11:05:31,460 INFO     OK 2025.pdf p[5, 6] -> 2025-02-14.yaml [salary] gross=$11,666.67 net=$5,143.12
+2026-02-28 11:05:31,462 INFO     OK 2025.pdf p[7, 8] -> 2025-02-28.yaml [salary] gross=$11,666.67 net=$5,869.27
+2026-02-28 11:05:31,464 INFO     OK 2025.pdf p[9, 10] -> 2025-02-24.yaml [rsu] gross=$145,915.80 net=$0.00
+2026-02-28 11:05:31,466 INFO     OK 2025.pdf p[11, 12] -> 2025-03-14.yaml [salary] gross=$11,666.67 net=$6,281.73
+2026-02-28 11:05:31,468 INFO     OK 2025.pdf p[13, 14] -> 2025-03-31.yaml [salary] gross=$11,666.67 net=$7,836.32
+2026-02-28 11:05:31,470 INFO     OK 2025.pdf p[15, 16] -> 2025-04-15.yaml [salary] gross=$12,250.00 net=$8,190.30
+2026-02-28 11:05:31,472 INFO     OK 2025.pdf p[17, 18] -> 2025-04-15-2.yaml [bonus] gross=$50,400.00 net=$37,795.97
+2026-02-28 11:05:31,474 INFO     OK 2025.pdf p[19, 20] -> 2025-04-30.yaml [salary] gross=$12,250.00 net=$8,190.30
+2026-02-28 11:05:31,476 INFO     OK 2025.pdf p[21, 22] -> 2025-05-15.yaml [salary] gross=$12,250.00 net=$7,857.10
+2026-02-28 11:05:31,479 INFO     OK 2025.pdf p[23, 24] -> 2025-05-30.yaml [salary] gross=$12,250.00 net=$7,857.11
+2026-02-28 11:05:31,481 INFO     OK 2025.pdf p[25, 26] -> 2025-05-23.yaml [rsu] gross=$33,443.56 net=$0.00
+2026-02-28 11:05:31,483 INFO     OK 2025.pdf p[27, 28] -> 2025-06-13.yaml [salary] gross=$12,250.00 net=$1,619.70
+2026-02-28 11:05:31,485 INFO     OK 2025.pdf p[29, 30] -> 2025-06-30.yaml [salary] gross=$12,250.00 net=$1,828.23
+2026-02-28 11:05:31,488 INFO     OK 2025.pdf p[31, 32] -> 2025-07-15.yaml [salary] gross=$12,250.00 net=$1,652.13
+2026-02-28 11:05:31,490 INFO     OK 2025.pdf p[33, 34] -> 2025-07-31.yaml [salary] gross=$12,250.00 net=$5,903.38
+2026-02-28 11:05:31,492 INFO     OK 2025.pdf p[35, 36] -> 2025-08-15.yaml [salary] gross=$12,250.00 net=$3,907.89
+2026-02-28 11:05:31,496 INFO     OK 2025.pdf p[37, 38] -> 2025-08-29.yaml [salary] gross=$12,250.00 net=$4,307.90
+2026-02-28 11:05:31,498 INFO     OK 2025.pdf p[39, 40] -> 2025-08-21.yaml [void] gross=$0.00 net=$0.00
+2026-02-28 11:05:31,500 INFO     OK 2025.pdf p[41, 42] -> 2025-08-25.yaml [rsu] gross=$29,298.22 net=$0.00
+2026-02-28 11:05:31,502 INFO     OK 2025.pdf p[43, 44] -> 2025-09-15.yaml [salary] gross=$12,250.00 net=$5,745.40
+2026-02-28 11:05:31,504 INFO     OK 2025.pdf p[45, 46] -> 2025-09-30.yaml [bonus] gross=$14,586.85 net=$0.00
+2026-02-28 11:05:31,506 INFO     OK 2025.pdf p[47, 48] -> 2025-09-30-2.yaml [salary] gross=$12,250.00 net=$232.90
+2026-02-28 11:05:31,510 INFO     OK 2025.pdf p[49, 50] -> 2025-09-25.yaml [salary] gross=$0.00 net=$0.00
+2026-02-28 11:05:31,512 INFO     OK 2025.pdf p[51, 52] -> 2025-10-15.yaml [salary] gross=$12,250.00 net=$3,767.43
+2026-02-28 11:05:31,514 INFO     OK 2025.pdf p[53, 54] -> 2025-10-31.yaml [salary] gross=$12,250.00 net=$8,807.89
+2026-02-28 11:05:31,517 INFO     OK 2025.pdf p[55, 56] -> 2025-11-14.yaml [salary] gross=$12,250.00 net=$8,807.90
+2026-02-28 11:05:31,520 INFO     OK 2025.pdf p[57, 58] -> 2025-11-28.yaml [salary] gross=$12,250.00 net=$8,807.91
+2026-02-28 11:05:31,522 INFO     OK 2025.pdf p[59, 60] -> 2025-12-15.yaml [salary] gross=$12,250.00 net=$5,470.40
+2026-02-28 11:05:31,524 INFO     OK 2025.pdf p[61, 62] -> 2025-11-24.yaml [rsu] gross=$26,798.98 net=$0.00
+2026-02-28 11:05:31,527 INFO     OK 2025.pdf p[63, 64] -> 2025-12-31.yaml [salary] gross=$12,514.63 net=$5,874.34
+2026-02-28 11:05:31,529 INFO     OK 2025.pdf p[65, 66] -> 2025-12-31-2.yaml [salary] gross=$13,408.81 net=$0.00
+2026-02-28 11:05:31,586 INFO     OK 2026-01-15.pdf p[1, 2] -> 2026-01-15.yaml [salary] gross=$12,250.00 net=$2,032.54
+2026-02-28 11:05:31,636 INFO     OK 2026-01-31.pdf p[1, 2] -> 2026-01-30.yaml [salary] gross=$12,250.00 net=$2,732.55
+2026-02-28 11:05:31,687 INFO     OK 2026-02-15.pdf p[1, 2] -> 2026-02-13.yaml [salary] gross=$12,341.00 net=$5,233.99
+2026-02-28 11:05:31,741 INFO     OK 2026-02-28-2.pdf p[1, 2] -> 2026-02-27.yaml [salary] gross=$12,250.00 net=$5,582.56
+2026-02-28 11:05:31,798 INFO     OK 2026-02-28.pdf p[1, 2] -> 2026-02-23.yaml [rsu] gross=$21,848.88 net=$0.00
+2026-02-28 11:05:31,799 INFO 
+  Processing ServiceTitan (6 PDFs)...
+2026-02-28 11:05:31,878 INFO     OK 2025-12-14.pdf p[1] -> 2025-12-19.yaml [salary] gross=$9,615.39 net=$1,857.06
+2026-02-28 11:05:31,967 INFO     OK 2025-12-28.pdf p[1] -> 2026-01-02.yaml [salary] gross=$9,615.39 net=$1,968.06
+2026-02-28 11:05:32,057 INFO     OK 2026-01-11.pdf p[1] -> 2026-01-16.yaml [salary] gross=$9,615.39 net=$4,868.04
+2026-02-28 11:05:32,156 INFO     OK 2026-01-25.pdf p[1] -> 2026-01-30.yaml [salary] gross=$9,615.39 net=$4,838.58
+2026-02-28 11:05:32,261 INFO     OK 2026-02-08.pdf p[1] -> 2026-02-13.yaml [salary] gross=$9,615.39 net=$4,868.06
+2026-02-28 11:05:32,362 INFO     OK 2026-02-22.pdf p[1] -> 2026-02-27.yaml [salary] gross=$9,615.39 net=$4,868.05
+2026-02-28 11:05:32,363 INFO 
+  Done: 44 written, 0 skipped (dedup), 0 errors, 0 validation issues
+2026-02-28 11:05:41,370 INFO Payslip Ingestion — 2026-02-28 11:05:41
+2026-02-28 11:05:41,371 INFO 
+  Processing Salesforce (6 PDFs)...
+2026-02-28 11:05:43,291 INFO 
+  Processing ServiceTitan (6 PDFs)...
+2026-02-28 11:05:43,826 INFO 
+  Done: 0 written, 44 skipped (dedup), 0 errors, 0 validation issues
+2026-03-07 07:12:34,372 INFO Payslip Ingestion — 2026-03-07 07:12:34
+2026-03-07 07:12:34,373 INFO 
+  Processing Salesforce (6 PDFs)...
+2026-03-07 07:12:36,116 INFO 
+  Processing ServiceTitan (6 PDFs)...
+2026-03-07 07:12:36,623 INFO 
+  Done: 0 written, 44 skipped (dedup), 0 errors, 0 validation issues

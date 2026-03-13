@@ -1,0 +1,23 @@
+form_type: 5498-SA
+tax_year: 2023
+trustee:
+  name: Fidelity Investments
+  tin: 04-3523567
+participant:
+  name: Yi Chen
+  ssn_last4: '2622'
+account_type: HSA
+boxes:
+  1_employee_contributions: 0.00
+  2_total_contributions: 7749.96
+  3_contributions_following_year: 0.00
+  4_rollover_contributions: 0.00
+  5_fair_market_value: 47905.34
+validation:
+  has_contributions: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2023/prepared-on-20240919/2023-Health-Savings-Account-4209-Form-5498-SA-&-Instructions.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-07T07:12:45'

@@ -1,0 +1,104 @@
+employer: Salesforce
+employee_id: '867738'
+pay_period_start: '2025-02-16'
+pay_period_end: '2025-02-28'
+pay_date: '2025-02-24'
+pay_type: rsu
+summary:
+  current:
+    hours_worked: 0.00
+    gross_pay: 145915.80
+    pre_tax_deductions: 0.00
+    employee_taxes: 64840.47
+    post_tax_deductions: 81075.33
+    net_pay: 0.00
+  ytd:
+    hours_worked: 260.01
+    gross_pay: 182687.12
+    pre_tax_deductions: 6036.98
+    employee_taxes: 74069.25
+    post_tax_deductions: 91518.92
+    net_pay: 11061.97
+earnings:
+- description: Rest Stock Unit Gain
+  dates: 02/16/2025 - 02/28/2025
+  amount: 145915.80
+  ytd: 145915.80
+total_earnings: 0.00
+employee_taxes:
+- description: Social Security (OASDI)
+  amount: 8735.84
+  ytd: 10918.20
+- description: Medicare
+  amount: 2115.78
+  ytd: 2626.17
+- description: Federal Withholding
+  amount: 53988.85
+  ytd: 60282.92
+- description: WA PFL (S) - WSPFL
+  amount: 0.00
+  ytd: 241.96
+total_employee_taxes: 64840.47
+pre_tax_deductions:
+- description: Dental
+  amount: 0.00
+  ytd: 75.00
+- description: FSA Dependent Care
+  amount: 0.00
+  ytd: 300.00
+- description: FSA Health Care
+  amount: 0.00
+  ytd: 126.00
+- description: EE Hlth Saving Acct
+  amount: 0.00
+  ytd: 817.50
+- description: Medical
+  amount: 0.00
+  ytd: 468.00
+- description: 401(k)
+  amount: 0.00
+  ytd: 4250.48
+total_pre_tax_deductions: 0.00
+post_tax_deductions:
+- description: Child Supp AD&D Insur
+  amount: 0.00
+  ytd: 0.60
+- description: 401(k) After Tax
+  amount: 0.00
+  ytd: 6662.07
+- description: Child Suppl Life Ins
+  amount: 0.00
+  ytd: 1.92
+- description: ESPP 12/01/24 - 05/31/25
+  amount: 0.00
+  ytd: 3750.71
+- description: Metlife Legal Plan
+  amount: 0.00
+  ytd: 28.29
+- description: RSU After Tax Offset
+  amount: 81075.33
+  ytd: 81075.33
+total_post_tax_deductions: 81075.33
+employer_paid_benefits:
+- description: ER Contr Hlth Sav
+  amount: 0.00
+  ytd: 2000.00
+- description: 401(k) Employer Match
+  amount: 0.00
+  ytd: 2200.28
+total_employer_paid_benefits: 0.00
+deposit:
+  bank: ''
+  account: ''
+  amount: 0.00
+validation:
+  taxes_sum_check: true
+  post_tax_sum_check: true
+  net_pay_check: true
+  mismatches: []
+source:
+  file: 2025.pdf
+  pages:
+  - 9
+  - 10
+  processed_at: '2026-02-28T11:05:31'

@@ -1,0 +1,37 @@
+form_type: W-2
+tax_year: 2024
+employer:
+  name: Stripe
+  ein: 27-0465600
+employee:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_wages: 26993.16
+  2_fed_tax_withheld: 3716.63
+  3_ss_wages: 26993.16
+  4_ss_tax_withheld: 1673.58
+  5_medicare_wages: 26993.16
+  6_medicare_tax_withheld: 391.40
+  '12':
+  - code: C
+    amount: 82.50
+    description: Group-term life insurance over $50K
+  - code: DD
+    amount: 2314.51
+    description: Health coverage cost (employer + employee)
+  '13':
+    retirement_plan: false
+    statutory_employee: false
+    third_party_sick_pay: false
+  15_state: WA
+  16_state_wages: 0.00
+  17_state_tax: 0.00
+validation:
+  checks_passed: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2024/Yi/W-2_Form_2024_Chen_stripe.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-07T07:12:45'

@@ -1,0 +1,623 @@
+statement_date: '2025-12-31'
+period_start: '2025-12-01'
+period_end: '2025-12-31'
+portfolio:
+  beginning_value: 212838.21
+  ending_value: 183700.17
+  additions: 135542.43
+  subtractions: -165659.24
+  change_in_investment_value: 978.77
+  transaction_costs: 0.0
+  transfers_between_fidelity: 0.0
+income_summary:
+  taxable:
+    total: 159.29
+    dividends: 159.29
+    interest: 0.0
+  tax_deferred:
+    total: 24.24
+  tax_free:
+    total: 732.63
+  grand_total: 916.16
+accounts:
+- account_number: X86-610887
+  account_name: YI CHEN - INDIVIDUAL - TOD
+  account_type: individual_brokerage
+  tax_status: taxable
+  beneficiary: Yi
+  summary:
+    beginning_value: 0.0
+    additions: 0.0
+    subtractions: 0.0
+    change_in_investment_value: 0.0
+    deposits: 0.0
+    exchanges_out: 0.0
+    transfers_between_fidelity: -813308.16
+    transaction_costs: 0.0
+  income:
+    interest: 0.0
+  holdings: []
+- account_number: Z26-474983
+  account_name: YI CHEN - INDIVIDUAL
+  account_type: cash_management
+  tax_status: taxable
+  beneficiary: Yi
+  summary:
+    beginning_value: 75439.74
+    ending_value: 34825.13
+    additions: 124892.43
+    subtractions: -165659.24
+    change_in_investment_value: 152.20
+    deposits: 124892.43
+    withdrawals: -155469.15
+    exchanges_in: 0.0
+    exchanges_out: -9900.0
+    cards_checking_bill_payments: -290.09
+    transaction_costs: 0.0
+  income:
+    dividends: 152.20
+    interest: 0.0
+    total: 152.20
+  holdings:
+  - symbol: SPAXX
+    description: FIDELITY GOVERNMENT MONEY
+    asset_class: core
+    quantity: 34825.13
+    price: 1.0
+    market_value: 34825.13
+  activity:
+  - date: '2025-12-01'
+    type: deposit
+    description: Deposit Ourfamilywiz Ourfamilyw
+    amount: 168.0
+    category: Kids Cost (Reimbursement)
+    is_transfer: false
+  - date: '2025-12-01'
+    type: deposit
+    description: Deposit Ourfamilywiz Ourfamilyw
+    amount: 132.47
+    category: Kids Cost (Reimbursement)
+    is_transfer: false
+  - date: '2025-12-03'
+    type: deposit
+    description: Deposit Apartments.c Apts Smoth
+    amount: 1995.0
+    category: Rental Income
+    is_transfer: false
+  - date: '2025-12-08'
+    type: deposit
+    description: Eft Funds Received Er38845588
+    amount: 10000.0
+    payee: Boeing Employees Credit Union ******7679
+    category: Transfer In
+    is_transfer: true
+  - date: '2025-12-09'
+    type: deposit
+    description: Deposit Mspbna Ach Trnsfr
+    amount: 44639.0
+    category: Transfer In (Morgan Stanley)
+    is_transfer: true
+  - date: '2025-12-11'
+    type: deposit
+    description: Deposit Ourfamilywiz Ourfamilyw
+    amount: 83.90
+    category: Kids Cost (Reimbursement)
+    is_transfer: false
+  - date: '2025-12-12'
+    type: deposit
+    description: Deposit 100-sfdc Inc Payroll
+    amount: 5470.40
+    category: Payroll
+    is_transfer: false
+  - date: '2025-12-17'
+    type: deposit
+    description: Deposit Connectyourc Optumclaim
+    amount: 504.20
+    category: Insurance Reimbursement
+    is_transfer: false
+  - date: '2025-12-17'
+    type: deposit
+    description: Deposit Received
+    amount: 37.0
+    category: Other Income
+    is_transfer: false
+  - date: '2025-12-18'
+    type: deposit
+    description: Deposit Mspbna Ach Trnsfr
+    amount: 12163.0
+    category: Transfer In (Morgan Stanley)
+    is_transfer: true
+  - date: '2025-12-18'
+    type: deposit
+    description: Deposit Servicetitan Edi Pymnts
+    amount: 1857.06
+    category: Payroll
+    is_transfer: false
+  - date: '2025-12-18'
+    type: deposit
+    description: Eft Funds Received Er41969274 /web
+    amount: 40000.0
+    payee: Boeing Employees Credit Union ******7679
+    category: Transfer In
+    is_transfer: true
+  - date: '2025-12-30'
+    type: deposit
+    description: Deposit 100-sfdc Inc Payroll
+    amount: 5874.34
+    category: Payroll
+    is_transfer: false
+  - date: '2025-12-31'
+    type: deposit
+    description: Deposit Servicetitan Edi Pymnts
+    amount: 1968.06
+    category: Payroll
+    is_transfer: false
+  - date: '2025-12-01'
+    type: withdrawal
+    description: DEBIT APPLECARD GSBA PAYMENT
+    amount: -702.52
+    category: 'CC Payment: Apple Card'
+    is_transfer: true
+  - date: '2025-12-01'
+    type: withdrawal
+    description: Money Line Paid EFT FUNDS PAID AD07964278 /DIRECTED
+    amount: -10000.0
+    payee: SHERI MARTIN / CAPITAL ONE N.A. ******0615
+    category: Spousal Maintenance
+    is_transfer: false
+  - date: '2025-12-01'
+    type: withdrawal
+    description: Money Line Paid EFT FUNDS PAID AD07964285 /DIRECTED
+    amount: -1254.0
+    payee: SHERI MARTIN / CAPITAL ONE N.A. ******0615
+    category: Child Support
+    is_transfer: false
+  - date: '2025-12-02'
+    type: withdrawal
+    description: DEBIT VENMO PAYMENT
+    amount: -80.0
+    category: Venmo
+    is_transfer: false
+  - date: '2025-12-03'
+    type: withdrawal
+    description: DEBIT NSM DBAMR.COOP NSM DBAMR
+    amount: -1779.97
+    category: Mortgage
+    is_transfer: false
+  - date: '2025-12-03'
+    type: withdrawal
+    description: DEBIT TREASURY DIREC TREAS DRCT
+    amount: -1000.0
+    category: IRS Estimated Tax
+    is_transfer: false
+  - date: '2025-12-03'
+    type: withdrawal
+    description: DEBIT TREASURY DIREC TREAS DRCT
+    amount: -1000.0
+    category: IRS Estimated Tax
+    is_transfer: false
+  - date: '2025-12-04'
+    type: withdrawal
+    description: DEBIT CHASE CREDIT C AUTOPAY
+    amount: -1548.39
+    category: 'CC Payment: Chase'
+    is_transfer: true
+  - date: '2025-12-04'
+    type: withdrawal
+    description: DEBIT CHASE CREDIT C AUTOPAY
+    amount: -4583.98
+    category: 'CC Payment: Chase'
+    is_transfer: true
+  - date: '2025-12-04'
+    type: withdrawal
+    description: DEBIT VENMO PAYMENT
+    amount: -20.0
+    category: Venmo
+    is_transfer: false
+  - date: '2025-12-04'
+    type: withdrawal
+    description: Money Line Paid EFT FUNDS PAID ED98891082 /WEB
+    amount: -3000.0
+    payee: BOEING EMPLOYEES CREDIT UNION ******7679
+    category: Transfer Out (BECU)
+    is_transfer: true
+  - date: '2025-12-08'
+    type: withdrawal
+    description: DEBIT CARDMEMBER SER WEB PYMT
+    amount: -2856.09
+    category: 'CC Payment: Fidelity'
+    is_transfer: true
+  - date: '2025-12-08'
+    type: withdrawal
+    description: DEBIT CHASE CREDIT C EPAY
+    amount: -5000.0
+    category: 'CC Payment: Chase'
+    is_transfer: true
+  - date: '2025-12-08'
+    type: withdrawal
+    description: DEBIT PRUDENTIAL PAYMENTS
+    amount: -184.19
+    category: Life Insurance
+    is_transfer: false
+  - date: '2025-12-08'
+    type: withdrawal
+    description: Money Line Paid EFT FUNDS PAID ED99198180 /WEB
+    amount: -16830.53
+    payee: BOEING EMPLOYEES CREDIT UNION ******7679
+    category: Transfer Out (BECU)
+    is_transfer: true
+  - date: '2025-12-08'
+    type: withdrawal
+    description: Money Line Paid EFT FUNDS PAID ED99250420 /WEB
+    amount: -10000.0
+    payee: BOEING EMPLOYEES CREDIT UNION ******7679
+    category: Transfer Out (BECU)
+    is_transfer: true
+  - date: '2025-12-09'
+    type: withdrawal
+    description: DEBIT BK OF AMER VIS ONLINE PMT
+    amount: -387.31
+    category: 'CC Payment: BofA'
+    is_transfer: true
+  - date: '2025-12-09'
+    type: withdrawal
+    description: DEBIT BK OF AMER VIS ONLINE PMT
+    amount: -695.46
+    category: 'CC Payment: BofA'
+    is_transfer: true
+  - date: '2025-12-10'
+    type: withdrawal
+    description: DEBIT SAMMAMISH FORE ACH Collec
+    amount: -573.0
+    category: HOA
+    is_transfer: false
+  - date: '2025-12-10'
+    type: withdrawal
+    description: DEBIT STATE FARM RO SFPP
+    amount: -90.0
+    category: Auto Insurance
+    is_transfer: false
+  - date: '2025-12-12'
+    type: withdrawal
+    description: DEBIT ALLSTATE INS C INS PREM
+    amount: -380.28
+    category: Auto/Home Insurance
+    is_transfer: false
+  - date: '2025-12-12'
+    type: withdrawal
+    description: DEBIT NSM DBAMR.COOP NSM DBAMR
+    amount: -4956.78
+    category: Mortgage
+    is_transfer: false
+  - date: '2025-12-12'
+    type: withdrawal
+    description: DEBIT VENMO PAYMENT
+    amount: -132.0
+    category: Venmo
+    is_transfer: false
+  - date: '2025-12-15'
+    type: withdrawal
+    description: DEBIT IRS USATAXPYMT
+    amount: -25000.0
+    category: IRS Estimated Tax
+    is_transfer: false
+  - date: '2025-12-15'
+    type: withdrawal
+    description: DEBIT SoFi Bank PMT0001202
+    amount: -1763.67
+    category: SoFi Loan
+    is_transfer: false
+  - date: '2025-12-18'
+    type: withdrawal
+    description: DEBIT VENMO PAYMENT
+    amount: -80.0
+    category: Venmo
+    is_transfer: false
+  - date: '2025-12-19'
+    type: withdrawal
+    description: DEBIT OurFamilyWizar OurFamilyW
+    amount: -1227.48
+    category: Kids Cost
+    is_transfer: false
+  - date: '2025-12-19'
+    type: withdrawal
+    description: DEBIT REPUBLICSERVIC RSIBILLPAY
+    amount: -210.50
+    category: Utilities
+    is_transfer: false
+  - date: '2025-12-22'
+    type: withdrawal
+    description: DEBIT BK OF AMER VIS ONLINE PMT
+    amount: -333.0
+    category: 'CC Payment: BofA'
+    is_transfer: true
+  - date: '2025-12-22'
+    type: withdrawal
+    description: DEBIT TREASURY DIREC TREAS DRCT
+    amount: -1000.0
+    category: IRS Estimated Tax
+    is_transfer: false
+  - date: '2025-12-22'
+    type: withdrawal
+    description: DEBIT TREASURY DIREC TREAS DRCT
+    amount: -1000.0
+    category: IRS Estimated Tax
+    is_transfer: false
+  - date: '2025-12-22'
+    type: withdrawal
+    description: DEBIT TREASURY DIREC TREAS DRCT
+    amount: -1000.0
+    category: IRS Estimated Tax
+    is_transfer: false
+  - date: '2025-12-22'
+    type: withdrawal
+    description: DEBIT TREASURY DIREC TREAS DRCT
+    amount: -1000.0
+    category: IRS Estimated Tax
+    is_transfer: false
+  - date: '2025-12-22'
+    type: withdrawal
+    description: DEBIT TREASURY DIREC TREAS DRCT
+    amount: -1000.0
+    category: IRS Estimated Tax
+    is_transfer: false
+  - date: '2025-12-22'
+    type: withdrawal
+    description: DEBIT TREASURY DIREC TREAS DRCT
+    amount: -1000.0
+    category: IRS Estimated Tax
+    is_transfer: false
+  - date: '2025-12-22'
+    type: withdrawal
+    description: Money Line Paid EFT FUNDS PAID AD08192742 /WEB
+    amount: -50000.0
+    payee: SHERI MARTIN / CAPITAL ONE N.A. ******0615
+    category: Property Settlement
+    is_transfer: false
+  - date: '2025-12-24'
+    type: withdrawal
+    description: Money Line Paid EFT FUNDS PAID ED01355267
+    amount: -1800.0
+    payee: BOEING EMPLOYEES CREDIT UNION ******7679
+    category: Transfer Out (BECU)
+    is_transfer: true
+  - date: '2025-12-26'
+    type: withdrawal
+    description: DEBIT TREASURY DIREC TREAS DRCT
+    amount: -1000.0
+    category: IRS Estimated Tax
+    is_transfer: false
+  - date: '2025-12-26'
+    type: withdrawal
+    description: DEBIT TREASURY DIREC TREAS DRCT
+    amount: -1000.0
+    category: IRS Estimated Tax
+    is_transfer: false
+  - date: '2025-12-22'
+    type: withdrawal
+    description: 'Check #1077 Check Paid'
+    amount: -31.0
+    category: Check
+    is_transfer: false
+  - date: '2025-12-08'
+    type: exchange_out
+    description: Z31-859340-1 Transferred To - -
+    amount: -9900.0
+    category: Transfer Out (Fidelity)
+    is_transfer: true
+- account_number: Z31-859340
+  account_name: YI CHEN - INDIVIDUAL
+  account_type: individual_brokerage
+  tax_status: taxable
+  beneficiary: Yi
+  summary:
+    beginning_value: 103.22
+    ending_value: 10030.20
+    additions: 9900.0
+    subtractions: 0.0
+    change_in_investment_value: 26.98
+    deposits: 0.0
+    exchanges_in: 9900.0
+    exchanges_out: 0.0
+  income:
+    dividends: 3.97
+    total: 3.97
+  holdings:
+  - symbol: SPAXX
+    description: FIDELITY GOVERNMENT MONEY
+    asset_class: core
+    quantity: 616.20
+    price: 1.0
+    market_value: 616.20
+  - symbol: GOOG
+    description: ALPHABET INC CAP STK CL C  unavailable 30.000
+    asset_class: stock
+    quantity: null
+    price: null
+    market_value: 9414.0
+    cost_basis: 9390.99
+    unrealized_gain_loss: 23.01
+- account_number: 413-189729
+  account_name: YI CHEN - SELF-EMPLOYED 401K
+  account_type: self_employed_401k
+  tax_status: tax_deferred
+  beneficiary: Yi
+  summary:
+    beginning_value: 2560.41
+    ending_value: 2560.27
+    change_in_investment_value: -0.14
+  income:
+    total: 24.24
+  holdings:
+  - symbol: FSKAX
+    description: FIDELITY TOTAL MARKET INDEX FUND
+    asset_class: mutual_fund
+    quantity: 13.70
+    price: 186.84
+    market_value: 2560.27
+    cost_basis: 1576.0
+    unrealized_gain_loss: 984.27
+- account_number: Z06-592753
+  account_name: RUBY CHEN - UTMA
+  account_type: utma
+  tax_status: taxable
+  beneficiary: Ruby
+  summary:
+    beginning_value: 23959.76
+    ending_value: 24416.48
+    change_in_investment_value: 456.72
+  income:
+    dividends: 1.70
+    total: 1.70
+  holdings:
+  - symbol: SPAXX
+    description: FIDELITY GOVERNMENT MONEY
+    asset_class: core
+    quantity: 92.90
+    price: 1.0
+    market_value: 92.90
+  - symbol: FSKAX
+    description: FIDELITY TOTAL MARKET INDEX FUND
+    asset_class: mutual_fund
+    quantity: 0.74
+    price: 186.84
+    market_value: 138.45
+    cost_basis: 101.06
+    unrealized_gain_loss: 37.39
+  - symbol: AMZN
+    description: AMAZON.COM INC
+    asset_class: stock
+    quantity: 50.0
+    price: 230.82
+    market_value: 11541.0
+    cost_basis: 4657.34
+    unrealized_gain_loss: 6883.66
+  - symbol: NVDA
+    description: NVIDIA CORPORATION COM
+    asset_class: stock
+    quantity: 12.0
+    price: 186.50
+    market_value: 2238.0
+    cost_basis: 1344.83
+    unrealized_gain_loss: 893.17
+  - symbol: RIVN
+    description: RIVIAN AUTOMOTIVE INC COM CL A
+    asset_class: stock
+    quantity: 5.0
+    price: 19.71
+    market_value: 98.55
+    cost_basis: 58.40
+    unrealized_gain_loss: 40.15
+  - symbol: TSLA
+    description: TESLA INC COM
+    asset_class: stock
+    quantity: 22.92
+    price: 449.72
+    market_value: 10307.58
+    cost_basis: 398.90
+    unrealized_gain_loss: 9908.68
+- account_number: Z08-759437
+  account_name: LAURENCE CHEN - UTMA
+  account_type: utma
+  tax_status: taxable
+  beneficiary: Laurence
+  summary:
+    beginning_value: 23930.49
+    ending_value: 24387.30
+    change_in_investment_value: 456.81
+  income:
+    dividends: 1.42
+    total: 1.42
+  holdings:
+  - symbol: SPAXX
+    description: FIDELITY GOVERNMENT MONEY
+    asset_class: core
+    quantity: 92.87
+    price: 1.0
+    market_value: 92.87
+  - symbol: FSKAX
+    description: FIDELITY TOTAL MARKET INDEX FUND
+    asset_class: mutual_fund
+    quantity: 0.58
+    price: 186.84
+    market_value: 109.30
+    cost_basis: 79.77
+    unrealized_gain_loss: 29.53
+  - symbol: AMZN
+    description: AMAZON.COM INC
+    asset_class: stock
+    quantity: 50.0
+    price: 230.82
+    market_value: 11541.0
+    cost_basis: 4276.65
+    unrealized_gain_loss: 7264.35
+  - symbol: NVDA
+    description: NVIDIA CORPORATION COM
+    asset_class: stock
+    quantity: 12.0
+    price: 186.50
+    market_value: 2238.0
+    cost_basis: 1344.21
+    unrealized_gain_loss: 893.79
+  - symbol: RIVN
+    description: RIVIAN AUTOMOTIVE INC COM CL A
+    asset_class: stock
+    quantity: 5.0
+    price: 19.71
+    market_value: 98.55
+    cost_basis: 58.40
+    unrealized_gain_loss: 40.15
+  - symbol: TSLA
+    description: TESLA INC COM
+    asset_class: stock
+    quantity: 22.92
+    price: 449.72
+    market_value: 10307.58
+    cost_basis: 398.90
+    unrealized_gain_loss: 9908.68
+- account_number: 231-574209
+  account_name: YI CHEN - HEALTH SAVINGS ACCOUNT
+  account_type: hsa
+  tax_status: tax_free
+  beneficiary: Yi
+  summary:
+    beginning_value: 86844.59
+    ending_value: 87480.79
+    additions: 750.0
+    change_in_investment_value: -113.80
+  income:
+    total: 732.63
+  holdings:
+  - symbol: FDRXX
+    description: FIDELITY GOVERNMENT CASH
+    asset_class: core
+    quantity: 22.66
+    price: 1.0
+    market_value: 22.66
+  - symbol: FZROX
+    description: FIDELITY ZERO TOTAL MARKET INDEX
+    asset_class: mutual_fund
+    quantity: 2987.56
+    price: 23.64
+    market_value: 70626.04
+    cost_basis: 42994.38
+    unrealized_gain_loss: 27631.66
+  - symbol: QQQ
+    description: INVESCO QQQ TR UNIT SER 1
+    asset_class: etp
+    quantity: 27.40
+    price: 614.31
+    market_value: 16832.09
+    cost_basis: 14160.55
+    unrealized_gain_loss: 2671.54
+validation:
+  portfolio_sum_check: true
+  income_sum_check: true
+  account_balance_checks: true
+  holdings_value_checks: true
+  checks_passed: true
+  mismatches: []
+source:
+  file: Statement12312025.pdf
+  pages: 38
+  processed_at: '2026-03-01T09:26:12.913104'

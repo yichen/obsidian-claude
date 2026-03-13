@@ -1,0 +1,45 @@
+form_type: '1040'
+tax_year: 2022
+filing_status: Married Filing Jointly
+taxpayer:
+  name: Yi Chen
+  ssn_last4: '2622'
+spouse:
+  name: Sheri Martin
+  ssn_last4: '3457'
+dependents:
+- name: Laurence Chen
+  ssn_last4: '6094'
+  relationship: Son
+- name: Ruby Chen
+  ssn_last4: '9707'
+  relationship: Daughter
+income:
+  1a_w2_wages: 662516.00
+  1z_total_wages: 666631.00
+  2b_taxable_interest: 288.00
+  3b_ordinary_dividends: 302.00
+  4b_taxable_ira: 6000.00
+  7_capital_gain_loss: -3000.00
+  8_additional_income: 61.00
+summary:
+  total_income: 664408.00
+  adjusted_gross_income: 664408.00
+  deductions: 43346.00
+  taxable_income: 621062.00
+  tax_line16: 164856.00
+  total_tax: 168660.00
+  w2_withholding: 143202.00
+  total_withholding: 144672.00
+  total_payments: 161597.00
+  refund_or_owed: 7063.00
+validation:
+  all_key_fields_present: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/3-archive/2022/Yi Chen and Sheri Martin's 2022
+    Tax Return.pdf
+  pages:
+  - 4
+  - 5
+  processed_at: '2026-02-28T21:35:12'

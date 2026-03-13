@@ -1,0 +1,21 @@
+form_type: '1098'
+tax_year: 2025
+lender:
+  name: BECU
+  tin: ''
+borrower:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_mortgage_interest: 1610.83
+  2_outstanding_principal: 1610.83
+  5_mortgage_insurance: 0.00
+  10_property_tax: 0.00
+validation:
+  has_interest: true
+  mismatches: []
+source:
+  file: /Users/ychen2/Dropbox/1-Tax/2-prepare/2025/BECU-Statement-E6D719F8-2E38-213F-6EF1-FFD0A7095102.PDF
+  pages:
+  - 1
+  processed_at: '2026-03-07T07:12:38'

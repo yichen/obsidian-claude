@@ -1,0 +1,45 @@
+statement_month: 2025-03
+period_start: '2025-02-17'
+period_end: '2025-03-16'
+checking:
+  account_number: '3588947679'
+  beginning_balance: 932.79
+  withdrawals_fees: -2500.0
+  deposits: 2250.0
+  dividends_interest: 0.81
+  ending_balance: 683.6
+  apy: 1.13
+  average_daily_balance: 1065.0
+  ytd_dividends: 3.24
+  transactions:
+  - date: '2025-02-27'
+    amount: 1800.0
+    description: External Deposit JPMorgan Chase - Ext Trnsfr
+    type: deposit
+  - date: '2025-02-27'
+    amount: 0.02
+    description: Dividend/Interest
+    type: deposit
+  - date: '2025-03-03'
+    amount: 450.0
+    description: External Deposit MSPBNA E*TRADE SECURITIES - ACH TRNSFR
+    type: deposit
+  - date: '2025-03-14'
+    amount: 0.79
+    description: Dividend/Interest
+    type: deposit
+  - date: '2025-03-03'
+    amount: -2500.0
+    description: External Withdrawal FID BKG SVC LLC - MONEYLINE
+    type: withdrawal
+heloc: null
+validation:
+  checking_balance_ok: true
+  checking_txn_totals_ok: true
+  heloc_balance_ok: null
+  heloc_sub_balance_ok: null
+  heloc_sub_interest_ok: null
+  mismatches: []
+source:
+  file: BECU-Statement-16-Mar-2025.PDF
+  processed_at: '2026-03-01T18:15:59'
