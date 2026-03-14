@@ -5,23 +5,7 @@ Yu Ding PsycD
 
 [https://doxy.me/drding](https://doxy.me/drding)
 
-## 2026-03-05
-
-- Slept 4 hours last night after the second date with Tingting. Last week after our first date I also slept 4 hours. When I lack of sleep, I got over stimulated, and can't calm my body.
-	- Ding: sound bath for sleep
-- Ding: you have been doing meditation consistently a while back. Are you still doing that?
-	- Yi: Not anymore. WIth the excitement with AI, and dating, and two jobs, I feel I don't have enough time for meditation.
-	- Ding: with the current state, meditation is more important
-- Yi: I will seriously consider quit coffee (but keep de-caf)
-- Ding: if you are already overstimulated, try to avoid taking new information (e.g. YouTube).
-- Ding: there is a study that hearing real birds' sound has great impact for mental healthy, while birds audio from devices does not have that effect. Try avoid devices after 8pm
-- Last weekend, with the help of AI, I found out I have to sell my rental house as my HELOC only have 8 moths of runway even with two jobs. I am shocked that my two jobs is not enough to give me a positive cash flow. 
-- Ding: looks like there is a real reason you are anxious: dad getting worse, two jobs, dating, selling rental, job interviews. 
-	- Just accept that you are anxious for a good reason.
-- Ding: can we make our brain a very precious resource, and must be maintained and recharged. Make it a high priority responsibility. 
-	- Intentionally protect your brain. For example, avoid watching Youtube videos regarding AI, Claude Code, those videos that stimulate you. 
-
-## 2026-02-19
+### 2026-02-19
 - Yi: Initial impact (reputation) doing very well at ServiceTitan.
 - Yi: too much context switch (multiple jobs, dates), my sleep problem is probably over stimulation. 
 - Yi: last Sunday (Chinese New Year Eve) I camped in my car to get better sleep. I did the whole trip just to sleep there. 

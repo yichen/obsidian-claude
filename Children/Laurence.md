@@ -1,12 +1,5 @@
 ## 2026-03-12
-- School health room visit: got hit in the face with a ball during P.E. No visible injury; health room applied ice pack. Head Injury Report sent home. (Email from Ivy Rasquinha, Health Room Specialist, Endeavour Elementary.)
-
-## 2026-03-03
-- **Regulation Tool:** Ciara assigned the 'impulse stoplight' homework (red = stop and think, yellow = double-check the impulse, green = act) to help him slow down before reacting; plan to practice it together during transitions.
-- **Stop-Think-Choose Worksheet:** She also provided a stoplight sheet prompting him to notice his feelings, brainstorm at least two choices, and then pick the best action before he moves.
-- **Choices & Do-Overs:** Activity 5 from the *Thriving with ADHD Workbook for Kids* asks him to write out a choice he'd redo, the consequences, and better alternatives, plus a "press the pause button" reminder to take breaths before reacting.
-- **Safety Reminder:** Ciara told him (with me present) that any threats to hurt or kill someone must be reported—even if he says he was joking—so he understands the boundary.
-- **Connection Moment:** During an angry outburst he shouted that he hated me; when I asked what he actually wanted he said he just wanted to play with me because I'm always working two jobs. I told him to ask for time directly instead of using hurtful words, and he seemed to understand.
+- **Health:** Received an email from Endeavour Elementary's health room — Laurence bumped his head at school and was seen by the nurse. He was treated with a cold pack and returned to class without further follow-up. The school will send home a yellow Head Injury Report Form in his backpack. The email noted that even minor head bumps can cause concussions and listed symptoms to watch for over the next 24–72 hours.
 
 ## 2026-03-01
 - **Behavior:** Sheri reported Laurence spent the day throwing things and even tossed a gallon of water that broke and flooded the floor.
