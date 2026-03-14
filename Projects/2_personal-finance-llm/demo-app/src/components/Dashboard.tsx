@@ -18,6 +18,15 @@ interface Insight {
   text: string
 }
 
+interface UpcomingEvent {
+  id: string
+  label: string
+  date: string
+  amount: number
+  type: 'income' | 'expense'
+  confidence: 'high' | 'medium'
+}
+
 interface DbRows {
   rows: unknown[][]
 }
@@ -44,6 +53,17 @@ function fmt(n: number, prefix = '', suffix = ''): string {
   return `${prefix}${n.toLocaleString('en-US', { maximumFractionDigits: 0 })}${suffix}`
 }
 
+function formatRelativeDate(dateStr: string): string {
+  const target = new Date(dateStr + 'T00:00:00')
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  const diffDays = Math.round((target.getTime() - today.getTime()) / (1000 * 60 * 60 * 24))
+  if (diffDays === 0) return 'Today'
+  if (diffDays === 1) return 'Tomorrow'
+  if (diffDays <= 7) return `In ${diffDays} days`
+  return target.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })
+}
+
 export const Dashboard = React.memo(function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps): React.ReactElement {
   const [metrics, setMetrics] = useState<Metric[]>([
     { label: 'Savings Rate', value: '—' },
@@ -58,6 +78,7 @@ export const Dashboard = React.memo(function Dashboard({ onDeepDive, pinnedChart
   const [recentTopics, setRecentTopics] = useState<string[]>([])
   const [refreshedCharts, setRefreshedCharts] = useState<Record<string, string>>({})
   const [overviewCharts, setOverviewCharts] = useState<{ income: string | null; incomePie: string | null; spending: string | null; spendingPie: string | null }>({ income: null, incomePie: null, spending: null, spendingPie: null })
+  const [upcomingEvents, setUpcomingEvents] = useState<UpcomingEvent[]>([])
 
   // Lazy-load: track when pinned section is visible
   const pinsRef = useRef<HTMLDivElement>(null)
@@ -205,6 +226,104 @@ export const Dashboard = React.memo(function Dashboard({ onDeepDive, pinnedChart
     loadOverview()
   }, [])
 
+  // Load upcoming predicted financial events
+  useEffect(() => {
+    const loadUpcoming = async () => {
+      try {
+        const events: UpcomingEvent[] = []
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        const thirtyDaysOut = new Date(today)
+        thirtyDaysOut.setDate(thirtyDaysOut.getDate() + 30)
+
+        // 1. Predict next paychecks from payslips table
+        const paycheckRes = await window.api.dbQuery(`
+          SELECT employer, MAX(pay_date) as last_pay_date, net_pay as last_net_pay,
+            CAST(AVG(gap) AS INTEGER) as avg_interval_days
+          FROM (
+            SELECT employer, pay_date, net_pay,
+              julianday(pay_date) - julianday(LAG(pay_date) OVER (PARTITION BY employer ORDER BY pay_date)) as gap
+            FROM payslips
+          )
+          WHERE gap IS NOT NULL
+          GROUP BY employer
+        `)
+        if (isDbRows(paycheckRes)) {
+          for (const row of paycheckRes.rows) {
+            const employer = String(row[0])
+            const lastPayDate = new Date(String(row[1]) + 'T00:00:00')
+            const netPay = Number(row[2]) || 0
+            const interval = Number(row[3]) || 14
+            const nextDate = new Date(lastPayDate)
+            nextDate.setDate(nextDate.getDate() + interval)
+            // Advance if next date is in the past
+            while (nextDate < today) nextDate.setDate(nextDate.getDate() + interval)
+            if (nextDate <= thirtyDaysOut) {
+              events.push({
+                id: `paycheck-${employer}`,
+                label: `Paycheck (${employer})`,
+                date: nextDate.toISOString().slice(0, 10),
+                amount: netPay,
+                type: 'income',
+                confidence: 'high'
+              })
+            }
+          }
+        }
+
+        // 2. Detect recurring CMA payments
+        const recurringRes = await window.api.dbQuery(`
+          SELECT category, COUNT(*) as occurrences,
+            ROUND(AVG(ABS(amount)), 2) as avg_amount,
+            MAX(date) as last_date,
+            CAST(AVG(gap) AS INTEGER) as avg_interval_days
+          FROM (
+            SELECT category, date, amount,
+              julianday(date) - julianday(LAG(date) OVER (PARTITION BY category ORDER BY date)) as gap
+            FROM fidelity_cma_transactions
+            WHERE date >= date('now', '-6 months')
+              AND amount < 0
+              AND category NOT LIKE 'Transfer%'
+              AND category IS NOT NULL
+              AND category != ''
+          )
+          WHERE gap IS NOT NULL
+          GROUP BY category
+          HAVING occurrences >= 3 AND avg_interval_days BETWEEN 7 AND 45
+          ORDER BY avg_amount DESC
+        `)
+        if (isDbRows(recurringRes)) {
+          for (const row of recurringRes.rows) {
+            const category = String(row[0])
+            const avgAmount = Number(row[2]) || 0
+            const lastDate = new Date(String(row[3]) + 'T00:00:00')
+            const interval = Number(row[4]) || 30
+            const occurrences = Number(row[1]) || 0
+            const nextDate = new Date(lastDate)
+            nextDate.setDate(nextDate.getDate() + interval)
+            while (nextDate < today) nextDate.setDate(nextDate.getDate() + interval)
+            if (nextDate <= thirtyDaysOut) {
+              events.push({
+                id: `recurring-${category}`,
+                label: category,
+                date: nextDate.toISOString().slice(0, 10),
+                amount: -avgAmount,
+                type: 'expense',
+                confidence: occurrences >= 5 ? 'high' : 'medium'
+              })
+            }
+          }
+        }
+
+        events.sort((a, b) => a.date.localeCompare(b.date))
+        setUpcomingEvents(events)
+      } catch (err) {
+        console.error('[Dashboard] Failed to load upcoming events:', err)
+      }
+    }
+    loadUpcoming()
+  }, [])
+
   // Memoize pinned chart display data
   const pinnedDisplayData = useMemo(() =>
     (pinnedCharts ?? []).map(pin => ({
@@ -258,6 +377,27 @@ export const Dashboard = React.memo(function Dashboard({ onDeepDive, pinnedChart
               </>
             )}
           </div>
+        </div>
+      </section>
+
+      <section className="upcoming-section">
+        <div className="section-header">
+          <h2>Upcoming</h2>
+        </div>
+        <div className="upcoming-list">
+          {upcomingEvents.length > 0 ? (
+            upcomingEvents.map(event => (
+              <div key={event.id} className={`upcoming-item ${event.type}`}>
+                <div className="upcoming-date">{formatRelativeDate(event.date)}</div>
+                <div className="upcoming-label">{event.label}</div>
+                <div className={`upcoming-amount ${event.type}`}>
+                  {event.type === 'income' ? '+' : '\u2212'}${fmt(Math.abs(event.amount))}
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="upcoming-empty">No upcoming events predicted</div>
+          )}
         </div>
       </section>
 
