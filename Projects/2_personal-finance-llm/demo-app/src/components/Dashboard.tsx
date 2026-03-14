@@ -175,22 +175,28 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
   // Load overview charts
   useEffect(() => {
     const loadOverview = async () => {
-      const [incomeBar, incomePie, spendingBar, spendingPie] = await Promise.all([
-        window.api.generateChart('monthly_income', 6),
-        window.api.generateChart('income_by_source', 6),
-        window.api.generateChart('monthly_spending', 6),
-        window.api.generateChart('spending_by_category', 6)
-      ])
-      setOverviewCharts({ income: incomeBar, incomePie, spending: spendingBar, spendingPie })
+      try {
+        const [incomeBar, incomePie, spendingBar, spendingPie] = await Promise.all([
+          window.api.generateChart('monthly_income', 6).catch(() => null),
+          window.api.generateChart('income_by_source', 6).catch(() => null),
+          window.api.generateChart('monthly_spending', 6).catch(() => null),
+          window.api.generateChart('spending_by_category', 6).catch(() => null),
+        ])
+        setOverviewCharts({ income: incomeBar || '', incomePie, spending: spendingBar || '', spendingPie })
+      } catch {
+        setOverviewCharts({ income: '', incomePie: null, spending: '', spendingPie: null })
+      }
     }
     loadOverview()
   }, [])
 
   return (
     <div className="dashboard-container">
-      <header className="dashboard-header">
-        <h1>Financial Overview</h1>
-        <p className="subtitle">Real-time analysis of your local records</p>
+      <header className="page-header" style={{ margin: '-32px -32px 24px -32px' }}>
+        <div className="page-header-left">
+          <h1>Financial Overview</h1>
+          <p className="subtitle">Real-time analysis of your local records</p>
+        </div>
       </header>
 
       <section className="overview-charts-section">
@@ -200,7 +206,11 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
         <div className="overview-charts-grid">
           <div className="overview-chart-card">
             <div className="overview-chart-title">Income <span className="overview-chart-subtitle">Recent 6 Months</span></div>
-            {overviewCharts.income ? <img src={overviewCharts.income} alt="Income" className="pin-image" /> : <div className="overview-chart-loading">Loading...</div>}
+            {overviewCharts.income
+              ? <img src={overviewCharts.income} alt="Income" className="pin-image" />
+              : overviewCharts.income === null
+                ? <div className="overview-chart-loading">Loading...</div>
+                : <div className="overview-chart-loading">No data available</div>}
             {overviewCharts.incomePie && (
               <>
                 <div className="overview-chart-divider" />
@@ -211,7 +221,11 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
           </div>
           <div className="overview-chart-card">
             <div className="overview-chart-title">Spending <span className="overview-chart-subtitle">Recent 6 Months</span></div>
-            {overviewCharts.spending ? <img src={overviewCharts.spending} alt="Spending" className="pin-image" /> : <div className="overview-chart-loading">Loading...</div>}
+            {overviewCharts.spending
+              ? <img src={overviewCharts.spending} alt="Spending" className="pin-image" />
+              : overviewCharts.spending === null
+                ? <div className="overview-chart-loading">Loading...</div>
+                : <div className="overview-chart-loading">No data available</div>}
             {overviewCharts.spendingPie && (
               <>
                 <div className="overview-chart-divider" />

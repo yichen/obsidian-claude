@@ -3591,6 +3591,24 @@ def cmd_import_pending_yaml():
         return
 
     conn = get_db()
+    # Ensure table exists (may not if DB was initialized before this table was added)
+    conn.executescript("""
+CREATE TABLE IF NOT EXISTS pending_transactions (
+    id INTEGER PRIMARY KEY,
+    date TEXT NOT NULL,
+    description TEXT NOT NULL,
+    amount REAL NOT NULL,
+    account_id INTEGER REFERENCES accounts(id),
+    category_id INTEGER REFERENCES categories(id),
+    status TEXT DEFAULT 'pending',
+    source_text TEXT,
+    notes TEXT,
+    created_at TEXT DEFAULT (datetime('now')),
+    matched_transaction_id INTEGER REFERENCES transactions(id)
+);
+CREATE INDEX IF NOT EXISTS idx_pending_status ON pending_transactions(status);
+CREATE INDEX IF NOT EXISTS idx_pending_date ON pending_transactions(date);
+""")
     imported = 0
     try:
         for entry in entries:
@@ -3599,9 +3617,9 @@ def cmd_import_pending_yaml():
                 continue  # Skip already-matched entries
 
             date = str(entry.get("date", ""))
-            description = entry.get("description", "")
+            description = entry.get("description", "") or entry.get("payee", "")
             amount = float(entry.get("amount", 0))
-            notes = entry.get("notes", "")
+            notes = entry.get("notes", "") or entry.get("memo", "")
             source_text = entry.get("source_text", "")
 
             # Dedup check

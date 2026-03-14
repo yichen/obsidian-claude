@@ -119,9 +119,9 @@ test('Gutter: all pages share the same 32px left/right gutter', async ({ page })
 
   // Transactions
   await page.click('text=Transactions');
-  await page.waitForSelector('.txn-top-bar', { timeout: 10000 });
+  await page.waitForSelector('.page-header.txn-top-bar', { timeout: 10000 });
   const txnGutter = await page.evaluate(() => {
-    const el = document.querySelector('.txn-top-bar')!;
+    const el = document.querySelector('.page-header.txn-top-bar')!;
     const cs = window.getComputedStyle(el);
     return { left: parseInt(cs.paddingLeft), right: parseInt(cs.paddingRight) };
   });
@@ -138,4 +138,82 @@ test('Gutter: all pages share the same 32px left/right gutter', async ({ page })
   });
   expect(chatGutter.left).toBe(32);
   expect(chatGutter.right).toBe(32);
+});
+
+test('Transaction detail close button works', async ({ page }) => {
+  await page.goto('http://localhost:5173', { timeout: 60000 });
+  await page.click('text=Transactions');
+  await page.waitForSelector('.txn-row-clickable');
+  await page.locator('.txn-row-clickable').first().click();
+  await expect(page.locator('.txn-detail-panel')).toBeVisible();
+  await page.locator('.txn-detail-close').click();
+  await expect(page.locator('.txn-detail-panel')).toHaveCount(0);
+});
+
+test('Pending transaction rows are clickable and show detail', async ({ page }) => {
+  await page.goto('http://localhost:5173', { timeout: 60000 });
+  await page.click('text=Transactions');
+  await page.waitForSelector('.txn-table', { timeout: 10000 });
+  const pendingRow = page.locator('.txn-row-pending');
+  if (await pendingRow.count() > 0) {
+    await pendingRow.first().click();
+    await expect(page.locator('.txn-detail-panel')).toBeVisible();
+    await expect(page.locator('.txn-detail-header h3')).toHaveText('Pending Transaction');
+    await page.locator('.txn-detail-cancel').click();
+    await expect(page.locator('.txn-detail-panel')).toHaveCount(0);
+  }
+});
+
+test('All page headers use unified .page-header with consistent padding and divider', async ({ page }) => {
+  await page.goto('http://localhost:5173', { timeout: 60000 });
+
+  // Dashboard
+  await page.waitForSelector('.dashboard-container .page-header');
+  const dashHeader = await page.evaluate(() => {
+    const el = document.querySelector('.dashboard-container .page-header')!;
+    const cs = getComputedStyle(el);
+    return { paddingTop: cs.paddingTop, borderBottom: cs.borderBottomWidth, borderStyle: cs.borderBottomStyle };
+  });
+  expect(dashHeader.paddingTop).toBe('32px');
+  expect(dashHeader.borderBottom).toBe('1px');
+  expect(dashHeader.borderStyle).toBe('solid');
+
+  // Transactions
+  await page.click('text=Transactions');
+  await page.waitForSelector('.page-header.txn-top-bar');
+  const txnHeader = await page.evaluate(() => {
+    const el = document.querySelector('.page-header.txn-top-bar')!;
+    const cs = getComputedStyle(el);
+    return { paddingTop: cs.paddingTop, borderBottom: cs.borderBottomWidth, borderStyle: cs.borderBottomStyle };
+  });
+  expect(txnHeader.paddingTop).toBe('32px');
+  expect(txnHeader.borderBottom).toBe('1px');
+  expect(txnHeader.borderStyle).toBe('solid');
+
+  // Chat
+  await page.click('text=Chat');
+  await page.waitForSelector('.page-header.chat-header');
+  const chatHeader = await page.evaluate(() => {
+    const el = document.querySelector('.page-header.chat-header')!;
+    const cs = getComputedStyle(el);
+    return { paddingTop: cs.paddingTop, borderBottom: cs.borderBottomWidth, borderStyle: cs.borderBottomStyle };
+  });
+  expect(chatHeader.paddingTop).toBe('32px');
+  expect(chatHeader.borderBottom).toBe('1px');
+  expect(chatHeader.borderStyle).toBe('solid');
+});
+
+test('All page titles use consistent 24px font size', async ({ page }) => {
+  await page.goto('http://localhost:5173', { timeout: 60000 });
+  // Dashboard
+  await page.waitForSelector('.page-header h1');
+  expect(await page.$eval('.page-header h1', el => getComputedStyle(el).fontSize)).toBe('24px');
+  // Transactions
+  await page.click('text=Transactions');
+  await page.waitForSelector('.page-header.txn-top-bar h1');
+  expect(await page.$eval('.page-header.txn-top-bar h1', el => getComputedStyle(el).fontSize)).toBe('24px');
+  // AI Chat
+  await page.click('text=Chat');
+  await page.waitForSelector('.page-header.chat-header h1');
+  expect(await page.$eval('.page-header.chat-header h1', el => getComputedStyle(el).fontSize)).toBe('24px');
 });

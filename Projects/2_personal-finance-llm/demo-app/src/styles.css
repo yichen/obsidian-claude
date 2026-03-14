@@ -73,13 +73,41 @@ body {
 h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px 0; }
 .subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
 
-/* ── Common View Header ─────────────────────────────────────────────────── */
-.view-header, .dashboard-header {
-  margin-bottom: 32px;
+/* ── Unified Page Header ───────────────────────────────────────────────── */
+.page-header {
+  padding: 32px 32px 16px;
   min-height: 60px;
   display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--border);
+}
+.page-header-left {
+  display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 2px;
+}
+.page-header-left-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.page-header h1 {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+.page-header .subtitle {
+  font-size: 14px;
+  color: var(--text-muted);
+  font-weight: 500;
+  margin: 0;
+}
+.page-header-icon {
+  display: flex;
+  align-items: center;
+  color: #10b981;
 }
 
 /* ── Metric Grid ────────────────────────────────────────────────────────── */
@@ -103,19 +131,12 @@ h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px
 }
 
 .chat-header {
-  padding: 16px 32px;
   background: rgba(249, 250, 251, 0.8);
   backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
   position: sticky;
   top: 0;
   z-index: 10;
 }
-
-.chat-header h1 { font-size: 18px; margin: 0; }
 
 .messages-area {
   flex: 1;
@@ -319,7 +340,7 @@ textarea {
 }
 
 .txn-top-bar {
-  padding: 32px 32px 16px 32px;
+  /* page-header base provides padding, border, flex layout */
 }
 
 .txn-top-inner {
@@ -328,9 +349,7 @@ textarea {
   flex-wrap: wrap;
 }
 
-.txn-header { display: flex; flex-direction: column; gap: 2px; }
-.txn-title { font-size: 20px; font-weight: 700; color: var(--text-main); margin: 0; }
-.txn-subtitle { font-size: 13px; color: var(--text-muted); font-weight: 500; margin: 0; }
+.txn-title { font-size: 24px; font-weight: 800; color: var(--text-main); margin: 0; }
 
 .txn-controls { display: flex; align-items: center; gap: 8px; }
 
@@ -360,7 +379,7 @@ textarea {
 .txn-icon-btn:hover { background: #f3f4f6; }
 
 .txn-body {
-  flex: 1; overflow: auto; padding: 0 32px 32px 32px;
+  flex: 1; overflow: auto; padding: 16px 32px 32px 32px;
 }
 .txn-table-wrap {
   max-width: 1200px; margin: 0 auto;
@@ -462,14 +481,16 @@ textarea {
 
 /* ── Slide-out detail panel ─────────────────────────────────────────────── */
 .txn-detail-overlay {
-  position: fixed; inset: 0; background: rgba(0,0,0,0.2); z-index: 1000;
+  position: fixed; inset: 0; background: rgba(0,0,0,0.2); z-index: 10000;
+  -webkit-app-region: no-drag;
 }
 .txn-detail-panel {
   position: fixed; top: 0; right: 0; bottom: 0; width: 360px;
   background: #fff; border-left: 1px solid var(--border);
   box-shadow: -4px 0 24px rgba(0,0,0,0.12);
-  z-index: 1001; display: flex; flex-direction: column;
+  z-index: 10001; display: flex; flex-direction: column;
   animation: slideInRight 0.2s ease;
+  -webkit-app-region: no-drag;
 }
 @keyframes slideInRight {
   from { transform: translateX(100%); opacity: 0; }
@@ -478,6 +499,7 @@ textarea {
 .txn-detail-header {
   display: flex; align-items: center; justify-content: space-between;
   padding: 20px 20px 16px; border-bottom: 1px solid var(--border);
+  -webkit-app-region: no-drag;
 }
 .txn-detail-header h3 { margin: 0; font-size: 15px; font-weight: 600; color: var(--text-main); }
 .txn-detail-close {

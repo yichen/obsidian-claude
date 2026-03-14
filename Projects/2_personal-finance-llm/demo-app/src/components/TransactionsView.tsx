@@ -30,6 +30,7 @@ export function TransactionsView({ initialData }: TransactionsViewProps): React.
   const [categories, setCategories] = useState<Category[]>([])
   const [selectedCatId, setSelectedCatId] = useState<string>('')
   const [isSaving, setIsSaving] = useState(false)
+  const [selectedIsPending, setSelectedIsPending] = useState(false)
 
   // Add transaction modal
   const [showAddModal, setShowAddModal] = useState(false)
@@ -76,7 +77,9 @@ export function TransactionsView({ initialData }: TransactionsViewProps): React.
         SELECT pt.id, pt.date, pt.description,
                COALESCE(c.name, 'Uncategorized') as category,
                COALESCE(a.name, '—') as account,
-               pt.amount
+               pt.amount,
+               pt.category_id,
+               pt.notes
         FROM pending_transactions pt
         LEFT JOIN categories c ON c.id = pt.category_id
         LEFT JOIN accounts a ON a.id = pt.account_id
@@ -117,9 +120,9 @@ export function TransactionsView({ initialData }: TransactionsViewProps): React.
 
   // ── Slide-out panel handlers ────────────────────────────────────────────
 
-  const openDetail = (t: unknown[]): void => {
+  const openDetail = (t: unknown[], isPending = false): void => {
     setSelectedTxn(t)
-    // col 6 = category_id
+    setSelectedIsPending(isPending)
     setSelectedCatId(t[6] != null ? String(t[6]) : '')
   }
 
@@ -136,6 +139,24 @@ export function TransactionsView({ initialData }: TransactionsViewProps): React.
       setSelectedTxn(null)
     } catch (err) {
       console.error('Failed to save category:', err)
+    } finally {
+      setIsSaving(false)
+    }
+  }
+
+  const savePendingCategory = async (): Promise<void> => {
+    if (!selectedTxn) return
+    const txnId = Number(selectedTxn[0])
+    const catSql = selectedCatId
+      ? `UPDATE pending_transactions SET category_id = ${Number(selectedCatId)} WHERE id = ${txnId}`
+      : `UPDATE pending_transactions SET category_id = NULL WHERE id = ${txnId}`
+    setIsSaving(true)
+    try {
+      await window.api.dbExecute(catSql)
+      await fetchPending()
+      setSelectedTxn(null)
+    } catch (err) {
+      console.error('Failed to save pending category:', err)
     } finally {
       setIsSaving(false)
     }
@@ -197,12 +218,12 @@ export function TransactionsView({ initialData }: TransactionsViewProps): React.
 
   return (
     <div className="txn-container">
-      <div className="txn-top-bar">
+      <div className="page-header txn-top-bar">
         <div className="txn-top-inner">
-          <header className="txn-header">
+          <div className="page-header-left">
             <h1 className="txn-title">Transactions</h1>
-            <p className="txn-subtitle">Global history across all accounts</p>
-          </header>
+            <p className="subtitle">Global history across all accounts</p>
+          </div>
 
           <div className="txn-controls">
             <div className="txn-search-wrap">
@@ -260,7 +281,7 @@ export function TransactionsView({ initialData }: TransactionsViewProps): React.
                   {pendingOpen && pending.map((t, i) => {
                     const amount = Number(t[5])
                     return (
-                      <tr key={`p-${i}`} className="txn-row-pending">
+                      <tr key={`p-${i}`} className="txn-row-pending txn-row-clickable" onClick={() => openDetail(t, true)}>
                         <td className="txn-td txn-td-date">{String(t[1])}</td>
                         <td className="txn-td txn-td-desc">
                           {String(t[2])}
@@ -324,7 +345,7 @@ export function TransactionsView({ initialData }: TransactionsViewProps): React.
           <div className="txn-detail-overlay" onClick={() => setSelectedTxn(null)} />
           <div className="txn-detail-panel">
             <div className="txn-detail-header">
-              <h3>Transaction Detail</h3>
+              <h3>{selectedIsPending ? 'Pending Transaction' : 'Transaction Detail'}</h3>
               <button className="txn-detail-close" onClick={() => setSelectedTxn(null)}>✕</button>
             </div>
             <div className="txn-detail-body">
@@ -375,7 +396,7 @@ export function TransactionsView({ initialData }: TransactionsViewProps): React.
             </div>
             <div className="txn-detail-footer">
               <button className="txn-detail-cancel" onClick={() => setSelectedTxn(null)}>Cancel</button>
-              <button className="txn-detail-save" onClick={saveCategory} disabled={isSaving}>
+              <button className="txn-detail-save" onClick={selectedIsPending ? savePendingCategory : saveCategory} disabled={isSaving}>
                 {isSaving ? 'Saving…' : 'Save'}
               </button>
             </div>

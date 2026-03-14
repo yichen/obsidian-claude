@@ -165,9 +165,9 @@ export function ChatInterface({
 
   return (
     <div className="chat-container">
-      <header className="chat-header">
-        <div className="chat-header-left">
-          <span className="chat-header-icon"><Sparkles size={16} /></span>
+      <header className="page-header chat-header">
+        <div className="page-header-left-row">
+          <span className="page-header-icon"><Sparkles size={16} /></span>
           <h1>Financial Analyst</h1>
         </div>
         <button

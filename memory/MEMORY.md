@@ -31,8 +31,26 @@
 - `git filter-repo --path <dir> --invert-paths --force` rewrites entire history to remove the path
 - After filter-repo, remote is removed — must `git remote add origin` and force-push
 
+### Archive Schedule/Form Extraction & 1040 Computation Engine (2026-03-13)
+- **Extended `ingest_tax.py`** (now ~5,036 lines): Added `map_archive_pages()` to detect 19 form types by header signatures across all PDF pages
+- **Phase 1 parsers**: Schedule D, Form 8949, Schedules A/1/2/3 — all extract line items to individual YAMLs in `Finance/tax/archive/<year>/`
+- **Schedule D line 16 = 1040 line 7** confirmed across all years (2020-2024). TAX-001 ($220K capital gains discrepancy) explained: raw 1099-B ≠ Schedule D because CPA applies carryforwards + adjusted cost basis
+- **PDF extraction gotcha**: IRS form line numbers (e.g., "16.") followed by sentence text match `\d+\.\d{0,2}` regex as dollar amounts. Fix: reject amounts where text with letters follows on the same line (`after.strip() → re.search(r"[a-zA-Z]", after)`)
+- **PDF extraction gotcha**: IRS forms wrap value on continuation line (up to 5 lines after label). Must search forward but stop at next form line label (`re.match(r"\d{1,2}[a-z]?\s+[A-Z]", next_stripped)`)
+- **Adjacent amounts proximity filter bug**: `abs(am.start() - pos) < 15` intended to avoid double-counting paren amounts, but filtered out legitimate adjacent amounts (e.g., "141,030. 152,518. -11,488." on Schedule D). Fix: only check proximity against parenthesized amounts, not all amounts.
+- **Cross-validation extended**: 3 new checks (Schedule D→1040 L7, Schedule A→1040 deductions, Schedule 1→1040 L8/L10) — all MATCH across 2020-2024
+- **1040 deductions line**: Form uses "12" (not "12a") for deductions prefix across all years — pre-existing bug fixed
+
+### 1040 Computation Engine Analysis (2026-03-13)
+- **Existing engine**: `.claude/scripts/compute_1040.py` (733 lines) — computes 1040 from prepare-folder YAMLs, backtests against archive
+- **Current accuracy**: 11.1% (1/9 lines match for 2023). Only deductions matched.
+- **Root cause of capital gains gap**: Carryforwards engine uses raw 1099-B totals, not Schedule D. For 2022: raw 1099-B = $217K gain, but Schedule D line 16 = -$70,707 (net loss after CPA cost basis adjustments). $67,707 should carry forward to 2023 but doesn't.
+- **Non-covered RSU/ESPP basis**: The remaining $152K gap (after carryforward fix) comes from Schedule D Line 9 (non-covered LT transactions) where CPA adjusted cost basis to $152,518. Source: stock plan administrator (Morgan Stanley) RSU vesting records showing FMV at vest date.
+- **2024 is much closer**: Raw 1099-B = $127,616 vs Schedule D = $126,057 — only $1,559 gap. Most 2024 transactions were "covered" (Fidelity tracked basis correctly). Non-covered RSU shares were mostly sold by 2023.
+- **Fidelity supplemental pages** (pages 7-9 of consolidated 1099 PDFs): Only contain dividend/interest detail breakdowns, NOT capital gains cost basis adjustments.
+
 ### Tax Document Ingestion Pipeline (2026-02-28)
-- Created `/ingest-tax` slash command + Python script at `.claude/scripts/ingest_tax.py` (3,371 lines)
+- Created `/ingest-tax` slash command + Python script at `.claude/scripts/ingest_tax.py` (~5,036 lines)
 - Source PDFs: `~/Dropbox/1-Tax/2-prepare/<year>/` (CPA inputs) + `~/Dropbox/1-Tax/3-archive/<year>/` (filed returns)
 - Output YAMLs: `Finance/tax/prepare/<year>/` and `Finance/tax/archive/<year>/`
 - **49 YAMLs** generated across 2022–2025: 15 W-2s, 9 1099-Rs, 14 1098s, 2 1099-INTs, 3 5498-SAs, 5 5498s, 1 1099-SA, 2 Schedule Hs, 3 1040 summaries
@@ -223,6 +241,12 @@
 ### Tax Ingestion Phase 4 Pending (2026-02-28) `(COMPLETED)`
 - All phases complete including SQLite integration (`tax_documents`, `tax_line_items` tables)
 - Remaining: consolidated 1099 parser (Fidelity/Morgan Stanley brokerage) — lower priority
+
+### 1040 Computation Engine Improvement (2026-03-13) `(active)`
+- Engine at `.claude/scripts/compute_1040.py` — currently 11.1% accuracy, targeting 60%+
+- **Key fixes needed**: carryforward from Schedule D archive data, W-2 dedup (duplicate spouse IFS W-2s), backdoor Roth detection, Schedule 2 taxes, deduction fix (rental vs primary mortgage)
+- **Capital gains limitation**: For years with non-covered RSU/ESPP sales (2023), gap persists (~$152K) without stock plan administrator data. For 2024, gap is only $1,559.
+- Plan file: `/Users/yichen/.claude/plans/sorted-singing-sunrise.md`
 
 ### 2025 Tax Return (2026-02-28) `(active)`
 - $25K estimated payment was unnecessary — expect ~$22-27K refund
