@@ -9,9 +9,10 @@ import { Pin, Bot, User } from 'lucide-react'
 interface Props {
   message: Message
   onPinChart?: (chart: Omit<PinnedChart, 'id' | 'timestamp'>) => void
+  pinnedCharts?: PinnedChart[]
 }
 
-export function MessageBubble({ message, onPinChart }: Props): React.ReactElement {
+export function MessageBubble({ message, onPinChart, pinnedCharts }: Props): React.ReactElement {
   if (message.role === 'tool') return <></>
 
   const isAssistant = message.role === 'assistant'
@@ -51,23 +52,32 @@ export function MessageBubble({ message, onPinChart }: Props): React.ReactElemen
             {message.content}
           </ReactMarkdown>
 
-          {message.charts?.map((c, i) => (
-            <div key={i} className="chat-chart-card">
-              <img src={c.data} alt="Chart" className="chart-image" />
-              {onPinChart && (
-                <button
-                  onClick={() => onPinChart({
-                    title: message.content.split('\n')[0].substring(0, 40) || 'Financial Chart',
-                    chartData: c.data,
-                    chartPath: c.path
-                  })}
-                  className="pin-action-btn"
-                >
-                  <Pin size={12} strokeWidth={3} /> Pin to Dashboard
-                </button>
-              )}
-            </div>
-          ))}
+          {message.charts?.map((c, i) => {
+            const isPinned = pinnedCharts?.some(p =>
+              (c.type && p.chartType === c.type && p.chartMonths === (c.months ?? 6)) ||
+              p.chartData === c.data
+            ) ?? false
+            return (
+              <div key={i} className="chat-chart-card">
+                <img src={c.data} alt="Chart" className="chart-image" />
+                {onPinChart && (
+                  <button
+                    onClick={() => !isPinned && onPinChart({
+                      title: message.content.split('\n')[0].substring(0, 40) || 'Financial Chart',
+                      chartData: c.data,
+                      chartPath: c.path,
+                      chartType: c.type,
+                      chartMonths: c.months ?? 6
+                    })}
+                    className={`pin-action-btn ${isPinned ? 'pin-action-btn--pinned' : ''}`}
+                    disabled={isPinned}
+                  >
+                    <Pin size={12} strokeWidth={3} /> {isPinned ? '\u2713 In Dashboard' : 'Pin to Dashboard'}
+                  </button>
+                )}
+              </div>
+            )
+          })}
         </div>
       </div>
     </div>

@@ -1,0 +1,16 @@
+form_type: Schedule 3
+tax_year: 2023
+boxes:
+  8_total_nonrefundable: 0.00
+  9_net_ptc: 10000.00
+  10_extension_payment: 10000.00
+  11_excess_ss: 520.00
+  15_total_other_payments: 10520.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2023/2023-tax-final.pdf
+  pages:
+  - 9
+  - 10
+  processed_at: '2026-03-13T20:11:38'

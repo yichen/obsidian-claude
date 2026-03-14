@@ -1,0 +1,21 @@
+form_type: Schedule A
+tax_year: 2023
+boxes:
+  4_medical_deduction: 0.00
+  5b_real_estate_taxes: 13541.00
+  5c_personal_property_taxes: 13541.00
+  5d_total_state_local: 13541.00
+  5e_salt_capped: 10000.00
+  7_total_taxes: 10000.00
+  8e_total_mortgage_interest: 20774.00
+  10_total_interest: 20774.00
+  13_carryover: 0.00
+  14_total_gifts: 0.00
+  17_total_itemized: 30774.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2023/2023-tax-final.pdf
+  pages:
+  - 11
+  processed_at: '2026-03-13T20:11:38'

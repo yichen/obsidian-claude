@@ -1,0 +1,30 @@
+form_type: Schedule D
+tax_year: 2023
+boxes:
+  1a_proceeds: 35672.00
+  1a_cost: 41781.00
+  1a_gain_loss: -6109.00
+  '6': -41464.00
+  '7': -47573.00
+  8a_proceeds: 254428.00
+  8a_cost: 139935.00
+  8a_gain_loss: 114493.00
+  9_proceeds: 141030.00
+  9_cost: 152518.00
+  9_gain_loss: -11488.00
+  '14': -26243.00
+  '15': 76762.00
+  '16': 29189.00
+  '17': 18.00
+  '18': 0.00
+  '19': 0.00
+validation:
+  has_line_16: true
+  has_line_21: false
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2023/2023-tax-final.pdf
+  pages:
+  - 15
+  - 16
+  processed_at: '2026-03-13T20:11:38'

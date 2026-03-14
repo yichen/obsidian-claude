@@ -20,11 +20,15 @@ declare global {
     api: {
       sendChat: (
         messages: { role: string; content: string }[]
-      ) => Promise<{ text: string; charts?: Array<{ path: string; data: string }> }>
+      ) => Promise<{ text: string; charts?: Array<{ path: string; data: string; type?: string; months?: number }> }>
       onToolResult: (cb: (data: ToolResult) => void) => () => void
       onStreamToken: (cb: (data: { token: string }) => void) => () => void
       dbQuery: (sql: string) => Promise<unknown>
       financeCommand: (command: string) => Promise<string>
+      dbExecute: (sql: string) => Promise<{ ok?: boolean; rows_affected?: number; error?: string }>
+      recentTopics: () => Promise<string[]>
+      parseReceipt: (text: string) => Promise<{ date?: string; amount?: number; description?: string; notes?: string }>
+      generateChart: (type: string, months: number) => Promise<string | null>
     }
   }
 }
@@ -35,14 +39,16 @@ interface ChatInterfaceProps {
   persistedMessages?: Message[]
   onMessagesChange?: (messages: Message[]) => void
   onPinChart?: (chart: Omit<PinnedChart, 'id' | 'timestamp'>) => void
+  pinnedCharts?: PinnedChart[]
 }
 
-export function ChatInterface({ 
-  initialMessage, 
-  onClearInitial, 
-  persistedMessages, 
+export function ChatInterface({
+  initialMessage,
+  onClearInitial,
+  persistedMessages,
   onMessagesChange,
-  onPinChart
+  onPinChart,
+  pinnedCharts
 }: ChatInterfaceProps): React.ReactElement {
   const [messages, setMessages] = useState<Message[]>(persistedMessages?.length ? persistedMessages : [
     {
@@ -176,7 +182,7 @@ export function ChatInterface({
 
       <div className="messages-area">
         {messages.map((msg) => (
-          <MessageBubble key={msg.id} message={msg} onPinChart={onPinChart} />
+          <MessageBubble key={msg.id} message={msg} onPinChart={onPinChart} pinnedCharts={pinnedCharts} />
         ))}
         {activeTool && (
           <div className="thinking-indicator">

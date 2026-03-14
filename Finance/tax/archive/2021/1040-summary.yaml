@@ -24,7 +24,6 @@ income:
 summary:
   total_income: 1624935.00
   adjusted_gross_income: 1624935.00
-  deductions: 33123.00
   taxable_income: 1591809.00
   tax_line16: 525097.00
   total_tax: 538307.00
@@ -37,11 +36,10 @@ validation:
   all_key_fields_present: true
   mismatches:
   - Cover letter refund ($9150.0) != line 34 ($10402.0)
-  - Taxable income (1591809.0) != AGI (1624935.0) - deductions (33123.0) = 1591812.0
 source:
   file: /Users/yichen/Dropbox/1-Tax/3-archive/2021/Yi Chen and Sheri Martin 2021 Tax
     Return update.pdf
   pages:
   - 4
   - 5
-  processed_at: '2026-03-13T18:01:43'
+  processed_at: '2026-03-13T20:12:01'

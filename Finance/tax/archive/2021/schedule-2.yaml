@@ -1,0 +1,17 @@
+form_type: Schedule 2
+tax_year: 2021
+boxes:
+  2_excess_ptc: 0.00
+  3_total_part1: 0.00
+  11_additional_medicare: 12545.00
+  12_niit: 675.00
+  21_total_other_taxes: 13220.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2021/Yi Chen and Sheri Martin 2021 Tax
+    Return update.pdf
+  pages:
+  - 8
+  - 9
+  processed_at: '2026-03-13T20:12:04'

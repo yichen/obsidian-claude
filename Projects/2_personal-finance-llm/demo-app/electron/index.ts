@@ -1,7 +1,8 @@
 import { app, shell, BrowserWindow, ipcMain } from 'electron'
 import { join } from 'path'
+import { readdirSync } from 'fs'
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { initConfig, makeDeps, handleChat, queryDB, runFinanceCommand, initCategoryContext, initFinanceCache } from './finance-core'
+import { initConfig, makeDeps, handleChat, queryDB, runFinanceCommand, initCategoryContext, initFinanceCache, migratePendingYamlToSQLite, openrouterClient, VAULT_PATH, generateChart } from './finance-core'
 
 // ── Electron app setup ─────────────────────────────────────────────────────
 
@@ -37,6 +38,7 @@ app.whenReady().then(async () => {
   const startupDeps = makeDeps()
   initCategoryContext(startupDeps).catch(e => console.warn('[startup] initCategoryContext failed:', e))
   initFinanceCache(startupDeps).catch(e => console.warn('[startup] initFinanceCache failed:', e))
+  migratePendingYamlToSQLite(startupDeps).catch(e => console.warn('[startup] migratePendingYamlToSQLite failed:', e))
   electronApp.setAppUserModelId('com.finance.demo')
   app.on('browser-window-created', (_, window) => {
     optimizer.watchWindowShortcuts(window)
@@ -67,8 +69,82 @@ app.whenReady().then(async () => {
     return await queryDB(sql, makeDeps())
   })
 
+  ipcMain.handle('db:execute', async (_event, sql: string) => {
+    try {
+      const output = await runFinanceCommand('execute', [sql], makeDeps())
+      const parsed = JSON.parse(output)
+      return parsed
+    } catch (err) {
+      return { error: String(err) }
+    }
+  })
+
   ipcMain.handle('finance:command', async (_event, command: string) => {
     return runFinanceCommand(command, [], makeDeps())
+  })
+
+  ipcMain.handle('finance:generate-chart', async (_event, type: string, months: number) => {
+    return generateChart(type, months, makeDeps())
+  })
+
+  ipcMain.handle('finance:recent-topics', async () => {
+    try {
+      const sessionDir = `${VAULT_PATH}/Finance/reports/debug/sessions`
+      const files = readdirSync(sessionDir)
+        .filter(f => f.endsWith('.json'))
+        .sort()
+        .slice(-5)
+        .reverse()
+
+      const topics: string[] = []
+      for (const file of files) {
+        try {
+          const raw = require('fs').readFileSync(join(sessionDir, file), 'utf-8')
+          const session = JSON.parse(raw)
+          const rounds: any[] = session.rounds || []
+          for (const round of rounds) {
+            const messages: any[] = round?.request?.messages || []
+            const userMsgs = messages.filter((m: any) => m.role === 'user')
+            if (userMsgs.length > 0) {
+              const last = userMsgs[userMsgs.length - 1]
+              const text = typeof last.content === 'string' ? last.content : (last.content?.[0]?.text ?? '')
+              const trimmed = text.trim().slice(0, 120)
+              if (trimmed && !topics.includes(trimmed)) {
+                topics.push(trimmed)
+              }
+            }
+          }
+        } catch (_) { /* skip malformed files */ }
+        if (topics.length >= 3) break
+      }
+      return topics
+    } catch (_) {
+      return []
+    }
+  })
+
+  ipcMain.handle('finance:parse-receipt', async (_event, text: string) => {
+    try {
+      const client = openrouterClient
+      if (!client) return {}
+      const response = await client.chat.completions.create({
+        model: 'anthropic/claude-3-haiku',
+        max_tokens: 256,
+        messages: [
+          {
+            role: 'user',
+            content: `Extract transaction details from this receipt text. Return JSON only, no explanation:\n{"date":"YYYY-MM-DD","amount":0.00,"description":"merchant name","notes":""}\n\nReceipt text:\n${text}`
+          }
+        ]
+      })
+      const content = response.choices[0]?.message?.content ?? ''
+      const match = content.match(/\{[\s\S]*\}/)
+      if (match) return JSON.parse(match[0])
+      return {}
+    } catch (err) {
+      console.error('[parse-receipt] error:', err)
+      return {}
+    }
   })
 
   createWindow()

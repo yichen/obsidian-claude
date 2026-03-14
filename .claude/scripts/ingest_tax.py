@@ -222,6 +222,16 @@ def detect_form_type(pdf_path: Path) -> Optional[str]:
                 return "5498-SA"
             if ("5498" in text_lower or "form 5498" in text_lower) and "ira contribution" in text_lower:
                 return "5498"
+            if "consolidated form 1099" in text_lower or (
+                "1099" in text_lower
+                and ("fidelity" in text_lower or "morgan stanley" in text_lower)
+                and ("dividend" in text_lower or "interest" in text_lower or "proceeds" in text_lower)
+            ):
+                return "1099-CONSOLIDATED"
+            if "1099-b" in text_lower and "proceeds" in text_lower:
+                return "1099-B"
+            if "1099-misc" in text_lower or "miscellaneous information" in text_lower:
+                return "1099-MISC"
     except Exception:
         pass
 
@@ -2837,6 +2847,102 @@ def _parse_ms_1099_misc(text: str) -> dict:
     return misc
 
 
+def parse_1099_misc(pdf_path: Path, tax_year: int) -> dict:
+    """Parse a standalone Form 1099-MISC (e.g. Shutterstock royalties).
+
+    Extracts:
+      Box 2: Royalties
+      Box 3: Other income
+      Box 4: Federal income tax withheld
+      Box 7: Nonemployee compensation
+    """
+    with pdfplumber.open(pdf_path) as pdf:
+        text = ""
+        for page in pdf.pages:
+            text += (page.extract_text() or "") + "\n"
+
+    text_lower = text.lower()
+
+    # Payer name: first non-empty line that looks like a company name
+    payer_name = ""
+    for line in text.split("\n")[:20]:
+        line = line.strip()
+        if line and len(line) > 4 and not re.match(r"^\d", line):
+            if any(kw in line.lower() for kw in ["shutterstock", "inc", "llc", "corp", "ltd"]):
+                payer_name = line
+                break
+    if not payer_name:
+        # Fallback: look for PAYER'S name section
+        m = re.search(r"PAYER.S name.*?\n(.+)", text, re.IGNORECASE)
+        if m:
+            payer_name = m.group(1).strip()
+
+    # Payer TIN
+    payer_tin = ""
+    m = re.search(r"(\d{2}-\d{7})", text)
+    if m:
+        payer_tin = m.group(1)
+
+    # Recipient SSN (masked)
+    ssn_last4 = "2622"  # default to Yi's
+    m = re.search(r"(?:\*{3}-\*{2}-|xxx-xx-)(\d{4})", text, re.IGNORECASE)
+    if m:
+        ssn_last4 = m.group(1)
+
+    # Recipient name
+    recipient_name = "Yi Chen"
+    m = re.search(r"RECIPIENT.S name.*?\n(.+)", text, re.IGNORECASE)
+    if m:
+        candidate = m.group(1).strip()
+        if candidate:
+            recipient_name = candidate
+
+    boxes = {}
+
+    # Box 2: Royalties
+    m = re.search(r"2\s+Royalt(?:y|ies).*?\$?\s*([\d,]+\.\d{2})", text, re.IGNORECASE)
+    if m:
+        boxes[2] = parse_amount(m.group(1))
+
+    # Box 3: Other income
+    m = re.search(r"3\s+Other income.*?\$?\s*([\d,]+\.\d{2})", text, re.IGNORECASE)
+    if m:
+        boxes[3] = parse_amount(m.group(1))
+
+    # Box 4: Federal income tax withheld
+    m = re.search(r"4\s+Federal income tax withheld.*?\$?\s*([\d,]+\.\d{2})", text, re.IGNORECASE)
+    if m:
+        boxes[4] = parse_amount(m.group(1))
+
+    # Box 7: Nonemployee compensation
+    m = re.search(r"7\s+Nonemployee compensation.*?\$?\s*([\d,]+\.\d{2})", text, re.IGNORECASE)
+    if m:
+        boxes[7] = parse_amount(m.group(1))
+
+    total_income = sum(v for k, v in boxes.items() if k in (2, 3, 7))
+
+    return {
+        "form_type": "1099-MISC",
+        "tax_year": tax_year,
+        "payer": {"name": payer_name, "tin": payer_tin},
+        "recipient": {"name": recipient_name, "ssn_last4": ssn_last4},
+        "boxes": {
+            "2_royalties": boxes.get(2, 0.0),
+            "3_other_income": boxes.get(3, 0.0),
+            "4_fed_tax_withheld": boxes.get(4, 0.0),
+            "7_nonemployee_compensation": boxes.get(7, 0.0),
+        },
+        "total_income": total_income,
+        "schedule": "Schedule 1 Line 8 (royalties/other) or Schedule C (NEC)",
+        "validation": {"mismatches": []},
+        "source": {
+            "file": str(pdf_path),
+            "pages": list(range(1, len(text.split("\x0c")) + 1)),
+            "processed_at": datetime.now().isoformat(timespec="seconds"),
+        },
+    }
+
+
 def parse_1099_consolidated(pdf_path: Path, tax_year: int) -> dict:
     """Parse a consolidated Form 1099 (Fidelity or Morgan Stanley).
 
@@ -3154,12 +3260,11 @@ def parse_1040(pdf_path: Path, tax_year: int) -> dict:
     # Summary Lines (page 1 + page 2)
     # Pre-2022: deductions are on Line 12 (2020) or Line 12a (2021); taxable income on Line 15
     summary = {}
-    deductions_prefix = "12" if tax_year == 2020 else "12a"
     for key, prefix, kws, src in [
         ("total_income", "9", ["total income"], page1_text),
         ("adjustments", "10", ["Adjustments"], page1_text),
         ("adjusted_gross_income", "11", ["adjusted gross income"], page1_text),
-        ("deductions", deductions_prefix, ["deduction", "Schedule A"], page1_text),
+        ("deductions", "12", ["deduction", "Schedule A"], page1_text),
         ("taxable_income", "15", ["taxable income"], page1_text),
         ("tax_line16", "16", ["Tax"], page2_text),
         ("total_tax", "24", ["total tax"], page2_text),
@@ -3268,6 +3373,654 @@ def parse_1040(pdf_path: Path, tax_year: int) -> dict:
     return result
 
 
+# ---------------------------------------------------------------------------
+# Shared Schedule/Form Line Extractor
+# ---------------------------------------------------------------------------
+
+def _extract_schedule_amount(text: str, line_prefix: str, keywords: list[str] = None) -> Optional[float]:
+    """Extract dollar amount from a schedule/form line.
+
+    Looks for line_prefix as a form label (not as a "line X" reference),
+    optionally requires a keyword match, and returns the rightmost amount.
+    Handles: trailing dots (29,189.), parenthesized negatives ( 41,464.), standard amounts.
+    Also checks the next line for amounts if none found on the matched line
+    (IRS forms often split label and value across two lines).
+    """
+    lines_list = text.split("\n")
+    for i, line in enumerate(lines_list):
+        m = re.search(rf"(?:^|\s){re.escape(line_prefix)}\b", line)
+        if not m:
+            continue
+        # Skip if preceded by "line " or "lines" — this is a reference, not a label
+        prefix_pos = m.start()
+        before = line[max(0, prefix_pos - 6):prefix_pos].lower()
+        if "line " in before or "lines" in before:
+            continue
+        # Keyword check if provided
+        if keywords and not any(kw.lower() in line.lower() for kw in keywords):
+            continue
+
+        # Search this line and the next line for amounts
+        for search_line in [line] + ([lines_list[i + 1]] if i + 1 < len(lines_list) else []):
+            # Find parenthesized negatives first
+            paren_amounts = re.findall(r"\(\s*([\d,]+\.?\d*)\s*\)", search_line)
+            if paren_amounts:
+                val = parse_amount(paren_amounts[-1])
+                if val is not None:
+                    return -abs(val)
+
+            # Find regular amounts — require that no substantive text follows on the line
+            # (avoids matching "line 16. Also" as $16.00; real values are at the right edge)
+            for am in reversed(list(re.finditer(r"(-?[\d,]+\.\d{0,2})", search_line))):
+                # Check that everything after this amount is whitespace/dots/parens
+                after = search_line[am.end():].strip()
+                if after and re.search(r"[a-zA-Z]", after):
+                    continue  # Text follows — likely a sentence, not a value
+                val_str = am.group(1)
+                if val_str.endswith("."):
+                    val_str += "00"
+                return parse_amount(val_str)
+    return None
+
+
+# ---------------------------------------------------------------------------
+# Schedule 1 Parser (Additional Income and Adjustments to Income)
+# ---------------------------------------------------------------------------
+
+def parse_schedule_1_archive(pdf, pages: list[int], year: int) -> dict:
+    """Parse Schedule 1 (Additional Income and Adjustments to Income)."""
+    text = "\n".join(pdf.pages[i].extract_text(layout=True) or "" for i in pages)
+
+    boxes = {}
+
+    # Part I: Additional Income
+    fields_part1 = [
+        ("1_taxable_refunds", "1", ["Taxable refunds"]),
+        ("2a_alimony_received", "2a", ["Alimony received"]),
+        ("3_business_income", "3", ["Business income"]),
+        ("4_other_gains", "4", ["Other gains"]),
+        ("5_rental_income", "5", ["Rental real estate"]),
+        ("6_farm_income", "6", ["Farm income"]),
+        ("7_unemployment", "7", ["Unemployment"]),
+        ("10_total_additional_income", "10", ["Total additional income", "Combine"]),
+    ]
+    for key, prefix, kws in fields_part1:
+        val = _extract_schedule_amount(text, prefix, kws)
+        if val is not None:
+            boxes[key] = val
+
+    # Part II: Adjustments to Income
+    fields_part2 = [
+        ("11_educator_expenses", "11", ["Educator"]),
+        ("13_hsa_deduction", "13", ["Health savings"]),
+        ("15_se_tax_deduction", "15", ["self-employment tax"]),
+        ("16_se_plans", "16", ["SEP, SIMPLE"]),
+        ("17_se_health_insurance", "17", ["health insurance"]),
+        ("20_ira_deduction", "20", ["IRA deduction"]),
+        ("21_student_loan", "21", ["Student loan"]),
+        ("26_total_adjustments", "26", ["adjustments to income"]),
+    ]
+    for key, prefix, kws in fields_part2:
+        val = _extract_schedule_amount(text, prefix, kws)
+        if val is not None:
+            boxes[key] = val
+
+    mismatches = []
+    return {
+        "form_type": "Schedule 1",
+        "tax_year": year,
+        "boxes": boxes,
+        "validation": {"mismatches": mismatches},
+        "source": {
+            "file": str(pdf.stream.name) if hasattr(pdf.stream, 'name') else "archive",
+            "pages": [p + 1 for p in pages],
+            "processed_at": datetime.now().isoformat(timespec="seconds"),
+        },
+    }
+
+
+# ---------------------------------------------------------------------------
+# Schedule 2 Parser (Additional Taxes)
+# ---------------------------------------------------------------------------
+
+def parse_schedule_2_archive(pdf, pages: list[int], year: int) -> dict:
+    """Parse Schedule 2 (Additional Taxes)."""
+    text = "\n".join(pdf.pages[i].extract_text(layout=True) or "" for i in pages)
+
+    boxes = {}
+
+    # Part I: Tax
+    fields_part1 = [
+        ("1_amt", "1", ["Alternative minimum tax"]),
+        ("2_excess_ptc", "2", ["premium tax credit"]),
+        ("3_total_part1", "3", ["Add lines 1 and 2"]),
+    ]
+    for key, prefix, kws in fields_part1:
+        val = _extract_schedule_amount(text, prefix, kws)
+        if val is not None:
+            boxes[key] = val
+
+    # Part II: Other Taxes
+    fields_part2 = [
+        ("4_se_tax", "4", ["Self-employment tax"]),
+        ("8_additional_tax_ira", "8", ["IRAs or other tax-favored"]),
+        ("9_household_employment", "9", ["Household employment"]),
+        ("11_additional_medicare", "11", ["Additional Medicare"]),
+        ("12_niit", "12", ["Net investment income"]),
+        ("21_total_other_taxes", "21", ["total other taxes"]),
+    ]
+    for key, prefix, kws in fields_part2:
+        val = _extract_schedule_amount(text, prefix, kws)
+        if val is not None:
+            boxes[key] = val
+
+    mismatches = []
+    return {
+        "form_type": "Schedule 2",
+        "tax_year": year,
+        "boxes": boxes,
+        "validation": {"mismatches": mismatches},
+        "source": {
+            "file": str(pdf.stream.name) if hasattr(pdf.stream, 'name') else "archive",
+            "pages": [p + 1 for p in pages],
+            "processed_at": datetime.now().isoformat(timespec="seconds"),
+        },
+    }
+
+
+# ---------------------------------------------------------------------------
+# Schedule 3 Parser (Additional Credits and Payments)
+# ---------------------------------------------------------------------------
+
+def parse_schedule_3_archive(pdf, pages: list[int], year: int) -> dict:
+    """Parse Schedule 3 (Additional Credits and Payments)."""
+    text = "\n".join(pdf.pages[i].extract_text(layout=True) or "" for i in pages)
+
+    boxes = {}
+
+    # Part I: Nonrefundable Credits
+    fields_part1 = [
+        ("1_foreign_tax_credit", "1", ["Foreign tax credit"]),
+        ("2_child_care_credit", "2", ["child and dependent care"]),
+        ("3_education_credits", "3", ["Education credits"]),
+        ("4_retirement_savings", "4", ["Retirement savings"]),
+        ("8_total_nonrefundable", "8", ["Add lines"]),
+    ]
+    for key, prefix, kws in fields_part1:
+        val = _extract_schedule_amount(text, prefix, kws)
+        if val is not None:
+            boxes[key] = val
+
+    # Part II: Other Payments and Refundable Credits
+    fields_part2 = [
+        ("9_net_ptc", "9", ["Net premium tax credit"]),
+        ("10_extension_payment", "10", ["extension"]),
+        ("11_excess_ss", "11", ["Excess social security"]),
+        ("15_total_other_payments", "15", ["Add lines 9"]),
+    ]
+    for key, prefix, kws in fields_part2:
+        val = _extract_schedule_amount(text, prefix, kws)
+        if val is not None:
+            boxes[key] = val
+
+    mismatches = []
+    return {
+        "form_type": "Schedule 3",
+        "tax_year": year,
+        "boxes": boxes,
+        "validation": {"mismatches": mismatches},
+        "source": {
+            "file": str(pdf.stream.name) if hasattr(pdf.stream, 'name') else "archive",
+            "pages": [p + 1 for p in pages],
+            "processed_at": datetime.now().isoformat(timespec="seconds"),
+        },
+    }
+
+
+# ---------------------------------------------------------------------------
+# Schedule A Parser (Itemized Deductions)
+# ---------------------------------------------------------------------------
+
+def parse_schedule_a_archive(pdf, pages: list[int], year: int) -> dict:
+    """Parse Schedule A (Itemized Deductions)."""
+    text = "\n".join(pdf.pages[i].extract_text(layout=True) or "" for i in pages)
+
+    boxes = {}
+
+    fields = [
+        ("1_medical_dental", "1", ["Medical and dental"]),
+        ("4_medical_deduction", "4", ["Subtract line 3"]),
+        ("5a_state_local_income_tax", "5a", ["State and local income"]),
+        ("5b_real_estate_taxes", "5b", ["real estate taxes"]),
+        ("5c_personal_property_taxes", "5c", ["personal property"]),
+        ("5d_total_state_local", "5d", ["Add lines 5a"]),
+        ("5e_salt_capped", "5e", ["smaller of line 5d"]),
+        ("7_total_taxes", "7", ["Add lines 5e"]),
+        ("8a_mortgage_interest_1098", "8a", ["Home mortgage interest", "Form 1098"]),
+        ("8e_total_mortgage_interest", "8e", ["Add lines 8a"]),
+        ("10_total_interest", "10", ["Add lines 8e"]),
+        ("11_gifts_cash", "11", ["Gifts by cash"]),
+        ("12_gifts_other", "12", ["Other than by cash"]),
+        ("13_carryover", "13", ["Carryover from prior"]),
+        ("14_total_gifts", "14", ["Add lines 11"]),
+        ("16_other", "16", ["Other"]),
+        ("17_total_itemized", "17", ["amounts in the far right"]),
+    ]
+    for key, prefix, kws in fields:
+        val = _extract_schedule_amount(text, prefix, kws)
+        if val is not None:
+            boxes[key] = val
+
+    # Validation
+    mismatches = []
+    total = boxes.get("17_total_itemized")
+    medical = boxes.get("4_medical_deduction", 0)
+    taxes = boxes.get("7_total_taxes", 0)
+    interest = boxes.get("10_total_interest", 0)
+    gifts = boxes.get("14_total_gifts", 0)
+    other = boxes.get("16_other", 0)
+
+    if total is not None:
+        expected = medical + taxes + interest + gifts + other
+        if abs(total - expected) > 1:
+            mismatches.append(
+                f"Total ({total}) != medical ({medical}) + taxes ({taxes}) + interest ({interest}) "
+                f"+ gifts ({gifts}) + other ({other}) = {expected}"
+            )
+
+    return {
+        "form_type": "Schedule A",
+        "tax_year": year,
+        "boxes": boxes,
+        "validation": {"mismatches": mismatches},
+        "source": {
+            "file": str(pdf.stream.name) if hasattr(pdf.stream, 'name') else "archive",
+            "pages": [p + 1 for p in pages],
+            "processed_at": datetime.now().isoformat(timespec="seconds"),
+        },
+    }
+
+
+# Form slug mapping for output filenames
+ARCHIVE_FORM_SLUGS = {
+    "Schedule 1": "schedule-1",
+    "Schedule 2": "schedule-2",
+    "Schedule 3": "schedule-3",
+    "Schedule A": "schedule-a",
+    "Schedule B": "schedule-b",
+    "Schedule C": "schedule-c",
+    "Schedule D": "schedule-d",
+    "Schedule E": "schedule-e",
+    "Schedule H": "schedule-h",
+    "Schedule 8812": "schedule-8812",
+    "Form 8949": "form-8949",
+    "Form 2441": "form-2441",
+    "Form 8606": "form-8606",
+    "Form 8889": "form-8889",
+    "Form 8959": "form-8959",
+    "Form 8960": "form-8960",
+    "Form 8582": "form-8582",
+    "Form 4562": "form-4562",
+    "Form 8995-A": "form-8995-a",
+}
+
+
+def map_archive_pages(pdf) -> dict[str, list[int]]:
+    """Scan all pages and map form/schedule names to their page indices (0-based).
+
+    Each form's detection uses two signature strings that must both appear on the page.
+    Pages not matching a new form header are considered continuations of the previous form.
+    """
+    FORM_SIGNATURES = [
+        ("Schedule 1", "SCHEDULE 1", "Additional Income"),
+        ("Schedule 2", "SCHEDULE 2", "Additional Taxes"),
+        ("Schedule 3", "SCHEDULE 3", "Additional Credits"),
+        ("Schedule A", "SCHEDULE A", "Itemized Deductions"),
+        ("Schedule B", "SCHEDULE B", "Interest"),
+        ("Schedule C", "SCHEDULE C", "Profit or Loss"),
+        ("Schedule D", "SCHEDULE D", "Capital Gains"),
+        ("Schedule E", "SCHEDULE E", "Supplemental Income"),
+        ("Schedule H", "SCHEDULE H", "Household Employment"),
+        ("Schedule 8812", "SCHEDULE 8812", "Qualifying Children"),
+        ("Form 8949", "Form 8949", ""),  # Detected by just "Form 8949" header (no second signature needed)
+        ("Form 2441", "2441", "Child and Dependent Care"),
+        ("Form 8606", "8606", "Nondeductible IRAs"),
+        ("Form 8889", "8889", "Health Savings"),
+        ("Form 8959", "8959", "Additional Medicare"),
+        ("Form 8960", "8960", "Net Investment Income"),
+        ("Form 8582", "8582", "Passive Activity"),
+        ("Form 4562", "4562", "Depreciation"),
+        ("Form 8995-A", "8995-A", "Qualified Business"),
+    ]
+
+    # Skip patterns - pages we never want to map
+    SKIP_PATTERNS = [
+        ("8879", "Signature Authorization"),  # e-file signature
+        ("Prior Year Comparison", ""),
+        ("yrammuS", ""),  # Reversed "Summary" - depreciation detail
+    ]
+
+    result = {}  # form_name -> list[page_idx]
+    current_form = None
+
+    for i, page in enumerate(pdf.pages):
+        text = page.extract_text(layout=True) or ""
+
+        # Check skip patterns first
+        skip = False
+        for sig1, sig2 in SKIP_PATTERNS:
+            if sig1 in text and (not sig2 or sig2 in text):
+                skip = True
+                break
+        if skip:
+            current_form = None
+            continue
+
+        # Try to match a new form header
+        matched_form = None
+        for form_name, sig1, sig2 in FORM_SIGNATURES:
+            if sig1 in text and (not sig2 or sig2 in text):
+                matched_form = form_name
+                break
+
+        if matched_form:
+            result.setdefault(matched_form, []).append(i)
+            current_form = matched_form
+        elif current_form:
+            # Continuation page of previous form - but only if it looks like
+            # a continuation (has the form name or "Page 2" reference)
+            text_lower = text.lower()
+            form_ref = current_form.lower().replace("form ", "").replace("schedule ", "")
+            if f"page 2" in text_lower or form_ref in text_lower:
+                result[current_form].append(i)
+            else:
+                current_form = None
+
+    return result
+
+
+
+
+def parse_schedule_d_archive(pdf, pages: list[int], year: int) -> dict:
+    """Parse Schedule D (Capital Gains and Losses) from archive PDF pages."""
+    text_parts = []
+    for idx in pages:
+        text_parts.append(pdf.pages[idx].extract_text(layout=True) or "")
+    full_text = "\n".join(text_parts)
+
+    def _find_amounts_on_line(line: str) -> list[tuple[float, int]]:
+        """Find all dollar amounts on a line, returning (value, position) tuples.
+
+        Skips small numbers (< 100) that are likely form line references.
+        Requires amounts to have a decimal point (IRS forms always use them).
+        """
+        amounts = []
+        paren_positions = set()
+        # First handle parenthesized amounts like ( 41,464.)
+        for pm in re.finditer(r"\(\s*([\d,]+\.?\d*)\s*\)", line):
+            val = parse_amount(pm.group(1))
+            if val is not None:
+                amounts.append((-abs(val), pm.start()))
+                paren_positions.add(pm.start())
+        # Then regular amounts — require decimal point, and no substantive text after on the line
+        # (avoids matching "line 16. Also" as $16.00)
+        for am in re.finditer(r"(-?[\d,]+\.\d{0,2})", line):
+            # Check that no letters follow this amount on the line (real values are at right edge)
+            after = line[am.end():].strip(". \t")
+            if after and re.search(r"[a-zA-Z]", after):
+                continue
+            val_str = am.group(1)
+            if val_str.endswith("."):
+                val_str += "00"
+            val = parse_amount(val_str)
+            if val is not None:
+                # Only skip if overlapping with a parenthesized amount already captured
+                if not any(abs(am.start() - pos) < 15 for pos in paren_positions):
+                    amounts.append((val, am.start()))
+        return amounts
+
+    def extract_line_amounts(text: str, line_prefix: str) -> dict:
+        """Extract amounts from a Schedule D line. Returns dict with proceeds/cost/gain_loss or just value.
+
+        Checks the matched line and following continuation lines for amounts
+        (IRS forms often split label and value across lines).
+        The line prefix must appear near the start of the line (within first 15 chars
+        of stripped text) to avoid matching references in the middle of text.
+        """
+        lines_list = text.split("\n")
+        for i, line in enumerate(lines_list):
+            stripped = line.lstrip()
+            # Line prefix must appear at the start of the line (IRS form labels
+            # are always at the left margin, within the first few characters)
+            m = re.match(rf"{re.escape(line_prefix)}\b", stripped)
+            if not m:
+                continue
+
+            # Search this line and continuation lines for amounts (IRS forms like
+            # Schedule D lines 1a/8a can have 4+ continuation lines before the value).
+            # Stop when we hit a new form line label (a line starting with a number).
+            for j in range(8):
+                if i + j >= len(lines_list):
+                    break
+                search_line = lines_list[i + j]
+                # Stop at a new form line label (but not the first line we matched)
+                if j > 0:
+                    next_stripped = search_line.lstrip()
+                    if re.match(r"\d{1,2}[a-z]?\s+[A-Z]", next_stripped):
+                        break
+                amounts = _find_amounts_on_line(search_line)
+                if not amounts:
+                    continue
+
+                # Sort by position (left to right)
+                amounts.sort(key=lambda x: x[1])
+
+                if len(amounts) >= 3:
+                    # Proceeds, Cost, Gain/Loss (take last 3)
+                    return {
+                        "proceeds": amounts[-3][0],
+                        "cost": amounts[-2][0],
+                        "gain_loss": amounts[-1][0],
+                    }
+                elif len(amounts) == 1:
+                    return {"value": amounts[0][0]}
+                elif len(amounts) == 2:
+                    return {"value": amounts[-1][0]}
+        return {}
+
+    boxes = {}
+
+    # Part I: Short-Term (lines 1a through 7)
+    for line_id in ["1a", "1b", "2", "3"]:
+        result = extract_line_amounts(full_text, line_id)
+        if result:
+            if "gain_loss" in result:
+                boxes[f"{line_id}_proceeds"] = result["proceeds"]
+                boxes[f"{line_id}_cost"] = result["cost"]
+                boxes[f"{line_id}_gain_loss"] = result["gain_loss"]
+            elif "value" in result:
+                boxes[f"{line_id}"] = result["value"]
+
+    for line_id in ["4", "5", "6", "7"]:
+        result = extract_line_amounts(full_text, line_id)
+        if result:
+            boxes[f"{line_id}"] = result.get("value", result.get("gain_loss", 0))
+
+    # Part II: Long-Term (lines 8a through 15)
+    for line_id in ["8a", "8b", "9", "10"]:
+        result = extract_line_amounts(full_text, line_id)
+        if result:
+            if "gain_loss" in result:
+                boxes[f"{line_id}_proceeds"] = result["proceeds"]
+                boxes[f"{line_id}_cost"] = result["cost"]
+                boxes[f"{line_id}_gain_loss"] = result["gain_loss"]
+            elif "value" in result:
+                boxes[f"{line_id}"] = result["value"]
+
+    for line_id in ["11", "12", "13", "14", "15"]:
+        result = extract_line_amounts(full_text, line_id)
+        if result:
+            boxes[f"{line_id}"] = result.get("value", result.get("gain_loss", 0))
+
+    # Part III: Summary (lines 16-21)
+    for line_id in ["16", "17", "18", "19", "20", "21"]:
+        result = extract_line_amounts(full_text, line_id)
+        if result:
+            boxes[f"{line_id}"] = result.get("value", 0)
+
+    # Validation
+    mismatches = []
+    line_7 = boxes.get("7")
+    line_15 = boxes.get("15")
+    line_16 = boxes.get("16")
+
+    if line_7 is not None and line_15 is not None and line_16 is not None:
+        expected_16 = round(line_7 + line_15, 2)
+        if abs(line_16 - expected_16) > 1:
+            mismatches.append(f"Line 16 ({line_16}) != line 7 ({line_7}) + line 15 ({line_15}) = {expected_16}")
+
+    # Line 21 should equal line 16 when positive (or capped at -3000 if loss)
+    line_21 = boxes.get("21")
+    if line_16 is not None and line_21 is not None:
+        if line_16 >= 0 and abs(line_21 - line_16) > 1:
+            mismatches.append(f"Line 21 ({line_21}) != line 16 ({line_16})")
+        elif line_16 < 0 and line_21 != max(line_16, -3000):
+            expected = max(line_16, -3000)
+            if abs(line_21 - expected) > 1:
+                mismatches.append(f"Line 21 ({line_21}) != max(line 16 ({line_16}), -3000) = {expected}")
+
+    return {
+        "form_type": "Schedule D",
+        "tax_year": year,
+        "boxes": boxes,
+        "validation": {
+            "has_line_16": line_16 is not None,
+            "has_line_21": line_21 is not None,
+            "mismatches": mismatches,
+        },
+        "source": {
+            "file": str(pdf.stream.name) if hasattr(pdf.stream, 'name') else "archive",
+            "pages": [p + 1 for p in pages],
+            "processed_at": datetime.now().isoformat(timespec="seconds"),
+        },
+    }
+
+
+def parse_form_8949_archive(pdf, pages: list[int], year: int) -> dict:
+    """Parse Form 8949 (Sales and Other Dispositions of Capital Assets) from archive PDF pages."""
+
+    all_transactions = {"short_term": [], "long_term": []}
+    current_part = None
+    box_checked = None
+
+    for idx in pages:
+        text = pdf.pages[idx].extract_text(layout=True) or ""
+
+        # Determine if this is Part I (short-term) or Part II (long-term)
+        if "Part I" in text and "Short-Term" in text:
+            current_part = "short_term"
+        elif "Part II" in text and "Long-Term" in text:
+            current_part = "long_term"
+        elif "PPaarrtt II " in text and "Long-Term" in text:
+            # Handle doubled text rendering
+            current_part = "long_term"
+        elif "PPaarrtt II" in text and "Short-Term" in text:
+            current_part = "short_term"
+
+        if current_part is None:
+            current_part = "long_term"  # Default based on common structure
+
+        # Detect which box is checked
+        for box_letter, box_label in [("A", "Box A"), ("B", "Box B"), ("C", "Box C"),
+                                       ("D", "Box D"), ("E", "Box E"), ("F", "Box F")]:
+            if f"X ({box_letter})" in text or f"X({box_letter})" in text:
+                box_checked = box_letter
+                break
+            # Also check "X (D)" or "X (E)" patterns
+            m = re.search(rf"X\s*\({box_letter}\)", text)
+            if m:
+                box_checked = box_letter
+                break
+
+        # Extract transaction rows
+        # Look for lines with dates and dollar amounts
+        lines = text.split("\n")
+        for line in lines:
+            # Skip header lines
+            if any(h in line for h in ["Description", "Date acquired", "Proceeds", "Cost",
+                                        "Adjustment", "Gain or", "column"]):
+                continue
+
+            # Look for transaction lines: they typically have dates (MM/DD/YYYY or VARIOUS)
+            date_pattern = r"(\d{2}/\d{2}/\d{4}|VARIOUS)"
+            dates = re.findall(date_pattern, line)
+            amounts = re.findall(r"(-?[\d,]+\.?\d*)", line)
+
+            if len(dates) >= 1 and len(amounts) >= 2:
+                # Extract description (text before first date)
+                desc_match = re.match(r"(.+?)(?:\d{2}/\d{2}|VARIOUS)", line)
+                description = desc_match.group(1).strip() if desc_match else ""
+
+                # Parse amounts (usually: proceeds, cost, and optionally adjustment, gain/loss)
+                parsed_amounts = [parse_amount(a) for a in amounts if parse_amount(a) is not None and abs(parse_amount(a)) > 0.5]
+
+                txn = {"description": description}
+                if len(dates) >= 2:
+                    txn["date_acquired"] = dates[0]
+                    txn["date_sold"] = dates[1]
+                elif len(dates) == 1:
+                    txn["date_sold"] = dates[0]
+
+                if len(parsed_amounts) >= 2:
+                    txn["proceeds"] = parsed_amounts[0]
+                    txn["cost"] = parsed_amounts[1]
+                if len(parsed_amounts) >= 3:
+                    txn["gain_loss"] = parsed_amounts[-1]
+
+                if box_checked:
+                    txn["box"] = box_checked
+
+                all_transactions[current_part].append(txn)
+
+    # Compute totals
+    st_total_proceeds = sum(t.get("proceeds", 0) for t in all_transactions["short_term"])
+    st_total_cost = sum(t.get("cost", 0) for t in all_transactions["short_term"])
+    st_total_gain = sum(t.get("gain_loss", 0) for t in all_transactions["short_term"])
+
+    lt_total_proceeds = sum(t.get("proceeds", 0) for t in all_transactions["long_term"])
+    lt_total_cost = sum(t.get("cost", 0) for t in all_transactions["long_term"])
+    lt_total_gain = sum(t.get("gain_loss", 0) for t in all_transactions["long_term"])
+
+    result = {
+        "form_type": "Form 8949",
+        "tax_year": year,
+        "short_term": {
+            "transactions": all_transactions["short_term"],
+            "count": len(all_transactions["short_term"]),
+            "total_proceeds": round(st_total_proceeds, 2),
+            "total_cost": round(st_total_cost, 2),
+            "total_gain_loss": round(st_total_gain, 2),
+        },
+        "long_term": {
+            "transactions": all_transactions["long_term"],
+            "count": len(all_transactions["long_term"]),
+            "total_proceeds": round(lt_total_proceeds, 2),
+            "total_cost": round(lt_total_cost, 2),
+            "total_gain_loss": round(lt_total_gain, 2),
+        },
+        "validation": {
+            "mismatches": [],
+        },
+        "source": {
+            "file": str(pdf.stream.name) if hasattr(pdf.stream, 'name') else "archive",
+            "pages": [p + 1 for p in pages],
+            "processed_at": datetime.now().isoformat(timespec="seconds"),
+        },
+    }
+
+    return result
+
+
 def process_archive_pdf(pdf_path: Path, year: int) -> dict:
     """Process an archive PDF (complete filed tax return)."""
     name_lower = pdf_path.name.lower()
@@ -3306,7 +4059,60 @@ def process_archive_pdf(pdf_path: Path, year: int) -> dict:
     validation = data.get("validation", {})
     has_mismatches = bool(validation.get("mismatches"))
 
-    return {
+    # --- Extract additional forms/schedules ---
+    form_results = []
+
+    # Build parser registry from globals
+    _parser_registry = {
+        "Schedule D": "parse_schedule_d_archive",
+        "Form 8949": "parse_form_8949_archive",
+        "Schedule A": "parse_schedule_a_archive",
+        "Schedule 1": "parse_schedule_1_archive",
+        "Schedule 2": "parse_schedule_2_archive",
+        "Schedule 3": "parse_schedule_3_archive",
+    }
+
+    try:
+        with pdfplumber.open(pdf_path) as pdf:
+            page_map = map_archive_pages(pdf)
+
+            for form_name, pages in page_map.items():
+                parser_name = _parser_registry.get(form_name)
+                if not parser_name:
+                    continue
+                parser_fn = globals().get(parser_name)
+                if not parser_fn:
+                    continue
+
+                try:
+                    form_data = parser_fn(pdf, pages, year)
+                    slug = ARCHIVE_FORM_SLUGS.get(form_name, form_name.lower().replace(" ", "-"))
+                    form_output = ARCHIVE_OUTPUT / str(year) / f"{slug}.yaml"
+                    write_yaml(form_data, form_output)
+
+                    form_validation = form_data.get("validation", {})
+                    form_mismatches = form_validation.get("mismatches", [])
+
+                    form_results.append({
+                        "form": form_name,
+                        "output_file": str(form_output.relative_to(OBSIDIAN_ROOT)),
+                        "validation_ok": not bool(form_mismatches),
+                        "mismatches": form_mismatches,
+                    })
+
+                    if form_mismatches:
+                        has_mismatches = True
+
+                except Exception as e:
+                    form_results.append({
+                        "form": form_name,
+                        "error": str(e),
+                    })
+                    logger.warning(f"  Failed to parse {form_name} from {pdf_path.name}: {e}")
+    except Exception as e:
+        logger.warning(f"  Failed to map archive pages for {pdf_path.name}: {e}")
+
+    result = {
         "status": "success",
         "form_type": "1040",
         "output_file": str(output_path.relative_to(OBSIDIAN_ROOT)),
@@ -3314,6 +4120,11 @@ def process_archive_pdf(pdf_path: Path, year: int) -> dict:
         "mismatches": validation.get("mismatches", []),
         "processed_at": datetime.now().isoformat(timespec="seconds"),
     }
+
+    if form_results:
+        result["additional_forms"] = form_results
+
+    return result
 
 
 # ---------------------------------------------------------------------------
@@ -3372,6 +4183,8 @@ def process_pdf(pdf_path: Path, year: int) -> dict:
         data = parse_schedule_h(pdf_path, year)
     elif form_type == "1099-CONSOLIDATED":
         data = parse_1099_consolidated(pdf_path, year)
+    elif form_type == "1099-MISC":
+        data = parse_1099_misc(pdf_path, year)
     else:
         return {"status": "skipped", "reason": f"no_parser_for_{form_type}"}
 
@@ -3797,6 +4610,85 @@ def run_cross_validate(year_filter: Optional[int] = None):
         else:
             logger.info(f"    No interest income reported")
 
+        # --- Check 6: Schedule D vs 1040 Line 7 (capital gains) ---
+        sched_d_path = ARCHIVE_OUTPUT / str(year) / "schedule-d.yaml"
+        if sched_d_path.exists():
+            with open(sched_d_path) as f:
+                sched_d = yaml.safe_load(f)
+
+            sched_d_line_16 = sched_d.get("boxes", {}).get("16")
+            sched_d_line_21 = sched_d.get("boxes", {}).get("21")
+            line_7 = f1040.get("income", {}).get("7_capital_gain_loss", 0)
+
+            logger.info(f"\n  --- Schedule D vs 1040 Line 7 (Capital Gains) ---")
+            if sched_d_line_16 is not None:
+                logger.info(f"    Schedule D line 16 (combined): ${sched_d_line_16:,.2f}")
+            if sched_d_line_21 is not None:
+                logger.info(f"    Schedule D line 21 (to 1040):  ${sched_d_line_21:,.2f}")
+            logger.info(f"    1040 line 7 (capital gains):    ${line_7:,.2f}")
+
+            # Line 21 (or line 16 if gain) should match 1040 line 7
+            sched_d_to_1040 = sched_d_line_21 if sched_d_line_21 is not None else sched_d_line_16
+            if sched_d_to_1040 is not None:
+                if abs(sched_d_to_1040 - line_7) < 1:
+                    checks.append(("Schedule D → 1040 line 7 (capital gains)", sched_d_to_1040, line_7, "MATCH", ""))
+                else:
+                    note = (f"Schedule D reports ${sched_d_to_1040:,.2f} but 1040 line 7 = ${line_7:,.2f}. "
+                            f"Difference: ${abs(sched_d_to_1040 - line_7):,.2f}")
+                    checks.append(("Schedule D → 1040 line 7 (capital gains)", sched_d_to_1040, line_7, "MISMATCH", note))
+
+        # --- Check 7: Schedule A vs 1040 deductions ---
+        sched_a_path = ARCHIVE_OUTPUT / str(year) / "schedule-a.yaml"
+        if sched_a_path.exists():
+            with open(sched_a_path) as f:
+                sched_a = yaml.safe_load(f)
+
+            sched_a_total = sched_a.get("boxes", {}).get("17_total_itemized")
+            deductions_1040 = f1040.get("summary", {}).get("deductions", 0)
+
+            logger.info(f"\n  --- Schedule A vs 1040 Deductions ---")
+            if sched_a_total is not None:
+                logger.info(f"    Schedule A line 17 (total itemized): ${sched_a_total:,.2f}")
+                logger.info(f"    1040 deductions:                     ${deductions_1040:,.2f}")
+
+                if abs(sched_a_total - deductions_1040) < 1:
+                    checks.append(("Schedule A line 17 → 1040 deductions", sched_a_total, deductions_1040, "MATCH", ""))
+                else:
+                    note = f"Schedule A total (${sched_a_total:,.2f}) vs 1040 deductions (${deductions_1040:,.2f})"
+                    checks.append(("Schedule A line 17 → 1040 deductions", sched_a_total, deductions_1040, "MISMATCH", note))
+
+        # --- Check 8: Schedule 1 vs 1040 lines 8 and 10 ---
+        sched_1_path = ARCHIVE_OUTPUT / str(year) / "schedule-1.yaml"
+        if sched_1_path.exists():
+            with open(sched_1_path) as f:
+                sched_1 = yaml.safe_load(f)
+
+            logger.info(f"\n  --- Schedule 1 vs 1040 ---")
+
+            # Schedule 1 line 10 (total additional income) → 1040 line 8
+            s1_line_10 = sched_1.get("boxes", {}).get("10_total_additional_income")
+            line_8 = f1040.get("income", {}).get("8_additional_income")
+            if s1_line_10 is not None and line_8 is not None:
+                logger.info(f"    Schedule 1 line 10 (additional income): ${s1_line_10:,.2f}")
+                logger.info(f"    1040 line 8:                            ${line_8:,.2f}")
+                if abs(s1_line_10 - line_8) < 1:
+                    checks.append(("Schedule 1 line 10 → 1040 line 8", s1_line_10, line_8, "MATCH", ""))
+                else:
+                    checks.append(("Schedule 1 line 10 → 1040 line 8", s1_line_10, line_8, "MISMATCH",
+                                   f"Additional income mismatch: Sch1=${s1_line_10:,.2f} vs 1040=${line_8:,.2f}"))
+
+            # Schedule 1 line 26 (total adjustments) → 1040 line 10
+            s1_line_26 = sched_1.get("boxes", {}).get("26_total_adjustments")
+            line_10_1040 = f1040.get("summary", {}).get("adjustments")
+            if s1_line_26 is not None and line_10_1040 is not None:
+                logger.info(f"    Schedule 1 line 26 (adjustments):       ${s1_line_26:,.2f}")
+                logger.info(f"    1040 line 10:                           ${line_10_1040:,.2f}")
+                if abs(s1_line_26 - line_10_1040) < 1:
+                    checks.append(("Schedule 1 line 26 → 1040 line 10", s1_line_26, line_10_1040, "MATCH", ""))
+                else:
+                    checks.append(("Schedule 1 line 26 → 1040 line 10", s1_line_26, line_10_1040, "MISMATCH",
+                                   f"Adjustments mismatch: Sch1=${s1_line_26:,.2f} vs 1040=${line_10_1040:,.2f}"))
+
         # --- Summary ---
         logger.info(f"\n  {'='*70}")
         logger.info(f"  CROSS-VALIDATION SUMMARY: {year}")
@@ -3910,6 +4802,24 @@ def run_carryforwards():
             with open(archive_summary) as f:
                 f1040 = yaml.safe_load(f)
             line_7 = f1040.get("income", {}).get("7_capital_gain_loss", 0.0) or 0.0
+
+        # Prefer Schedule D for detailed breakdown when available
+        sched_d_path = ARCHIVE_OUTPUT / str(year) / "schedule-d.yaml"
+        sched_d_line_6 = None  # ST carryforward from prior year
+        sched_d_line_14 = None  # LT carryforward from prior year
+        if sched_d_path.exists():
+            with open(sched_d_path) as f:
+                sched_d = yaml.safe_load(f)
+            sched_d_boxes = sched_d.get("boxes", {})
+            sched_d_line_6 = sched_d_boxes.get("6")
+            sched_d_line_14 = sched_d_boxes.get("14")
+            sched_d_line_16 = sched_d_boxes.get("16")
+            if sched_d_line_16 is not None:
+                logger.info(f"    Schedule D line 16 (combined):  ${sched_d_line_16:>12,.2f}")
+            if sched_d_line_6 is not None:
+                logger.info(f"    Schedule D line 6 (ST carryover in):${sched_d_line_6:>12,.2f}")
+            if sched_d_line_14 is not None:
+                logger.info(f"    Schedule D line 14 (LT carryover in):${sched_d_line_14:>12,.2f}")
 
         # Amount deducted is capped at -$3,000 if a loss year
         cap_loss_deducted = max(line_7, -3000.0) if line_7 < 0 else line_7
@@ -4057,6 +4967,15 @@ def run_ingest(year_filter: Optional[int] = None, source: str = "prepare", force
                         warn = f" \033[33m⚠ VALIDATION: {result['mismatches']}\033[0m"
                         validation_failures.append((pdf_path.name, result["mismatches"]))
                     logger.info(f"    \033[32mOK\033[0m [{result['form_type']:8s}] {pdf_path.name} -> {result['output_file']}{warn}")
+                    # Log additional forms extracted from archive PDFs
+                    for af in result.get("additional_forms", []):
+                        if af.get("error"):
+                            logger.warning(f"      \033[31mFAIL\033[0m {af['form']}: {af['error']}")
+                        else:
+                            af_warn = ""
+                            if not af.get("validation_ok", True):
+                                af_warn = f" \033[33m⚠ {af['mismatches']}\033[0m"
+                            logger.info(f"      \033[32m+\033[0m {af['form']:15s} -> {af['output_file']}{af_warn}")
                 elif result["status"] == "skipped":
                     total_skipped += 1
                     logger.info(f"    \033[90mSKIP\033[0m {pdf_path.name} ({result.get('reason', '')})")

@@ -1,0 +1,15 @@
+form_type: Schedule 1
+tax_year: 2020
+boxes:
+  3_business_income: 7985.00
+  4_other_gains: 2667.00
+  5_rental_income: 2667.00
+  10_total_additional_income: 10652.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2020/final-returns/Yi Chen and Sheri
+    Martin's 2020 Tax Return Final.pdf
+  pages:
+  - 7
+  processed_at: '2026-03-13T20:12:00'

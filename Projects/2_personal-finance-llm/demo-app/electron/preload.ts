@@ -21,5 +21,19 @@ contextBridge.exposeInMainWorld('api', {
   },
 
   dbQuery: (sql: string) => ipcRenderer.invoke('db:query', sql),
-  financeCommand: (command: string) => ipcRenderer.invoke('finance:command', command)
+  financeCommand: (command: string) => ipcRenderer.invoke('finance:command', command),
+
+  // Run a non-SELECT SQL statement (INSERT/UPDATE/DELETE)
+  dbExecute: (sql: string) => ipcRenderer.invoke('db:execute', sql),
+
+  // Returns up to 3 recent chat query strings from session logs
+  recentTopics: (): Promise<string[]> => ipcRenderer.invoke('finance:recent-topics'),
+
+  // Parse a receipt text with AI and return structured fields
+  parseReceipt: (text: string): Promise<{ date?: string; amount?: number; description?: string; notes?: string }> =>
+    ipcRenderer.invoke('finance:parse-receipt', text),
+
+  // Generate a standard chart by type and return base64 data URL
+  generateChart: (type: string, months: number): Promise<string | null> =>
+    ipcRenderer.invoke('finance:generate-chart', type, months)
 })

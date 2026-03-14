@@ -1,0 +1,16 @@
+form_type: Schedule 2
+tax_year: 2024
+boxes:
+  9_household_employment: 1830.00
+  11_additional_medicare: 1530.00
+  12_niit: 5391.00
+  21_total_other_taxes: 8751.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2024/Yi Chen and Sheri Martin's 2024
+    Tax Return Final.pdf
+  pages:
+  - 6
+  - 7
+  processed_at: '2026-03-13T20:11:41'

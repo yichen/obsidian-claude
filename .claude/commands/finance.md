@@ -1,0 +1,1 @@
+../skills/finance/SKILL.md

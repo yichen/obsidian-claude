@@ -31,13 +31,17 @@ export default function App(): React.ReactElement {
   }, [pinnedCharts])
 
   const handlePinChart = useCallback((chart: Omit<PinnedChart, 'id' | 'timestamp'>) => {
+    // Dedup: if same chartType+months already pinned, skip
+    if (chart.chartType && pinnedCharts.some(p => p.chartType === chart.chartType && p.chartMonths === chart.chartMonths)) return
+    // Fallback dedup by data
+    if (pinnedCharts.some(p => p.chartData === chart.chartData)) return
     const newPin: PinnedChart = {
       ...chart,
       id: Math.random().toString(36).substring(7),
       timestamp: Date.now()
     }
     setPinnedCharts(prev => [...prev, newPin])
-  }, [])
+  }, [pinnedCharts])
 
   const handleUnpinChart = useCallback((id: string) => {
     setPinnedCharts(prev => prev.filter(p => p.id !== id))
@@ -51,11 +55,11 @@ export default function App(): React.ReactElement {
         await new Promise(resolve => setTimeout(resolve, 1000))
         
         const sql = `
-          SELECT t.date, t.description, COALESCE(c.name, 'Uncategorized') as category, a.name as account, t.amount
+          SELECT t.id, t.date, t.description, COALESCE(c.name, 'Uncategorized') as category, a.name as account, t.amount, t.category_id, t.notes
           FROM transactions t
           LEFT JOIN categories c ON c.id = t.category_id
           JOIN accounts a ON a.id = t.account_id
-          WHERE t.is_transfer = 0 
+          WHERE t.is_transfer = 0
           ORDER BY t.date DESC
           LIMIT 100
         `
@@ -89,12 +93,13 @@ export default function App(): React.ReactElement {
         )}
         {activeView === 'transactions' && <TransactionsView initialData={prefetchedTransactions} />}
         {activeView === 'chat' && (
-          <ChatInterface 
-            initialMessage={initialChatMessage} 
+          <ChatInterface
+            initialMessage={initialChatMessage}
             onClearInitial={() => setInitialChatMessage(undefined)}
             persistedMessages={chatHistory}
             onMessagesChange={setChatHistory}
             onPinChart={handlePinChart}
+            pinnedCharts={pinnedCharts}
           />
         )}
       </main>

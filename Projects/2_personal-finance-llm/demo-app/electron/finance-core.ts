@@ -26,7 +26,7 @@ export interface FinanceDeps {
 
 export interface ChatResult {
   text: string
-  charts?: Array<{ path: string; data: string }>
+  charts?: Array<{ path: string; data: string; type?: string; months?: number }>
 }
 
 export interface EventSender {
@@ -191,6 +191,17 @@ export async function queryDB(
   }
 }
 
+// ── Pending YAML migration ────────────────────────────────────────────────
+
+export async function migratePendingYamlToSQLite(deps: FinanceDeps): Promise<void> {
+  try {
+    await runFinanceCommand('import-pending-yaml', [], deps)
+    console.log('[startup] migratePendingYamlToSQLite complete')
+  } catch (err) {
+    console.warn('[startup] migratePendingYamlToSQLite error:', err)
+  }
+}
+
 // ── Tool definitions for OpenRouter ──────────────────────────────────────
 
 export const TOOLS: OpenAI.Chat.ChatCompletionTool[] = [
@@ -260,7 +271,7 @@ export const TOOLS: OpenAI.Chat.ChatCompletionTool[] = [
         properties: {
           type: {
             type: 'string',
-            enum: ['spending_by_category', 'monthly_cashflow', 'top_merchants'],
+            enum: ['spending_by_category', 'monthly_cashflow', 'top_merchants', 'monthly_income', 'monthly_spending'],
             description: 'The type of chart to generate'
           },
           months: {
@@ -422,6 +433,53 @@ async function generateLocalSummary(deps: FinanceDeps): Promise<string> {
   return summary
 }
 
+// ── Standalone chart generator (used by IPC + tool handler) ─────────────
+
+export async function generateChart(
+  type: string,
+  months: number,
+  deps: FinanceDeps
+): Promise<string | null> {
+  const reportDir = `${deps.vaultPath}/Finance/reports`
+  if (!deps.fs.existsSync(reportDir)) deps.fs.mkdirSync(reportDir, { recursive: true })
+  const filename = `${type}_${Date.now()}.png`
+  const chartPath = `${reportDir}/${filename}`
+
+  let script = ''
+  if (type === 'monthly_cashflow') {
+    script = `import sqlite3\nimport matplotlib.pyplot as plt\nimport pandas as pd\nimport numpy as np\nconn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')\ninc = pd.read_sql_query("SELECT strftime('%Y-%m', pay_date) as m, SUM(net_pay) as v FROM payslips GROUP BY 1", conn)\nexp = pd.read_sql_query("SELECT strftime('%Y-%m', date) as m, SUM(ABS(amount)) as v FROM transactions WHERE is_transfer=0 AND amount < 0 GROUP BY 1", conn)\ndf = pd.merge(inc, exp, on='m', how='outer', suffixes=('_i', '_e')).fillna(0).sort_values('m').tail(${months})\nplt.figure(figsize=(10, 6))\nx = np.arange(len(df))\nplt.bar(x-0.2, df['v_i'], 0.4, label='Income', color='green')\nplt.bar(x+0.2, df['v_e'], 0.4, label='Spending', color='red')\nplt.xticks(x, df['m'], rotation=45)\nplt.legend()\nplt.tight_layout()\nplt.savefig('${chartPath}')`
+  } else if (type === 'spending_by_category') {
+    script = `import sqlite3\nimport matplotlib.pyplot as plt\nimport pandas as pd\nconn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')\ndf = pd.read_sql_query("SELECT COALESCE(cp.name, c.name) as n, SUM(ABS(t.amount)) as v FROM transactions t LEFT JOIN categories c ON c.id = t.category_id LEFT JOIN categories cp ON cp.id = c.parent_id WHERE t.is_transfer=0 AND t.amount < 0 AND t.date >= date('now', '-${months} months') GROUP BY 1 ORDER BY 2 DESC LIMIT 8", conn)\nplt.figure(figsize=(10, 6))\nplt.pie(df['v'], labels=df['n'], autopct='%1.1f%%')\nplt.title('Spending by Category (Last ${months} Months)')\nplt.tight_layout()\nplt.savefig('${chartPath}')`
+  } else if (type === 'monthly_income') {
+    script = `import sqlite3\nimport matplotlib.pyplot as plt\nimport pandas as pd\nconn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')\ninc = pd.read_sql_query("SELECT strftime('%Y-%m', pay_date) as m, SUM(net_pay) as v FROM payslips WHERE pay_date >= date('now', '-${months} months') GROUP BY 1 ORDER BY 1", conn)\nplt.figure(figsize=(10, 6))\nplt.bar(range(len(inc)), inc['v'], color='#22c55e')\nplt.xticks(range(len(inc)), inc['m'].tolist(), rotation=45)\nplt.title('Income')\nplt.tight_layout()\nplt.savefig('${chartPath}')`
+  } else if (type === 'monthly_spending') {
+    script = `import sqlite3\nimport matplotlib.pyplot as plt\nimport pandas as pd\nconn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')\nexp = pd.read_sql_query("SELECT strftime('%Y-%m', date) as m, SUM(ABS(amount)) as v FROM transactions WHERE is_transfer=0 AND amount<0 AND date >= date('now', '-${months} months') GROUP BY 1 ORDER BY 1", conn)\nplt.figure(figsize=(10, 6))\nplt.bar(range(len(exp)), exp['v'], color='#6366f1')\nplt.xticks(range(len(exp)), exp['m'].tolist(), rotation=45)\nplt.title('Spending')\nplt.tight_layout()\nplt.savefig('${chartPath}')`
+  } else if (type === 'top_merchants') {
+    script = `import sqlite3\nimport matplotlib.pyplot as plt\nimport pandas as pd\nconn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')\ndf = pd.read_sql_query("SELECT description as n, SUM(ABS(amount)) as v FROM transactions WHERE is_transfer=0 AND amount<0 AND date >= date('now', '-${months} months') GROUP BY 1 ORDER BY 2 DESC LIMIT 10", conn)\nplt.figure(figsize=(10, 6))\nplt.barh(range(len(df)), df['v'])\nplt.yticks(range(len(df)), df['n'].tolist())\nplt.title('Top Merchants (Last ${months} Months)')\nplt.tight_layout()\nplt.savefig('${chartPath}')`
+  } else {
+    return null
+  }
+
+  const tmpScript = `/tmp/gen_chart_${Date.now()}.py`
+  try {
+    deps.fs.writeFileSync(tmpScript, script)
+    await deps.execFile(deps.pythonBin, [tmpScript], {
+      cwd: deps.vaultPath,
+      env: { ...process.env, MPLBACKEND: 'Agg' }
+    })
+    if (deps.fs.existsSync(chartPath)) {
+      const b64 = deps.fs.readFileSync(chartPath, 'base64')
+      return `data:image/png;base64,${b64}`
+    }
+    return null
+  } catch (err) {
+    console.error(`[generateChart] Failed to generate ${type}:`, err)
+    return null
+  } finally {
+    if (deps.fs.existsSync(tmpScript)) deps.fs.unlinkSync(tmpScript)
+  }
+}
+
 export async function handleChat(
   messages: Message[],
   eventSender: EventSender,
@@ -459,9 +517,17 @@ export async function handleChat(
   ]
 
   let continueLoop = true
-  const allCharts: Array<{ path: string; data: string }> = []
+  const allCharts: Array<{ path: string; data: string; type?: string; months?: number }> = []
   const MAX_TOOL_ROUNDS = 15
   let rounds = 0
+
+  // ── Session log setup ─────────────────────────────────────────────────────
+  const sessionDir = `${deps.vaultPath}/Finance/reports/debug/sessions`
+  if (!deps.fs.existsSync(sessionDir)) deps.fs.mkdirSync(sessionDir, { recursive: true })
+  const sessionTimestamp = new Date().toISOString().replace('T', '_').replace(/:/g, '-').substring(0, 19)
+  const sessionFile = `${sessionDir}/${sessionTimestamp}.json`
+  const sessionLog: { session: string; rounds: unknown[] } = { session: new Date().toISOString(), rounds: [] }
+  deps.fs.writeFileSync(sessionFile, JSON.stringify(sessionLog, null, 2))
 
   // ── Timing ────────────────────────────────────────────────────────────────
   interface TimingEntry { label: string; ms: number }
@@ -478,31 +544,22 @@ export async function handleChat(
   }
 
   while (continueLoop && rounds++ < MAX_TOOL_ROUNDS) {
-    // ── DEBUG: Log full request payload ──────────────────────────────────
-    try {
-      const debugDir = `${deps.vaultPath}/Finance/reports/debug`
-      if (!deps.fs.existsSync(debugDir)) deps.fs.mkdirSync(debugDir, { recursive: true })
-      const debugFile = `${debugDir}/chat_request_round_${rounds}.json`
-      deps.fs.writeFileSync(debugFile, JSON.stringify({ model: 'anthropic/claude-3.7-sonnet', messages: apiMessages, tools: TOOLS }, null, 2))
-      console.log(`[debug] Request payload saved to ${debugFile}`)
-    } catch (e) {
-      console.warn(`[debug] Failed to save request payload: ${e}`)
-    }
-    // ──────────────────────────────────────────────────────────────────────
-
     // ── Streaming API call ────────────────────────────────────────────────
+    const requestSnapshot = { model: 'anthropic/claude-3.7-sonnet', messages: [...apiMessages], tools: TOOLS }
     const apiStart = Date.now()
     const stream = await deps.openai.chat.completions.create({
       model: 'anthropic/claude-3.7-sonnet',
       messages: apiMessages,
       tools: TOOLS,
       max_tokens: 4096,
-      stream: true
+      stream: true,
+      stream_options: { include_usage: true }
     })
 
     let streamContent = ''
     let streamFinishReason: string | null = null
     const streamToolCallMap: Record<number, { id: string; type: 'function'; function: { name: string; arguments: string } }> = {}
+    let usage: { prompt_tokens?: number; completion_tokens?: number; total_tokens?: number } | undefined
 
     for await (const chunk of stream) {
       const delta = chunk.choices[0]?.delta
@@ -523,6 +580,8 @@ export async function handleChat(
           if (tc.function?.arguments) streamToolCallMap[tc.index].function.arguments += tc.function.arguments
         }
       }
+
+      if ((chunk as any).usage) usage = (chunk as any).usage
     }
 
     const apiMs = Date.now() - apiStart
@@ -548,6 +607,26 @@ export async function handleChat(
     apiMessages.push(msg)
     timings.push({ label: `API call #${rounds} [${streamFinishReason}]`, ms: apiMs })
     console.log(`[timing] API call #${rounds}: ${apiMs}ms`)
+
+    // ── Append round to session log ───────────────────────────────────────
+    try {
+      sessionLog.rounds.push({
+        round: rounds,
+        timestamp: new Date().toISOString(),
+        request: requestSnapshot,
+        response: {
+          content: streamContent,
+          tool_calls: toolCallsList,
+          finish_reason: streamFinishReason,
+          usage
+        },
+        elapsed_ms: apiMs
+      })
+      deps.fs.writeFileSync(sessionFile, JSON.stringify(sessionLog, null, 2))
+    } catch (e) {
+      console.warn(`[debug] Failed to write session log: ${e}`)
+    }
+    // ─────────────────────────────────────────────────────────────────────
 
     const trace = `round ${rounds}: ${streamFinishReason}, ${toolCallsList.length} tool call(s), elapsed ${elapsed()}ms`
     console.log(`[chat] ${trace}`)
@@ -606,7 +685,7 @@ export async function handleChat(
             )
             if (deps.fs.existsSync(chartPath)) {
               const b64 = deps.fs.readFileSync(chartPath, 'base64')
-              allCharts.push({ path: chartPath, data: `data:image/png;base64,${b64}` })
+              allCharts.push({ path: chartPath, data: `data:image/png;base64,${b64}`, type, months })
               result = JSON.stringify({ success: true, path: chartPath })
             } else {
               result = JSON.stringify({ success: false, error: 'File not generated' })

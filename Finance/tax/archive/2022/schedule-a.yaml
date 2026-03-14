@@ -1,0 +1,21 @@
+form_type: Schedule A
+tax_year: 2022
+boxes:
+  4_medical_deduction: 0.00
+  5b_real_estate_taxes: 10000.00
+  5c_personal_property_taxes: 43466.00
+  5d_total_state_local: 43466.00
+  5e_salt_capped: 10000.00
+  7_total_taxes: 10000.00
+  8e_total_mortgage_interest: 33346.00
+  10_total_interest: 33346.00
+  14_total_gifts: 0.00
+  17_total_itemized: 43346.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2022/Yi Chen and Sheri Martin's 2022
+    Tax Return.pdf
+  pages:
+  - 12
+  processed_at: '2026-03-13T20:12:09'

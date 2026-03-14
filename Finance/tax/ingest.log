@@ -4969,3 +4969,368 @@
 2026-03-13 18:03:12,712 INFO     IRA rollover (code G): Fidelity - ServiceTitan 401K gross=$1,923.08 taxable=$0.00
 2026-03-13 18:03:12,717 INFO 
   Written: /Users/yichen/Obsidian/Finance/tax/carryforwards.yaml
+2026-03-13 19:58:23,684 INFO Tax Document Ingestion — 2026-03-13 19:58:23
+2026-03-13 19:58:23,685 INFO 
+  Processing 2023 (1 PDFs)...
+2026-03-13 19:58:27,083 INFO     [32mOK[0m [1040    ] 2023-tax-final.pdf -> Finance/tax/archive/2023/1040-summary.yaml [33m⚠ VALIDATION: [][0m
+2026-03-13 19:58:27,084 INFO 
+  Done: 1 succeeded, 0 skipped, 0 errors
+2026-03-13 19:58:27,084 WARNING 
+  ⚠ VALIDATION FAILURES:
+2026-03-13 20:09:49,930 INFO Tax Document Ingestion — 2026-03-13 20:09:49
+2026-03-13 20:09:49,931 INFO 
+  Processing 2023 (1 PDFs)...
+2026-03-13 20:09:53,330 INFO     [32mOK[0m [1040    ] 2023-tax-final.pdf -> Finance/tax/archive/2023/1040-summary.yaml
+2026-03-13 20:09:53,330 INFO 
+  Done: 1 succeeded, 0 skipped, 0 errors
+2026-03-13 20:10:29,761 INFO Tax Document Ingestion — 2026-03-13 20:10:29
+2026-03-13 20:10:29,761 INFO 
+  Processing 2023 (1 PDFs)...
+2026-03-13 20:10:33,138 INFO     [32mOK[0m [1040    ] 2023-tax-final.pdf -> Finance/tax/archive/2023/1040-summary.yaml
+2026-03-13 20:10:33,138 INFO       [32m+[0m Schedule 1      -> Finance/tax/archive/2023/schedule-1.yaml
+2026-03-13 20:10:33,138 INFO       [32m+[0m Schedule 2      -> Finance/tax/archive/2023/schedule-2.yaml
+2026-03-13 20:10:33,138 INFO       [32m+[0m Schedule 3      -> Finance/tax/archive/2023/schedule-3.yaml
+2026-03-13 20:10:33,138 INFO       [32m+[0m Schedule A      -> Finance/tax/archive/2023/schedule-a.yaml
+2026-03-13 20:10:33,138 INFO       [32m+[0m Schedule D      -> Finance/tax/archive/2023/schedule-d.yaml
+2026-03-13 20:10:33,138 INFO       [32m+[0m Form 8949       -> Finance/tax/archive/2023/form-8949.yaml
+2026-03-13 20:10:33,138 INFO 
+  Done: 1 succeeded, 0 skipped, 0 errors
+2026-03-13 20:10:33,490 INFO Tax Document Ingestion — 2026-03-13 20:10:33
+2026-03-13 20:10:33,490 INFO 
+  Processing 2024 (1 PDFs)...
+2026-03-13 20:10:36,753 INFO     [32mOK[0m [1040    ] Yi Chen and Sheri Martin's 2024 Tax Return Final.pdf -> Finance/tax/archive/2024/1040-summary.yaml
+2026-03-13 20:10:36,753 INFO       [32m+[0m Schedule 1      -> Finance/tax/archive/2024/schedule-1.yaml
+2026-03-13 20:10:36,753 INFO       [32m+[0m Schedule 2      -> Finance/tax/archive/2024/schedule-2.yaml
+2026-03-13 20:10:36,753 INFO       [32m+[0m Schedule 3      -> Finance/tax/archive/2024/schedule-3.yaml
+2026-03-13 20:10:36,753 INFO       [32m+[0m Schedule A      -> Finance/tax/archive/2024/schedule-a.yaml
+2026-03-13 20:10:36,753 INFO       [32m+[0m Schedule D      -> Finance/tax/archive/2024/schedule-d.yaml
+2026-03-13 20:10:36,753 INFO       [32m+[0m Form 8949       -> Finance/tax/archive/2024/form-8949.yaml
+2026-03-13 20:10:36,753 INFO 
+  Done: 1 succeeded, 0 skipped, 0 errors
+2026-03-13 20:11:34,832 INFO Tax Document Ingestion — 2026-03-13 20:11:34
+2026-03-13 20:11:34,833 INFO 
+  Processing 2023 (1 PDFs)...
+2026-03-13 20:11:38,237 INFO     [32mOK[0m [1040    ] 2023-tax-final.pdf -> Finance/tax/archive/2023/1040-summary.yaml
+2026-03-13 20:11:38,237 INFO       [32m+[0m Schedule 1      -> Finance/tax/archive/2023/schedule-1.yaml
+2026-03-13 20:11:38,237 INFO       [32m+[0m Schedule 2      -> Finance/tax/archive/2023/schedule-2.yaml
+2026-03-13 20:11:38,237 INFO       [32m+[0m Schedule 3      -> Finance/tax/archive/2023/schedule-3.yaml
+2026-03-13 20:11:38,237 INFO       [32m+[0m Schedule A      -> Finance/tax/archive/2023/schedule-a.yaml
+2026-03-13 20:11:38,237 INFO       [32m+[0m Schedule D      -> Finance/tax/archive/2023/schedule-d.yaml
+2026-03-13 20:11:38,237 INFO       [32m+[0m Form 8949       -> Finance/tax/archive/2023/form-8949.yaml
+2026-03-13 20:11:38,238 INFO 
+  Done: 1 succeeded, 0 skipped, 0 errors
+2026-03-13 20:11:38,544 INFO Tax Document Ingestion — 2026-03-13 20:11:38
+2026-03-13 20:11:38,545 INFO 
+  Processing 2024 (1 PDFs)...
+2026-03-13 20:11:41,801 INFO     [32mOK[0m [1040    ] Yi Chen and Sheri Martin's 2024 Tax Return Final.pdf -> Finance/tax/archive/2024/1040-summary.yaml
+2026-03-13 20:11:41,801 INFO       [32m+[0m Schedule 1      -> Finance/tax/archive/2024/schedule-1.yaml
+2026-03-13 20:11:41,801 INFO       [32m+[0m Schedule 2      -> Finance/tax/archive/2024/schedule-2.yaml
+2026-03-13 20:11:41,801 INFO       [32m+[0m Schedule 3      -> Finance/tax/archive/2024/schedule-3.yaml
+2026-03-13 20:11:41,801 INFO       [32m+[0m Schedule A      -> Finance/tax/archive/2024/schedule-a.yaml
+2026-03-13 20:11:41,801 INFO       [32m+[0m Schedule D      -> Finance/tax/archive/2024/schedule-d.yaml
+2026-03-13 20:11:41,801 INFO       [32m+[0m Form 8949       -> Finance/tax/archive/2024/form-8949.yaml
+2026-03-13 20:11:41,802 INFO 
+  Done: 1 succeeded, 0 skipped, 0 errors
+2026-03-13 20:11:46,259 INFO Tax Document Ingestion — 2026-03-13 20:11:46
+2026-03-13 20:11:46,259 INFO 
+======================================================================
+2026-03-13 20:11:46,259 INFO   CROSS-VALIDATION: 2023
+2026-03-13 20:11:46,259 INFO ======================================================================
+2026-03-13 20:11:46,261 INFO   Filing status: Married Filing Jointly
+2026-03-13 20:11:46,286 INFO 
+  --- W-2 Wages (Line 1a) ---
+2026-03-13 20:11:46,286 INFO     Yi W-2: Airbnb Inc                                wages=$    3,570.00  fed_withheld=$      0.00
+2026-03-13 20:11:46,286 INFO     Yi W-2: Stripe                                    wages=$  620,019.38  fed_withheld=$169,778.80
+2026-03-13 20:11:46,286 INFO     Household W-2 (employee: Margaret          Kimani): wages=$    3,660.00  (Schedule H, not in line 1a)
+2026-03-13 20:11:46,286 INFO     Spouse W-2 (SSN ...3457): EIN 81-3819663                  wages=$   45,826.78  fed_withheld=$  2,409.92
+2026-03-13 20:11:46,286 INFO     Spouse W-2 (SSN ...3457): EIN 81-3819663                  wages=$   40,243.90  fed_withheld=$  2,423.31
+2026-03-13 20:11:46,286 INFO     Yi-only wages: $623,589.38  |  1040 line 1a: $677,795.00  |  Implied spouse wages: $54,205.62
+2026-03-13 20:11:46,286 INFO 
+  --- W-2 Federal Withholding ---
+2026-03-13 20:11:46,286 INFO     Note: Schedule H fed withholding = $524.42 (reported on 1040 line 25d, not line 25a)
+2026-03-13 20:11:46,286 INFO 
+  --- 1099-R Distributions (Line 4a/4b) ---
+2026-03-13 20:11:46,286 INFO     1099-R: Fidelity Investments (IRA) (Traditional IRA)  gross=$6,500.41  taxable=$6,500.41  code=2
+2026-03-13 20:11:46,286 INFO     1099-R:  (unknown) — $0 distribution (code=, informational)
+2026-03-13 20:11:46,286 INFO 
+  --- 1098 Mortgage Interest ---
+2026-03-13 20:11:46,286 INFO     1098: Flagstar Bank  interest=$20,774.18  property_tax=$13,540.50
+2026-03-13 20:11:46,286 INFO     1098: Mr. Cooper  interest=$8,222.88  property_tax=$6,697.90
+2026-03-13 20:11:46,286 INFO 
+  --- 1099-INT Interest (Line 2b) ---
+2026-03-13 20:11:46,287 INFO 
+  --- Schedule D vs 1040 Line 7 (Capital Gains) ---
+2026-03-13 20:11:46,287 INFO     Schedule D line 16 (combined): $29,189.00
+2026-03-13 20:11:46,287 INFO     1040 line 7 (capital gains):    $29,189.00
+2026-03-13 20:11:46,288 INFO 
+  --- Schedule A vs 1040 Deductions ---
+2026-03-13 20:11:46,288 INFO     Schedule A line 17 (total itemized): $30,774.00
+2026-03-13 20:11:46,288 INFO     1040 deductions:                     $30,774.00
+2026-03-13 20:11:46,289 INFO 
+  --- Schedule 1 vs 1040 ---
+2026-03-13 20:11:46,289 INFO     Schedule 1 line 10 (additional income): $-15.00
+2026-03-13 20:11:46,289 INFO     1040 line 8:                            $-15.00
+2026-03-13 20:11:46,289 INFO 
+  ======================================================================
+2026-03-13 20:11:46,289 INFO   CROSS-VALIDATION SUMMARY: 2023
+2026-03-13 20:11:46,289 INFO   ======================================================================
+2026-03-13 20:11:46,289 INFO   Check                                                        Prepare         1040     Status
+2026-03-13 20:11:46,289 INFO   ------------------------------------------------------- ------------ ------------ ----------
+2026-03-13 20:11:46,289 INFO   W-2 wages (all, MFJ) vs 1040 line 1a                      709,660.06   677,795.00 [31m  MISMATCH[0m
+2026-03-13 20:11:46,289 INFO       Gap=$-31,865.06. Prepare folder W-2s sum exceeds 1040 line 1a — verify for
+2026-03-13 20:11:46,289 INFO       duplicates.
+2026-03-13 20:11:46,289 INFO   W-2 fed withholding (all, MFJ) vs 1040 w2_withholding     174,612.03   172,189.00 [33m  EXPECTED[0m
+2026-03-13 20:11:46,289 INFO       Yi=$169,778.80, Spouse=$4,833.23. Gap=$-2,423.03.
+2026-03-13 20:11:46,289 INFO   1099-R taxable vs 1040 line 4b                              6,500.41         0.00 [33m  EXPECTED[0m
+2026-03-13 20:11:46,289 INFO       1099-R taxable=$6,500.41 but 1040 line 4b=$0.00. Likely a backdoor Roth
+2026-03-13 20:11:46,289 INFO       conversion: full amount on 1099-R but Form 8606 tracks non-deductible IRA basis,
+2026-03-13 20:11:46,289 INFO       so only gains are taxable on 1040.
+2026-03-13 20:11:46,289 INFO   1098 mortgage interest (itemized deductions)               28,997.06    30,774.00 [33m      INFO[0m
+2026-03-13 20:11:46,289 INFO       Mortgage interest=$28,997.06, property tax=$20,238.40. 1040 deductions=$30,774.00
+2026-03-13 20:11:46,289 INFO       includes SALT (capped $10K), charity, etc. Cannot directly compare — deductions
+2026-03-13 20:11:46,289 INFO       are a superset.
+2026-03-13 20:11:46,289 INFO   1099-INT interest vs 1040 line 2b                               0.00     4,398.00 [33m  EXPECTED[0m
+2026-03-13 20:11:46,289 INFO       Gap=$4,398.00. 1040 reports more interest than prepare-folder 1099-INTs. Likely
+2026-03-13 20:11:46,289 INFO       sources: brokerage 1099-INTs (Fidelity, Schwab) sent directly to CPA, not in the
+2026-03-13 20:11:46,289 INFO       prepare folder PDF collection.
+2026-03-13 20:11:46,289 INFO   Schedule D → 1040 line 7 (capital gains)                   29,189.00    29,189.00 [32m     MATCH[0m
+2026-03-13 20:11:46,289 INFO   Schedule A line 17 → 1040 deductions                       30,774.00    30,774.00 [32m     MATCH[0m
+2026-03-13 20:11:46,289 INFO   Schedule 1 line 10 → 1040 line 8                              -15.00       -15.00 [32m     MATCH[0m
+2026-03-13 20:11:46,289 INFO 
+  Result: 3 matched, 3 expected gaps, 1 mismatched, 1 info-only
+2026-03-13 20:11:46,291 INFO   Written: /Users/yichen/Obsidian/Finance/tax/archive/2023/cross-validation.yaml
+2026-03-13 20:11:50,969 INFO Tax Document Ingestion — 2026-03-13 20:11:50
+2026-03-13 20:11:50,970 INFO 
+======================================================================
+2026-03-13 20:11:50,970 INFO   CROSS-VALIDATION: 2024
+2026-03-13 20:11:50,970 INFO ======================================================================
+2026-03-13 20:11:50,971 INFO   Filing status: Married Filing Jointly
+2026-03-13 20:11:50,994 INFO 
+  --- W-2 Wages (Line 1a) ---
+2026-03-13 20:11:50,994 INFO     Yi W-2: Lincoln National Life Insurance Co        wages=$  100,542.00  fed_withheld=$      0.00
+2026-03-13 20:11:50,994 INFO     Yi W-2: Salesforce, Inc.                          wages=$  310,446.67  fed_withheld=$ 66,156.55
+2026-03-13 20:11:50,994 INFO     Yi W-2: Stripe                                    wages=$   26,993.16  fed_withheld=$  3,716.63
+2026-03-13 20:11:50,994 INFO     Household W-2 (employee: Margaret          Kimani): wages=$    5,910.00  (Schedule H, not in line 1a)
+2026-03-13 20:11:50,994 INFO     Spouse W-2 (SSN ...3457): EIN 81-3819663                  wages=$   40,243.90  fed_withheld=$  2,423.31
+2026-03-13 20:11:50,994 INFO     Yi-only wages: $437,981.83  |  1040 line 1a: $396,232.00  |  Implied spouse wages: $-41,749.83
+2026-03-13 20:11:50,994 INFO 
+  --- W-2 Federal Withholding ---
+2026-03-13 20:11:50,994 INFO     Note: Schedule H fed withholding = $890.71 (reported on 1040 line 25d, not line 25a)
+2026-03-13 20:11:50,994 INFO 
+  --- 1099-R Distributions (Line 4a/4b) ---
+2026-03-13 20:11:50,994 INFO     1099-R: Fidelity Investments (IRA) (Traditional IRA)  gross=$7,000.00  taxable=$7,000.00  code=2
+2026-03-13 20:11:50,994 INFO 
+  --- 1098 Mortgage Interest ---
+2026-03-13 20:11:50,994 INFO     1098: Flagstar Bank  interest=$20,274.41  property_tax=$12,275.36
+2026-03-13 20:11:50,994 INFO     1098: Mr. Cooper  interest=$8,035.13  property_tax=$5,395.20
+2026-03-13 20:11:50,994 INFO 
+  --- 1099-INT Interest (Line 2b) ---
+2026-03-13 20:11:50,994 INFO     1099-INT: Boeing Employees Credit Union  interest=$13.01
+2026-03-13 20:11:50,995 INFO 
+  --- Schedule D vs 1040 Line 7 (Capital Gains) ---
+2026-03-13 20:11:50,995 INFO     Schedule D line 16 (combined): $126,057.00
+2026-03-13 20:11:50,995 INFO     1040 line 7 (capital gains):    $126,057.00
+2026-03-13 20:11:50,996 INFO 
+  --- Schedule A vs 1040 Deductions ---
+2026-03-13 20:11:50,996 INFO     Schedule A line 17 (total itemized): $30,274.00
+2026-03-13 20:11:50,996 INFO     1040 deductions:                     $30,274.00
+2026-03-13 20:11:50,997 INFO 
+  --- Schedule 1 vs 1040 ---
+2026-03-13 20:11:50,997 INFO     Schedule 1 line 10 (additional income): $7,771.00
+2026-03-13 20:11:50,997 INFO     1040 line 8:                            $7,771.00
+2026-03-13 20:11:50,997 INFO 
+  ======================================================================
+2026-03-13 20:11:50,997 INFO   CROSS-VALIDATION SUMMARY: 2024
+2026-03-13 20:11:50,997 INFO   ======================================================================
+2026-03-13 20:11:50,997 INFO   Check                                                        Prepare         1040     Status
+2026-03-13 20:11:50,997 INFO   ------------------------------------------------------- ------------ ------------ ----------
+2026-03-13 20:11:50,997 INFO   W-2 wages (all, MFJ) vs 1040 line 1a                      478,225.73   396,232.00 [33m  EXPECTED[0m
+2026-03-13 20:11:50,997 INFO       Gap=$-81,993.73. Third-party sick pay W-2(s): Lincoln National Life Insurance Co
+2026-03-13 20:11:50,997 INFO       ($100,542.00). When employer pays sick leave through an insurer, the insurer
+2026-03-13 20:11:50,997 INFO       issues a separate W-2. The insurer's Box 1 may overlap with the primary
+2026-03-13 20:11:50,997 INFO       employer's W-2 Box 1 because both report the same wages. The 1040 line 1a
+2026-03-13 20:11:50,997 INFO       reflects the de-duplicated total.
+2026-03-13 20:11:50,997 INFO   W-2 fed withholding (all, MFJ) vs 1040 w2_withholding      72,296.49    73,661.00 [33m  EXPECTED[0m
+2026-03-13 20:11:50,997 INFO       Yi=$69,873.18, Spouse=$2,423.31. Gap=$1,364.51. 1040 shows more withholding —
+2026-03-13 20:11:50,997 INFO       spouse W-2 withholding not captured in parsed data.
+2026-03-13 20:11:50,997 INFO   1099-R taxable vs 1040 line 4b                              7,000.00         3.00 [33m  EXPECTED[0m
+2026-03-13 20:11:50,997 INFO       1099-R taxable=$7,000.00 but 1040 line 4b=$3.00. Likely a backdoor Roth
+2026-03-13 20:11:50,997 INFO       conversion: full amount on 1099-R but Form 8606 tracks non-deductible IRA basis,
+2026-03-13 20:11:50,997 INFO       so only gains are taxable on 1040.
+2026-03-13 20:11:50,997 INFO   1098 mortgage interest (itemized deductions)               28,309.54    30,274.00 [33m      INFO[0m
+2026-03-13 20:11:50,997 INFO       Mortgage interest=$28,309.54, property tax=$17,670.56. 1040 deductions=$30,274.00
+2026-03-13 20:11:50,997 INFO       includes SALT (capped $10K), charity, etc. Cannot directly compare — deductions
+2026-03-13 20:11:50,997 INFO       are a superset.
+2026-03-13 20:11:50,997 INFO   1099-INT interest vs 1040 line 2b                              13.01    13,082.00 [33m  EXPECTED[0m
+2026-03-13 20:11:50,997 INFO       Gap=$13,068.99. 1040 reports more interest than prepare-folder 1099-INTs. Likely
+2026-03-13 20:11:50,997 INFO       sources: brokerage 1099-INTs (Fidelity, Schwab) sent directly to CPA, not in the
+2026-03-13 20:11:50,997 INFO       prepare folder PDF collection.
+2026-03-13 20:11:50,997 INFO   Schedule D → 1040 line 7 (capital gains)                  126,057.00   126,057.00 [32m     MATCH[0m
+2026-03-13 20:11:50,997 INFO   Schedule A line 17 → 1040 deductions                       30,274.00    30,274.00 [32m     MATCH[0m
+2026-03-13 20:11:50,997 INFO   Schedule 1 line 10 → 1040 line 8                            7,771.00     7,771.00 [32m     MATCH[0m
+2026-03-13 20:11:50,997 INFO 
+  Result: 3 matched, 4 expected gaps, 1 info-only
+2026-03-13 20:11:50,999 INFO   Written: /Users/yichen/Obsidian/Finance/tax/archive/2024/cross-validation.yaml
+2026-03-13 20:11:56,923 INFO Tax Document Ingestion — 2026-03-13 20:11:56
+2026-03-13 20:11:56,926 INFO 
+  Processing 2020 (2 PDFs)...
+2026-03-13 20:11:56,929 INFO     [90mSKIP[0m 8879.pdf (not_a_tax_return)
+2026-03-13 20:12:00,776 INFO     [32mOK[0m [1040    ] Yi Chen and Sheri Martin's 2020 Tax Return Final.pdf -> Finance/tax/archive/2020/1040-summary.yaml [33m⚠ VALIDATION: ['AGI (1750143.0) != total_income (1751926.0) - adjustments (1683.0)', 'Taxable income (1725305.0) != AGI (1750143.0) - deductions (24800.0) = 1725343.0'][0m
+2026-03-13 20:12:00,776 INFO       [32m+[0m Schedule 1      -> Finance/tax/archive/2020/schedule-1.yaml
+2026-03-13 20:12:00,776 INFO       [32m+[0m Schedule 2      -> Finance/tax/archive/2020/schedule-2.yaml
+2026-03-13 20:12:00,776 INFO       [32m+[0m Schedule 3      -> Finance/tax/archive/2020/schedule-3.yaml
+2026-03-13 20:12:00,776 INFO       [32m+[0m Schedule D      -> Finance/tax/archive/2020/schedule-d.yaml
+2026-03-13 20:12:00,776 INFO       [32m+[0m Form 8949       -> Finance/tax/archive/2020/form-8949.yaml
+2026-03-13 20:12:00,776 INFO 
+  Done: 1 succeeded, 1 skipped, 0 errors
+2026-03-13 20:12:00,776 WARNING 
+  ⚠ VALIDATION FAILURES:
+2026-03-13 20:12:00,776 WARNING     Yi Chen and Sheri Martin's 2020 Tax Return Final.pdf: AGI (1750143.0) != total_income (1751926.0) - adjustments (1683.0)
+2026-03-13 20:12:00,776 WARNING     Yi Chen and Sheri Martin's 2020 Tax Return Final.pdf: Taxable income (1725305.0) != AGI (1750143.0) - deductions (24800.0) = 1725343.0
+2026-03-13 20:12:01,054 INFO Tax Document Ingestion — 2026-03-13 20:12:01
+2026-03-13 20:12:01,056 INFO 
+  Processing 2021 (1 PDFs)...
+2026-03-13 20:12:04,365 INFO     [32mOK[0m [1040    ] Yi Chen and Sheri Martin 2021 Tax Return update.pdf -> Finance/tax/archive/2021/1040-summary.yaml [33m⚠ VALIDATION: ['Cover letter refund ($9150.0) != line 34 ($10402.0)'][0m
+2026-03-13 20:12:04,365 INFO       [32m+[0m Schedule 1      -> Finance/tax/archive/2021/schedule-1.yaml
+2026-03-13 20:12:04,365 INFO       [32m+[0m Schedule 2      -> Finance/tax/archive/2021/schedule-2.yaml
+2026-03-13 20:12:04,365 INFO       [32m+[0m Schedule 3      -> Finance/tax/archive/2021/schedule-3.yaml
+2026-03-13 20:12:04,365 INFO       [32m+[0m Schedule A      -> Finance/tax/archive/2021/schedule-a.yaml
+2026-03-13 20:12:04,365 INFO       [32m+[0m Schedule D      -> Finance/tax/archive/2021/schedule-d.yaml
+2026-03-13 20:12:04,365 INFO       [32m+[0m Form 8949       -> Finance/tax/archive/2021/form-8949.yaml
+2026-03-13 20:12:04,365 INFO 
+  Done: 1 succeeded, 0 skipped, 0 errors
+2026-03-13 20:12:04,365 WARNING 
+  ⚠ VALIDATION FAILURES:
+2026-03-13 20:12:04,365 WARNING     Yi Chen and Sheri Martin 2021 Tax Return update.pdf: Cover letter refund ($9150.0) != line 34 ($10402.0)
+2026-03-13 20:12:04,728 INFO Tax Document Ingestion — 2026-03-13 20:12:04
+2026-03-13 20:12:04,730 INFO 
+  Processing 2022 (1 PDFs)...
+2026-03-13 20:12:09,116 INFO     [32mOK[0m [1040    ] Yi Chen and Sheri Martin's 2022 Tax Return.pdf -> Finance/tax/archive/2022/1040-summary.yaml
+2026-03-13 20:12:09,116 INFO       [32m+[0m Schedule 1      -> Finance/tax/archive/2022/schedule-1.yaml
+2026-03-13 20:12:09,116 INFO       [32m+[0m Schedule 2      -> Finance/tax/archive/2022/schedule-2.yaml
+2026-03-13 20:12:09,116 INFO       [32m+[0m Schedule 3      -> Finance/tax/archive/2022/schedule-3.yaml
+2026-03-13 20:12:09,116 INFO       [32m+[0m Schedule A      -> Finance/tax/archive/2022/schedule-a.yaml
+2026-03-13 20:12:09,116 INFO       [32m+[0m Schedule D      -> Finance/tax/archive/2022/schedule-d.yaml
+2026-03-13 20:12:09,116 INFO       [32m+[0m Form 8949       -> Finance/tax/archive/2022/form-8949.yaml
+2026-03-13 20:12:09,116 INFO 
+  Done: 1 succeeded, 0 skipped, 0 errors
+2026-03-13 20:12:15,970 INFO Tax Document Ingestion — 2026-03-13 20:12:15
+2026-03-13 20:12:15,970 INFO 
+======================================================================
+2026-03-13 20:12:15,970 INFO   CARRYFORWARD COMPUTATION
+2026-03-13 20:12:15,970 INFO ======================================================================
+2026-03-13 20:12:15,988 INFO     Schedule D line 16 (combined):  $  236,109.00
+2026-03-13 20:12:15,988 INFO 
+  2020:
+2026-03-13 20:12:15,988 INFO     1099-B net gain/loss:      $  236,777.68
+2026-03-13 20:12:15,988 INFO     Carryforward from prior:   $        0.00
+2026-03-13 20:12:15,988 INFO     1040 Line 7 (reported):    $  236,109.00
+2026-03-13 20:12:15,988 INFO     Carryforward to next year: $        0.00
+2026-03-13 20:12:15,995 INFO     IRA rollover (code G): Fidelity Investments (401k) gross=$21,270.57 taxable=$1,664.60
+2026-03-13 20:12:15,996 INFO     IRA rollover (code G): Fidelity Investments (IRA) gross=$132,542.36 taxable=$132,542.36
+2026-03-13 20:12:16,025 INFO     Schedule D line 16 (combined):  $    9,821.00
+2026-03-13 20:12:16,025 INFO 
+  2021:
+2026-03-13 20:12:16,025 INFO     1099-B net gain/loss:      $  539,720.66
+2026-03-13 20:12:16,025 INFO     Carryforward from prior:   $        0.00
+2026-03-13 20:12:16,025 INFO     1040 Line 7 (reported):    $    9,821.00
+2026-03-13 20:12:16,025 INFO     Carryforward to next year: $        0.00
+2026-03-13 20:12:16,037 INFO     IRA rollover (code G): Fidelity Investments (401k) gross=$35,930.95 taxable=$1,308.35
+2026-03-13 20:12:16,058 INFO     Schedule D line 16 (combined):  $  -70,707.00
+2026-03-13 20:12:16,058 INFO 
+  2022:
+2026-03-13 20:12:16,058 INFO     1099-B net gain/loss:      $  217,168.58
+2026-03-13 20:12:16,058 INFO     Carryforward from prior:   $        0.00
+2026-03-13 20:12:16,058 INFO     1040 Line 7 (reported):    $   -3,000.00
+2026-03-13 20:12:16,058 INFO     Carryforward to next year: $        0.00
+2026-03-13 20:12:16,092 INFO     Schedule D line 16 (combined):  $   29,189.00
+2026-03-13 20:12:16,092 INFO     Schedule D line 6 (ST carryover in):$  -41,464.00
+2026-03-13 20:12:16,092 INFO     Schedule D line 14 (LT carryover in):$  -26,243.00
+2026-03-13 20:12:16,092 INFO 
+  2023:
+2026-03-13 20:12:16,092 INFO     1099-B net gain/loss:      $  249,413.79
+2026-03-13 20:12:16,092 INFO     Carryforward from prior:   $        0.00
+2026-03-13 20:12:16,092 INFO     1040 Line 7 (reported):    $   29,189.00
+2026-03-13 20:12:16,092 INFO     Carryforward to next year: $        0.00
+2026-03-13 20:12:16,137 INFO     Schedule D line 16 (combined):  $  126,057.00
+2026-03-13 20:12:16,137 INFO 
+  2024:
+2026-03-13 20:12:16,137 INFO     1099-B net gain/loss:      $  127,615.60
+2026-03-13 20:12:16,137 INFO     Carryforward from prior:   $        0.00
+2026-03-13 20:12:16,137 INFO     1040 Line 7 (reported):    $  126,057.00
+2026-03-13 20:12:16,137 INFO     Carryforward to next year: $        0.00
+2026-03-13 20:12:16,179 INFO 
+  2025:
+2026-03-13 20:12:16,180 INFO     1099-B net gain/loss:      $    7,123.49
+2026-03-13 20:12:16,180 INFO     Carryforward from prior:   $        0.00
+2026-03-13 20:12:16,180 INFO     1040 Line 7 (reported):    $        0.00
+2026-03-13 20:12:16,180 INFO     Carryforward to next year: $        0.00
+2026-03-13 20:12:16,193 INFO     IRA rollover (code G): Fidelity - Salesforce 401K gross=$40,500.00 taxable=$0.00
+2026-03-13 20:12:16,194 INFO     IRA rollover (code G): Fidelity - ServiceTitan 401K gross=$1,923.08 taxable=$0.00
+2026-03-13 20:12:16,200 INFO 
+  Written: /Users/yichen/Obsidian/Finance/tax/carryforwards.yaml
+2026-03-13 20:12:56,321 INFO Tax Document Ingestion — 2026-03-13 20:12:56
+2026-03-13 20:12:56,322 INFO 
+======================================================================
+2026-03-13 20:12:56,322 INFO   CROSS-VALIDATION: 2022
+2026-03-13 20:12:56,322 INFO ======================================================================
+2026-03-13 20:12:56,323 INFO   Filing status: Married Filing Jointly
+2026-03-13 20:12:56,334 INFO 
+  --- W-2 Wages (Line 1a) ---
+2026-03-13 20:12:56,334 INFO     Yi W-2: Airbnb Inc                                wages=$  344,031.53  fed_withheld=$ 79,609.86
+2026-03-13 20:12:56,334 INFO     Yi W-2: Stripe                                    wages=$  191,613.17  fed_withheld=$ 35,674.35
+2026-03-13 20:12:56,334 INFO     Other W-2 (SSN ...): Meta Platforms Inc              wages=$  125,988.52
+2026-03-13 20:12:56,334 INFO     Yi-only wages: $535,644.70  |  1040 line 1a: $662,516.00  |  Implied spouse wages: $126,871.30
+2026-03-13 20:12:56,334 INFO 
+  --- W-2 Federal Withholding ---
+2026-03-13 20:12:56,334 INFO 
+  --- 1099-R Distributions (Line 4a/4b) ---
+2026-03-13 20:12:56,334 INFO     1099-R: Fidelity Investments (IRA) (Traditional IRA)  gross=$6,000.00  taxable=$6,000.00  code=2
+2026-03-13 20:12:56,334 INFO     1099-R: State Farm Life Insurance (Roth IRA) — $0 distribution (code=W, informational)
+2026-03-13 20:12:56,334 INFO 
+  --- 1098 Mortgage Interest ---
+2026-03-13 20:12:56,334 INFO     1098: Flagstar Bank  interest=$11,341.52  property_tax=$11,341.52
+2026-03-13 20:12:56,334 INFO     1098: loanDepot  interest=$2,117.69  property_tax=$0.00
+2026-03-13 20:12:56,335 INFO     1098: Mr. Cooper  interest=$6,286.46  property_tax=$5,417.24
+2026-03-13 20:12:56,335 INFO 
+  --- 1099-INT Interest (Line 2b) ---
+2026-03-13 20:12:56,335 INFO 
+  --- Schedule D vs 1040 Line 7 (Capital Gains) ---
+2026-03-13 20:12:56,335 INFO     Schedule D line 16 (combined): $-70,707.00
+2026-03-13 20:12:56,335 INFO     Schedule D line 21 (to 1040):  $-3,000.00
+2026-03-13 20:12:56,335 INFO     1040 line 7 (capital gains):    $-3,000.00
+2026-03-13 20:12:56,336 INFO 
+  --- Schedule A vs 1040 Deductions ---
+2026-03-13 20:12:56,336 INFO     Schedule A line 17 (total itemized): $43,346.00
+2026-03-13 20:12:56,336 INFO     1040 deductions:                     $43,346.00
+2026-03-13 20:12:56,337 INFO 
+  --- Schedule 1 vs 1040 ---
+2026-03-13 20:12:56,337 INFO     Schedule 1 line 10 (additional income): $61.00
+2026-03-13 20:12:56,337 INFO     1040 line 8:                            $61.00
+2026-03-13 20:12:56,337 INFO 
+  ======================================================================
+2026-03-13 20:12:56,337 INFO   CROSS-VALIDATION SUMMARY: 2022
+2026-03-13 20:12:56,337 INFO   ======================================================================
+2026-03-13 20:12:56,337 INFO   Check                                                        Prepare         1040     Status
+2026-03-13 20:12:56,337 INFO   ------------------------------------------------------- ------------ ------------ ----------
+2026-03-13 20:12:56,337 INFO   W-2 wages (all, MFJ) vs 1040 line 1a                      535,644.70   662,516.00 [33m  EXPECTED[0m
+2026-03-13 20:12:56,337 INFO       Gap=$126,871.30. No spouse W-2s found in prepare folder. The $126,871.30 gap is
+2026-03-13 20:12:56,337 INFO       likely spouse's actual wages not captured in parsed W-2s.
+2026-03-13 20:12:56,337 INFO   W-2 fed withholding (all, MFJ) vs 1040 w2_withholding     115,284.21   143,202.00 [33m  EXPECTED[0m
+2026-03-13 20:12:56,337 INFO       Yi=$115,284.21, Spouse=$0.00. Gap=$27,917.79. 1040 shows more withholding —
+2026-03-13 20:12:56,337 INFO       spouse W-2 withholding not captured in parsed data.
+2026-03-13 20:12:56,337 INFO   1099-R taxable vs 1040 line 4b                              6,000.00     6,000.00 [32m     MATCH[0m
+2026-03-13 20:12:56,337 INFO   1098 mortgage interest (itemized deductions)               19,745.67    43,346.00 [33m      INFO[0m
+2026-03-13 20:12:56,337 INFO       Mortgage interest=$19,745.67, property tax=$16,758.76. 1040 deductions=$43,346.00
+2026-03-13 20:12:56,337 INFO       includes SALT (capped $10K), charity, etc. Cannot directly compare — deductions
+2026-03-13 20:12:56,337 INFO       are a superset.
+2026-03-13 20:12:56,337 INFO   1099-INT interest vs 1040 line 2b                               0.00       288.00 [33m  EXPECTED[0m
+2026-03-13 20:12:56,337 INFO       Gap=$288.00. 1040 reports more interest than prepare-folder 1099-INTs. Likely
+2026-03-13 20:12:56,337 INFO       sources: brokerage 1099-INTs (Fidelity, Schwab) sent directly to CPA, not in the
+2026-03-13 20:12:56,337 INFO       prepare folder PDF collection.
+2026-03-13 20:12:56,337 INFO   Schedule D → 1040 line 7 (capital gains)                   -3,000.00    -3,000.00 [32m     MATCH[0m
+2026-03-13 20:12:56,337 INFO   Schedule A line 17 → 1040 deductions                       43,346.00    43,346.00 [32m     MATCH[0m
+2026-03-13 20:12:56,337 INFO   Schedule 1 line 10 → 1040 line 8                               61.00        61.00 [32m     MATCH[0m
+2026-03-13 20:12:56,337 INFO 
+  Result: 4 matched, 3 expected gaps, 1 info-only
+2026-03-13 20:12:56,339 INFO   Written: /Users/yichen/Obsidian/Finance/tax/archive/2022/cross-validation.yaml

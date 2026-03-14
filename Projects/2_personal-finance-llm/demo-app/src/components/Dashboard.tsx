@@ -33,6 +33,13 @@ function getRow0Col0(r: unknown): number {
   return 0
 }
 
+function getRow0Col1(r: unknown): number {
+  if (isDbRows(r) && r.rows.length > 0 && r.rows[0].length > 1) {
+    return Number(r.rows[0][1]) || 0
+  }
+  return 0
+}
+
 function fmt(n: number, prefix = '', suffix = ''): string {
   return `${prefix}${n.toLocaleString('en-US', { maximumFractionDigits: 0 })}${suffix}`
 }
@@ -44,15 +51,18 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
     { label: 'Net Cashflow', value: '—' }
   ])
 
-  const [insights] = useState<Insight[]>([
-    { id: '1', type: 'success', text: "You're saving more than your 3-month average. Great momentum!" },
-    { id: '2', type: 'alert', text: "Open AI Chat to get personalized insights from your transaction history." }
+  const [insights, setInsights] = useState<Insight[]>([
+    { id: 'placeholder', type: 'success', text: 'Loading insights…' }
   ])
+
+  const [recentTopics, setRecentTopics] = useState<string[]>([])
+  const [refreshedCharts, setRefreshedCharts] = useState<Record<string, string>>({})
+  const [overviewCharts, setOverviewCharts] = useState<{ income: string | null; spending: string | null }>({ income: null, spending: null })
 
   useEffect(() => {
     const load = async (): Promise<void> => {
       try {
-        const [spendRes, incomeRes, cmaRes, avgRes] = await Promise.all([
+        const [spendRes, incomeRes, cmaRes, avgRes, spendCompRes, uncatRes] = await Promise.all([
           window.api.dbQuery(
             `SELECT SUM(ABS(t.amount)) as spending FROM transactions t WHERE t.is_transfer = 0 AND t.amount < 0 AND strftime('%Y-%m', t.date) = strftime('%Y-%m', 'now')`
           ),
@@ -64,6 +74,12 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
           ),
           window.api.dbQuery(
             `SELECT AVG(monthly) as avg_spending FROM (SELECT strftime('%Y-%m', date) as m, SUM(ABS(amount)) as monthly FROM transactions WHERE is_transfer = 0 AND amount < 0 AND date >= date('now', '-3 months') GROUP BY m)`
+          ),
+          window.api.dbQuery(
+            `SELECT (SELECT SUM(ABS(amount)) FROM transactions WHERE is_transfer=0 AND amount<0 AND strftime('%Y-%m', date) = strftime('%Y-%m', 'now')) as this_month, AVG(monthly) as avg FROM (SELECT strftime('%Y-%m', date) as m, SUM(ABS(amount)) as monthly FROM transactions WHERE is_transfer=0 AND amount<0 AND date >= date('now', '-4 months') AND strftime('%Y-%m', date) != strftime('%Y-%m', 'now') GROUP BY m)`
+          ),
+          window.api.dbQuery(
+            `SELECT COUNT(*) FROM transactions WHERE is_transfer=0 AND category_id IS NULL AND date >= date('now', '-3 months')`
           )
         ])
 
@@ -81,11 +97,91 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
           { label: 'Financial Runway', value: `${runway.toFixed(1)} mo` },
           { label: 'Net Cashflow', value: netCashflow >= 0 ? `+$${fmt(netCashflow)}` : `-$${fmt(Math.abs(netCashflow))}` }
         ])
+
+        // Build dynamic insights
+        const newInsights: Insight[] = []
+
+        const thisMonth = getRow0Col0(spendCompRes)
+        const threeMonthAvg = getRow0Col1(spendCompRes)
+
+        if (thisMonth > 0 && threeMonthAvg > 0) {
+          const ratio = thisMonth / threeMonthAvg
+          const pct = Math.round(Math.abs(ratio - 1) * 100)
+          if (ratio > 1.1) {
+            newInsights.push({
+              id: 'spend-compare',
+              type: 'alert',
+              text: `Spending is ${pct}% above your 3-month average ($${fmt(thisMonth)} vs $${fmt(threeMonthAvg)} avg)`
+            })
+          } else if (ratio < 0.9) {
+            newInsights.push({
+              id: 'spend-compare',
+              type: 'success',
+              text: `Spending is ${pct}% below your 3-month average. Great discipline! ($${fmt(thisMonth)} vs $${fmt(threeMonthAvg)} avg)`
+            })
+          } else {
+            newInsights.push({
+              id: 'spend-compare',
+              type: 'success',
+              text: `Spending is on track with your 3-month average ($${fmt(thisMonth)})`
+            })
+          }
+        }
+
+        const uncatCount = getRow0Col0(uncatRes)
+        if (uncatCount > 5) {
+          newInsights.push({
+            id: 'uncat',
+            type: 'alert',
+            text: `You have ${uncatCount} uncategorized transactions in the last 3 months`
+          })
+        }
+
+        if (newInsights.length === 0) {
+          newInsights.push({ id: 'fallback', type: 'success', text: 'Open AI Chat to get personalized insights from your transaction history.' })
+        }
+
+        setInsights(newInsights)
       } catch (err) {
         console.error('[Dashboard] Failed to load metrics:', err)
       }
+
+      // Load recent session topics
+      try {
+        const topics = await window.api.recentTopics()
+        if (Array.isArray(topics)) setRecentTopics(topics)
+      } catch (_) {
+        // optional — silently skip if not available
+      }
     }
     load()
+  }, [])
+
+  // Dynamic refresh of pinned charts
+  useEffect(() => {
+    const refreshPins = async () => {
+      for (const pin of pinnedCharts ?? []) {
+        if (pin.chartType) {
+          const freshData = await window.api.generateChart(pin.chartType, pin.chartMonths ?? 6)
+          if (freshData) {
+            setRefreshedCharts(prev => ({ ...prev, [pin.id]: freshData }))
+          }
+        }
+      }
+    }
+    refreshPins()
+  }, [pinnedCharts])
+
+  // Load overview charts
+  useEffect(() => {
+    const loadOverview = async () => {
+      const [incomeChart, spendingChart] = await Promise.all([
+        window.api.generateChart('monthly_income', 6),
+        window.api.generateChart('monthly_spending', 6)
+      ])
+      setOverviewCharts({ income: incomeChart, spending: spendingChart })
+    }
+    loadOverview()
   }, [])
 
   return (
@@ -94,6 +190,22 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
         <h1>Financial Overview</h1>
         <p className="subtitle">Real-time analysis of your local records</p>
       </header>
+
+      <section className="overview-charts-section">
+        <div className="section-header">
+          <h2>Overview</h2>
+        </div>
+        <div className="overview-charts-grid">
+          <div className="overview-chart-card">
+            <div className="overview-chart-title">Income <span className="overview-chart-subtitle">Recent 6 Months</span></div>
+            {overviewCharts.income ? <img src={overviewCharts.income} alt="Income" className="pin-image" /> : <div className="overview-chart-loading">Loading...</div>}
+          </div>
+          <div className="overview-chart-card">
+            <div className="overview-chart-title">Spending <span className="overview-chart-subtitle">Recent 6 Months</span></div>
+            {overviewCharts.spending ? <img src={overviewCharts.spending} alt="Spending" className="pin-image" /> : <div className="overview-chart-loading">Loading...</div>}
+          </div>
+        </div>
+      </section>
 
       <section>
         <div className="section-header">
@@ -111,6 +223,19 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
             </div>
           ))}
         </div>
+
+        {recentTopics.length > 0 && (
+          <div className="recent-topics-section">
+            <div className="recent-topics-label">You recently asked about:</div>
+            <div className="recent-topics-chips">
+              {recentTopics.map((topic, i) => (
+                <button key={i} className="topic-chip" onClick={() => onDeepDive(topic)}>
+                  {topic.length > 60 ? topic.slice(0, 60) + '…' : topic}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
       </section>
 
       <section>
@@ -143,7 +268,7 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
                   <button className="unpin-btn" onClick={() => onUnpin?.(pin.id)}>✕</button>
                 </div>
                 <div className="pin-body">
-                  <img src={pin.chartData} alt={pin.title} className="pin-image" />
+                  <img src={refreshedCharts[pin.id] ?? pin.chartData} alt={pin.title} className="pin-image" />
                 </div>
               </div>
             ))

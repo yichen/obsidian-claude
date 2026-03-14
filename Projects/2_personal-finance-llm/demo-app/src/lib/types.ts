@@ -6,7 +6,7 @@ export interface Message {
   toolData?: unknown
   chartPath?: string
   chartData?: string  // base64 data URL (kept for pinned chart compat)
-  charts?: Array<{ path: string; data: string }>
+  charts?: Array<{ path: string; data: string; type?: string; months?: number }>
   isLoading?: boolean
 }
 
@@ -23,4 +23,6 @@ export interface PinnedChart {
   chartData: string
   chartPath?: string
   timestamp: number
+  chartType?: string
+  chartMonths?: number
 }
