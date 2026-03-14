@@ -218,39 +218,37 @@ export function TransactionsView({ initialData }: TransactionsViewProps): React.
 
   return (
     <div className="txn-container">
-      <div className="page-header txn-top-bar">
-        <div className="txn-top-inner">
-          <div className="page-header-left">
-            <h1 className="txn-title">Transactions</h1>
-            <p className="subtitle">Global history across all accounts</p>
-          </div>
-
-          <div className="txn-controls">
-            <div className="txn-search-wrap">
-              <span className="txn-search-icon">
-                <Search size={15} />
-              </span>
-              <input
-                type="text"
-                placeholder="Search description, category, or account..."
-                className="txn-search-input"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                autoFocus
-              />
-            </div>
-            <button className="txn-icon-btn" aria-label="Filter">
-              <Filter size={16} />
-            </button>
-            <button className="txn-icon-btn" aria-label="Download">
-              <Download size={16} />
-            </button>
-            <button className="txn-add-btn" onClick={() => setShowAddModal(true)}>
-              <Plus size={16} /> Add
-            </button>
-          </div>
+      <header className="page-header txn-top-bar">
+        <div className="page-header-left">
+          <h1>Transactions</h1>
+          <p className="subtitle">Global history across all accounts</p>
         </div>
-      </div>
+
+        <div className="txn-controls">
+          <div className="txn-search-wrap">
+            <span className="txn-search-icon">
+              <Search size={15} />
+            </span>
+            <input
+              type="text"
+              placeholder="Search description, category, or account..."
+              className="txn-search-input"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              autoFocus
+            />
+          </div>
+          <button className="txn-icon-btn" aria-label="Filter">
+            <Filter size={16} />
+          </button>
+          <button className="txn-icon-btn" aria-label="Download">
+            <Download size={16} />
+          </button>
+          <button className="txn-add-btn" onClick={() => setShowAddModal(true)}>
+            <Plus size={16} /> Add
+          </button>
+        </div>
+      </header>
 
       <div className="txn-body">
         <div className="txn-table-wrap">

@@ -64,14 +64,19 @@ body {
   flex-direction: column;
 }
 
-.dashboard-container, .transactions-container, .chat-view-container {
-  padding: 32px 32px;
+.dashboard-container {
   width: 100%;
   flex-shrink: 0;
 }
+.dashboard-container > section {
+  padding: 24px 32px 0 32px;
+}
+.dashboard-container > section:last-child {
+  padding-bottom: 32px;
+}
 
 h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px 0; }
-.subtitle { color: var(--text-muted); font-size: 14px; margin-bottom: 24px; }
+.subtitle { color: var(--text-muted); font-size: 14px; }
 
 /* ── Unified Page Header ───────────────────────────────────────────────── */
 .page-header {
@@ -87,11 +92,6 @@ h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px
   flex-direction: column;
   gap: 2px;
 }
-.page-header-left-row {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
 .page-header h1 {
   font-size: 24px;
   font-weight: 800;
@@ -104,12 +104,6 @@ h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px
   font-weight: 500;
   margin: 0;
 }
-.page-header-icon {
-  display: flex;
-  align-items: center;
-  color: #10b981;
-}
-
 /* ── Metric Grid ────────────────────────────────────────────────────────── */
 .metrics-grid {
   display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
@@ -140,7 +134,7 @@ h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px
 
 .messages-area {
   flex: 1;
-  padding: 16px 20px;
+  padding: 16px 32px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
@@ -246,7 +240,7 @@ h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px
 
 /* ── Floating Input Bar ── */
 .input-area {
-  padding: 20px 32px 40px 32px; background: transparent;
+  padding: 20px 32px 32px 32px; background: transparent;
 }
 .input-wrapper {
   max-width: 800px; margin: 0 auto; position: relative;
@@ -339,18 +333,6 @@ textarea {
   background-color: var(--bg-app);
 }
 
-.txn-top-bar {
-  /* page-header base provides padding, border, flex layout */
-}
-
-.txn-top-inner {
-  max-width: 1200px; margin: 0 auto;
-  display: flex; align-items: center; justify-content: space-between; gap: 16px;
-  flex-wrap: wrap;
-}
-
-.txn-title { font-size: 24px; font-weight: 800; color: var(--text-main); margin: 0; }
-
 .txn-controls { display: flex; align-items: center; gap: 8px; }
 
 .txn-search-wrap {
@@ -379,7 +361,7 @@ textarea {
 .txn-icon-btn:hover { background: #f3f4f6; }
 
 .txn-body {
-  flex: 1; overflow: auto; padding: 16px 32px 32px 32px;
+  flex: 1; overflow: auto; padding: 0 32px 32px 32px;
 }
 .txn-table-wrap {
   max-width: 1200px; margin: 0 auto;
@@ -449,9 +431,6 @@ textarea {
 .new-session-btn:hover { background: #f3f4f6; color: var(--text-main); }
 .new-session-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-/* ── Chat: header flex layout ───────────────────────────────────────────── */
-.chat-header-left { display: flex; align-items: center; gap: 8px; }
-.chat-header-icon { color: #10b981; display: flex; align-items: center; }
 .loader-spin { animation: spin 0.8s linear infinite; }
 
 /* ── Transaction row clickable ──────────────────────────────────────────── */

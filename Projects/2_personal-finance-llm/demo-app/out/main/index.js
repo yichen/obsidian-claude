@@ -530,7 +530,7 @@ plt.savefig('${chartPath}')`;
   } else {
     return null;
   }
-  const tmpScript = `/tmp/gen_chart_${Date.now()}.py`;
+  const tmpScript = `/tmp/gen_chart_${type}_${Date.now()}.py`;
   try {
     deps.fs.writeFileSync(tmpScript, script);
     await deps.execFile(deps.pythonBin, [tmpScript], {

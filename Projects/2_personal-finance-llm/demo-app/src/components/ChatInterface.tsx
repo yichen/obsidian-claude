@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { MessageBubble } from './MessageBubble'
 import { Message, ToolResult, PinnedChart } from '../lib/types'
-import { Send, Eraser, Sparkles, Baby, Tag, LineChart, Loader2 } from 'lucide-react'
+import { Send, Eraser, Baby, Tag, LineChart, Loader2 } from 'lucide-react'
 
 const SUGGESTIONS = [
   { label: 'Kids Spending', icon: <Baby size={18} style={{ color: '#f43f5e' }} />, prompt: 'How much did I spend on kids last 3 months?' },
@@ -166,9 +166,9 @@ export function ChatInterface({
   return (
     <div className="chat-container">
       <header className="page-header chat-header">
-        <div className="page-header-left-row">
-          <span className="page-header-icon"><Sparkles size={16} /></span>
+        <div className="page-header-left">
           <h1>Financial Analyst</h1>
+          <p className="subtitle">AI-powered analysis of your financial data</p>
         </div>
         <button
           onClick={clearSession}

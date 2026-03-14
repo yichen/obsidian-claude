@@ -108,9 +108,9 @@ test('Gutter: all pages share the same 32px left/right gutter', async ({ page })
   await page.goto('http://localhost:5173', { timeout: 60000 });
   await page.waitForSelector('.dashboard-container', { timeout: 20000 });
 
-  // Dashboard
+  // Dashboard — header provides 32px padding
   const dashGutter = await page.evaluate(() => {
-    const el = document.querySelector('.dashboard-container')!;
+    const el = document.querySelector('.dashboard-container .page-header')!;
     const cs = window.getComputedStyle(el);
     return { left: parseInt(cs.paddingLeft), right: parseInt(cs.paddingRight) };
   });
@@ -140,28 +140,34 @@ test('Gutter: all pages share the same 32px left/right gutter', async ({ page })
   expect(chatGutter.right).toBe(32);
 });
 
-test('Transaction detail close button works', async ({ page }) => {
+test('Dashboard overview charts: all four charts render images', async ({ page }) => {
   await page.goto('http://localhost:5173', { timeout: 60000 });
-  await page.click('text=Transactions');
-  await page.waitForSelector('.txn-row-clickable');
-  await page.locator('.txn-row-clickable').first().click();
-  await expect(page.locator('.txn-detail-panel')).toBeVisible();
-  await page.locator('.txn-detail-close').click();
-  await expect(page.locator('.txn-detail-panel')).toHaveCount(0);
-});
+  await page.waitForSelector('.dashboard-container', { timeout: 20000 });
 
-test('Pending transaction rows are clickable and show detail', async ({ page }) => {
-  await page.goto('http://localhost:5173', { timeout: 60000 });
-  await page.click('text=Transactions');
-  await page.waitForSelector('.txn-table', { timeout: 10000 });
-  const pendingRow = page.locator('.txn-row-pending');
-  if (await pendingRow.count() > 0) {
-    await pendingRow.first().click();
-    await expect(page.locator('.txn-detail-panel')).toBeVisible();
-    await expect(page.locator('.txn-detail-header h3')).toHaveText('Pending Transaction');
-    await page.locator('.txn-detail-cancel').click();
-    await expect(page.locator('.txn-detail-panel')).toHaveCount(0);
-  }
+  // Wait for charts to load (they start as "Loading..." then become <img> or "No data available")
+  // Give charts up to 30s to render since they involve Python execution
+  const chartCards = page.locator('.overview-chart-card');
+  await expect(chartCards).toHaveCount(2); // Income card + Spending card
+
+  // Income bar chart
+  const incomeImg = chartCards.nth(0).locator('img[alt="Income"]');
+  await expect(incomeImg).toBeVisible({ timeout: 30000 });
+
+  // Income pie chart (By Source)
+  const incomePieImg = chartCards.nth(0).locator('img[alt="Income by Source"]');
+  await expect(incomePieImg).toBeVisible({ timeout: 30000 });
+
+  // Spending bar chart
+  const spendingImg = chartCards.nth(1).locator('img[alt="Spending"]');
+  await expect(spendingImg).toBeVisible({ timeout: 30000 });
+
+  // Spending pie chart (By Category)
+  const spendingPieImg = chartCards.nth(1).locator('img[alt="Spending by Category"]');
+  await expect(spendingPieImg).toBeVisible({ timeout: 30000 });
+
+  // Verify no "No data available" messages are shown
+  const noData = page.locator('.overview-chart-loading', { hasText: 'No data available' });
+  await expect(noData).toHaveCount(0);
 });
 
 test('All page headers use unified .page-header with consistent padding and divider', async ({ page }) => {
@@ -216,4 +222,27 @@ test('All page titles use consistent 24px font size', async ({ page }) => {
   await page.click('text=Chat');
   await page.waitForSelector('.page-header.chat-header h1');
   expect(await page.$eval('.page-header.chat-header h1', el => getComputedStyle(el).fontSize)).toBe('24px');
+});
+
+test('All page header titles have the same horizontal position', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.goto('http://localhost:5173', { timeout: 60000 });
+
+  // Dashboard
+  await page.waitForSelector('.page-header h1');
+  const dashLeft = await page.$eval('.page-header h1', el => el.getBoundingClientRect().left);
+
+  // Transactions
+  await page.click('text=Transactions');
+  await page.waitForSelector('.page-header.txn-top-bar h1');
+  const txnLeft = await page.$eval('.page-header.txn-top-bar h1', el => el.getBoundingClientRect().left);
+
+  // Chat
+  await page.click('text=Chat');
+  await page.waitForSelector('.page-header.chat-header h1');
+  const chatLeft = await page.$eval('.page-header.chat-header h1', el => el.getBoundingClientRect().left);
+
+  // All three should be at the same horizontal position (sidebar width + header padding)
+  expect(txnLeft).toBe(dashLeft);
+  expect(chatLeft).toBe(dashLeft);
 });

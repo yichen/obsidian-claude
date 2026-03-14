@@ -192,7 +192,7 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
 
   return (
     <div className="dashboard-container">
-      <header className="page-header" style={{ margin: '-32px -32px 24px -32px' }}>
+      <header className="page-header">
         <div className="page-header-left">
           <h1>Financial Overview</h1>
           <p className="subtitle">Real-time analysis of your local records</p>
