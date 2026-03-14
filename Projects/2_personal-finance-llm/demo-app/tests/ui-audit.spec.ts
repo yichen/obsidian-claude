@@ -83,6 +83,7 @@ test('Audit: Dashboard Layout and Spacing', async ({ page }) => {
 
   // 5. Chart Visibility Check
   await page.click('text=Chat');
+
   await page.fill('textarea', 'Show me a spending dashboard');
   await page.click('.send-btn');
   
@@ -101,4 +102,40 @@ test('Audit: Dashboard Layout and Spacing', async ({ page }) => {
   } catch (e) {
     console.log('No chart generated in this audit round.');
   }
+});
+
+test('Gutter: all pages share the same 32px left/right gutter', async ({ page }) => {
+  await page.goto('http://localhost:5173', { timeout: 60000 });
+  await page.waitForSelector('.dashboard-container', { timeout: 20000 });
+
+  // Dashboard
+  const dashGutter = await page.evaluate(() => {
+    const el = document.querySelector('.dashboard-container')!;
+    const cs = window.getComputedStyle(el);
+    return { left: parseInt(cs.paddingLeft), right: parseInt(cs.paddingRight) };
+  });
+  expect(dashGutter.left).toBe(32);
+  expect(dashGutter.right).toBe(32);
+
+  // Transactions
+  await page.click('text=Transactions');
+  await page.waitForSelector('.txn-top-bar', { timeout: 10000 });
+  const txnGutter = await page.evaluate(() => {
+    const el = document.querySelector('.txn-top-bar')!;
+    const cs = window.getComputedStyle(el);
+    return { left: parseInt(cs.paddingLeft), right: parseInt(cs.paddingRight) };
+  });
+  expect(txnGutter.left).toBe(32);
+  expect(txnGutter.right).toBe(32);
+
+  // Chat
+  await page.click('text=Chat');
+  await page.waitForSelector('.messages-area', { timeout: 10000 });
+  const chatGutter = await page.evaluate(() => {
+    const el = document.querySelector('.messages-area')!;
+    const cs = window.getComputedStyle(el);
+    return { left: parseInt(cs.paddingLeft), right: parseInt(cs.paddingRight) };
+  });
+  expect(chatGutter.left).toBe(32);
+  expect(chatGutter.right).toBe(32);
 });
