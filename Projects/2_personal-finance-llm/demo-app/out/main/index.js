@@ -1,10 +1,10 @@
 "use strict";
 const electron = require("electron");
 const path = require("path");
+const fs = require("fs");
 const child_process = require("child_process");
 const util = require("util");
 const OpenAI = require("openai");
-const fs = require("fs");
 function _interopNamespaceDefault(e) {
   const n = Object.create(null, { [Symbol.toStringTag]: { value: "Module" } });
   if (e) {
@@ -230,6 +230,14 @@ async function queryDB(sql, deps) {
     return { error: String(err) };
   }
 }
+async function migratePendingYamlToSQLite(deps) {
+  try {
+    await runFinanceCommand("import-pending-yaml", [], deps);
+    console.log("[startup] migratePendingYamlToSQLite complete");
+  } catch (err) {
+    console.warn("[startup] migratePendingYamlToSQLite error:", err);
+  }
+}
 const TOOLS = [
   {
     type: "function",
@@ -293,7 +301,7 @@ const TOOLS = [
         properties: {
           type: {
             type: "string",
-            enum: ["spending_by_category", "monthly_cashflow", "top_merchants"],
+            enum: ["spending_by_category", "monthly_cashflow", "top_merchants", "monthly_income", "monthly_spending", "income_by_source"],
             description: "The type of chart to generate"
           },
           months: {
@@ -438,6 +446,109 @@ async function generateLocalSummary(deps) {
   financeCache = { summary, ts: Date.now() };
   return summary;
 }
+async function generateChart(type, months, deps) {
+  const reportDir = `${deps.vaultPath}/Finance/reports`;
+  if (!deps.fs.existsSync(reportDir)) deps.fs.mkdirSync(reportDir, { recursive: true });
+  const filename = `${type}_${Date.now()}.png`;
+  const chartPath = `${reportDir}/${filename}`;
+  let script = "";
+  if (type === "monthly_cashflow") {
+    script = `import sqlite3
+import matplotlib.pyplot as plt
+import pandas as pd
+import numpy as np
+conn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')
+inc = pd.read_sql_query("SELECT strftime('%Y-%m', pay_date) as m, SUM(net_pay) as v FROM payslips GROUP BY 1", conn)
+exp = pd.read_sql_query("SELECT strftime('%Y-%m', date) as m, SUM(ABS(amount)) as v FROM transactions WHERE is_transfer=0 AND amount < 0 GROUP BY 1", conn)
+df = pd.merge(inc, exp, on='m', how='outer', suffixes=('_i', '_e')).fillna(0).sort_values('m').tail(${months})
+plt.figure(figsize=(10, 6))
+x = np.arange(len(df))
+plt.bar(x-0.2, df['v_i'], 0.4, label='Income', color='green')
+plt.bar(x+0.2, df['v_e'], 0.4, label='Spending', color='red')
+plt.xticks(x, df['m'], rotation=45)
+plt.legend()
+plt.tight_layout()
+plt.savefig('${chartPath}')`;
+  } else if (type === "spending_by_category") {
+    script = `import sqlite3
+import matplotlib.pyplot as plt
+import pandas as pd
+conn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')
+df = pd.read_sql_query("SELECT COALESCE(cp.name, c.name) as n, SUM(ABS(t.amount)) as v FROM transactions t LEFT JOIN categories c ON c.id = t.category_id LEFT JOIN categories cp ON cp.id = c.parent_id WHERE t.is_transfer=0 AND t.amount < 0 AND t.date >= date('now', '-${months} months') GROUP BY 1 ORDER BY 2 DESC LIMIT 8", conn)
+plt.figure(figsize=(10, 6))
+plt.pie(df['v'], labels=df['n'], autopct='%1.1f%%')
+plt.title('Spending by Category (Last ${months} Months)')
+plt.tight_layout()
+plt.savefig('${chartPath}')`;
+  } else if (type === "monthly_income") {
+    script = `import sqlite3
+import matplotlib.pyplot as plt
+import pandas as pd
+conn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')
+inc = pd.read_sql_query("SELECT strftime('%Y-%m', pay_date) as m, SUM(net_pay) as v FROM payslips WHERE pay_date >= date('now', '-${months} months') GROUP BY 1 ORDER BY 1", conn)
+plt.figure(figsize=(10, 6))
+plt.bar(range(len(inc)), inc['v'], color='#22c55e')
+plt.xticks(range(len(inc)), inc['m'].tolist(), rotation=45)
+plt.title('Income')
+plt.tight_layout()
+plt.savefig('${chartPath}')`;
+  } else if (type === "monthly_spending") {
+    script = `import sqlite3
+import matplotlib.pyplot as plt
+import pandas as pd
+conn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')
+exp = pd.read_sql_query("SELECT strftime('%Y-%m', date) as m, SUM(ABS(amount)) as v FROM transactions WHERE is_transfer=0 AND amount<0 AND date >= date('now', '-${months} months') GROUP BY 1 ORDER BY 1", conn)
+plt.figure(figsize=(10, 6))
+plt.bar(range(len(exp)), exp['v'], color='#6366f1')
+plt.xticks(range(len(exp)), exp['m'].tolist(), rotation=45)
+plt.title('Spending')
+plt.tight_layout()
+plt.savefig('${chartPath}')`;
+  } else if (type === "top_merchants") {
+    script = `import sqlite3
+import matplotlib.pyplot as plt
+import pandas as pd
+conn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')
+df = pd.read_sql_query("SELECT description as n, SUM(ABS(amount)) as v FROM transactions WHERE is_transfer=0 AND amount<0 AND date >= date('now', '-${months} months') GROUP BY 1 ORDER BY 2 DESC LIMIT 10", conn)
+plt.figure(figsize=(10, 6))
+plt.barh(range(len(df)), df['v'])
+plt.yticks(range(len(df)), df['n'].tolist())
+plt.title('Top Merchants (Last ${months} Months)')
+plt.tight_layout()
+plt.savefig('${chartPath}')`;
+  } else if (type === "income_by_source") {
+    script = `import sqlite3
+import matplotlib.pyplot as plt
+import pandas as pd
+conn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')
+df = pd.read_sql_query("SELECT employer as n, SUM(net_pay) as v FROM payslips WHERE pay_date >= date('now', '-${months} months') GROUP BY employer ORDER BY v DESC", conn)
+plt.figure(figsize=(10, 6))
+plt.pie(df['v'], labels=df['n'], autopct='%1.1f%%')
+plt.title('Income by Source (Last ${months} Months)')
+plt.tight_layout()
+plt.savefig('${chartPath}')`;
+  } else {
+    return null;
+  }
+  const tmpScript = `/tmp/gen_chart_${Date.now()}.py`;
+  try {
+    deps.fs.writeFileSync(tmpScript, script);
+    await deps.execFile(deps.pythonBin, [tmpScript], {
+      cwd: deps.vaultPath,
+      env: { ...process.env, MPLBACKEND: "Agg" }
+    });
+    if (deps.fs.existsSync(chartPath)) {
+      const b64 = deps.fs.readFileSync(chartPath, "base64");
+      return `data:image/png;base64,${b64}`;
+    }
+    return null;
+  } catch (err) {
+    console.error(`[generateChart] Failed to generate ${type}:`, err);
+    return null;
+  } finally {
+    if (deps.fs.existsSync(tmpScript)) deps.fs.unlinkSync(tmpScript);
+  }
+}
 async function handleChat(messages, eventSender, deps) {
   const localContext = await localIntentRouter(messages, deps);
   let augmentedMessages;
@@ -467,6 +578,12 @@ Valid spending categories: ${CATEGORY_CONTEXT}` : SYSTEM_PROMPT;
   const allCharts = [];
   const MAX_TOOL_ROUNDS = 15;
   let rounds = 0;
+  const sessionDir = `${deps.vaultPath}/Finance/reports/debug/sessions`;
+  if (!deps.fs.existsSync(sessionDir)) deps.fs.mkdirSync(sessionDir, { recursive: true });
+  const sessionTimestamp = (/* @__PURE__ */ new Date()).toISOString().replace("T", "_").replace(/:/g, "-").substring(0, 19);
+  const sessionFile = `${sessionDir}/${sessionTimestamp}.json`;
+  const sessionLog = { session: (/* @__PURE__ */ new Date()).toISOString(), rounds: [] };
+  deps.fs.writeFileSync(sessionFile, JSON.stringify(sessionLog, null, 2));
   const timings = [];
   const t0 = Date.now();
   const elapsed = () => Date.now() - t0;
@@ -479,26 +596,20 @@ Valid spending categories: ${CATEGORY_CONTEXT}` : SYSTEM_PROMPT;
     return result;
   };
   while (continueLoop && rounds++ < MAX_TOOL_ROUNDS) {
-    try {
-      const debugDir = `${deps.vaultPath}/Finance/reports/debug`;
-      if (!deps.fs.existsSync(debugDir)) deps.fs.mkdirSync(debugDir, { recursive: true });
-      const debugFile = `${debugDir}/chat_request_round_${rounds}.json`;
-      deps.fs.writeFileSync(debugFile, JSON.stringify({ model: "anthropic/claude-3.7-sonnet", messages: apiMessages, tools: TOOLS }, null, 2));
-      console.log(`[debug] Request payload saved to ${debugFile}`);
-    } catch (e) {
-      console.warn(`[debug] Failed to save request payload: ${e}`);
-    }
+    const requestSnapshot = { model: "anthropic/claude-3.7-sonnet", messages: [...apiMessages], tools: TOOLS };
     const apiStart = Date.now();
     const stream = await deps.openai.chat.completions.create({
       model: "anthropic/claude-3.7-sonnet",
       messages: apiMessages,
       tools: TOOLS,
       max_tokens: 4096,
-      stream: true
+      stream: true,
+      stream_options: { include_usage: true }
     });
     let streamContent = "";
     let streamFinishReason = null;
     const streamToolCallMap = {};
+    let usage;
     for await (const chunk of stream) {
       const delta = chunk.choices[0]?.delta;
       if (chunk.choices[0]?.finish_reason) streamFinishReason = chunk.choices[0].finish_reason;
@@ -516,6 +627,7 @@ Valid spending categories: ${CATEGORY_CONTEXT}` : SYSTEM_PROMPT;
           if (tc.function?.arguments) streamToolCallMap[tc.index].function.arguments += tc.function.arguments;
         }
       }
+      if (chunk.usage) usage = chunk.usage;
     }
     const apiMs = Date.now() - apiStart;
     const toolCallsList = Object.entries(streamToolCallMap).sort(([a], [b]) => Number(a) - Number(b)).map(([, tc]) => tc);
@@ -534,6 +646,23 @@ Valid spending categories: ${CATEGORY_CONTEXT}` : SYSTEM_PROMPT;
     apiMessages.push(msg);
     timings.push({ label: `API call #${rounds} [${streamFinishReason}]`, ms: apiMs });
     console.log(`[timing] API call #${rounds}: ${apiMs}ms`);
+    try {
+      sessionLog.rounds.push({
+        round: rounds,
+        timestamp: (/* @__PURE__ */ new Date()).toISOString(),
+        request: requestSnapshot,
+        response: {
+          content: streamContent,
+          tool_calls: toolCallsList,
+          finish_reason: streamFinishReason,
+          usage
+        },
+        elapsed_ms: apiMs
+      });
+      deps.fs.writeFileSync(sessionFile, JSON.stringify(sessionLog, null, 2));
+    } catch (e) {
+      console.warn(`[debug] Failed to write session log: ${e}`);
+    }
     const trace = `round ${rounds}: ${streamFinishReason}, ${toolCallsList.length} tool call(s), elapsed ${elapsed()}ms`;
     console.log(`[chat] ${trace}`);
     if (streamFinishReason === "tool_calls" && toolCallsList.length > 0) {
@@ -611,7 +740,7 @@ plt.savefig('${chartPath}')`;
             );
             if (deps.fs.existsSync(chartPath)) {
               const b64 = deps.fs.readFileSync(chartPath, "base64");
-              allCharts.push({ path: chartPath, data: `data:image/png;base64,${b64}` });
+              allCharts.push({ path: chartPath, data: `data:image/png;base64,${b64}`, type, months });
               result = JSON.stringify({ success: true, path: chartPath });
             } else {
               result = JSON.stringify({ success: false, error: "File not generated" });
@@ -713,6 +842,7 @@ electron.app.whenReady().then(async () => {
   const startupDeps = makeDeps();
   initCategoryContext(startupDeps).catch((e) => console.warn("[startup] initCategoryContext failed:", e));
   initFinanceCache(startupDeps).catch((e) => console.warn("[startup] initFinanceCache failed:", e));
+  migratePendingYamlToSQLite(startupDeps).catch((e) => console.warn("[startup] migratePendingYamlToSQLite failed:", e));
   electronApp.setAppUserModelId("com.finance.demo");
   electron.app.on("browser-window-created", (_, window) => {
     optimizer.watchWindowShortcuts(window);
@@ -740,8 +870,78 @@ electron.app.whenReady().then(async () => {
   electron.ipcMain.handle("db:query", async (_event, sql) => {
     return await queryDB(sql, makeDeps());
   });
+  electron.ipcMain.handle("db:execute", async (_event, sql) => {
+    try {
+      const output = await runFinanceCommand("execute", [sql], makeDeps());
+      const parsed = JSON.parse(output);
+      return parsed;
+    } catch (err) {
+      return { error: String(err) };
+    }
+  });
   electron.ipcMain.handle("finance:command", async (_event, command) => {
     return runFinanceCommand(command, [], makeDeps());
+  });
+  electron.ipcMain.handle("finance:generate-chart", async (_event, type, months) => {
+    return generateChart(type, months, makeDeps());
+  });
+  electron.ipcMain.handle("finance:recent-topics", async () => {
+    try {
+      const sessionDir = `${VAULT_PATH}/Finance/reports/debug/sessions`;
+      const files = fs.readdirSync(sessionDir).filter((f) => f.endsWith(".json")).sort().slice(-5).reverse();
+      const topics = [];
+      for (const file of files) {
+        try {
+          const raw = require("fs").readFileSync(path.join(sessionDir, file), "utf-8");
+          const session = JSON.parse(raw);
+          const rounds = session.rounds || [];
+          for (const round of rounds) {
+            const messages = round?.request?.messages || [];
+            const userMsgs = messages.filter((m) => m.role === "user");
+            if (userMsgs.length > 0) {
+              const last = userMsgs[userMsgs.length - 1];
+              const text = typeof last.content === "string" ? last.content : last.content?.[0]?.text ?? "";
+              const trimmed = text.trim().slice(0, 120);
+              if (trimmed && !topics.includes(trimmed)) {
+                topics.push(trimmed);
+              }
+            }
+          }
+        } catch (_) {
+        }
+        if (topics.length >= 3) break;
+      }
+      return topics;
+    } catch (_) {
+      return [];
+    }
+  });
+  electron.ipcMain.handle("finance:parse-receipt", async (_event, text) => {
+    try {
+      const client = openrouterClient;
+      if (!client) return {};
+      const response = await client.chat.completions.create({
+        model: "anthropic/claude-3-haiku",
+        max_tokens: 256,
+        messages: [
+          {
+            role: "user",
+            content: `Extract transaction details from this receipt text. Return JSON only, no explanation:
+{"date":"YYYY-MM-DD","amount":0.00,"description":"merchant name","notes":""}
+
+Receipt text:
+${text}`
+          }
+        ]
+      });
+      const content = response.choices[0]?.message?.content ?? "";
+      const match = content.match(/\{[\s\S]*\}/);
+      if (match) return JSON.parse(match[0]);
+      return {};
+    } catch (err) {
+      console.error("[parse-receipt] error:", err);
+      return {};
+    }
   });
   createWindow();
   electron.app.on("activate", () => {

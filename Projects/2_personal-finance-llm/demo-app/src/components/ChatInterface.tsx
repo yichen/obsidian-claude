@@ -1,10 +1,9 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react'
 import { MessageBubble } from './MessageBubble'
 import { Message, ToolResult, PinnedChart } from '../lib/types'
-import { Send, Eraser, Sparkles, PieChart, Baby, Tag, LineChart, Loader2 } from 'lucide-react'
+import { Send, Eraser, Sparkles, Baby, Tag, LineChart, Loader2 } from 'lucide-react'
 
 const SUGGESTIONS = [
-  { label: 'Spending Dashboard', icon: <PieChart size={18} style={{ color: '#3b82f6' }} />, prompt: 'Show me a spending dashboard' },
   { label: 'Kids Spending', icon: <Baby size={18} style={{ color: '#f43f5e' }} />, prompt: 'How much did I spend on kids last 3 months?' },
   { label: 'Top Categories', icon: <Tag size={18} style={{ color: '#f59e0b' }} />, prompt: 'What are my top spending categories this year?' },
   { label: 'Monthly Cashflow', icon: <LineChart size={18} style={{ color: '#10b981' }} />, prompt: 'Show monthly cash flow for 2025' }

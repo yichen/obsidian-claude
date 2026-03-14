@@ -1,5 +1,36 @@
 # Key Learnings
 
+### Personal Finance Demo App — Electron Desktop (2026-03-13)
+- **Stack**: Electron 35 + React 18 + TypeScript, built with electron-vite
+- **LLM backend**: OpenRouter API (`anthropic/claude-3.7-sonnet`), OpenAI-compatible SDK
+- **DB access**: Python subprocess (`Scripts/venv/bin/python3 .claude/scripts/finance_db.py`) — avoids `better-sqlite3` native compilation issues in Electron
+- **Core logic**: `demo-app/electron/finance-core.ts` with `FinanceDeps` dependency injection for testability; 22 vitest tests run in Node (no Electron needed)
+- **Chart rendering**: matplotlib PNG → read as base64 in main process → `data:image/png;base64,...` data URL. `file://` URLs are blocked by Electron CSP in renderer.
+- **Latency breakdown (21s total)**: 98% is LLM API calls (3 sequential round trips: 3.5s + 7.7s + 9.4s). SQL/tools only ~400ms. Main optimization lever: reduce API round trips.
+- **electron-vite gotcha**: HMR only works for renderer; main process changes require full `npm run dev` restart + `npx electron-vite build`
+- **Session logging**: all API requests/responses logged to `Finance/reports/debug/sessions/YYYY-MM-DD_HH-MM-SS.json`
+- **localIntentRouter**: keyword-based pre-fetch for dashboard queries (line 367 finance-core.ts) — eliminates first API round trip for common queries
+
+### LLM Model Routing & Hosting for Finance App (2026-03-13)
+- **Multi-model routing**: route simple queries → cheap model (Together AI Llama 8B ~$0.10/M), complex SQL/reasoning → Sonnet ($3/$15/M). Could cut API costs 60-70%.
+- **Embedded local model NOT viable for general users**: 7B Q4 model needs ~6GB RAM + 4.1GB file; 8GB MacBook Air M1 would be too slow. Use Ollama sidecar (optional, user-installed) rather than bundling weights.
+- **Qwen3.5 (released Mar 2, 2026)**: 0.8B / 2B / 4B / 9B models; Apache 2.0; 256K context; 9B beats GPT-4o-mini class. 9B needs ~6GB RAM — viable on 16GB Mac. Worth testing for SQL generation to replace Sonnet on simple queries.
+- **0.5B/0.8B models**: only good for intent classification/routing, NOT SQL generation (can't handle multi-table JOINs or tool call JSON).
+- **Together AI vs OpenRouter**: for open-source models, Together AI is cheaper (OpenRouter adds ~5% fee). For Claude: must use Anthropic/OpenRouter (Together AI doesn't host Claude).
+- **node-llama-cpp**: npm package to embed llama.cpp natively in Electron if full local inference needed.
+- **RouteLLM / Semantic Router**: frameworks for ML-based query routing (vs current keyword matching in localIntentRouter).
+
+### Claude Code Slash Commands vs Skills (2026-03-13)
+- **Two separate systems**: `.claude/commands/*.md` → shows in `/` autocomplete; `.claude/skills/<name>/SKILL.md` → AI-invocable via Skill tool only
+- **Fix**: symlink `.claude/commands/<name>.md` → `../skills/<name>/SKILL.md` — bridges both systems without duplication
+- **Created 15 symlinks** for: memorize, memory-compress, finance, commit, code, leetcode, sync, sync-notes, finance-todo, ingest-cc, ingest-payslips, ingest-tax, ingest-amazon, ingest-fidelity, ingest-becu
+
+### Git Large File Removal (2026-03-13)
+- `node_modules/` committed before `.gitignore` was added → 159MB Electron binary blocked GitHub push
+- `git rm -r --cached` removes from tracking but NOT from history — GitHub still rejects
+- `git filter-repo --path <dir> --invert-paths --force` rewrites entire history to remove the path
+- After filter-repo, remote is removed — must `git remote add origin` and force-push
+
 ### Tax Document Ingestion Pipeline (2026-02-28)
 - Created `/ingest-tax` slash command + Python script at `.claude/scripts/ingest_tax.py` (3,371 lines)
 - Source PDFs: `~/Dropbox/1-Tax/2-prepare/<year>/` (CPA inputs) + `~/Dropbox/1-Tax/3-archive/<year>/` (filed returns)
@@ -170,6 +201,18 @@
 - **Obsidian file naming**: Use hyphens instead of spaces. Avoid `&` and other special characters — they break Obsidian wiki-links. Use `and` instead of `&`.
 
 # Active Context
+
+### Personal Finance Demo App (2026-03-13) `(active)`
+- Base64 chart rendering working, timing instrumentation in place, session logs to `Finance/reports/debug/sessions/`
+- **Dashboard**: Overview section has 4 charts (income bar + pie by employer, spending bar + pie by category). Pie charts load in parallel with bar charts.
+- **Pending transactions**: `migratePendingYamlToSQLite()` runs non-blocking on app startup — auto-imports from `Finance/pending-transactions.yaml`
+- **Chat UI**: Reduced whitespace (messages-area gap 16→8px, padding 24→16px, message-row gap 8→4px)
+- **Chart types**: `monthly_income`, `monthly_spending`, `monthly_cashflow`, `spending_by_category`, `top_merchants`, `income_by_source` — all in `generateChart()` + tool enum
+- **Next**: Multi-model routing — route simple queries to Qwen3.5-9B or Llama 8B via Together AI; reserve Sonnet for complex SQL/reasoning
+- **Next**: Test Qwen3.5-9B for SQL generation capability (released Mar 2, 2026)
+- **Next**: Optional Ollama sidecar for offline/private mode
+- **OpenRouter credit**: Bought $20 on 2026-03-12 for prototyping
+- **Branch**: `feature` on `obsidian-claude` repo (history rewritten to remove node_modules)
 
 ### Finance DB categorization rules backup (2026-03-01) `(COMPLETED)`
 - **Resolved**: 751 rules now auto-exported to `Finance/categorization_rules.json` on every import

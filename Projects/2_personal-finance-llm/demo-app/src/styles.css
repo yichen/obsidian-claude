@@ -119,15 +119,15 @@ h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px
 
 .messages-area {
   flex: 1;
-  padding: 24px 24px;
+  padding: 16px 20px;
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 8px;
 }
 
 /* ── New Message Row ── */
-.message-row { display: flex; flex-direction: column; gap: 8px; width: 100%; max-width: 800px; }
+.message-row { display: flex; flex-direction: column; gap: 4px; width: 100%; max-width: 800px; }
 .message-row.assistant { align-self: flex-start; }
 .message-row.user { align-self: flex-end; max-width: 600px; }
 
@@ -213,7 +213,7 @@ h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 4px
 
 /* ── Suggestions Grid Redesign ── */
 .suggestions-grid {
-  display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; padding: 0 32px 32px 32px;
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; padding: 0 32px 32px 32px;
 }
 .suggestion-card {
   background: white; border: 1px solid var(--border); padding: 16px; border-radius: 12px;
@@ -616,6 +616,8 @@ textarea {
   display: flex; align-items: center; justify-content: center;
   height: 200px; color: var(--text-muted); font-size: 13px;
 }
+.overview-chart-divider { height: 1px; background: var(--border); margin: 12px 0; }
+.overview-chart-subtitle-row { font-size: 11px; font-weight: 600; color: var(--text-muted); margin-bottom: 8px; }
 
 /* ── Window drag region (macOS hiddenInset title bar) ───────────────────── */
 .window-drag-bar {

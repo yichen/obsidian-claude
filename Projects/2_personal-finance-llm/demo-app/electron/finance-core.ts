@@ -271,7 +271,7 @@ export const TOOLS: OpenAI.Chat.ChatCompletionTool[] = [
         properties: {
           type: {
             type: 'string',
-            enum: ['spending_by_category', 'monthly_cashflow', 'top_merchants', 'monthly_income', 'monthly_spending'],
+            enum: ['spending_by_category', 'monthly_cashflow', 'top_merchants', 'monthly_income', 'monthly_spending', 'income_by_source'],
             description: 'The type of chart to generate'
           },
           months: {
@@ -456,6 +456,8 @@ export async function generateChart(
     script = `import sqlite3\nimport matplotlib.pyplot as plt\nimport pandas as pd\nconn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')\nexp = pd.read_sql_query("SELECT strftime('%Y-%m', date) as m, SUM(ABS(amount)) as v FROM transactions WHERE is_transfer=0 AND amount<0 AND date >= date('now', '-${months} months') GROUP BY 1 ORDER BY 1", conn)\nplt.figure(figsize=(10, 6))\nplt.bar(range(len(exp)), exp['v'], color='#6366f1')\nplt.xticks(range(len(exp)), exp['m'].tolist(), rotation=45)\nplt.title('Spending')\nplt.tight_layout()\nplt.savefig('${chartPath}')`
   } else if (type === 'top_merchants') {
     script = `import sqlite3\nimport matplotlib.pyplot as plt\nimport pandas as pd\nconn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')\ndf = pd.read_sql_query("SELECT description as n, SUM(ABS(amount)) as v FROM transactions WHERE is_transfer=0 AND amount<0 AND date >= date('now', '-${months} months') GROUP BY 1 ORDER BY 2 DESC LIMIT 10", conn)\nplt.figure(figsize=(10, 6))\nplt.barh(range(len(df)), df['v'])\nplt.yticks(range(len(df)), df['n'].tolist())\nplt.title('Top Merchants (Last ${months} Months)')\nplt.tight_layout()\nplt.savefig('${chartPath}')`
+  } else if (type === 'income_by_source') {
+    script = `import sqlite3\nimport matplotlib.pyplot as plt\nimport pandas as pd\nconn = sqlite3.connect('${deps.vaultPath}/Finance/finance.db')\ndf = pd.read_sql_query("SELECT employer as n, SUM(net_pay) as v FROM payslips WHERE pay_date >= date('now', '-${months} months') GROUP BY employer ORDER BY v DESC", conn)\nplt.figure(figsize=(10, 6))\nplt.pie(df['v'], labels=df['n'], autopct='%1.1f%%')\nplt.title('Income by Source (Last ${months} Months)')\nplt.tight_layout()\nplt.savefig('${chartPath}')`
   } else {
     return null
   }

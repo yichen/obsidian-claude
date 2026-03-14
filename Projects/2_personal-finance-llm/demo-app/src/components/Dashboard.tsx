@@ -57,7 +57,7 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
 
   const [recentTopics, setRecentTopics] = useState<string[]>([])
   const [refreshedCharts, setRefreshedCharts] = useState<Record<string, string>>({})
-  const [overviewCharts, setOverviewCharts] = useState<{ income: string | null; spending: string | null }>({ income: null, spending: null })
+  const [overviewCharts, setOverviewCharts] = useState<{ income: string | null; incomePie: string | null; spending: string | null; spendingPie: string | null }>({ income: null, incomePie: null, spending: null, spendingPie: null })
 
   useEffect(() => {
     const load = async (): Promise<void> => {
@@ -175,11 +175,13 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
   // Load overview charts
   useEffect(() => {
     const loadOverview = async () => {
-      const [incomeChart, spendingChart] = await Promise.all([
+      const [incomeBar, incomePie, spendingBar, spendingPie] = await Promise.all([
         window.api.generateChart('monthly_income', 6),
-        window.api.generateChart('monthly_spending', 6)
+        window.api.generateChart('income_by_source', 6),
+        window.api.generateChart('monthly_spending', 6),
+        window.api.generateChart('spending_by_category', 6)
       ])
-      setOverviewCharts({ income: incomeChart, spending: spendingChart })
+      setOverviewCharts({ income: incomeBar, incomePie, spending: spendingBar, spendingPie })
     }
     loadOverview()
   }, [])
@@ -199,10 +201,24 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
           <div className="overview-chart-card">
             <div className="overview-chart-title">Income <span className="overview-chart-subtitle">Recent 6 Months</span></div>
             {overviewCharts.income ? <img src={overviewCharts.income} alt="Income" className="pin-image" /> : <div className="overview-chart-loading">Loading...</div>}
+            {overviewCharts.incomePie && (
+              <>
+                <div className="overview-chart-divider" />
+                <div className="overview-chart-subtitle-row">By Source</div>
+                <img src={overviewCharts.incomePie} alt="Income by Source" className="pin-image" />
+              </>
+            )}
           </div>
           <div className="overview-chart-card">
             <div className="overview-chart-title">Spending <span className="overview-chart-subtitle">Recent 6 Months</span></div>
             {overviewCharts.spending ? <img src={overviewCharts.spending} alt="Spending" className="pin-image" /> : <div className="overview-chart-loading">Loading...</div>}
+            {overviewCharts.spendingPie && (
+              <>
+                <div className="overview-chart-divider" />
+                <div className="overview-chart-subtitle-row">By Category</div>
+                <img src={overviewCharts.spendingPie} alt="Spending by Category" className="pin-image" />
+              </>
+            )}
           </div>
         </div>
       </section>
