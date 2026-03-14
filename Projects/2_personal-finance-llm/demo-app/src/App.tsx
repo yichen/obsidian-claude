@@ -77,6 +77,7 @@ export default function App(): React.ReactElement {
 
   return (
     <div className="app-layout">
+      <div className="window-drag-bar" />
       <Sidebar activeView={activeView} onViewChange={setActiveView} />
       <main className="main-content">
         {activeView === 'dashboard' && (

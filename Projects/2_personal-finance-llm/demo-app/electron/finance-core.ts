@@ -26,8 +26,7 @@ export interface FinanceDeps {
 
 export interface ChatResult {
   text: string
-  chartPath?: string
-  chartData?: string  // base64 data URL: "data:image/png;base64,..."
+  charts?: Array<{ path: string; data: string }>
 }
 
 export interface EventSender {
@@ -335,7 +334,11 @@ Always run tools to get real data before answering. Do not make up numbers. Pres
 **CHARTS**: When the user asks for any chart, graph, or visualization:
 1.  **ALWAYS check if 'generate_standard_chart' can fulfill the request.** If the user asks for "cashflow", "spending by category", or "top merchants", YOU MUST use 'generate_standard_chart'. This is 10x faster.
 2.  Only use the manual 'generate_chart' tool for highly custom requests that are not covered by the standard types.
-3.  NEVER render charts as ASCII art, Unicode characters, or text diagrams. The app renders the PNG image inline in the chat. You have access to: 'sqlite3', 'matplotlib', 'pandas', and 'numpy'.`
+3.  NEVER render charts as ASCII art, Unicode characters, or text diagrams. The app renders the PNG image inline in the chat. You have access to: 'sqlite3', 'matplotlib', 'pandas', and 'numpy'.
+
+**BATCHING**: When you need multiple standard charts, call 'generate_standard_chart' multiple times in the SAME response — do not wait for results before requesting the next chart. The app executes all tool calls in parallel.
+
+**CHART MARKDOWN**: Do NOT include \`![...](path)\` markdown image syntax in your response. Charts are rendered automatically below your text by the app.`
 
 // ── Chat handler ─────────────────────────────────────────────────────────
 
@@ -456,8 +459,7 @@ export async function handleChat(
   ]
 
   let continueLoop = true
-  let lastChartPath: string | undefined
-  let lastChartData: string | undefined
+  const allCharts: Array<{ path: string; data: string }> = []
   const MAX_TOOL_ROUNDS = 15
   let rounds = 0
 
@@ -603,9 +605,8 @@ export async function handleChat(
               })
             )
             if (deps.fs.existsSync(chartPath)) {
-              lastChartPath = chartPath
-              const b64 = fs.readFileSync(chartPath).toString('base64')
-              lastChartData = `data:image/png;base64,${b64}`
+              const b64 = deps.fs.readFileSync(chartPath, 'base64')
+              allCharts.push({ path: chartPath, data: `data:image/png;base64,${b64}` })
               result = JSON.stringify({ success: true, path: chartPath })
             } else {
               result = JSON.stringify({ success: false, error: 'File not generated' })
@@ -645,9 +646,8 @@ export async function handleChat(
             )
             const chartPath = `${reportDir}/${args.filename}`
             if (deps.fs.existsSync(chartPath)) {
-              lastChartPath = chartPath
-              const b64 = fs.readFileSync(chartPath).toString('base64')
-              lastChartData = `data:image/png;base64,${b64}`
+              const b64 = deps.fs.readFileSync(chartPath, 'base64')
+              allCharts.push({ path: chartPath, data: `data:image/png;base64,${b64}` })
               result = JSON.stringify({ success: true, path: chartPath })
             } else {
               result = JSON.stringify({ success: false, stdout, stderr })
@@ -670,7 +670,7 @@ export async function handleChat(
       const timingLine = buildTimingLine(timings, totalMs)
       console.log(`[timing] total: ${totalMs}ms — ${timingLine}`)
       const text = (streamContent || '') + '\n\n' + timingLine
-      return { text, chartPath: lastChartPath, chartData: lastChartData }
+      return { text, charts: allCharts.length > 0 ? allCharts : undefined }
     }
   }
   return { text: '(max tool rounds reached without final response)' }

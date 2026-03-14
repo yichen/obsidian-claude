@@ -44,7 +44,44 @@ test('Audit: Dashboard Layout and Spacing', async ({ page }) => {
   // If we have 15 different font sizes, it's inconsistent.
   expect(fontSizes.length).toBeLessThan(10);
 
-  // 4. Chart Visibility Check
+  // 3b. Drag bar check
+  await page.waitForSelector('.window-drag-bar', { timeout: 10000 });
+  const dragStyles = await page.evaluate(() => {
+    const el = document.querySelector('.window-drag-bar')!;
+    const cs = window.getComputedStyle(el);
+    return {
+      position: cs.position,
+      pointerEvents: cs.pointerEvents,
+      appRegion: cs.getPropertyValue('-webkit-app-region'),
+      height: cs.height,
+    };
+  });
+  expect(dragStyles.position).toBe('fixed');
+  expect(dragStyles.pointerEvents).toBe('none');
+  expect(dragStyles.appRegion).toBe('drag');
+  expect(parseInt(dragStyles.height)).toBeGreaterThanOrEqual(40);
+
+  // 4a. Deep Dive sends exactly one user message
+  await page.reload();
+  await page.waitForSelector('.dashboard-container', { timeout: 20000 });
+  const deepDiveBefore = await page.locator('.message-row.user').count();
+  await page.locator('.deep-dive-btn').first().click();
+  await page.waitForSelector('.message-row.user', { timeout: 10000 });
+  await page.waitForTimeout(500);
+  const deepDiveAfter = await page.locator('.message-row.user').count();
+  expect(deepDiveAfter - deepDiveBefore).toBe(1);
+
+  // 4b. Dashboard container fills available width without large right gap
+  await page.setViewportSize({ width: 1440, height: 900 });
+  await page.reload();
+  await page.waitForSelector('.dashboard-container', { timeout: 20000 });
+  const containerBox = await page.locator('.dashboard-container').boundingBox();
+  const mainBox = await page.locator('.main-content').boundingBox();
+  expect(containerBox).not.toBeNull();
+  expect(mainBox).not.toBeNull();
+  expect(containerBox!.width / mainBox!.width).toBeGreaterThan(0.9);
+
+  // 5. Chart Visibility Check
   await page.click('text=Chat');
   await page.fill('textarea', 'Show me a spending dashboard');
   await page.click('.send-btn');
