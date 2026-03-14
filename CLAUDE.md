@@ -68,6 +68,7 @@ Your content here...
 5.  **Finance & Income**
     - **Triggers**: "Spending", "Budget", "Payslip", "Salary", "Income", "W-4", "Withholding", "Tax", "401k", "Cash flow", "Credit card statement", "Amazon orders".
     - **Action**: Read `Finance/CLAUDE.md`. It documents the finance database schema, data sources, and query patterns.
+    - **Tax commands**: Use `/tax` for all tax operations (ingestion, validation, 1040 computation, issues tracking). `/tax` is the unified front-end; `/ingest-tax` still works for ingestion only.
 
 6.  **Divorce & Legal Requirements**
     - **Triggers**: "Divorce", "Settlement", "Custody", "Child support", "Parenting plan", "Legal", "Court order", "OFW", "OurFamilyWizard", "Sheri" (ex-wife).

@@ -1,7 +1,56 @@
 # Key Learnings
 
+### Personal Finance Demo App — Electron Desktop (2026-03-13)
+- **Stack**: Electron 35 + React 18 + TypeScript, built with electron-vite
+- **LLM backend**: OpenRouter API (`anthropic/claude-3.7-sonnet`), OpenAI-compatible SDK
+- **DB access**: Python subprocess (`Scripts/venv/bin/python3 .claude/scripts/finance_db.py`) — avoids `better-sqlite3` native compilation issues in Electron
+- **Core logic**: `demo-app/electron/finance-core.ts` with `FinanceDeps` dependency injection for testability; 22 vitest tests run in Node (no Electron needed)
+- **Chart rendering**: matplotlib PNG → read as base64 in main process → `data:image/png;base64,...` data URL. `file://` URLs are blocked by Electron CSP in renderer.
+- **Latency breakdown (21s total)**: 98% is LLM API calls (3 sequential round trips: 3.5s + 7.7s + 9.4s). SQL/tools only ~400ms. Main optimization lever: reduce API round trips.
+- **electron-vite gotcha**: HMR only works for renderer; main process changes require full `npm run dev` restart + `npx electron-vite build`
+- **Session logging**: all API requests/responses logged to `Finance/reports/debug/sessions/YYYY-MM-DD_HH-MM-SS.json`
+- **localIntentRouter**: keyword-based pre-fetch for dashboard queries (line 367 finance-core.ts) — eliminates first API round trip for common queries
+
+### LLM Model Routing & Hosting for Finance App (2026-03-13)
+- **Multi-model routing**: route simple queries → cheap model (Together AI Llama 8B ~$0.10/M), complex SQL/reasoning → Sonnet ($3/$15/M). Could cut API costs 60-70%.
+- **Embedded local model NOT viable for general users**: 7B Q4 model needs ~6GB RAM + 4.1GB file; 8GB MacBook Air M1 would be too slow. Use Ollama sidecar (optional, user-installed) rather than bundling weights.
+- **Qwen3.5 (released Mar 2, 2026)**: 0.8B / 2B / 4B / 9B models; Apache 2.0; 256K context; 9B beats GPT-4o-mini class. 9B needs ~6GB RAM — viable on 16GB Mac. Worth testing for SQL generation to replace Sonnet on simple queries.
+- **0.5B/0.8B models**: only good for intent classification/routing, NOT SQL generation (can't handle multi-table JOINs or tool call JSON).
+- **Together AI vs OpenRouter**: for open-source models, Together AI is cheaper (OpenRouter adds ~5% fee). For Claude: must use Anthropic/OpenRouter (Together AI doesn't host Claude).
+- **node-llama-cpp**: npm package to embed llama.cpp natively in Electron if full local inference needed.
+- **RouteLLM / Semantic Router**: frameworks for ML-based query routing (vs current keyword matching in localIntentRouter).
+
+### Claude Code Slash Commands vs Skills (2026-03-13)
+- **Two separate systems**: `.claude/commands/*.md` → shows in `/` autocomplete; `.claude/skills/<name>/SKILL.md` → AI-invocable via Skill tool only
+- **Fix**: symlink `.claude/commands/<name>.md` → `../skills/<name>/SKILL.md` — bridges both systems without duplication
+- **Created 15 symlinks** for: memorize, memory-compress, finance, commit, code, leetcode, sync, sync-notes, finance-todo, ingest-cc, ingest-payslips, ingest-tax, ingest-amazon, ingest-fidelity, ingest-becu
+
+### Git Large File Removal (2026-03-13)
+- `node_modules/` committed before `.gitignore` was added → 159MB Electron binary blocked GitHub push
+- `git rm -r --cached` removes from tracking but NOT from history — GitHub still rejects
+- `git filter-repo --path <dir> --invert-paths --force` rewrites entire history to remove the path
+- After filter-repo, remote is removed — must `git remote add origin` and force-push
+
+### Archive Schedule/Form Extraction & 1040 Computation Engine (2026-03-13)
+- **Extended `ingest_tax.py`** (now ~5,036 lines): Added `map_archive_pages()` to detect 19 form types by header signatures across all PDF pages
+- **Phase 1 parsers**: Schedule D, Form 8949, Schedules A/1/2/3 — all extract line items to individual YAMLs in `Finance/tax/archive/<year>/`
+- **Schedule D line 16 = 1040 line 7** confirmed across all years (2020-2024). TAX-001 ($220K capital gains discrepancy) explained: raw 1099-B ≠ Schedule D because CPA applies carryforwards + adjusted cost basis
+- **PDF extraction gotcha**: IRS form line numbers (e.g., "16.") followed by sentence text match `\d+\.\d{0,2}` regex as dollar amounts. Fix: reject amounts where text with letters follows on the same line (`after.strip() → re.search(r"[a-zA-Z]", after)`)
+- **PDF extraction gotcha**: IRS forms wrap value on continuation line (up to 5 lines after label). Must search forward but stop at next form line label (`re.match(r"\d{1,2}[a-z]?\s+[A-Z]", next_stripped)`)
+- **Adjacent amounts proximity filter bug**: `abs(am.start() - pos) < 15` intended to avoid double-counting paren amounts, but filtered out legitimate adjacent amounts (e.g., "141,030. 152,518. -11,488." on Schedule D). Fix: only check proximity against parenthesized amounts, not all amounts.
+- **Cross-validation extended**: 3 new checks (Schedule D→1040 L7, Schedule A→1040 deductions, Schedule 1→1040 L8/L10) — all MATCH across 2020-2024
+- **1040 deductions line**: Form uses "12" (not "12a") for deductions prefix across all years — pre-existing bug fixed
+
+### 1040 Computation Engine Analysis (2026-03-13)
+- **Existing engine**: `.claude/scripts/compute_1040.py` (733 lines) — computes 1040 from prepare-folder YAMLs, backtests against archive
+- **Current accuracy**: 11.1% (1/9 lines match for 2023). Only deductions matched.
+- **Root cause of capital gains gap**: Carryforwards engine uses raw 1099-B totals, not Schedule D. For 2022: raw 1099-B = $217K gain, but Schedule D line 16 = -$70,707 (net loss after CPA cost basis adjustments). $67,707 should carry forward to 2023 but doesn't.
+- **Non-covered RSU/ESPP basis**: The remaining $152K gap (after carryforward fix) comes from Schedule D Line 9 (non-covered LT transactions) where CPA adjusted cost basis to $152,518. Source: stock plan administrator (Morgan Stanley) RSU vesting records showing FMV at vest date.
+- **2024 is much closer**: Raw 1099-B = $127,616 vs Schedule D = $126,057 — only $1,559 gap. Most 2024 transactions were "covered" (Fidelity tracked basis correctly). Non-covered RSU shares were mostly sold by 2023.
+- **Fidelity supplemental pages** (pages 7-9 of consolidated 1099 PDFs): Only contain dividend/interest detail breakdowns, NOT capital gains cost basis adjustments.
+
 ### Tax Document Ingestion Pipeline (2026-02-28)
-- Created `/ingest-tax` slash command + Python script at `.claude/scripts/ingest_tax.py` (3,371 lines)
+- Created `/ingest-tax` slash command + Python script at `.claude/scripts/ingest_tax.py` (~5,036 lines)
 - Source PDFs: `~/Dropbox/1-Tax/2-prepare/<year>/` (CPA inputs) + `~/Dropbox/1-Tax/3-archive/<year>/` (filed returns)
 - Output YAMLs: `Finance/tax/prepare/<year>/` and `Finance/tax/archive/<year>/`
 - **49 YAMLs** generated across 2022–2025: 15 W-2s, 9 1099-Rs, 14 1098s, 2 1099-INTs, 3 5498-SAs, 5 5498s, 1 1099-SA, 2 Schedule Hs, 3 1040 summaries
@@ -15,7 +64,7 @@
 - Schedule H ↔ nanny W-2: exact match both years; 2025 Salesforce W-2 fed withholding ↔ payslip DB: exact match ($160,668.34)
 - **Team agents pattern**: Used 4 parallel agents (parser-1099int, parser-5498, parser-schedule-h, parser-1040) + 1 sequential (cross-validator). Each agent edits different functions in same file — minimal conflicts. TaskCreate with blockedBy for dependencies.
 
-### Personal Finance Database & Analysis Skill (2026-03-01, updated 2026-03-06)
+### Personal Finance Database & Analysis Skill (2026-03-01)
 - Created `/finance` slash command + Python script at `.claude/scripts/finance_db.py`
 - SQLite database at `Finance/finance.db` — schema: transactions, categories, accounts, categorization_rules, import_log, **amazon_orders**, **payslips, payslip_line_items**
 - **5,620 CC transactions** imported from 163 CSVs (Dec 2022 – Feb 2026, 6 cards)
@@ -28,11 +77,9 @@
 - **Amazon subcategories added (Mar 2026)**: Kids Books, Kids Toys and Games, Kids Food, Kids Gear, Baby and Infant, Tech and Electronics, Camping and Outdoor, Photography, Office, Supplements
 - `backup_db()` creates `.db.bak` + auto-exports `Finance/categorization_rules.json` (1,239 rules) before every import
 - `backup-rules` / `restore-rules` commands for manual export/import of categorization rules
-- **Full rebuild**: `finance_db.py rebuild` (single command — parallel parse + sequential import). Flags: `--force`, `--import-only`, `--parse-only`
-- **Pipeline observability**: `dashboard` (per-source status, pending files, freshness, categorization), `preflight` (pre-rebuild checks), `validate` (balance validation)
-- **Retry budget**: All 6 ingest scripts have `MAX_PARSE_ATTEMPTS = 3` — retries transient pdfminer failures
+- **Full rebuild**: `init` → `restore-rules` → `import` → `categorize` → `import-amazon` → `categorize-amazon` → `import-payslips` → `import-tax` → `import-fidelity` → `import-sofi` → `import-becu`
+- `finance_db.py validate` — post-import balance validation against PDF balance summaries
 - `/finance <question>` translates natural language to SQL queries — supports payslip/income/cash-flow queries
-- `/finance` context priming now runs `dashboard` first to detect stale/pending data before answering queries
 - matplotlib installed in venv for chart generation to `Finance/reports/`
 - **Finance CLAUDE.md** at `Finance/CLAUDE.md` documents all data sources, schema, tax facts, query patterns; root CLAUDE.md routes to it
 
@@ -58,50 +105,8 @@
 - **Safe harbor strategy**: keep current withholding, re-evaluate in October, adjust W-4 or make Q4 payment; W-2 withholding counts as paid evenly across all quarters (unlike estimated payments)
 - 110% of prior year tax safe harbor: need ~$180-185K in total 2026 withholding
 
-### Pending Transaction Log System (2026-03-11)
-- **File**: `Finance/pending-transactions.yaml` — pre-log transactions before statements arrive
-- **Log command**: `/finance log <description>` — parses input, appends YAML entry
-- **Match command**: `finance_db.py match-pending` — matches pending entries against DB by account + date (±5 days) + amount (±$1)
-- **Duplicate detection**: Skill checks before appending (account + amount + date ±1 day); script warns on duplicates in output
-- Supports all accounts: cma, apple-card, chase-prime/sapphire/freedom, fidelity-cc, bofa-atmos, becu-checking, amazon
-- Statuses: `pending` → `matched` | `stale` (45+ days). Entries kept forever as audit trail.
-- **Documented in**: `Finance/CLAUDE.md` under "Pending Transaction Log"
-
-### Stripe Tender Offer & Investment Decision (2026-03-10)
-- **Stripe valuation**: $159B (Feb 2026), up 74% from $91.5B (Feb 2025). Tender at $63/share.
-- **Holdings**: 8,946 eligible shares across 2 grants (CS-251512 Aug 2023 @ $20.13, CS-89887 Nov 2023 @ $21.15)
-- **Decision**: Sell $311K (55%), keep $249K (~4,013 shares) for IPO upside
-- Both grants held >1 year → LTCG (20% + 3.8% NIIT = 23.8%). Tax ~$50K, net ~$261K.
-- **Settles Apr 3, 2026**. Plan: pay off SoFi ($41K) + Tesla ($46K) immediately, keep $174K reserve.
-- $249K kept = 5.6% of ~$4.4M net worth — within safe concentration limits
-- Stripe has annual tender offers; no IPO planned ("not in top 20 priorities" — John Collison)
-
-### Net Worth Snapshot (2026-03-10)
-- **Retirement**: $2,238,076 (Roth IRA $930K, Microsoft 401k $1.02M diversified in index funds, SF 401k $188K, Airbnb 401k $83K, ST 401k $13K)
-- **Microsoft 401k holdings**: Vanguard 500 (10%), Vanguard Russell 1000 Growth (29%), Fidelity Growth Company Pool (32%), Fidelity Contrafund Pool (30%) — NO MSFT stock
-- **Real estate**: primary ~$1M equity, rental ~$540K equity
-- **Stripe RSUs**: $560K (pre-sale)
-- **Fidelity non-retirement**: $161K
-- **Estimated total**: ~$4.4M
-
-### Updated Spousal Support Schedule (2026-03-10)
-- $10K/mo through Jun 2026, then **$8K/mo Jul 2026 – Jun 2028**, then $0
-- Previously assumed $10K/mo through late 2028 — this is $2K/mo better starting Jul 2026
-
-### Revised CC Baseline (2026-03-10)
-- Original $2,723/mo estimate was too aggressive — missed Kids Education ($1,225/mo) and Kids Activities ($817/mo)
-- LingoAce Chinese lessons: ~$3,088 semi-annual prepay → amortized ~$515/mo
-- **Realistic CC baseline**: ~$4,800/mo (not $2,723)
-- Kids Education normalized: ~$720/mo (LingoAce $515 + school fees $148 + tutoring $58)
-
-### Cash Flow Analysis (2026-03-01, updated 2026-03-10)
-- **Full analysis saved to**: `Finance/Planning/2026-03-01_Cash-Flow-Analysis-and-Rental-Sale-Decision.md`
-- **Updated projection** with Stripe $311K sale + rental sale + revised spousal ($8K from Jul 2026):
-- Apr 3: Stripe settles → pay SoFi+Tesla → $174K reserve, burn -$3.3K/mo
-- Jun: ESPP freed → flip positive +$2.8K/mo
-- Aug: Rental sold → HELOC paid → $397K reserve, +$6.6K/mo
-- Jul 2028: Spousal ends → +$14.6K/mo
-- **Realistic CC baseline**: $4,800/mo (not $2,723)
+### Cash Flow Analysis (2026-03-01, updated)
+- **Full analysis saved to**: `Finance/Planning/2026-03-01-Cash-Flow-Analysis-and-Rental-Sale-Decision.md`
 - **Monthly take-home (Feb 2026)**: SF $10,817 + ST $9,736 + rental $1,995 = $22,548
 - **Monthly fixed obligations**: $23,833 (spousal $10K, primary mortgage $4,957, rental mortgage $1,780, SoFi $1,764, HELOC $1,358, child support $1,254, Tesla $1,000, rental HOA $620, insurance $550, kids ~$500, primary HOA $50)
 - **After-tax 401k**: already $0 at both employers (confirmed from Feb 2026 payslips)
@@ -113,7 +118,7 @@
 - **No longer need to sell rental** for survival — rental sale becomes optional deleveraging
 - **HELOC**: $150,904 balance, 6.99%, $230K limit, $79K available — runway now ~19 months at -$733/mo (was ~Oct 2026)
 - **Two mortgages via Mr. Cooper**: primary $4,957/mo + rental $1,780/mo
-- **Tesla loan**: Wells Fargo Auto #1313987526, $46,391 balance (Feb 2026), $897.79/mo required + $102.21 extra principal = $1,000/mo via BECU auto-draft (NOT from CMA)
+- **Tesla loan**: Wells Fargo, ~$45K balance, $1,000/mo via BECU auto-draft
 
 ### Rental Property (2026-03-01)
 - **Address**: 2516 175th Ave NE
@@ -201,9 +206,6 @@
 - Always check Trips/Lessons Learned.md before planning
 - Validate all URLs before including in itineraries
 
-## MCP Tool Constraints
-- **Brave Search API (Free plan)**: rate limit = 1 req/sec. NEVER call `mcp__brave-search__brave_web_search` in parallel — always sequential.
-
 ## User Preferences
 
 - Prefers concise financial analysis with tables over narrative
@@ -218,6 +220,18 @@
 
 # Active Context
 
+### Personal Finance Demo App (2026-03-13) `(active)`
+- Base64 chart rendering working, timing instrumentation in place, session logs to `Finance/reports/debug/sessions/`
+- **Dashboard**: Overview section has 4 charts (income bar + pie by employer, spending bar + pie by category). Pie charts load in parallel with bar charts.
+- **Pending transactions**: `migratePendingYamlToSQLite()` runs non-blocking on app startup — auto-imports from `Finance/pending-transactions.yaml`
+- **Chat UI**: Reduced whitespace (messages-area gap 16→8px, padding 24→16px, message-row gap 8→4px)
+- **Chart types**: `monthly_income`, `monthly_spending`, `monthly_cashflow`, `spending_by_category`, `top_merchants`, `income_by_source` — all in `generateChart()` + tool enum
+- **Next**: Multi-model routing — route simple queries to Qwen3.5-9B or Llama 8B via Together AI; reserve Sonnet for complex SQL/reasoning
+- **Next**: Test Qwen3.5-9B for SQL generation capability (released Mar 2, 2026)
+- **Next**: Optional Ollama sidecar for offline/private mode
+- **OpenRouter credit**: Bought $20 on 2026-03-12 for prototyping
+- **Branch**: `feature` on `obsidian-claude` repo (history rewritten to remove node_modules)
+
 ### Finance DB categorization rules backup (2026-03-01) `(COMPLETED)`
 - **Resolved**: 751 rules now auto-exported to `Finance/categorization_rules.json` on every import
 - `backup-rules` / `restore-rules` CLI commands added to `finance_db.py`
@@ -227,6 +241,12 @@
 ### Tax Ingestion Phase 4 Pending (2026-02-28) `(COMPLETED)`
 - All phases complete including SQLite integration (`tax_documents`, `tax_line_items` tables)
 - Remaining: consolidated 1099 parser (Fidelity/Morgan Stanley brokerage) — lower priority
+
+### 1040 Computation Engine Improvement (2026-03-13) `(active)`
+- Engine at `.claude/scripts/compute_1040.py` — currently 11.1% accuracy, targeting 60%+
+- **Key fixes needed**: carryforward from Schedule D archive data, W-2 dedup (duplicate spouse IFS W-2s), backdoor Roth detection, Schedule 2 taxes, deduction fix (rental vs primary mortgage)
+- **Capital gains limitation**: For years with non-covered RSU/ESPP sales (2023), gap persists (~$152K) without stock plan administrator data. For 2024, gap is only $1,559.
+- Plan file: `/Users/yichen/.claude/plans/sorted-singing-sunrise.md`
 
 ### 2025 Tax Return (2026-02-28) `(active)`
 - $25K estimated payment was unnecessary — expect ~$22-27K refund
@@ -242,42 +262,10 @@
 - Car: Alamo intermediate (Toyota Corolla), Conf: 68668670
 - Extras: $141 Costco shop card, $100 F&B credit, waived resort fee, free valet
 
-### Finance Pipeline Minions Improvements (2026-03-06) `(COMPLETED)`
-- Implemented 6 changes inspired by Stripe's "Minions" article for reliable one-shot coding agents
-- Added `dashboard`, `preflight`, `rebuild` commands to `finance_db.py`
-- Added `MAX_PARSE_ATTEMPTS = 3` retry budget to all 6 ingest scripts
-- Updated `/finance` context priming to use `dashboard` before answering queries (Data Completeness Guard)
-- Updated `Finance/CLAUDE.md` and `.claude/commands/finance.md` documentation
-
-### Rental Sale Spec Execution (2026-03-02) `(active)`
-- **Spec**: `Projects/1_selling-rental/spec.md` — 11 sub-tasks, 6 acceptance criteria
-- **Execution started** via `/execute-spec` — Phase 2 (plan presented, awaiting user approval)
-- **MetLife Legal Plan** covers real estate transaction review — use before cancelling the benefit
-- **Revised Mar 2026**: deficit -$733/mo (near breakeven), sale is optional deleveraging not survival
-- **HELOC runway**: $79K available / $733/mo = ~9 years — no longer urgent
-
-### BASC After-School Care (2026-03-10) `(active)`
-- ~$615/mo from CMA (53% of $1,160). Details in `memory/topics/cma-categorization-hints.md` — load when ingesting Fidelity CMA or categorizing.
-
-### Stripe Tender Offer Execution (2026-03-10) `(active)`
-- Selling $311K of $560K eligible. Settles Apr 3, 2026.
-- Plan: pay off SoFi + Tesla immediately, keep HELOC open until rental sale covers it (~Aug 2026)
-
-### Rental Sale Timeline (2026-03-10) `(active)`
-- Give tenant 90-day notice → vacancy ~Jun 2026 → list+sell → close ~Aug-Sep 2026
-- Net after tax: ~$374K → pay off HELOC ($151K) → $223K to reserve
-- Eastside market softening: prices -16% YoY, inventory +49% — sell sooner not later
-- Research saved to: `Finance/Planning/2026-03-10_Rental-Property-Inflation-Hedge-Research.md`
-
-### Slash Commands Created (2026-03-11) `(COMPLETED)`
-- `/ruby` — log to `Children/Ruby.md` (### headers, auto-tag)
-- `/laurence` — log to `Children/Laurence.md` (## headers, copyedits input)
-- `/sleep` — log to `Health/Yi's Mental Health, Anxiety, SAD.md` (splits into tagged bullets)
-- `/finance-log` renamed to `/finance-todo` — tracks activities needing follow-up
-
-### Local AI Desktop App Research (2026-03-11) `(active)`
-- Exploring product idea: privacy-focused financial document parsing desktop app
-- **Architecture**: Tauri + llama.cpp sidecar + Phi-4-mini (3.8B, 2.5GB) for local inference
-- **Hybrid approach**: deterministic PDF parsing (pdfplumber) + local LLM for classification/new formats + cloud API fallback for complex docs
-- **Market gap**: no desktop app exists with bundled local LLM for financial doc parsing
-- **Business model**: ship with local model (handles ~70% of formats free), charge for cloud API fallback ($0.50/parser), community parser library as moat
+### Cash Flow / Rental Sale Decision (2026-03-01) `(active)`
+- **Revised Mar 2026**: After hobby freeze + legal eliminated + ESPP stopped + subscription cuts, deficit went from -$6,785/mo to **-$733/mo** (near breakeven)
+- **HELOC runway**: $79K available / $733/mo = ~9 years (was ~Oct 2026) — no longer urgent
+- **Rental sale**: still beneficial (+$5,882/mo surplus, $137K reserve) but **no longer required for survival**
+- **Remaining levers**: cut dining 50% (+$300), audit Apple subs (+$50-100) → would flip to positive
+- **Spousal maintenance ends ~late 2028**: +$10K/mo — everything becomes very comfortable
+- Re-evaluate withholding in October per safe harbor strategy
