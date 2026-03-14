@@ -20,7 +20,7 @@ declare global {
     api: {
       sendChat: (
         messages: { role: string; content: string }[]
-      ) => Promise<{ text: string; chartPath?: string; chartData?: string }>
+      ) => Promise<{ text: string; charts?: Array<{ path: string; data: string }> }>
       onToolResult: (cb: (data: ToolResult) => void) => () => void
       onStreamToken: (cb: (data: { token: string }) => void) => () => void
       dbQuery: (sql: string) => Promise<unknown>
@@ -57,15 +57,21 @@ export function ChatInterface({
   
   const bottomRef = useRef<HTMLDivElement>(null)
   const textareaRef = useRef<HTMLTextAreaElement>(null)
+  const sentInitialRef = useRef<string | null>(null)
 
   useEffect(() => {
     onMessagesChange?.(messages)
   }, [messages, onMessagesChange])
 
   useEffect(() => {
-    if (initialMessage && !isLoading) {
+    if (!initialMessage) {
+      sentInitialRef.current = null
+      return
+    }
+    if (!isLoading && sentInitialRef.current !== initialMessage) {
       const lastUserMsg = [...messages].reverse().find(m => m.role === 'user')
       if (lastUserMsg?.content !== initialMessage) {
+        sentInitialRef.current = initialMessage
         sendMessage(initialMessage)
       }
       onClearInitial?.()
@@ -125,7 +131,7 @@ export function ChatInterface({
         setMessages((prev) =>
           prev.map((m) =>
             m.id === loadingId
-              ? { ...m, isLoading: false, content: result.text, chartPath: result.chartPath, chartData: result.chartData }
+              ? { ...m, isLoading: false, content: result.text, charts: result.charts }
               : m
           )
         )

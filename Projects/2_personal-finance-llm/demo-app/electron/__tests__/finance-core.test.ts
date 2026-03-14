@@ -185,7 +185,7 @@ describe('queryDB', () => {
 // ── handleChat ───────────────────────────────────────────────────────────
 
 describe('handleChat', () => {
-  it('single turn, finish_reason=stop: returns {text, chartPath:undefined}', async () => {
+  it('single turn, finish_reason=stop: returns {text, charts:undefined}', async () => {
     const openai = makeOpenAIMock([
       { finish_reason: 'stop', content: 'Hello there!' }
     ])
@@ -197,7 +197,7 @@ describe('handleChat', () => {
       deps
     )
     expect(result.text).toContain('Hello there!')
-    expect(result.chartPath).toBeUndefined()
+    expect(result.charts).toBeUndefined()
   })
 
   it('one execute_sql tool call: verifies apiMessages has 4 entries on 2nd call', async () => {
@@ -304,7 +304,8 @@ describe('handleChat', () => {
       deps
     )
     expect(result.text).toContain('Chart generated.')
-    expect(result.chartPath).toBe('/test/vault/Finance/reports/chart.png')
+    expect(result.charts).toHaveLength(1)
+    expect(result.charts![0].path).toBe('/test/vault/Finance/reports/chart.png')
     // writeFileSync called for the tmp script
     expect(fsMock.writeFileSync).toHaveBeenCalled()
     // unlinkSync called in finally to clean up

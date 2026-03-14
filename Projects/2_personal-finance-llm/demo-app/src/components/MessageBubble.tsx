@@ -51,15 +51,15 @@ export function MessageBubble({ message, onPinChart }: Props): React.ReactElemen
             {message.content}
           </ReactMarkdown>
 
-          {message.chartData && (
-            <div className="chat-chart-card">
-              <img src={message.chartData} alt="Analysis" className="chart-image" />
+          {message.charts?.map((c, i) => (
+            <div key={i} className="chat-chart-card">
+              <img src={c.data} alt="Chart" className="chart-image" />
               {onPinChart && (
-                <button 
-                  onClick={() => onPinChart({ 
-                    title: message.content.split('\n')[0].substring(0, 40) || 'Financial Chart', 
-                    chartData: message.chartData!, 
-                    chartPath: message.chartPath 
+                <button
+                  onClick={() => onPinChart({
+                    title: message.content.split('\n')[0].substring(0, 40) || 'Financial Chart',
+                    chartData: c.data,
+                    chartPath: c.path
                   })}
                   className="pin-action-btn"
                 >
@@ -67,7 +67,7 @@ export function MessageBubble({ message, onPinChart }: Props): React.ReactElemen
                 </button>
               )}
             </div>
-          )}
+          ))}
         </div>
       </div>
     </div>

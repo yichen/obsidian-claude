@@ -5,7 +5,8 @@ export interface Message {
   toolName?: string
   toolData?: unknown
   chartPath?: string
-  chartData?: string  // base64 data URL
+  chartData?: string  // base64 data URL (kept for pinned chart compat)
+  charts?: Array<{ path: string; data: string }>
   isLoading?: boolean
 }
 

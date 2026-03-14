@@ -67,8 +67,6 @@ body {
 .dashboard-container, .transactions-container, .chat-view-container {
   padding: 32px 48px;
   width: 100%;
-  max-width: 1200px;
-  margin: 0;
   flex-shrink: 0;
 }
 
@@ -425,3 +423,15 @@ textarea {
 .chat-header-left { display: flex; align-items: center; gap: 8px; }
 .chat-header-icon { color: #10b981; display: flex; align-items: center; }
 .loader-spin { animation: spin 0.8s linear infinite; }
+
+/* ── Window drag region (macOS hiddenInset title bar) ───────────────────── */
+.window-drag-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 52px;
+  -webkit-app-region: drag;
+  pointer-events: none;
+  z-index: 9999;
+}
