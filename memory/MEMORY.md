@@ -220,9 +220,10 @@
 
 # Active Context
 
-### Personal Finance Demo App (2026-03-13) `(active)`
+### Personal Finance Demo App (2026-03-14) `(active)`
 - Base64 chart rendering working, timing instrumentation in place, session logs to `Finance/reports/debug/sessions/`
 - **Dashboard**: Overview section has 4 charts (income bar + pie by employer, spending bar + pie by category). Pie charts load in parallel with bar charts.
+- **Dashboard Upcoming section** (2026-03-14): Predicts financial events in next 30 days using pattern detection — paychecks from `payslips` table (interval prediction), recurring expenses from `fidelity_cma_transactions` (categories with 3+ occurrences in 6 months, 7-45 day cadence). Auto-discovers child support, spousal maintenance, mortgage, etc. without hardcoding.
 - **Pending transactions**: `migratePendingYamlToSQLite()` runs non-blocking on app startup — auto-imports from `Finance/pending-transactions.yaml`
 - **Chat UI**: Reduced whitespace (messages-area gap 16→8px, padding 24→16px, message-row gap 8→4px)
 - **Chart types**: `monthly_income`, `monthly_spending`, `monthly_cashflow`, `spending_by_category`, `top_merchants`, `income_by_source` — all in `generateChart()` + tool enum
