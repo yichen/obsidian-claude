@@ -45,7 +45,7 @@ ARCHIVE_OUTPUT = OUTPUT_ROOT / "archive"
 LOG_FILE = OUTPUT_ROOT / "ingest.log"
 PROCESSING_LOG_PATH = OUTPUT_ROOT / "processing_log.json"
 
-YEARS = [2025, 2024, 2023, 2022]  # Process newest first
+YEARS = [2025, 2024, 2023, 2022, 2021, 2020]  # Process newest first
 MAX_PARSE_ATTEMPTS = 3  # Retry budget for transient PDF parse failures
 
 # --- Logging ---
@@ -114,7 +114,7 @@ def record_result(log: dict, pdf_path: Path, result: dict):
 
 # --- PDF Discovery ---
 def discover_prepare_pdfs(year: int) -> list[Path]:
-    """Find all PDFs in a prepare year folder (recursively)."""
+    """Find all PDFs in a prepare year folder (recursively). Skips ZIP files."""
     year_dir = PREPARE_SOURCE / str(year)
     if not year_dir.exists():
         return []
@@ -125,6 +125,9 @@ def discover_prepare_pdfs(year: int) -> list[Path]:
     seen = set()
     unique = []
     for p in pdfs:
+        # Skip anything inside a .zip pseudo-path (shouldn't happen with rglob, but guard anyway)
+        if ".zip" in p.name.lower():
+            continue
         rp = p.resolve()
         if rp not in seen:
             seen.add(rp)
@@ -996,7 +999,7 @@ def _build_w2_yaml(
     box6 = boxes.get(6, 0)
 
     # SS wage base limits by year
-    ss_wage_bases = {2022: 147000, 2023: 160200, 2024: 168600, 2025: 176100}
+    ss_wage_bases = {2020: 137700, 2021: 142800, 2022: 147000, 2023: 160200, 2024: 168600, 2025: 176100}
     ss_base = ss_wage_bases.get(tax_year, 176100)
 
     # Box 4 = Box 3 × 6.2% (±$1 for rounding)
@@ -2985,19 +2988,33 @@ def parse_1099_consolidated(pdf_path: Path, tax_year: int) -> dict:
 # ---------------------------------------------------------------------------
 
 def _find_1040_pages(pdf) -> tuple[Optional[int], Optional[int]]:
-    """Find the page indices for 1040 page 1 (income) and page 2 (tax/payments)."""
+    """Find the page indices for 1040 page 1 (income) and page 2 (tax/payments).
+
+    Handles two formats:
+    - 2022+: line labels are "1a" (W-2 wages), "1z" (total wages)
+    - 2020-2021: single line "1" (Wages, salaries), no 1a/1z split
+    """
     page1_idx = None
     page2_idx = None
     for i, page in enumerate(pdf.pages):
         text = page.extract_text(layout=True) or ""
-        if page1_idx is None and "1a" in text and "W-2" in text and (
-            "total income" in text.lower() or "taxable income" in text.lower()
-        ):
-            page1_idx = i
-        if page2_idx is None and "total tax" in text.lower() and (
-            "total payments" in text.lower() or "25a" in text
+        text_lower = text.lower()
+
+        # Page 1 (income): post-2021 requires "1a" label; pre-2022 uses just "1  Wages"
+        if page1_idx is None:
+            has_wages = ("1a" in text and "W-2" in text) or (
+                "Wages, salaries" in text and "W-2" in text
+            )
+            has_income_summary = "total income" in text_lower or "taxable income" in text_lower
+            if has_wages and has_income_summary:
+                page1_idx = i
+
+        # Page 2 (tax/payments): same across years
+        if page2_idx is None and "total tax" in text_lower and (
+            "total payments" in text_lower or "25a" in text
         ):
             page2_idx = i
+
         if page1_idx is not None and page2_idx is not None:
             break
     return page1_idx, page2_idx
@@ -3106,27 +3123,43 @@ def parse_1040(pdf_path: Path, tax_year: int) -> dict:
         })
 
     # Income Lines (page 1)
+    # Pre-2022 (2020-2021): wages are on a single Line 1 (no 1a/1z split)
+    # 2022+: wages split across 1a (W-2) and 1z (total wages including adjustments)
     income = {}
-    for key, prefix, kws in [
-        ("1a_w2_wages", "1a", ["W-2", "Wages"]),
-        ("1z_total_wages", "1z", ["Add lines"]),
-        ("2b_taxable_interest", "2b", ["Taxable interest"]),
-        ("3b_ordinary_dividends", "3b", ["Ordinary dividends", "dividends"]),
-        ("4b_taxable_ira", "4b", ["Taxable amount"]),
-        ("7_capital_gain_loss", "7", ["Capital gain"]),
-        ("8_additional_income", "8", ["Additional income", "Schedule 1", "Other income"]),
-    ]:
+    is_pre_2022 = tax_year <= 2021
+    if is_pre_2022:
+        income_fields = [
+            ("1a_w2_wages", "1", ["Wages, salaries"]),  # Line 1 = all W-2 wages pre-2022
+            ("2b_taxable_interest", "2b", ["Taxable interest"]),
+            ("3b_ordinary_dividends", "3b", ["Ordinary dividends", "dividends"]),
+            ("4b_taxable_ira", "4b", ["Taxable amount"]),
+            ("7_capital_gain_loss", "7", ["Capital gain"]),
+            ("8_additional_income", "8", ["Additional income", "Schedule 1", "Other income"]),
+        ]
+    else:
+        income_fields = [
+            ("1a_w2_wages", "1a", ["W-2", "Wages"]),
+            ("1z_total_wages", "1z", ["Add lines"]),
+            ("2b_taxable_interest", "2b", ["Taxable interest"]),
+            ("3b_ordinary_dividends", "3b", ["Ordinary dividends", "dividends"]),
+            ("4b_taxable_ira", "4b", ["Taxable amount"]),
+            ("7_capital_gain_loss", "7", ["Capital gain"]),
+            ("8_additional_income", "8", ["Additional income", "Schedule 1", "Other income"]),
+        ]
+    for key, prefix, kws in income_fields:
         val = extract_amount(page1_text, prefix, kws)
         if val is not None:
             income[key] = val
 
     # Summary Lines (page 1 + page 2)
+    # Pre-2022: deductions are on Line 12 (2020) or Line 12a (2021); taxable income on Line 15
     summary = {}
+    deductions_prefix = "12" if tax_year == 2020 else "12a"
     for key, prefix, kws, src in [
         ("total_income", "9", ["total income"], page1_text),
         ("adjustments", "10", ["Adjustments"], page1_text),
         ("adjusted_gross_income", "11", ["adjusted gross income"], page1_text),
-        ("deductions", "12", ["deduction", "Schedule A"], page1_text),
+        ("deductions", deductions_prefix, ["deduction", "Schedule A"], page1_text),
         ("taxable_income", "15", ["taxable income"], page1_text),
         ("tax_line16", "16", ["Tax"], page2_text),
         ("total_tax", "24", ["total tax"], page2_text),
@@ -3707,7 +3740,7 @@ def run_cross_validate(year_filter: Optional[int] = None):
 
         deductions = f1040.get("summary", {}).get("deductions", 0)
         # Standard deduction for MFJ in various years
-        std_deduction = {2022: 25900, 2023: 27700, 2024: 29200}.get(year, 29200)
+        std_deduction = {2020: 24800, 2021: 25100, 2022: 25900, 2023: 27700, 2024: 29200, 2025: 30000}.get(year, 30000)
         if is_mfj:
             std_deduction_label = f"MFJ standard deduction=${std_deduction:,}"
         else:
@@ -3799,6 +3832,132 @@ def run_cross_validate(year_filter: Optional[int] = None):
             parts.append(f"{mismatches} mismatched")
         parts.append(f"{infos} info-only")
         logger.info(f"\n  Result: {', '.join(parts)}")
+
+        # Write YAML output
+        cv_output = {
+            "tax_year": year,
+            "checks": [
+                {
+                    "field": label,
+                    "computed": round(float(prep_val), 2),
+                    "actual_1040": round(float(arch_val), 2),
+                    "status": status,
+                    **({"note": note} if note else {}),
+                }
+                for label, prep_val, arch_val, status, note in checks
+            ],
+            "summary": {
+                "matched": matches,
+                "expected_gaps": expected,
+                "mismatches": mismatches,
+                "info_only": infos,
+                "all_passed": mismatches == 0,
+            },
+        }
+        cv_path = ARCHIVE_OUTPUT / str(year) / "cross-validation.yaml"
+        write_yaml(cv_output, cv_path)
+        logger.info(f"  Written: {cv_path}")
+
+
+def run_carryforwards():
+    """Compute cross-year carryforwards (capital loss, IRA rollovers) and write Finance/tax/carryforwards.yaml."""
+    carryforward_path = OUTPUT_ROOT / "carryforwards.yaml"
+
+    logger.info(f"\n{'='*70}")
+    logger.info("  CARRYFORWARD COMPUTATION")
+    logger.info(f"{'='*70}")
+
+    result = {}
+    prior_cap_loss_carryforward = 0.0
+
+    for year in sorted(y for y in YEARS if y <= datetime.now().year):
+        archive_summary = ARCHIVE_OUTPUT / str(year) / "1040-summary.yaml"
+        prepare_dir = PREPARE_OUTPUT / str(year)
+
+        if not archive_summary.exists() and not prepare_dir.exists():
+            continue
+
+        year_data = {}
+
+        # --- Capital loss carryforward ---
+        # Sum 1099-B net gain/loss from prepare YAMLs
+        cap_gain_loss_1099b = 0.0
+        if prepare_dir.exists():
+            for yf in sorted(prepare_dir.glob("*.yaml")):
+                with open(yf) as f:
+                    doc = yaml.safe_load(f)
+                if not doc:
+                    continue
+                ft = doc.get("form_type", "")
+                if ft in ("1099-B", "1099-CONSOLIDATED"):
+                    # 1099-B: top-level net_gain_loss field
+                    if "net_gain_loss" in doc:
+                        cap_gain_loss_1099b += doc["net_gain_loss"]
+                    # 1099-CONSOLIDATED: look inside forms -> 1099-B -> total -> gain_loss
+                    elif ft == "1099-CONSOLIDATED":
+                        b_section = doc.get("forms", {}).get("1099-B", {})
+                        total_gl = b_section.get("total", {}).get("gain_loss", None)
+                        if total_gl is not None:
+                            cap_gain_loss_1099b += total_gl
+                        elif "net_gain_loss" in b_section:
+                            cap_gain_loss_1099b += b_section["net_gain_loss"]
+                        elif "realized_gains" in b_section:
+                            cap_gain_loss_1099b += b_section.get("realized_gains", 0)
+
+        # 1040 line 7 = capital gain/loss reported
+        line_7 = 0.0
+        if archive_summary.exists():
+            with open(archive_summary) as f:
+                f1040 = yaml.safe_load(f)
+            line_7 = f1040.get("income", {}).get("7_capital_gain_loss", 0.0) or 0.0
+
+        # Amount deducted is capped at -$3,000 if a loss year
+        cap_loss_deducted = max(line_7, -3000.0) if line_7 < 0 else line_7
+
+        # Prior carryforward + current year 1099-B = total available; excess beyond $3K limit carries forward
+        total_available = prior_cap_loss_carryforward + cap_gain_loss_1099b
+        if total_available < -3000.0:
+            cap_loss_carryforward_out = total_available - (-3000.0)  # negative excess
+        else:
+            cap_loss_carryforward_out = 0.0
+
+        year_data["capital_loss_1099b_net"] = round(cap_gain_loss_1099b, 2)
+        year_data["capital_loss_carryforward_in"] = round(prior_cap_loss_carryforward, 2)
+        year_data["capital_loss_line7_1040"] = round(line_7, 2)
+        year_data["capital_loss_carryforward_out"] = round(cap_loss_carryforward_out, 2)
+
+        logger.info(f"\n  {year}:")
+        logger.info(f"    1099-B net gain/loss:      ${cap_gain_loss_1099b:>12,.2f}")
+        logger.info(f"    Carryforward from prior:   ${prior_cap_loss_carryforward:>12,.2f}")
+        logger.info(f"    1040 Line 7 (reported):    ${line_7:>12,.2f}")
+        logger.info(f"    Carryforward to next year: ${cap_loss_carryforward_out:>12,.2f}")
+
+        # --- IRA rollover tracking ---
+        rollovers = []
+        if prepare_dir.exists():
+            for yf in sorted(prepare_dir.glob("*.yaml")):
+                with open(yf) as f:
+                    doc = yaml.safe_load(f)
+                if not doc:
+                    continue
+                if doc.get("form_type") == "1099-R":
+                    dist_code = doc.get("boxes", {}).get("7_distribution_code", "")
+                    if "G" in str(dist_code).upper():
+                        gross = doc.get("boxes", {}).get("1_gross_distribution", 0)
+                        taxable = doc.get("boxes", {}).get("2a_taxable_amount", 0)
+                        payer = doc.get("payer", {}).get("name", "?")
+                        rollovers.append({"payer": payer, "gross": gross, "taxable": taxable, "code": dist_code})
+                        logger.info(f"    IRA rollover (code {dist_code}): {payer} gross=${gross:,.2f} taxable=${taxable:,.2f}")
+
+        if rollovers:
+            year_data["ira_rollovers"] = rollovers
+
+        result[year] = year_data
+        prior_cap_loss_carryforward = cap_loss_carryforward_out
+
+    # Write output
+    write_yaml(result, carryforward_path)
+    logger.info(f"\n  Written: {carryforward_path}")
 
 
 def run_scan(year_filter: Optional[int] = None, source: str = "prepare"):
@@ -3933,6 +4092,7 @@ def main():
     group.add_argument("--scan", action="store_true", help="Show tax PDFs and their form types (no processing)")
     group.add_argument("--run", action="store_true", help="Process new PDFs and generate YAML")
     group.add_argument("--cross-validate", action="store_true", help="Cross-validate prepare docs against archive 1040s")
+    group.add_argument("--carryforwards", action="store_true", help="Compute cross-year carryforwards (capital loss, IRA rollovers)")
 
     parser.add_argument("--year", type=int, choices=YEARS, help="Process only this year")
     parser.add_argument("--source", choices=["prepare", "archive"], default="prepare", help="Which folder to process")
@@ -3949,6 +4109,8 @@ def main():
         run_ingest(year_filter=args.year, source=args.source, force=args.force)
     elif args.cross_validate:
         run_cross_validate(year_filter=args.year)
+    elif args.carryforwards:
+        run_carryforwards()
 
 
 if __name__ == "__main__":

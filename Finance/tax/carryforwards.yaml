@@ -1,0 +1,53 @@
+2020:
+  capital_loss_1099b_net: 236777.68
+  capital_loss_carryforward_in: 0.00
+  capital_loss_line7_1040: 236109.00
+  capital_loss_carryforward_out: 0.00
+  ira_rollovers:
+  - payer: Fidelity Investments (401k)
+    gross: 21270.57
+    taxable: 1664.60
+    code: G
+  - payer: Fidelity Investments (IRA)
+    gross: 132542.36
+    taxable: 132542.36
+    code: G
+2021:
+  capital_loss_1099b_net: 539720.66
+  capital_loss_carryforward_in: 0.00
+  capital_loss_line7_1040: 9821.00
+  capital_loss_carryforward_out: 0.00
+  ira_rollovers:
+  - payer: Fidelity Investments (401k)
+    gross: 35930.95
+    taxable: 1308.35
+    code: G
+2022:
+  capital_loss_1099b_net: 217168.58
+  capital_loss_carryforward_in: 0.00
+  capital_loss_line7_1040: -3000.00
+  capital_loss_carryforward_out: 0.00
+2023:
+  capital_loss_1099b_net: 249413.79
+  capital_loss_carryforward_in: 0.00
+  capital_loss_line7_1040: 29189.00
+  capital_loss_carryforward_out: 0.00
+2024:
+  capital_loss_1099b_net: 127615.60
+  capital_loss_carryforward_in: 0.00
+  capital_loss_line7_1040: 126057.00
+  capital_loss_carryforward_out: 0.00
+2025:
+  capital_loss_1099b_net: 7123.49
+  capital_loss_carryforward_in: 0.00
+  capital_loss_line7_1040: 0.00
+  capital_loss_carryforward_out: 0.00
+  ira_rollovers:
+  - payer: Fidelity - Salesforce 401K
+    gross: 40500.00
+    taxable: 0.00
+    code: G
+  - payer: Fidelity - ServiceTitan 401K
+    gross: 1923.08
+    taxable: 0.00
+    code: G

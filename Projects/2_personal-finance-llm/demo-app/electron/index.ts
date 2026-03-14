@@ -45,8 +45,21 @@ app.whenReady().then(async () => {
   ipcMain.handle('chat:send', async (event, messages) => {
     try {
       return await handleChat(messages, event.sender, makeDeps())
-    } catch (err) {
-      return { text: `Error: ${String(err)}` }
+    } catch (err: any) {
+      const status = err?.status ?? err?.statusCode
+      let message: string
+      if (status === 401) {
+        message = 'API key expired or invalid — please update your OpenRouter API key in .env and restart the app.'
+      } else if (status === 403) {
+        message = 'Access denied — your API key does not have permission for this model.'
+      } else if (status === 429) {
+        message = 'Rate limit exceeded — please wait a moment and try again.'
+      } else if (status === 402) {
+        message = 'Insufficient credits — please top up your OpenRouter account.'
+      } else {
+        message = `Error: ${String(err)}`
+      }
+      return { text: message }
     }
   })
 

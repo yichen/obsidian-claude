@@ -1,0 +1,43 @@
+form_type: W-2
+tax_year: 2020
+employer:
+  name: ''
+  ein: 26-3051428
+employee:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_wages: 1445952.99
+  2_fed_tax_withheld: 495341.61
+  3_ss_wages: 137700.00
+  4_ss_tax_withheld: 8537.40
+  5_medicare_wages: 1465452.99
+  6_medicare_tax_withheld: 32638.15
+  '12':
+  - code: C
+    amount: 787.60
+    description: Group-term life insurance over $50K
+  - code: D
+    amount: 19500.00
+    description: 401(k) elective deferrals
+  - code: W
+    amount: 7099.92
+    description: HSA employer contributions
+  - code: DD
+    amount: 14846.13
+    description: Health coverage cost (employer + employee)
+  '13':
+    retirement_plan: true
+    statutory_employee: false
+    third_party_sick_pay: false
+  15_state: WA
+  16_state_wages: 0.00
+  17_state_tax: 0.00
+validation:
+  checks_passed: true
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2020/2021-02-06/W-2_Form_2020_Chen_2021_01_19_13_32_49_-0800_W-2_ESS.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-13T17:57:42'

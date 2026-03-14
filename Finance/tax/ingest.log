@@ -4160,3 +4160,812 @@
 2026-03-07 07:12:54,335 WARNING     2024-Yi-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf: 1099-B short_term: gain/loss (-4983.29) != proceeds (42227.03) - basis (47210.32) + wash (40.0) = -4943.29
 2026-03-07 07:12:54,335 WARNING     2023-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf: 1099-B short_term: gain/loss (-6109.27) != proceeds (35671.67) - basis (41780.94) + wash (124.84) = -5984.43
 2026-03-07 07:12:54,335 WARNING     2024-09-19-Airbnb-w2-2023.pdf: Box 1 (3570.0) > $100 but no taxes withheld (Boxes 2,4,6 all zero)
+2026-03-13 17:49:45,204 INFO Tax Document Ingestion — 2026-03-13 17:49:45
+2026-03-13 17:49:45,208 INFO 
+  2025: 21 new / 21 total PDFs
+2026-03-13 17:49:45,208 INFO     [90mNEW[0m [1095-C (skip)       ] 2025-1095-c-salesforce.pdf
+2026-03-13 17:49:45,208 INFO     [33mNEW[0m [1099-SA             ] 2025-1099-SA-original.pdf
+2026-03-13 17:49:45,208 INFO     [33mNEW[0m [5498-SA             ] 2025-5498-SA-original.pdf
+2026-03-13 17:49:45,208 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2025-Frozen-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+2026-03-13 17:49:45,208 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2025-Frozen-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+2026-03-13 17:49:45,208 INFO     [33mNEW[0m [1099-R              ] 2025-SALESFORCECOM-48797-1099-R-Tax-Form.pdf
+2026-03-13 17:49:45,208 INFO     [33mNEW[0m [1099-R              ] 2025-SERVICETITAN-401(K)-77662-1099-R-Tax-Form.pdf
+2026-03-13 17:49:45,208 INFO     [33mNEW[0m [1099-R              ] 2025-SERVICETITAN-401K-77662-1099-R-Tax-Form.pdf
+2026-03-13 17:49:45,208 INFO     [33mNEW[0m [1099-R              ] 2025-Traditional-IRA-9024-Form-1099-R-&-Instructions.pdf
+2026-03-13 17:49:45,208 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2025-Yi's-Individual-CMA-4983-Consolidated-Form-1099.pdf
+2026-03-13 17:49:45,208 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2025-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+2026-03-13 17:49:45,208 INFO     [90mNEW[0m [???                 ] Acura MDX Renew your vehicle tabs Confirmation Number_ 0-100-553-956.pdf
+2026-03-13 17:49:45,959 INFO     [90mNEW[0m [???                 ] Endeavor Elementary Statement - 2026-02-02T105538.522.pdf
+2026-03-13 17:49:45,959 INFO     [33mNEW[0m [1098                ] Form-1098-694006164-5806.pdf
+2026-03-13 17:49:45,959 INFO     [33mNEW[0m [1098                ] mortgage-1098-748333812-16110.pdf
+2026-03-13 17:49:45,960 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] MS_2025_1099-CONS_MSSB_LLC_5046_20260203.pdf
+2026-03-13 17:49:45,960 INFO     [33mNEW[0m [W-2                 ] Salesforce-W2.pdf
+2026-03-13 17:49:45,960 INFO     [90mNEW[0m [???                 ] Trailer - Renew your vehicle tabs Confirmation Number_ 0-100-802-695.pdf
+2026-03-13 17:49:45,960 INFO     [33mNEW[0m [W-2                 ] W-2_Form_2025_Chen_2026_02_26_08_35_16_-0800_W-2_ESS.pdf
+2026-03-13 17:49:47,015 INFO     [33mNEW[0m [1098                ] BECU-Statement-E6D719F8-2E38-213F-6EF1-FFD0A7095102.PDF
+2026-03-13 17:49:47,756 INFO     [33mNEW[0m [1099-INT            ] BECU-Statement-F270CEC9-4719-DD17-8228-52BFDBE7B9B3.PDF
+2026-03-13 17:49:47,761 INFO 
+  2024: 32 new / 32 total PDFs
+2026-03-13 17:49:47,764 INFO     [90mNEW[0m [???                 ]  Pay Period- 07_21_2024 - 08_03_2024.pdf
+2026-03-13 17:49:47,767 INFO     [90mNEW[0m [???                 ]  Pay Period- 09_01_2024 - 09_14_2024.pdf
+2026-03-13 17:49:47,821 INFO     [90mNEW[0m [???                 ] 2024 Tax Summary (2025-03-19).pdf
+2026-03-13 17:49:47,821 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-CHEN-FAMILY-CHECKING-4267-Consolidated-Form-1099.pdf
+2026-03-13 17:49:47,821 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf
+2026-03-13 17:49:47,821 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf
+2026-03-13 17:49:47,821 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-Joint-WROS-TOD-6649-Consolidated-Form-1099.pdf
+2026-03-13 17:49:47,821 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+2026-03-13 17:49:47,877 INFO     [90mNEW[0m [???                 ] 2024-rental-income.pdf
+2026-03-13 17:49:47,877 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+2026-03-13 17:49:47,877 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-SHERI-INDIVIDUAL-TOD-9955-Consolidated-Form-1099.pdf
+2026-03-13 17:49:47,877 INFO     [33mNEW[0m [1099-R              ] 2024-Traditional-IRA-9024-Form-1099-R-.pdf
+2026-03-13 17:49:47,877 INFO     [33mNEW[0m [W-2                 ] 2024-W2-Salesforce.pdf
+2026-03-13 17:49:47,877 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+2026-03-13 17:49:47,877 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-Yi-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+2026-03-13 17:49:47,877 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-Yi-s-Individual-CMA-4983-Consolidated-Form-1099.pdf
+2026-03-13 17:49:47,877 INFO     [33mNEW[0m [W-2                 ] 2025-03-18-Lincoln-life-W-2.pdf
+2026-03-13 17:49:47,877 INFO     [90mNEW[0m [???                 ] Acura-CAA-4255-Renew-2024.pdf
+2026-03-13 17:49:47,877 INFO     [33mNEW[0m [1098                ] flagstar-1098.pdf
+2026-03-13 17:49:47,877 INFO     [33mNEW[0m [W-2                 ] IFS W2_2024.pdf
+2026-03-13 17:49:47,877 INFO     [33mNEW[0m [1098                ] mrcooper-1098.pdf
+2026-03-13 17:49:47,880 INFO     [90mNEW[0m [???                 ] Pay Period- 07_07_2024 - 07_20_2024.pdf
+2026-03-13 17:49:47,882 INFO     [90mNEW[0m [???                 ] Pay Period- 08_04_2024 - 08_17_2024.pdf
+2026-03-13 17:49:47,885 INFO     [90mNEW[0m [???                 ] Pay Period- 08_18_2024 - 08_31_2024.pdf
+2026-03-13 17:49:47,887 INFO     [90mNEW[0m [???                 ] Pay Period- 09_15_2024 - 09_28_2024.pdf
+2026-03-13 17:49:47,890 INFO     [90mNEW[0m [???                 ] Pay Period- 09_29_2024 - 10_12_2024.pdf
+2026-03-13 17:49:47,890 INFO     [33mNEW[0m [Schedule-H          ] schedule_h.20241231.pdf
+2026-03-13 17:49:47,890 INFO     [90mNEW[0m [???                 ] trailer-tabs-renew-2024.pdf
+2026-03-13 17:49:47,946 INFO     [90mNEW[0m [???                 ] UE 1099 2024.pdf
+2026-03-13 17:49:47,946 INFO     [33mNEW[0m [W-2                 ] W-2_Form_2024_Chen_stripe.pdf
+2026-03-13 17:49:47,946 INFO     [33mNEW[0m [W-2                 ] w2.20241231.pdf
+2026-03-13 17:49:47,946 INFO     [33mNEW[0m [1099-INT            ] 1099-INT-BECU-Statement-ECAF35A4-3155-518E-A2AE-9A0196BAFF85.PDF
+2026-03-13 17:49:47,952 INFO 
+  2023: 35 new / 35 total PDFs
+2026-03-13 17:49:48,829 INFO     [90mNEW[0m [???                 ] 1099 2024 unemployment .pdf
+2026-03-13 17:49:48,829 INFO     [33mNEW[0m [1098                ] 2023-flagstar-form-1098.pdf
+2026-03-13 17:49:48,829 INFO     [33mNEW[0m [5498-SA             ] 2023-Health-Savings-Account-4209-Form-5498-SA-&-Instructions.pdf
+2026-03-13 17:49:48,829 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2023-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf
+2026-03-13 17:49:48,829 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2023-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf
+2026-03-13 17:49:48,829 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2023-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+2026-03-13 17:49:48,829 INFO     [33mNEW[0m [1098                ] 2023-MrCooper-FORM-1098.pdf
+2026-03-13 17:49:48,829 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2023-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+2026-03-13 17:49:48,863 INFO     [90mNEW[0m [???                 ] 2023-Self-Employed-401K-9729-Form-5500-AVS-&-Instructions.pdf
+2026-03-13 17:49:48,887 INFO     [90mNEW[0m [???                 ] 2023-tax-final.pdf
+2026-03-13 17:49:48,887 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2023-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+2026-03-13 17:49:48,887 INFO     [33mNEW[0m [5498                ] 2023-YI-CHEN-ROTH-IRA-8097-Form-5498.pdf
+2026-03-13 17:49:48,887 INFO     [33mNEW[0m [1099-R              ] 2023-YI-CHEN-TRADITIONAL-IRA-4208-Form-1099-R-&-Instructions.pdf
+2026-03-13 17:49:48,887 INFO     [33mNEW[0m [5498                ] 2023-YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf
+2026-03-13 17:49:48,887 INFO     [33mNEW[0m [W-2                 ] 2024-09-19-Airbnb-w2-2023.pdf
+2026-03-13 17:49:49,001 INFO     [90mNEW[0m [???                 ] 2024-09-19-Lincoln-life.pdf
+2026-03-13 17:49:49,001 INFO     [90mNEW[0m [1095-C (skip)       ] 2024-09-19-stripe-1095c.pdf
+2026-03-13 17:49:49,122 INFO     [33mNEW[0m [1099-R              ] 2024-09-19-tax-State Farm.pdf
+2026-03-13 17:49:49,172 INFO     [90mNEW[0m [???                 ] [2024-09-19] 2023_Tax_Preparation.pdf
+2026-03-13 17:49:49,209 INFO     [90mNEW[0m [???                 ] Chen, Yi & Martin, Sheri_Inv#_Opp2249357-2301-00002877_1-11-2023_2_51_PM.pdf
+2026-03-13 17:49:49,283 INFO     [90mNEW[0m [???                 ] Chen, Yi & Martin, Sheri_Inv#_Opp2356233-2307-00004952_7-24-2023_4_04_PM.pdf
+2026-03-13 17:49:49,283 INFO     [33mNEW[0m [Schedule-H          ] diana.schedule_h.20231231.pdf
+2026-03-13 17:49:49,283 INFO     [33mNEW[0m [W-2                 ] diana.w2.20231231.pdf
+2026-03-13 17:49:49,588 INFO     [90mNEW[0m [1099-DIV (unsupported)] Fidelity_001.pdf
+2026-03-13 17:49:49,885 INFO     [90mNEW[0m [1099-DIV (unsupported)] File_002.pdf
+2026-03-13 17:49:50,184 INFO     [90mNEW[0m [1099-DIV (unsupported)] File_003.pdf
+2026-03-13 17:49:50,219 INFO     [33mNEW[0m [5498                ] File_004.pdf
+2026-03-13 17:49:50,223 INFO     [90mNEW[0m [???                 ] firstrepublic-0210879651 - 34 - YI CHEN - 2023.pdf
+2026-03-13 17:49:50,336 INFO     [90mNEW[0m [???                 ] IFS-2023-transactions.pdf
+2026-03-13 17:49:50,446 INFO     [90mNEW[0m [???                 ] IFS-Transaction-Details.pdf
+2026-03-13 17:49:50,446 INFO     [33mNEW[0m [W-2                 ] PLA w2.pdf
+2026-03-13 17:49:50,529 INFO     [90mNEW[0m [???                 ] shutterstock_2023_tax_form_yiphoto.pdf
+2026-03-13 17:49:50,529 INFO     [33mNEW[0m [W-2                 ] Stripe_W-2_Form_2023_Chen_2024_01_25_15_54_20_-0800_W-2_ESS.pdf
+2026-03-13 17:49:50,529 INFO     [33mNEW[0m [W-2                 ] W2_2023 IFS .pdf
+2026-03-13 17:49:50,529 INFO     [33mNEW[0m [W-2                 ] W2_2024 IFS.pdf
+2026-03-13 17:49:50,533 INFO 
+  2022: 23 new / 23 total PDFs
+2026-03-13 17:49:50,533 INFO     [33mNEW[0m [1098                ] 2022-1098-flagstar-2021-2.pdf
+2026-03-13 17:49:50,533 INFO     [33mNEW[0m [1098                ] 2022-1098-for-2021-flagstar.pdf
+2026-03-13 17:49:50,533 INFO     [90mNEW[0m [1095-C (skip)       ] 2022-Airbnb-1095c.pdf
+2026-03-13 17:49:50,533 INFO     [90mNEW[0m [1099-MISC (unsupported)] 2022-Airbnb-1099-misc.pdf
+2026-03-13 17:49:50,584 INFO     [90mNEW[0m [???                 ] 2022-airbnb-401k-true-up.pdf
+2026-03-13 17:49:50,584 INFO     [90mNEW[0m [3922 (skip)         ] 2022-Airbnb-form-3922.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [W-2                 ] 2022-Airbnb-w2.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [1098                ] 2022-flagstar-1098-1.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [1098                ] 2022-flagstar-1098-2.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [1098                ] 2022-flagstar-form-1098.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [5498-SA             ] 2022-healthequity-5498sa.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [1098                ] 2022-loandepot-1098.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [1099-R              ] 2022-statefarm-lifeinsurance-1099r.pdf
+2026-03-13 17:49:50,584 INFO     [90mNEW[0m [1095-C (skip)       ] 2022-stripe-1095-c.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [W-2                 ] 2022-stripe-W-2_Form_2022_Chen_2023_03_02_09_39_39_-0800_W-2_ESS.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [W-2                 ] 2022-w2-meta.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2022-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [5498                ] 2022-YI-CHEN-ROTH-IRA-8097-Form-5498.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [1099-R              ] 2022-YI-CHEN-TRADITIONAL-IRA-4208-Form-1099-R-&-Instructions.pdf
+2026-03-13 17:49:50,584 INFO     [33mNEW[0m [5498                ] 2022-YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf
+2026-03-13 17:49:50,596 INFO     [90mNEW[0m [???                 ] 2023 Airbnb 401(k) Summary Plan Description.pdf
+2026-03-13 17:49:50,668 INFO     [90mNEW[0m [???                 ] childcare_fsa_airbnb.pdf
+2026-03-13 17:49:50,739 INFO     [33mNEW[0m [1098                ] tax.pdf
+2026-03-13 17:49:50,744 INFO 
+  2021: 39 new / 39 total PDFs
+2026-03-13 17:49:50,744 INFO     [33mNEW[0m [1098                ] 1098_(Rocket_Mortgage).pdf
+2026-03-13 17:49:50,744 INFO     [33mNEW[0m [1098                ] 1098_flagstar_2.pdf
+2026-03-13 17:49:50,744 INFO     [33mNEW[0m [1098                ] 1098_flagstore_1.pdf
+2026-03-13 17:49:50,802 INFO     [90mNEW[0m [???                 ] 1099-Zhang.pdf
+2026-03-13 17:49:50,859 INFO     [90mNEW[0m [???                 ] 2021 Tax Preparation Summary.pdf
+2026-03-13 17:49:50,988 INFO     [90mNEW[0m [???                 ] 2021-feb-RSU-sell-to-cover-detail.pdf
+2026-03-13 17:49:50,988 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2021-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf
+2026-03-13 17:49:50,988 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2021-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf
+2026-03-13 17:49:51,023 INFO     [90mNEW[0m [???                 ] 2021-Self-Employed-401K-9729-Form-5500-AVS-&-Instructions.pdf
+2026-03-13 17:49:51,023 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2021-SHERI-INDIVIDUAL---TOD-9955-Consolidated-Form-1099.pdf
+2026-03-13 17:49:51,023 INFO     [33mNEW[0m [5498                ] 2021-SHERI-ROTH-IRA-2351-Form-5498.pdf
+2026-03-13 17:49:51,023 INFO     [33mNEW[0m [1099-R              ] 2021-Traditional-IRA-0059-Form-1099-R-&-Instructions.pdf
+2026-03-13 17:49:51,173 INFO     [33mNEW[0m [1098                ] 2022-04-30-Zhang-w9.pdf
+2026-03-13 17:49:51,213 INFO     [90mNEW[0m [???                 ] cultural-care-receipt.pdf
+2026-03-13 17:49:51,297 INFO     [90mNEW[0m [???                 ] EQUITY_STMT_105396_Aug-25-2021.pdf
+2026-03-13 17:49:51,420 INFO     [90mNEW[0m [???                 ] EQUITY_STMT_105396_Dec-09-2020.pdf
+2026-03-13 17:49:51,506 INFO     [90mNEW[0m [???                 ] EQUITY_STMT_105396_Feb-25-2021.pdf
+2026-03-13 17:49:51,592 INFO     [90mNEW[0m [???                 ] EQUITY_STMT_105396_May-25-2021.pdf
+2026-03-13 17:49:51,675 INFO     [90mNEW[0m [???                 ] EQUITY_STMT_105396_Nov-19-2021.pdf
+2026-03-13 17:49:51,696 INFO     [90mNEW[0m [???                 ] Extension.pdf
+2026-03-13 17:49:51,696 INFO     [33mNEW[0m [5498-SA             ] HealthEquity_f5498sa_2021.pdf
+2026-03-13 17:49:51,712 INFO     [90mNEW[0m [???                 ] How to enter Airbnb RSU sales on TurboTax.pdf
+2026-03-13 17:49:51,867 INFO     [90mNEW[0m [???                 ] laurence-tuition-2021-2022.pdf
+2026-03-13 17:49:51,869 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+2026-03-13 17:49:51,933 INFO     [90mNEW[0m [???                 ] Payslip_to_Print_-_Report_Design_03_25_2022.pdf
+2026-03-13 17:49:51,980 INFO     [90mNEW[0m [???                 ] rental-landscape-fine.pdf
+2026-03-13 17:49:52,135 INFO     [90mNEW[0m [???                 ] ruby-tuition-2021-2022.pdf
+2026-03-13 17:49:52,136 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+2026-03-13 17:49:52,136 INFO     [33mNEW[0m [W-2                 ] Sheri-W-2 2021 Eastside Preparatory.pdf
+2026-03-13 17:49:52,136 INFO     [33mNEW[0m [W-2                 ] Sheri-W-2 2021 Proof.pdf
+2026-03-13 17:49:52,136 INFO     [33mNEW[0m [W-2                 ] W-2_Form_2021_Chen_2022_03_25_15_21_42_-0700_W-2_ESS.pdf
+2026-03-13 17:49:52,136 INFO     [33mNEW[0m [1099-INT            ] YI-becu-1099-INT.pdf
+2026-03-13 17:49:52,136 INFO     [33mNEW[0m [1099-R              ] YI-CHEN-Airbnb-401k-1099-R.pdf
+2026-03-13 17:49:52,136 INFO     [33mNEW[0m [W-2                 ] YI-CHEN-Airbnb-W-2_Form_2021_Chen_2022_03_25_15_21_42_-0700_W-2_ESS.pdf
+2026-03-13 17:49:52,136 INFO     [33mNEW[0m [5498                ] YI-CHEN-ROTH-IRA-8097-Form-5498.pdf
+2026-03-13 17:49:52,136 INFO     [33mNEW[0m [1098                ] YI-CHEN-Sammamish-1098_(Rocket_Mortgage).pdf
+2026-03-13 17:49:52,136 INFO     [33mNEW[0m [1099-R              ] YI-CHEN-TRADITIONAL-IRA-4208-Form-1099-R-&-Instructions.pdf
+2026-03-13 17:49:52,136 INFO     [33mNEW[0m [5498                ] YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf
+2026-03-13 17:49:52,136 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] Yi-INDIVIDUAL---TOD-0887-Consolidated-Form-1099.pdf
+2026-03-13 17:49:52,140 INFO 
+  2020: 31 new / 31 total PDFs
+2026-03-13 17:49:52,140 INFO     [33mNEW[0m [1098                ] 1098-sammamish-heloc.pdf
+2026-03-13 17:49:52,140 INFO     [33mNEW[0m [1098                ] 1098-sammamish-primary.pdf
+2026-03-13 17:49:52,140 INFO     [33mNEW[0m [5498                ] 2019-SHERI-ROTH-IRA-2351-Form-5498.pdf
+2026-03-13 17:49:52,140 INFO     [33mNEW[0m [5498                ] 2019-Traditional-IRA-0059-Form-5498.pdf
+2026-03-13 17:49:52,154 INFO     [90mNEW[0m [???                 ] 2020 Rental Income and Expense.pdf
+2026-03-13 17:49:52,247 INFO     [33mNEW[0m [1099-R              ] 2020 Tax Preparation Summary (2021-02-06).pdf
+2026-03-13 17:49:52,249 INFO     [90mNEW[0m [???                 ] 2020-06-24-title-insurance.pdf
+2026-03-13 17:49:52,249 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2020-JOINT-BROKERAGE-X94666649-Consolidated-Form-1099.pdf
+2026-03-13 17:49:52,251 INFO     [90mNEW[0m [???                 ] 2020-Rental-refi-cost.pdf
+2026-03-13 17:49:52,251 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2020-SHERI-INDIVIDUAL---TOD-X84919955-Consolidated-Form-1099.pdf
+2026-03-13 17:49:52,251 INFO     [33mNEW[0m [5498                ] 2020-SHERI-ROTH-IRA-227592351-Form-5498.pdf
+2026-03-13 17:49:52,251 INFO     [33mNEW[0m [5498                ] 2020-Traditional-IRA-0059-Form-5498.pdf
+2026-03-13 17:49:52,251 INFO     [33mNEW[0m [5498                ] 2020-Traditional-IRA-231290059-Form-5498.pdf
+2026-03-13 17:49:52,251 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2020-YI-CHEN-INDIVIDUAL---TOD-X86610887-Consolidated-Form-1099.pdf
+2026-03-13 17:49:52,251 INFO     [33mNEW[0m [5498                ] 2020-YI-CHEN-ROTH-IRA-226518097-Form-5498.pdf
+2026-03-13 17:49:52,251 INFO     [33mNEW[0m [1099-R              ] 2020-YI-CHEN-TRADITIONAL-IRA-221984208-Form-1099-R-&-Instructions.pdf
+2026-03-13 17:49:52,251 INFO     [33mNEW[0m [5498                ] 2020-YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf
+2026-03-13 17:49:52,253 INFO     [90mNEW[0m [???                 ] 8879.pdf
+2026-03-13 17:49:52,253 INFO     [33mNEW[0m [1099-R              ] airbnb-1099-R (CA-E).pdf
+2026-03-13 17:49:52,254 INFO     [33mNEW[0m [1099-R              ] airbnb-1099-R (CA-G).pdf
+2026-03-13 17:49:52,254 INFO     [33mNEW[0m [1099-R              ] airbnb-1099-R (WA-G).pdf
+2026-03-13 17:49:52,254 INFO     [33mNEW[0m [1099-INT            ] Capital One 1099-INT 2020.pdf
+2026-03-13 17:49:52,254 INFO     [33mNEW[0m [5498-SA             ] form-5498-SA-corrected.pdf
+2026-03-13 17:49:52,254 INFO     [33mNEW[0m [5498-SA             ] healthequity_f5498sa_2020.pdf
+2026-03-13 17:49:52,262 INFO     [90mNEW[0m [???                 ] HUST-COVID-donation-YiChen.pdf
+2026-03-13 17:49:52,262 INFO     [33mNEW[0m [W-2                 ] Proof W2 2020.pdf
+2026-03-13 17:49:52,315 INFO     [90mNEW[0m [1099-DIV (unsupported)] robinhood_1099.pdf
+2026-03-13 17:49:52,331 INFO     [90mNEW[0m [???                 ] Ruby & Lawrence.pdf
+2026-03-13 17:49:52,331 INFO     [33mNEW[0m [1098                ] Student loan 1098-E 2020.pdf
+2026-03-13 17:49:52,331 INFO     [33mNEW[0m [W-2                 ] W-2_Form_2020_Chen_2021_01_19_13_32_49_-0800_W-2_ESS.pdf
+2026-03-13 17:49:52,361 INFO     [90mNEW[0m [???                 ] Yi Chen and Sheri Martin's 2020 Tax Return Final.pdf
+2026-03-13 17:49:52,361 INFO 
+  Total: 181 new / 181 total PDFs (119 supported, 57 unsupported/unknown)
+2026-03-13 17:49:57,721 INFO Tax Document Ingestion — 2026-03-13 17:49:57
+2026-03-13 17:49:57,722 INFO 
+  2025: 21 new / 21 total PDFs
+2026-03-13 17:49:57,722 INFO     [90mNEW[0m [1095-C (skip)       ] 2025-1095-c-salesforce.pdf
+2026-03-13 17:49:57,722 INFO     [33mNEW[0m [1099-SA             ] 2025-1099-SA-original.pdf
+2026-03-13 17:49:57,722 INFO     [33mNEW[0m [5498-SA             ] 2025-5498-SA-original.pdf
+2026-03-13 17:49:57,722 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2025-Frozen-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+2026-03-13 17:49:57,722 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2025-Frozen-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+2026-03-13 17:49:57,722 INFO     [33mNEW[0m [1099-R              ] 2025-SALESFORCECOM-48797-1099-R-Tax-Form.pdf
+2026-03-13 17:49:57,722 INFO     [33mNEW[0m [1099-R              ] 2025-SERVICETITAN-401(K)-77662-1099-R-Tax-Form.pdf
+2026-03-13 17:49:57,722 INFO     [33mNEW[0m [1099-R              ] 2025-SERVICETITAN-401K-77662-1099-R-Tax-Form.pdf
+2026-03-13 17:49:57,722 INFO     [33mNEW[0m [1099-R              ] 2025-Traditional-IRA-9024-Form-1099-R-&-Instructions.pdf
+2026-03-13 17:49:57,722 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2025-Yi's-Individual-CMA-4983-Consolidated-Form-1099.pdf
+2026-03-13 17:49:57,722 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2025-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+2026-03-13 17:49:57,722 INFO     [90mNEW[0m [???                 ] Acura MDX Renew your vehicle tabs Confirmation Number_ 0-100-553-956.pdf
+2026-03-13 17:49:57,787 INFO     [90mNEW[0m [???                 ] Endeavor Elementary Statement - 2026-02-02T105538.522.pdf
+2026-03-13 17:49:57,787 INFO     [33mNEW[0m [1098                ] Form-1098-694006164-5806.pdf
+2026-03-13 17:49:57,787 INFO     [33mNEW[0m [1098                ] mortgage-1098-748333812-16110.pdf
+2026-03-13 17:49:57,787 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] MS_2025_1099-CONS_MSSB_LLC_5046_20260203.pdf
+2026-03-13 17:49:57,787 INFO     [33mNEW[0m [W-2                 ] Salesforce-W2.pdf
+2026-03-13 17:49:57,787 INFO     [90mNEW[0m [???                 ] Trailer - Renew your vehicle tabs Confirmation Number_ 0-100-802-695.pdf
+2026-03-13 17:49:57,787 INFO     [33mNEW[0m [W-2                 ] W-2_Form_2025_Chen_2026_02_26_08_35_16_-0800_W-2_ESS.pdf
+2026-03-13 17:49:57,882 INFO     [33mNEW[0m [1098                ] BECU-Statement-E6D719F8-2E38-213F-6EF1-FFD0A7095102.PDF
+2026-03-13 17:49:57,908 INFO     [33mNEW[0m [1099-INT            ] BECU-Statement-F270CEC9-4719-DD17-8228-52BFDBE7B9B3.PDF
+2026-03-13 17:49:57,910 INFO 
+  2024: 32 new / 32 total PDFs
+2026-03-13 17:49:57,912 INFO     [90mNEW[0m [???                 ]  Pay Period- 07_21_2024 - 08_03_2024.pdf
+2026-03-13 17:49:57,914 INFO     [90mNEW[0m [???                 ]  Pay Period- 09_01_2024 - 09_14_2024.pdf
+2026-03-13 17:49:57,962 INFO     [90mNEW[0m [???                 ] 2024 Tax Summary (2025-03-19).pdf
+2026-03-13 17:49:57,962 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-CHEN-FAMILY-CHECKING-4267-Consolidated-Form-1099.pdf
+2026-03-13 17:49:57,962 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf
+2026-03-13 17:49:57,962 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf
+2026-03-13 17:49:57,962 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-Joint-WROS-TOD-6649-Consolidated-Form-1099.pdf
+2026-03-13 17:49:57,962 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+2026-03-13 17:49:58,013 INFO     [90mNEW[0m [???                 ] 2024-rental-income.pdf
+2026-03-13 17:49:58,013 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+2026-03-13 17:49:58,013 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-SHERI-INDIVIDUAL-TOD-9955-Consolidated-Form-1099.pdf
+2026-03-13 17:49:58,013 INFO     [33mNEW[0m [1099-R              ] 2024-Traditional-IRA-9024-Form-1099-R-.pdf
+2026-03-13 17:49:58,013 INFO     [33mNEW[0m [W-2                 ] 2024-W2-Salesforce.pdf
+2026-03-13 17:49:58,013 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+2026-03-13 17:49:58,013 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-Yi-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+2026-03-13 17:49:58,013 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2024-Yi-s-Individual-CMA-4983-Consolidated-Form-1099.pdf
+2026-03-13 17:49:58,013 INFO     [33mNEW[0m [W-2                 ] 2025-03-18-Lincoln-life-W-2.pdf
+2026-03-13 17:49:58,013 INFO     [90mNEW[0m [???                 ] Acura-CAA-4255-Renew-2024.pdf
+2026-03-13 17:49:58,013 INFO     [33mNEW[0m [1098                ] flagstar-1098.pdf
+2026-03-13 17:49:58,013 INFO     [33mNEW[0m [W-2                 ] IFS W2_2024.pdf
+2026-03-13 17:49:58,014 INFO     [33mNEW[0m [1098                ] mrcooper-1098.pdf
+2026-03-13 17:49:58,015 INFO     [90mNEW[0m [???                 ] Pay Period- 07_07_2024 - 07_20_2024.pdf
+2026-03-13 17:49:58,017 INFO     [90mNEW[0m [???                 ] Pay Period- 08_04_2024 - 08_17_2024.pdf
+2026-03-13 17:49:58,019 INFO     [90mNEW[0m [???                 ] Pay Period- 08_18_2024 - 08_31_2024.pdf
+2026-03-13 17:49:58,021 INFO     [90mNEW[0m [???                 ] Pay Period- 09_15_2024 - 09_28_2024.pdf
+2026-03-13 17:49:58,023 INFO     [90mNEW[0m [???                 ] Pay Period- 09_29_2024 - 10_12_2024.pdf
+2026-03-13 17:49:58,023 INFO     [33mNEW[0m [Schedule-H          ] schedule_h.20241231.pdf
+2026-03-13 17:49:58,023 INFO     [90mNEW[0m [???                 ] trailer-tabs-renew-2024.pdf
+2026-03-13 17:49:58,075 INFO     [90mNEW[0m [???                 ] UE 1099 2024.pdf
+2026-03-13 17:49:58,075 INFO     [33mNEW[0m [W-2                 ] W-2_Form_2024_Chen_stripe.pdf
+2026-03-13 17:49:58,075 INFO     [33mNEW[0m [W-2                 ] w2.20241231.pdf
+2026-03-13 17:49:58,075 INFO     [33mNEW[0m [1099-INT            ] 1099-INT-BECU-Statement-ECAF35A4-3155-518E-A2AE-9A0196BAFF85.PDF
+2026-03-13 17:49:58,077 INFO 
+  2023: 35 new / 35 total PDFs
+2026-03-13 17:49:58,128 INFO     [90mNEW[0m [???                 ] 1099 2024 unemployment .pdf
+2026-03-13 17:49:58,128 INFO     [33mNEW[0m [1098                ] 2023-flagstar-form-1098.pdf
+2026-03-13 17:49:58,128 INFO     [33mNEW[0m [5498-SA             ] 2023-Health-Savings-Account-4209-Form-5498-SA-&-Instructions.pdf
+2026-03-13 17:49:58,128 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2023-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf
+2026-03-13 17:49:58,128 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2023-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf
+2026-03-13 17:49:58,128 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2023-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+2026-03-13 17:49:58,128 INFO     [33mNEW[0m [1098                ] 2023-MrCooper-FORM-1098.pdf
+2026-03-13 17:49:58,128 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2023-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+2026-03-13 17:49:58,160 INFO     [90mNEW[0m [???                 ] 2023-Self-Employed-401K-9729-Form-5500-AVS-&-Instructions.pdf
+2026-03-13 17:49:58,182 INFO     [90mNEW[0m [???                 ] 2023-tax-final.pdf
+2026-03-13 17:49:58,182 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2023-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+2026-03-13 17:49:58,182 INFO     [33mNEW[0m [5498                ] 2023-YI-CHEN-ROTH-IRA-8097-Form-5498.pdf
+2026-03-13 17:49:58,182 INFO     [33mNEW[0m [1099-R              ] 2023-YI-CHEN-TRADITIONAL-IRA-4208-Form-1099-R-&-Instructions.pdf
+2026-03-13 17:49:58,182 INFO     [33mNEW[0m [5498                ] 2023-YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf
+2026-03-13 17:49:58,182 INFO     [33mNEW[0m [W-2                 ] 2024-09-19-Airbnb-w2-2023.pdf
+2026-03-13 17:49:58,294 INFO     [90mNEW[0m [???                 ] 2024-09-19-Lincoln-life.pdf
+2026-03-13 17:49:58,295 INFO     [90mNEW[0m [1095-C (skip)       ] 2024-09-19-stripe-1095c.pdf
+2026-03-13 17:49:58,409 INFO     [33mNEW[0m [1099-R              ] 2024-09-19-tax-State Farm.pdf
+2026-03-13 17:49:58,454 INFO     [90mNEW[0m [???                 ] [2024-09-19] 2023_Tax_Preparation.pdf
+2026-03-13 17:49:58,489 INFO     [90mNEW[0m [???                 ] Chen, Yi & Martin, Sheri_Inv#_Opp2249357-2301-00002877_1-11-2023_2_51_PM.pdf
+2026-03-13 17:49:58,559 INFO     [90mNEW[0m [???                 ] Chen, Yi & Martin, Sheri_Inv#_Opp2356233-2307-00004952_7-24-2023_4_04_PM.pdf
+2026-03-13 17:49:58,559 INFO     [33mNEW[0m [Schedule-H          ] diana.schedule_h.20231231.pdf
+2026-03-13 17:49:58,559 INFO     [33mNEW[0m [W-2                 ] diana.w2.20231231.pdf
+2026-03-13 17:49:58,854 INFO     [90mNEW[0m [1099-DIV (unsupported)] Fidelity_001.pdf
+2026-03-13 17:49:59,150 INFO     [90mNEW[0m [1099-DIV (unsupported)] File_002.pdf
+2026-03-13 17:49:59,449 INFO     [90mNEW[0m [1099-DIV (unsupported)] File_003.pdf
+2026-03-13 17:49:59,484 INFO     [33mNEW[0m [5498                ] File_004.pdf
+2026-03-13 17:49:59,487 INFO     [90mNEW[0m [???                 ] firstrepublic-0210879651 - 34 - YI CHEN - 2023.pdf
+2026-03-13 17:49:59,598 INFO     [90mNEW[0m [???                 ] IFS-2023-transactions.pdf
+2026-03-13 17:49:59,701 INFO     [90mNEW[0m [???                 ] IFS-Transaction-Details.pdf
+2026-03-13 17:49:59,701 INFO     [33mNEW[0m [W-2                 ] PLA w2.pdf
+2026-03-13 17:49:59,782 INFO     [90mNEW[0m [???                 ] shutterstock_2023_tax_form_yiphoto.pdf
+2026-03-13 17:49:59,782 INFO     [33mNEW[0m [W-2                 ] Stripe_W-2_Form_2023_Chen_2024_01_25_15_54_20_-0800_W-2_ESS.pdf
+2026-03-13 17:49:59,783 INFO     [33mNEW[0m [W-2                 ] W2_2023 IFS .pdf
+2026-03-13 17:49:59,783 INFO     [33mNEW[0m [W-2                 ] W2_2024 IFS.pdf
+2026-03-13 17:49:59,784 INFO 
+  2022: 23 new / 23 total PDFs
+2026-03-13 17:49:59,784 INFO     [33mNEW[0m [1098                ] 2022-1098-flagstar-2021-2.pdf
+2026-03-13 17:49:59,784 INFO     [33mNEW[0m [1098                ] 2022-1098-for-2021-flagstar.pdf
+2026-03-13 17:49:59,784 INFO     [90mNEW[0m [1095-C (skip)       ] 2022-Airbnb-1095c.pdf
+2026-03-13 17:49:59,784 INFO     [90mNEW[0m [1099-MISC (unsupported)] 2022-Airbnb-1099-misc.pdf
+2026-03-13 17:49:59,835 INFO     [90mNEW[0m [???                 ] 2022-airbnb-401k-true-up.pdf
+2026-03-13 17:49:59,835 INFO     [90mNEW[0m [3922 (skip)         ] 2022-Airbnb-form-3922.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [W-2                 ] 2022-Airbnb-w2.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [1098                ] 2022-flagstar-1098-1.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [1098                ] 2022-flagstar-1098-2.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [1098                ] 2022-flagstar-form-1098.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [5498-SA             ] 2022-healthequity-5498sa.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [1098                ] 2022-loandepot-1098.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [1099-R              ] 2022-statefarm-lifeinsurance-1099r.pdf
+2026-03-13 17:49:59,835 INFO     [90mNEW[0m [1095-C (skip)       ] 2022-stripe-1095-c.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [W-2                 ] 2022-stripe-W-2_Form_2022_Chen_2023_03_02_09_39_39_-0800_W-2_ESS.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [W-2                 ] 2022-w2-meta.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2022-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [5498                ] 2022-YI-CHEN-ROTH-IRA-8097-Form-5498.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [1099-R              ] 2022-YI-CHEN-TRADITIONAL-IRA-4208-Form-1099-R-&-Instructions.pdf
+2026-03-13 17:49:59,835 INFO     [33mNEW[0m [5498                ] 2022-YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf
+2026-03-13 17:49:59,846 INFO     [90mNEW[0m [???                 ] 2023 Airbnb 401(k) Summary Plan Description.pdf
+2026-03-13 17:49:59,919 INFO     [90mNEW[0m [???                 ] childcare_fsa_airbnb.pdf
+2026-03-13 17:49:59,987 INFO     [33mNEW[0m [1098                ] tax.pdf
+2026-03-13 17:49:59,989 INFO 
+  2021: 39 new / 39 total PDFs
+2026-03-13 17:49:59,989 INFO     [33mNEW[0m [1098                ] 1098_(Rocket_Mortgage).pdf
+2026-03-13 17:49:59,989 INFO     [33mNEW[0m [1098                ] 1098_flagstar_2.pdf
+2026-03-13 17:49:59,989 INFO     [33mNEW[0m [1098                ] 1098_flagstore_1.pdf
+2026-03-13 17:50:00,047 INFO     [90mNEW[0m [???                 ] 1099-Zhang.pdf
+2026-03-13 17:50:00,104 INFO     [90mNEW[0m [???                 ] 2021 Tax Preparation Summary.pdf
+2026-03-13 17:50:00,231 INFO     [90mNEW[0m [???                 ] 2021-feb-RSU-sell-to-cover-detail.pdf
+2026-03-13 17:50:00,231 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2021-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf
+2026-03-13 17:50:00,231 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2021-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf
+2026-03-13 17:50:00,265 INFO     [90mNEW[0m [???                 ] 2021-Self-Employed-401K-9729-Form-5500-AVS-&-Instructions.pdf
+2026-03-13 17:50:00,265 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2021-SHERI-INDIVIDUAL---TOD-9955-Consolidated-Form-1099.pdf
+2026-03-13 17:50:00,265 INFO     [33mNEW[0m [5498                ] 2021-SHERI-ROTH-IRA-2351-Form-5498.pdf
+2026-03-13 17:50:00,265 INFO     [33mNEW[0m [1099-R              ] 2021-Traditional-IRA-0059-Form-1099-R-&-Instructions.pdf
+2026-03-13 17:50:00,410 INFO     [33mNEW[0m [1098                ] 2022-04-30-Zhang-w9.pdf
+2026-03-13 17:50:00,449 INFO     [90mNEW[0m [???                 ] cultural-care-receipt.pdf
+2026-03-13 17:50:00,533 INFO     [90mNEW[0m [???                 ] EQUITY_STMT_105396_Aug-25-2021.pdf
+2026-03-13 17:50:00,646 INFO     [90mNEW[0m [???                 ] EQUITY_STMT_105396_Dec-09-2020.pdf
+2026-03-13 17:50:00,729 INFO     [90mNEW[0m [???                 ] EQUITY_STMT_105396_Feb-25-2021.pdf
+2026-03-13 17:50:00,810 INFO     [90mNEW[0m [???                 ] EQUITY_STMT_105396_May-25-2021.pdf
+2026-03-13 17:50:00,893 INFO     [90mNEW[0m [???                 ] EQUITY_STMT_105396_Nov-19-2021.pdf
+2026-03-13 17:50:00,913 INFO     [90mNEW[0m [???                 ] Extension.pdf
+2026-03-13 17:50:00,913 INFO     [33mNEW[0m [5498-SA             ] HealthEquity_f5498sa_2021.pdf
+2026-03-13 17:50:00,927 INFO     [90mNEW[0m [???                 ] How to enter Airbnb RSU sales on TurboTax.pdf
+2026-03-13 17:50:01,082 INFO     [90mNEW[0m [???                 ] laurence-tuition-2021-2022.pdf
+2026-03-13 17:50:01,082 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+2026-03-13 17:50:01,145 INFO     [90mNEW[0m [???                 ] Payslip_to_Print_-_Report_Design_03_25_2022.pdf
+2026-03-13 17:50:01,191 INFO     [90mNEW[0m [???                 ] rental-landscape-fine.pdf
+2026-03-13 17:50:01,348 INFO     [90mNEW[0m [???                 ] ruby-tuition-2021-2022.pdf
+2026-03-13 17:50:01,348 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+2026-03-13 17:50:01,348 INFO     [33mNEW[0m [W-2                 ] Sheri-W-2 2021 Eastside Preparatory.pdf
+2026-03-13 17:50:01,348 INFO     [33mNEW[0m [W-2                 ] Sheri-W-2 2021 Proof.pdf
+2026-03-13 17:50:01,348 INFO     [33mNEW[0m [W-2                 ] W-2_Form_2021_Chen_2022_03_25_15_21_42_-0700_W-2_ESS.pdf
+2026-03-13 17:50:01,348 INFO     [33mNEW[0m [1099-INT            ] YI-becu-1099-INT.pdf
+2026-03-13 17:50:01,348 INFO     [33mNEW[0m [1099-R              ] YI-CHEN-Airbnb-401k-1099-R.pdf
+2026-03-13 17:50:01,348 INFO     [33mNEW[0m [W-2                 ] YI-CHEN-Airbnb-W-2_Form_2021_Chen_2022_03_25_15_21_42_-0700_W-2_ESS.pdf
+2026-03-13 17:50:01,348 INFO     [33mNEW[0m [5498                ] YI-CHEN-ROTH-IRA-8097-Form-5498.pdf
+2026-03-13 17:50:01,348 INFO     [33mNEW[0m [1098                ] YI-CHEN-Sammamish-1098_(Rocket_Mortgage).pdf
+2026-03-13 17:50:01,349 INFO     [33mNEW[0m [1099-R              ] YI-CHEN-TRADITIONAL-IRA-4208-Form-1099-R-&-Instructions.pdf
+2026-03-13 17:50:01,349 INFO     [33mNEW[0m [5498                ] YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf
+2026-03-13 17:50:01,349 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] Yi-INDIVIDUAL---TOD-0887-Consolidated-Form-1099.pdf
+2026-03-13 17:50:01,350 INFO 
+  2020: 31 new / 31 total PDFs
+2026-03-13 17:50:01,351 INFO     [33mNEW[0m [1098                ] 1098-sammamish-heloc.pdf
+2026-03-13 17:50:01,351 INFO     [33mNEW[0m [1098                ] 1098-sammamish-primary.pdf
+2026-03-13 17:50:01,351 INFO     [33mNEW[0m [5498                ] 2019-SHERI-ROTH-IRA-2351-Form-5498.pdf
+2026-03-13 17:50:01,351 INFO     [33mNEW[0m [5498                ] 2019-Traditional-IRA-0059-Form-5498.pdf
+2026-03-13 17:50:01,365 INFO     [90mNEW[0m [???                 ] 2020 Rental Income and Expense.pdf
+2026-03-13 17:50:01,454 INFO     [33mNEW[0m [1099-R              ] 2020 Tax Preparation Summary (2021-02-06).pdf
+2026-03-13 17:50:01,455 INFO     [90mNEW[0m [???                 ] 2020-06-24-title-insurance.pdf
+2026-03-13 17:50:01,455 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2020-JOINT-BROKERAGE-X94666649-Consolidated-Form-1099.pdf
+2026-03-13 17:50:01,456 INFO     [90mNEW[0m [???                 ] 2020-Rental-refi-cost.pdf
+2026-03-13 17:50:01,456 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2020-SHERI-INDIVIDUAL---TOD-X84919955-Consolidated-Form-1099.pdf
+2026-03-13 17:50:01,456 INFO     [33mNEW[0m [5498                ] 2020-SHERI-ROTH-IRA-227592351-Form-5498.pdf
+2026-03-13 17:50:01,456 INFO     [33mNEW[0m [5498                ] 2020-Traditional-IRA-0059-Form-5498.pdf
+2026-03-13 17:50:01,456 INFO     [33mNEW[0m [5498                ] 2020-Traditional-IRA-231290059-Form-5498.pdf
+2026-03-13 17:50:01,456 INFO     [33mNEW[0m [1099-CONSOLIDATED   ] 2020-YI-CHEN-INDIVIDUAL---TOD-X86610887-Consolidated-Form-1099.pdf
+2026-03-13 17:50:01,456 INFO     [33mNEW[0m [5498                ] 2020-YI-CHEN-ROTH-IRA-226518097-Form-5498.pdf
+2026-03-13 17:50:01,456 INFO     [33mNEW[0m [1099-R              ] 2020-YI-CHEN-TRADITIONAL-IRA-221984208-Form-1099-R-&-Instructions.pdf
+2026-03-13 17:50:01,456 INFO     [33mNEW[0m [5498                ] 2020-YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf
+2026-03-13 17:50:01,457 INFO     [90mNEW[0m [???                 ] 8879.pdf
+2026-03-13 17:50:01,457 INFO     [33mNEW[0m [1099-R              ] airbnb-1099-R (CA-E).pdf
+2026-03-13 17:50:01,457 INFO     [33mNEW[0m [1099-R              ] airbnb-1099-R (CA-G).pdf
+2026-03-13 17:50:01,457 INFO     [33mNEW[0m [1099-R              ] airbnb-1099-R (WA-G).pdf
+2026-03-13 17:50:01,457 INFO     [33mNEW[0m [1099-INT            ] Capital One 1099-INT 2020.pdf
+2026-03-13 17:50:01,457 INFO     [33mNEW[0m [5498-SA             ] form-5498-SA-corrected.pdf
+2026-03-13 17:50:01,457 INFO     [33mNEW[0m [5498-SA             ] healthequity_f5498sa_2020.pdf
+2026-03-13 17:50:01,466 INFO     [90mNEW[0m [???                 ] HUST-COVID-donation-YiChen.pdf
+2026-03-13 17:50:01,466 INFO     [33mNEW[0m [W-2                 ] Proof W2 2020.pdf
+2026-03-13 17:50:01,517 INFO     [90mNEW[0m [1099-DIV (unsupported)] robinhood_1099.pdf
+2026-03-13 17:50:01,533 INFO     [90mNEW[0m [???                 ] Ruby & Lawrence.pdf
+2026-03-13 17:50:01,533 INFO     [33mNEW[0m [1098                ] Student loan 1098-E 2020.pdf
+2026-03-13 17:50:01,533 INFO     [33mNEW[0m [W-2                 ] W-2_Form_2020_Chen_2021_01_19_13_32_49_-0800_W-2_ESS.pdf
+2026-03-13 17:50:01,562 INFO     [90mNEW[0m [???                 ] Yi Chen and Sheri Martin's 2020 Tax Return Final.pdf
+2026-03-13 17:50:01,562 INFO 
+  Total: 181 new / 181 total PDFs (119 supported, 57 unsupported/unknown)
+2026-03-13 17:50:09,241 INFO Tax Document Ingestion — 2026-03-13 17:50:09
+2026-03-13 17:50:09,241 INFO 
+======================================================================
+2026-03-13 17:50:09,241 INFO   CARRYFORWARD COMPUTATION
+2026-03-13 17:50:09,241 INFO ======================================================================
+2026-03-13 17:50:09,255 INFO 
+  2022:
+2026-03-13 17:50:09,255 INFO     1099-B net gain/loss:      $        0.00
+2026-03-13 17:50:09,255 INFO     Carryforward from prior:   $        0.00
+2026-03-13 17:50:09,255 INFO     1040 Line 7 (reported):    $   -3,000.00
+2026-03-13 17:50:09,255 INFO     Carryforward to next year: $        0.00
+2026-03-13 17:50:09,284 INFO 
+  2023:
+2026-03-13 17:50:09,284 INFO     1099-B net gain/loss:      $        0.00
+2026-03-13 17:50:09,284 INFO     Carryforward from prior:   $        0.00
+2026-03-13 17:50:09,284 INFO     1040 Line 7 (reported):    $   29,189.00
+2026-03-13 17:50:09,284 INFO     Carryforward to next year: $        0.00
+2026-03-13 17:50:09,319 INFO 
+  2024:
+2026-03-13 17:50:09,319 INFO     1099-B net gain/loss:      $        0.00
+2026-03-13 17:50:09,319 INFO     Carryforward from prior:   $        0.00
+2026-03-13 17:50:09,319 INFO     1040 Line 7 (reported):    $  126,057.00
+2026-03-13 17:50:09,319 INFO     Carryforward to next year: $        0.00
+2026-03-13 17:50:09,352 INFO 
+  2025:
+2026-03-13 17:50:09,352 INFO     1099-B net gain/loss:      $        0.00
+2026-03-13 17:50:09,352 INFO     Carryforward from prior:   $        0.00
+2026-03-13 17:50:09,352 INFO     1040 Line 7 (reported):    $        0.00
+2026-03-13 17:50:09,352 INFO     Carryforward to next year: $        0.00
+2026-03-13 17:50:09,363 INFO     IRA rollover (code G): Fidelity - Salesforce 401K gross=$40,500.00 taxable=$0.00
+2026-03-13 17:50:09,364 INFO     IRA rollover (code G): Fidelity - ServiceTitan 401K gross=$1,923.08 taxable=$0.00
+2026-03-13 17:50:09,369 INFO 
+  Written: /Users/yichen/Obsidian/Finance/tax/carryforwards.yaml
+2026-03-13 17:50:47,975 INFO Tax Document Ingestion — 2026-03-13 17:50:47
+2026-03-13 17:50:47,975 INFO 
+======================================================================
+2026-03-13 17:50:47,975 INFO   CARRYFORWARD COMPUTATION
+2026-03-13 17:50:47,975 INFO ======================================================================
+2026-03-13 17:50:47,987 INFO 
+  2022:
+2026-03-13 17:50:47,987 INFO     1099-B net gain/loss:      $  217,168.58
+2026-03-13 17:50:47,987 INFO     Carryforward from prior:   $        0.00
+2026-03-13 17:50:47,987 INFO     1040 Line 7 (reported):    $   -3,000.00
+2026-03-13 17:50:47,987 INFO     Carryforward to next year: $        0.00
+2026-03-13 17:50:48,015 INFO 
+  2023:
+2026-03-13 17:50:48,015 INFO     1099-B net gain/loss:      $  249,413.79
+2026-03-13 17:50:48,015 INFO     Carryforward from prior:   $        0.00
+2026-03-13 17:50:48,015 INFO     1040 Line 7 (reported):    $   29,189.00
+2026-03-13 17:50:48,015 INFO     Carryforward to next year: $        0.00
+2026-03-13 17:50:48,049 INFO 
+  2024:
+2026-03-13 17:50:48,049 INFO     1099-B net gain/loss:      $  127,615.60
+2026-03-13 17:50:48,049 INFO     Carryforward from prior:   $        0.00
+2026-03-13 17:50:48,049 INFO     1040 Line 7 (reported):    $  126,057.00
+2026-03-13 17:50:48,049 INFO     Carryforward to next year: $        0.00
+2026-03-13 17:50:48,082 INFO 
+  2025:
+2026-03-13 17:50:48,082 INFO     1099-B net gain/loss:      $    7,123.49
+2026-03-13 17:50:48,082 INFO     Carryforward from prior:   $        0.00
+2026-03-13 17:50:48,082 INFO     1040 Line 7 (reported):    $        0.00
+2026-03-13 17:50:48,082 INFO     Carryforward to next year: $        0.00
+2026-03-13 17:50:48,094 INFO     IRA rollover (code G): Fidelity - Salesforce 401K gross=$40,500.00 taxable=$0.00
+2026-03-13 17:50:48,095 INFO     IRA rollover (code G): Fidelity - ServiceTitan 401K gross=$1,923.08 taxable=$0.00
+2026-03-13 17:50:48,099 INFO 
+  Written: /Users/yichen/Obsidian/Finance/tax/carryforwards.yaml
+2026-03-13 17:52:16,441 INFO Tax Document Ingestion — 2026-03-13 17:52:16
+2026-03-13 17:52:16,442 INFO 
+======================================================================
+2026-03-13 17:52:16,442 INFO   CROSS-VALIDATION: 2022
+2026-03-13 17:52:16,442 INFO ======================================================================
+2026-03-13 17:52:16,443 INFO   Filing status: Married Filing Jointly
+2026-03-13 17:52:16,454 INFO 
+  --- W-2 Wages (Line 1a) ---
+2026-03-13 17:52:16,454 INFO     Yi W-2: Airbnb Inc                                wages=$  344,031.53  fed_withheld=$ 79,609.86
+2026-03-13 17:52:16,454 INFO     Yi W-2: Stripe                                    wages=$  191,613.17  fed_withheld=$ 35,674.35
+2026-03-13 17:52:16,454 INFO     Other W-2 (SSN ...): Meta Platforms Inc              wages=$  125,988.52
+2026-03-13 17:52:16,454 INFO     Yi-only wages: $535,644.70  |  1040 line 1a: $662,516.00  |  Implied spouse wages: $126,871.30
+2026-03-13 17:52:16,454 INFO 
+  --- W-2 Federal Withholding ---
+2026-03-13 17:52:16,454 INFO 
+  --- 1099-R Distributions (Line 4a/4b) ---
+2026-03-13 17:52:16,454 INFO     1099-R: Fidelity Investments (IRA) (Traditional IRA)  gross=$6,000.00  taxable=$6,000.00  code=2
+2026-03-13 17:52:16,454 INFO     1099-R: State Farm Life Insurance (Roth IRA) — $0 distribution (code=W, informational)
+2026-03-13 17:52:16,454 INFO 
+  --- 1098 Mortgage Interest ---
+2026-03-13 17:52:16,454 INFO     1098: Flagstar Bank  interest=$11,341.52  property_tax=$11,341.52
+2026-03-13 17:52:16,454 INFO     1098: loanDepot  interest=$2,117.69  property_tax=$0.00
+2026-03-13 17:52:16,454 INFO     1098: Mr. Cooper  interest=$6,286.46  property_tax=$5,417.24
+2026-03-13 17:52:16,454 INFO 
+  --- 1099-INT Interest (Line 2b) ---
+2026-03-13 17:52:16,454 INFO 
+  ======================================================================
+2026-03-13 17:52:16,454 INFO   CROSS-VALIDATION SUMMARY: 2022
+2026-03-13 17:52:16,454 INFO   ======================================================================
+2026-03-13 17:52:16,454 INFO   Check                                                        Prepare         1040     Status
+2026-03-13 17:52:16,454 INFO   ------------------------------------------------------- ------------ ------------ ----------
+2026-03-13 17:52:16,454 INFO   W-2 wages (all, MFJ) vs 1040 line 1a                      535,644.70   662,516.00 [33m  EXPECTED[0m
+2026-03-13 17:52:16,454 INFO       Gap=$126,871.30. No spouse W-2s found in prepare folder. The $126,871.30 gap is
+2026-03-13 17:52:16,454 INFO       likely spouse's actual wages not captured in parsed W-2s.
+2026-03-13 17:52:16,454 INFO   W-2 fed withholding (all, MFJ) vs 1040 w2_withholding     115,284.21   143,202.00 [33m  EXPECTED[0m
+2026-03-13 17:52:16,454 INFO       Yi=$115,284.21, Spouse=$0.00. Gap=$27,917.79. 1040 shows more withholding —
+2026-03-13 17:52:16,454 INFO       spouse W-2 withholding not captured in parsed data.
+2026-03-13 17:52:16,454 INFO   1099-R taxable vs 1040 line 4b                              6,000.00     6,000.00 [32m     MATCH[0m
+2026-03-13 17:52:16,454 INFO   1098 mortgage interest (itemized deductions)               19,745.67    43,346.00 [33m      INFO[0m
+2026-03-13 17:52:16,454 INFO       Mortgage interest=$19,745.67, property tax=$16,758.76. 1040 deductions=$43,346.00
+2026-03-13 17:52:16,454 INFO       includes SALT (capped $10K), charity, etc. Cannot directly compare — deductions
+2026-03-13 17:52:16,454 INFO       are a superset.
+2026-03-13 17:52:16,454 INFO   1099-INT interest vs 1040 line 2b                               0.00       288.00 [33m  EXPECTED[0m
+2026-03-13 17:52:16,454 INFO       Gap=$288.00. 1040 reports more interest than prepare-folder 1099-INTs. Likely
+2026-03-13 17:52:16,455 INFO       sources: brokerage 1099-INTs (Fidelity, Schwab) sent directly to CPA, not in the
+2026-03-13 17:52:16,455 INFO       prepare folder PDF collection.
+2026-03-13 17:52:16,455 INFO 
+  Result: 1 matched, 3 expected gaps, 1 info-only
+2026-03-13 17:52:16,456 INFO   Written: /Users/yichen/Obsidian/Finance/tax/archive/2022/cross-validation.yaml
+2026-03-13 17:57:25,427 INFO Tax Document Ingestion — 2026-03-13 17:57:25
+2026-03-13 17:57:25,429 INFO 
+  Processing 2021 (39 PDFs)...
+2026-03-13 17:57:26,276 INFO     [32mOK[0m [1098    ] 1098_(Rocket_Mortgage).pdf -> Finance/tax/prepare/2021/1098-1098-rocket-mortgage.yaml
+2026-03-13 17:57:26,402 INFO     [32mOK[0m [1098    ] 1098_flagstar_2.pdf -> Finance/tax/prepare/2021/1098-flagstar-bank.yaml
+2026-03-13 17:57:26,568 INFO     [32mOK[0m [1098    ] 1098_flagstore_1.pdf -> Finance/tax/prepare/2021/1098-flagstar-bank.yaml
+2026-03-13 17:57:26,628 INFO     [90mSKIP[0m 1099-Zhang.pdf (unrecognized_form)
+2026-03-13 17:57:26,685 INFO     [90mSKIP[0m 2021 Tax Preparation Summary.pdf (unrecognized_form)
+2026-03-13 17:57:26,814 INFO     [90mSKIP[0m 2021-feb-RSU-sell-to-cover-detail.pdf (unrecognized_form)
+2026-03-13 17:57:27,477 INFO     [32mOK[0m [1099-CONSOLIDATED] 2021-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2021/1099-consolidated-fidelity-6649.yaml
+2026-03-13 17:57:28,089 INFO     [32mOK[0m [1099-CONSOLIDATED] 2021-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2021/1099-consolidated-fidelity-4267.yaml
+2026-03-13 17:57:28,128 INFO     [90mSKIP[0m 2021-Self-Employed-401K-9729-Form-5500-AVS-&-Instructions.pdf (unrecognized_form)
+2026-03-13 17:57:28,840 INFO     [32mOK[0m [1099-CONSOLIDATED] 2021-SHERI-INDIVIDUAL---TOD-9955-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2021/1099-consolidated-fidelity-9955.yaml
+2026-03-13 17:57:28,892 INFO     [32mOK[0m [5498    ] 2021-SHERI-ROTH-IRA-2351-Form-5498.pdf -> Finance/tax/prepare/2021/5498-fidelity-investments-roth-ira-592351.yaml
+2026-03-13 17:57:29,041 INFO     [32mOK[0m [1099-R  ] 2021-Traditional-IRA-0059-Form-1099-R-&-Instructions.pdf -> Finance/tax/prepare/2021/1099-r-fidelity-investments-ira-traditional-ira.yaml
+2026-03-13 17:57:29,336 INFO     [32mOK[0m [1098    ] 2022-04-30-Zhang-w9.pdf -> Finance/tax/prepare/2021/1098-2022-04-30-zhang-w9.yaml [33m⚠ VALIDATION: ['Box 1 (mortgage interest) is $0 — expected > 0'][0m
+2026-03-13 17:57:29,377 INFO     [90mSKIP[0m cultural-care-receipt.pdf (unrecognized_form)
+2026-03-13 17:57:29,462 INFO     [90mSKIP[0m EQUITY_STMT_105396_Aug-25-2021.pdf (unrecognized_form)
+2026-03-13 17:57:29,551 INFO     [90mSKIP[0m EQUITY_STMT_105396_Dec-09-2020.pdf (unrecognized_form)
+2026-03-13 17:57:29,637 INFO     [90mSKIP[0m EQUITY_STMT_105396_Feb-25-2021.pdf (unrecognized_form)
+2026-03-13 17:57:29,747 INFO     [90mSKIP[0m EQUITY_STMT_105396_May-25-2021.pdf (unrecognized_form)
+2026-03-13 17:57:29,833 INFO     [90mSKIP[0m EQUITY_STMT_105396_Nov-19-2021.pdf (unrecognized_form)
+2026-03-13 17:57:29,854 INFO     [90mSKIP[0m Extension.pdf (unrecognized_form)
+2026-03-13 17:57:29,932 INFO     [32mOK[0m [5498-SA ] HealthEquity_f5498sa_2021.pdf -> Finance/tax/prepare/2021/5498-sa-healthequity-401494.yaml
+2026-03-13 17:57:29,951 INFO     [90mSKIP[0m How to enter Airbnb RSU sales on TurboTax.pdf (unrecognized_form)
+2026-03-13 17:57:30,107 INFO     [90mSKIP[0m laurence-tuition-2021-2022.pdf (unrecognized_form)
+2026-03-13 17:57:30,772 INFO     [32mOK[0m [1099-CONSOLIDATED] Laurence-UTMA-9437-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2021/1099-consolidated-fidelity-9437.yaml
+2026-03-13 17:57:30,872 INFO     [90mSKIP[0m Payslip_to_Print_-_Report_Design_03_25_2022.pdf (unrecognized_form)
+2026-03-13 17:57:30,920 INFO     [90mSKIP[0m rental-landscape-fine.pdf (unrecognized_form)
+2026-03-13 17:57:31,079 INFO     [90mSKIP[0m ruby-tuition-2021-2022.pdf (unrecognized_form)
+2026-03-13 17:57:31,748 INFO     [32mOK[0m [1099-CONSOLIDATED] Ruby-UTMA-2753-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2021/1099-consolidated-fidelity-2753.yaml
+2026-03-13 17:57:31,891 DEBUG   W-2 format detected: adp for Sheri-W-2 2021 Eastside Preparatory.pdf
+2026-03-13 17:57:32,065 INFO     [32mOK[0m [W-2     ] Sheri-W-2 2021 Eastside Preparatory.pdf -> Finance/tax/prepare/2021/w-2-sheri-w-2-2021-eastside-prepar.yaml
+2026-03-13 17:57:32,094 DEBUG   W-2 format detected: generic for Sheri-W-2 2021 Proof.pdf
+2026-03-13 17:57:32,121 DEBUG   W-2 format detected: generic for Sheri-W-2 2021 Proof.pdf
+2026-03-13 17:57:32,147 DEBUG   W-2 format detected: generic for Sheri-W-2 2021 Proof.pdf
+2026-03-13 17:57:32,147 ERROR     [31mFAIL[0m Sheri-W-2 2021 Proof.pdf: Unknown W-2 format for Sheri-W-2 2021 Proof.pdf
+2026-03-13 17:57:32,147 DEBUG   W-2 format detected: paylocity for W-2_Form_2021_Chen_2022_03_25_15_21_42_-0700_W-2_ESS.pdf
+2026-03-13 17:57:32,177 INFO     [32mOK[0m [W-2     ] W-2_Form_2021_Chen_2022_03_25_15_21_42_-0700_W-2_ESS.pdf -> Finance/tax/prepare/2021/w-2-w-2-form-2021-chen-2022-03-25-.yaml
+2026-03-13 17:57:32,208 INFO     [32mOK[0m [1099-INT] YI-becu-1099-INT.pdf -> Finance/tax/prepare/2021/1099-int-boeing-employees-credit-union-947679.yaml
+2026-03-13 17:57:32,297 INFO     [32mOK[0m [1099-R  ] YI-CHEN-Airbnb-401k-1099-R.pdf -> Finance/tax/prepare/2021/1099-r-fidelity-investments-401k-401-k.yaml [33m⚠ VALIDATION: ['Code G (rollover) but Box 2a taxable = 1308.35 (expected 0)'][0m
+2026-03-13 17:57:32,297 DEBUG   W-2 format detected: paylocity for YI-CHEN-Airbnb-W-2_Form_2021_Chen_2022_03_25_15_21_42_-0700_W-2_ESS.pdf
+2026-03-13 17:57:32,326 INFO     [32mOK[0m [W-2     ] YI-CHEN-Airbnb-W-2_Form_2021_Chen_2022_03_25_15_21_42_-0700_W-2_ESS.pdf -> Finance/tax/prepare/2021/w-2-yi-chen-airbnb-w-2-form-2021-c.yaml
+2026-03-13 17:57:32,377 INFO     [32mOK[0m [5498    ] YI-CHEN-ROTH-IRA-8097-Form-5498.pdf -> Finance/tax/prepare/2021/5498-fidelity-investments-roth-ira-518097.yaml
+2026-03-13 17:57:33,281 INFO     [32mOK[0m [1098    ] YI-CHEN-Sammamish-1098_(Rocket_Mortgage).pdf -> Finance/tax/prepare/2021/1098-yi-chen-sammamish-1098-rocket-.yaml
+2026-03-13 17:57:33,411 INFO     [32mOK[0m [1099-R  ] YI-CHEN-TRADITIONAL-IRA-4208-Form-1099-R-&-Instructions.pdf -> Finance/tax/prepare/2021/1099-r-fidelity-investments-ira-traditional-ira.yaml
+2026-03-13 17:57:33,451 INFO     [32mOK[0m [5498    ] YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf -> Finance/tax/prepare/2021/5498-fidelity-investments-ira-984208.yaml
+2026-03-13 17:57:34,643 INFO     [32mOK[0m [1099-CONSOLIDATED] Yi-INDIVIDUAL---TOD-0887-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2021/1099-consolidated-fidelity-0887.yaml [33m⚠ VALIDATION: ['1099-B short_term: gain/loss (535907.21) != proceeds (853865.67) - basis (317958.45999999996) + wash (14847.68) = 550754.89'][0m
+2026-03-13 17:57:34,644 INFO 
+  Done: 22 succeeded, 16 skipped, 1 errors
+2026-03-13 17:57:34,644 WARNING 
+  ⚠ VALIDATION FAILURES:
+2026-03-13 17:57:34,644 WARNING     2022-04-30-Zhang-w9.pdf: Box 1 (mortgage interest) is $0 — expected > 0
+2026-03-13 17:57:34,644 WARNING     YI-CHEN-Airbnb-401k-1099-R.pdf: Code G (rollover) but Box 2a taxable = 1308.35 (expected 0)
+2026-03-13 17:57:34,644 WARNING     Yi-INDIVIDUAL---TOD-0887-Consolidated-Form-1099.pdf: 1099-B short_term: gain/loss (535907.21) != proceeds (853865.67) - basis (317958.45999999996) + wash (14847.68) = 550754.89
+2026-03-13 17:57:38,789 INFO Tax Document Ingestion — 2026-03-13 17:57:38
+2026-03-13 17:57:38,791 INFO 
+  Processing 2020 (31 PDFs)...
+2026-03-13 17:57:38,931 INFO     [32mOK[0m [1098    ] 1098-sammamish-heloc.pdf -> Finance/tax/prepare/2020/1098-flagstar-bank.yaml
+2026-03-13 17:57:39,071 INFO     [32mOK[0m [1098    ] 1098-sammamish-primary.pdf -> Finance/tax/prepare/2020/1098-flagstar-bank.yaml
+2026-03-13 17:57:39,128 INFO     [32mOK[0m [5498    ] 2019-SHERI-ROTH-IRA-2351-Form-5498.pdf -> Finance/tax/prepare/2020/5498-fidelity-investments-roth-ira-592351.yaml
+2026-03-13 17:57:39,168 INFO     [32mOK[0m [5498    ] 2019-Traditional-IRA-0059-Form-5498.pdf -> Finance/tax/prepare/2020/5498-fidelity-investments-ira-290059.yaml
+2026-03-13 17:57:39,184 INFO     [90mSKIP[0m 2020 Rental Income and Expense.pdf (unrecognized_form)
+2026-03-13 17:57:39,395 INFO     [32mOK[0m [1099-R  ] 2020 Tax Preparation Summary (2021-02-06).pdf -> Finance/tax/prepare/2020/1099-r-fidelity-investments-401k-401-k.yaml
+2026-03-13 17:57:39,397 INFO     [90mSKIP[0m 2020-06-24-title-insurance.pdf (unrecognized_form)
+2026-03-13 17:57:40,141 INFO     [32mOK[0m [1099-CONSOLIDATED] 2020-JOINT-BROKERAGE-X94666649-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2020/1099-consolidated-fidelity-6649.yaml
+2026-03-13 17:57:40,144 INFO     [90mSKIP[0m 2020-Rental-refi-cost.pdf (unrecognized_form)
+2026-03-13 17:57:40,936 INFO     [32mOK[0m [1099-CONSOLIDATED] 2020-SHERI-INDIVIDUAL---TOD-X84919955-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2020/1099-consolidated-fidelity-9955.yaml
+2026-03-13 17:57:40,995 INFO     [32mOK[0m [5498    ] 2020-SHERI-ROTH-IRA-227592351-Form-5498.pdf -> Finance/tax/prepare/2020/5498-fidelity-investments-roth-ira-592351.yaml
+2026-03-13 17:57:41,044 INFO     [32mOK[0m [5498    ] 2020-Traditional-IRA-0059-Form-5498.pdf -> Finance/tax/prepare/2020/5498-fidelity-investments-ira-290059.yaml
+2026-03-13 17:57:41,093 INFO     [32mOK[0m [5498    ] 2020-Traditional-IRA-231290059-Form-5498.pdf -> Finance/tax/prepare/2020/5498-fidelity-investments-ira-290059.yaml
+2026-03-13 17:57:41,826 INFO     [32mOK[0m [1099-CONSOLIDATED] 2020-YI-CHEN-INDIVIDUAL---TOD-X86610887-Consolidated-Form-1099.pdf -> Finance/tax/prepare/2020/1099-consolidated-fidelity-0887.yaml
+2026-03-13 17:57:41,891 INFO     [32mOK[0m [5498    ] 2020-YI-CHEN-ROTH-IRA-226518097-Form-5498.pdf -> Finance/tax/prepare/2020/5498-fidelity-investments-roth-ira-518097.yaml
+2026-03-13 17:57:41,997 INFO     [32mOK[0m [1099-R  ] 2020-YI-CHEN-TRADITIONAL-IRA-221984208-Form-1099-R-&-Instructions.pdf -> Finance/tax/prepare/2020/1099-r-fidelity-investments-ira-traditional-ira.yaml [33m⚠ VALIDATION: ['Code G (rollover) but Box 2a taxable = 132542.36 (expected 0)'][0m
+2026-03-13 17:57:42,040 INFO     [32mOK[0m [5498    ] 2020-YI-CHEN-TRADITIONAL-IRA-4208-Form-5498.pdf -> Finance/tax/prepare/2020/5498-fidelity-investments-ira-984208.yaml
+2026-03-13 17:57:42,043 INFO     [90mSKIP[0m 8879.pdf (unrecognized_form)
+2026-03-13 17:57:42,134 INFO     [32mOK[0m [1099-R  ] airbnb-1099-R (CA-E).pdf -> Finance/tax/prepare/2020/1099-r-fidelity-investments-401k-401-k.yaml
+2026-03-13 17:57:42,264 INFO     [32mOK[0m [1099-R  ] airbnb-1099-R (CA-G).pdf -> Finance/tax/prepare/2020/1099-r-fidelity-investments-401k-401-k.yaml
+2026-03-13 17:57:42,354 INFO     [32mOK[0m [1099-R  ] airbnb-1099-R (WA-G).pdf -> Finance/tax/prepare/2020/1099-r-fidelity-investments-401k-401-k.yaml [33m⚠ VALIDATION: ['Code G (rollover) but Box 2a taxable = 1664.6 (expected 0)'][0m
+2026-03-13 17:57:42,383 INFO     [32mOK[0m [1099-INT] Capital One 1099-INT 2020.pdf -> Finance/tax/prepare/2020/1099-int-capital-one.yaml
+2026-03-13 17:57:42,387 INFO     [32mOK[0m [5498-SA ] form-5498-SA-corrected.pdf -> Finance/tax/prepare/2020/5498-sa-form-5498-sa-corrected.yaml
+2026-03-13 17:57:42,465 INFO     [32mOK[0m [5498-SA ] healthequity_f5498sa_2020.pdf -> Finance/tax/prepare/2020/5498-sa-healthequity-401494.yaml
+2026-03-13 17:57:42,475 INFO     [90mSKIP[0m HUST-COVID-donation-YiChen.pdf (unrecognized_form)
+2026-03-13 17:57:42,515 DEBUG   W-2 format detected: generic for Proof W2 2020.pdf
+2026-03-13 17:57:42,555 DEBUG   W-2 format detected: generic for Proof W2 2020.pdf
+2026-03-13 17:57:42,593 DEBUG   W-2 format detected: generic for Proof W2 2020.pdf
+2026-03-13 17:57:42,593 ERROR     [31mFAIL[0m Proof W2 2020.pdf: Unknown W-2 format for Proof W2 2020.pdf
+2026-03-13 17:57:42,647 INFO     [90mSKIP[0m robinhood_1099.pdf (unsupported_form_1099-DIV)
+2026-03-13 17:57:42,665 INFO     [90mSKIP[0m Ruby & Lawrence.pdf (unrecognized_form)
+2026-03-13 17:57:42,770 INFO     [32mOK[0m [1098    ] Student loan 1098-E 2020.pdf -> Finance/tax/prepare/2020/1098-student-loan-1098-e-2020.yaml [33m⚠ VALIDATION: ['Box 1 (mortgage interest) is $0 — expected > 0'][0m
+2026-03-13 17:57:42,770 DEBUG   W-2 format detected: paylocity for W-2_Form_2020_Chen_2021_01_19_13_32_49_-0800_W-2_ESS.pdf
+2026-03-13 17:57:42,801 INFO     [32mOK[0m [W-2     ] W-2_Form_2020_Chen_2021_01_19_13_32_49_-0800_W-2_ESS.pdf -> Finance/tax/prepare/2020/w-2-w-2-form-2020-chen-2021-01-19-.yaml
+2026-03-13 17:57:42,832 INFO     [90mSKIP[0m Yi Chen and Sheri Martin's 2020 Tax Return Final.pdf (unrecognized_form)
+2026-03-13 17:57:42,833 INFO 
+  Done: 22 succeeded, 8 skipped, 1 errors
+2026-03-13 17:57:42,833 WARNING 
+  ⚠ VALIDATION FAILURES:
+2026-03-13 17:57:42,833 WARNING     2020-YI-CHEN-TRADITIONAL-IRA-221984208-Form-1099-R-&-Instructions.pdf: Code G (rollover) but Box 2a taxable = 132542.36 (expected 0)
+2026-03-13 17:57:42,833 WARNING     airbnb-1099-R (WA-G).pdf: Code G (rollover) but Box 2a taxable = 1664.6 (expected 0)
+2026-03-13 17:57:42,833 WARNING     Student loan 1098-E 2020.pdf: Box 1 (mortgage interest) is $0 — expected > 0
+2026-03-13 17:58:00,154 INFO Tax Document Ingestion — 2026-03-13 17:58:00
+2026-03-13 17:58:00,157 INFO 
+  2020: 2 new / 2 total PDFs
+2026-03-13 17:58:00,161 INFO     [90mNEW[0m [???                 ] 8879.pdf
+2026-03-13 17:58:00,193 INFO     [90mNEW[0m [???                 ] Yi Chen and Sheri Martin's 2020 Tax Return Final.pdf
+2026-03-13 17:58:00,193 INFO 
+  Total: 2 new / 2 total PDFs (0 supported, 2 unsupported/unknown)
+2026-03-13 17:58:07,982 INFO Tax Document Ingestion — 2026-03-13 17:58:07
+2026-03-13 17:58:07,982 INFO 
+  2021: 1 new / 1 total PDFs
+2026-03-13 17:58:08,010 INFO     [90mNEW[0m [???                 ] Yi Chen and Sheri Martin 2021 Tax Return update.pdf
+2026-03-13 17:58:08,010 INFO 
+  Total: 1 new / 1 total PDFs (0 supported, 1 unsupported/unknown)
+2026-03-13 17:58:12,736 INFO Tax Document Ingestion — 2026-03-13 17:58:12
+2026-03-13 17:58:12,737 INFO 
+  2022: 1 new / 1 total PDFs
+2026-03-13 17:58:12,765 INFO     [90mNEW[0m [???                 ] Yi Chen and Sheri Martin's 2022 Tax Return.pdf
+2026-03-13 17:58:12,766 INFO 
+  Total: 1 new / 1 total PDFs (0 supported, 1 unsupported/unknown)
+2026-03-13 17:58:37,048 INFO Tax Document Ingestion — 2026-03-13 17:58:37
+2026-03-13 17:58:37,049 INFO 
+  Processing 2021 (1 PDFs)...
+2026-03-13 17:58:46,801 ERROR     [31mFAIL[0m Yi Chen and Sheri Martin 2021 Tax Return update.pdf: Could not find 1040 page 1 in Yi Chen and Sheri Martin 2021 Tax Return update.pdf
+2026-03-13 17:58:46,802 INFO 
+  Done: 0 succeeded, 0 skipped, 1 errors
+2026-03-13 17:58:47,126 INFO Tax Document Ingestion — 2026-03-13 17:58:47
+2026-03-13 17:58:47,127 INFO 
+  Processing 2020 (2 PDFs)...
+2026-03-13 17:58:47,131 INFO     [90mSKIP[0m 8879.pdf (not_a_tax_return)
+2026-03-13 17:58:58,224 ERROR     [31mFAIL[0m Yi Chen and Sheri Martin's 2020 Tax Return Final.pdf: Could not find 1040 page 1 in Yi Chen and Sheri Martin's 2020 Tax Return Final.pdf
+2026-03-13 17:58:58,225 INFO 
+  Done: 0 succeeded, 1 skipped, 1 errors
+2026-03-13 18:01:43,076 INFO Tax Document Ingestion — 2026-03-13 18:01:43
+2026-03-13 18:01:43,076 INFO 
+  Processing 2021 (1 PDFs)...
+2026-03-13 18:01:43,306 INFO     [32mOK[0m [1040    ] Yi Chen and Sheri Martin 2021 Tax Return update.pdf -> Finance/tax/archive/2021/1040-summary.yaml [33m⚠ VALIDATION: ['Cover letter refund ($9150.0) != line 34 ($10402.0)', 'Taxable income (1591809.0) != AGI (1624935.0) - deductions (33123.0) = 1591812.0'][0m
+2026-03-13 18:01:43,306 INFO 
+  Done: 1 succeeded, 0 skipped, 0 errors
+2026-03-13 18:01:43,306 WARNING 
+  ⚠ VALIDATION FAILURES:
+2026-03-13 18:01:43,306 WARNING     Yi Chen and Sheri Martin 2021 Tax Return update.pdf: Cover letter refund ($9150.0) != line 34 ($10402.0)
+2026-03-13 18:01:43,306 WARNING     Yi Chen and Sheri Martin 2021 Tax Return update.pdf: Taxable income (1591809.0) != AGI (1624935.0) - deductions (33123.0) = 1591812.0
+2026-03-13 18:01:43,428 INFO Tax Document Ingestion — 2026-03-13 18:01:43
+2026-03-13 18:01:43,429 INFO 
+  Processing 2020 (2 PDFs)...
+2026-03-13 18:01:43,433 INFO     [90mSKIP[0m 8879.pdf (not_a_tax_return)
+2026-03-13 18:01:43,760 INFO     [32mOK[0m [1040    ] Yi Chen and Sheri Martin's 2020 Tax Return Final.pdf -> Finance/tax/archive/2020/1040-summary.yaml [33m⚠ VALIDATION: ['AGI (1750143.0) != total_income (1751926.0) - adjustments (1683.0)', 'Taxable income (1725305.0) != AGI (1750143.0) - deductions (24800.0) = 1725343.0'][0m
+2026-03-13 18:01:43,761 INFO 
+  Done: 1 succeeded, 1 skipped, 0 errors
+2026-03-13 18:01:43,761 WARNING 
+  ⚠ VALIDATION FAILURES:
+2026-03-13 18:01:43,761 WARNING     Yi Chen and Sheri Martin's 2020 Tax Return Final.pdf: AGI (1750143.0) != total_income (1751926.0) - adjustments (1683.0)
+2026-03-13 18:01:43,761 WARNING     Yi Chen and Sheri Martin's 2020 Tax Return Final.pdf: Taxable income (1725305.0) != AGI (1750143.0) - deductions (24800.0) = 1725343.0
+2026-03-13 18:02:56,149 INFO Tax Document Ingestion — 2026-03-13 18:02:56
+2026-03-13 18:02:56,149 INFO 
+======================================================================
+2026-03-13 18:02:56,149 INFO   CROSS-VALIDATION: 2021
+2026-03-13 18:02:56,149 INFO ======================================================================
+2026-03-13 18:02:56,150 INFO   Filing status: Married Filing Jointly
+2026-03-13 18:02:56,174 INFO 
+  --- W-2 Wages (Line 1a) ---
+2026-03-13 18:02:56,174 INFO     Yi W-2:                                           wages=$1,567,098.32  fed_withheld=$407,360.35
+2026-03-13 18:02:56,174 INFO     Yi W-2:                                           wages=$1,567,098.32  fed_withheld=$407,360.35
+2026-03-13 18:02:56,174 INFO     Spouse W-2 (SSN ...3457): EIN 37-1430960                  wages=$        0.00  fed_withheld=$      0.00
+2026-03-13 18:02:56,174 INFO     Yi-only wages: $3,134,196.64  |  1040 line 1a: $1,601,645.00  |  Implied spouse wages: $-1,532,551.64
+2026-03-13 18:02:56,174 INFO 
+  --- W-2 Federal Withholding ---
+2026-03-13 18:02:56,174 INFO 
+  --- 1099-R Distributions (Line 4a/4b) ---
+2026-03-13 18:02:56,174 INFO     1099-R: Fidelity Investments (401k) (401(k))  gross=$35,930.95  taxable=$1,308.35  code=G
+2026-03-13 18:02:56,174 INFO     1099-R: Fidelity Investments (IRA) (Traditional IRA)  gross=$12,149.74  taxable=$12,149.74  code=2
+2026-03-13 18:02:56,174 INFO 
+  --- 1098 Mortgage Interest ---
+2026-03-13 18:02:56,174 INFO     1098:   interest=$3,982.26  property_tax=$4,851.96
+2026-03-13 18:02:56,174 INFO     1098: Flagstar Bank  interest=$8,541.15  property_tax=$0.00
+2026-03-13 18:02:56,174 INFO     1098:   interest=$3,982.26  property_tax=$4,851.96
+2026-03-13 18:02:56,174 INFO 
+  --- 1099-INT Interest (Line 2b) ---
+2026-03-13 18:02:56,174 INFO     1099-INT: Boeing Employees Credit Union  interest=$3.16
+2026-03-13 18:02:56,174 INFO 
+  ======================================================================
+2026-03-13 18:02:56,174 INFO   CROSS-VALIDATION SUMMARY: 2021
+2026-03-13 18:02:56,174 INFO   ======================================================================
+2026-03-13 18:02:56,174 INFO   Check                                                        Prepare         1040     Status
+2026-03-13 18:02:56,174 INFO   ------------------------------------------------------- ------------ ------------ ----------
+2026-03-13 18:02:56,174 INFO   W-2 wages (all, MFJ) vs 1040 line 1a                    3,134,196.64 1,601,645.00 [31m  MISMATCH[0m
+2026-03-13 18:02:56,174 INFO       Gap=$-1,532,551.64. Prepare folder W-2s sum exceeds 1040 line 1a — verify for
+2026-03-13 18:02:56,174 INFO       duplicates.
+2026-03-13 18:02:56,174 INFO   W-2 fed withholding (all, MFJ) vs 1040 w2_withholding     814,720.70   409,229.00 [33m  EXPECTED[0m
+2026-03-13 18:02:56,174 INFO       Yi=$814,720.70, Spouse=$0.00. Gap=$-405,491.70.
+2026-03-13 18:02:56,174 INFO   1099-R taxable vs 1040 line 4b                             13,458.09     3,518.00 [33m  EXPECTED[0m
+2026-03-13 18:02:56,174 INFO       1099-R taxable=$13,458.09 but 1040 line 4b=$3,518.00. Likely a backdoor Roth
+2026-03-13 18:02:56,174 INFO       conversion: full amount on 1099-R but Form 8606 tracks non-deductible IRA basis,
+2026-03-13 18:02:56,174 INFO       so only gains are taxable on 1040.
+2026-03-13 18:02:56,174 INFO   1098 mortgage interest (itemized deductions)               16,505.67    33,123.00 [33m      INFO[0m
+2026-03-13 18:02:56,174 INFO       Mortgage interest=$16,505.67, property tax=$9,703.92. 1040 deductions=$33,123.00
+2026-03-13 18:02:56,174 INFO       includes SALT (capped $10K), charity, etc. Cannot directly compare — deductions
+2026-03-13 18:02:56,174 INFO       are a superset.
+2026-03-13 18:02:56,174 INFO   1099-INT interest vs 1040 line 2b                               3.16        10.00 [33m  EXPECTED[0m
+2026-03-13 18:02:56,174 INFO       Gap=$6.84. 1040 reports more interest than prepare-folder 1099-INTs. Likely
+2026-03-13 18:02:56,174 INFO       sources: brokerage 1099-INTs (Fidelity, Schwab) sent directly to CPA, not in the
+2026-03-13 18:02:56,174 INFO       prepare folder PDF collection.
+2026-03-13 18:02:56,174 INFO 
+  Result: 0 matched, 3 expected gaps, 1 mismatched, 1 info-only
+2026-03-13 18:02:56,176 INFO   Written: /Users/yichen/Obsidian/Finance/tax/archive/2021/cross-validation.yaml
+2026-03-13 18:02:56,292 INFO Tax Document Ingestion — 2026-03-13 18:02:56
+2026-03-13 18:02:56,292 INFO 
+======================================================================
+2026-03-13 18:02:56,292 INFO   CROSS-VALIDATION: 2020
+2026-03-13 18:02:56,292 INFO ======================================================================
+2026-03-13 18:02:56,294 INFO   Filing status: Married Filing Jointly
+2026-03-13 18:02:56,310 INFO 
+  --- W-2 Wages (Line 1a) ---
+2026-03-13 18:02:56,310 INFO     Yi W-2:                                           wages=$1,445,952.99  fed_withheld=$495,341.61
+2026-03-13 18:02:56,310 INFO     Yi-only wages: $1,445,952.99  |  1040 line 1a: $1,503,388.00  |  Implied spouse wages: $57,435.01
+2026-03-13 18:02:56,310 INFO 
+  --- W-2 Federal Withholding ---
+2026-03-13 18:02:56,310 INFO 
+  --- 1099-R Distributions (Line 4a/4b) ---
+2026-03-13 18:02:56,310 INFO     1099-R: Fidelity Investments (401k) (401(k))  gross=$21,270.57  taxable=$1,664.60  code=G
+2026-03-13 18:02:56,310 INFO     1099-R: Fidelity Investments (IRA) (Traditional IRA)  gross=$132,542.36  taxable=$132,542.36  code=G
+2026-03-13 18:02:56,310 INFO 
+  --- 1098 Mortgage Interest ---
+2026-03-13 18:02:56,310 INFO     1098: Flagstar Bank  interest=$8,598.87  property_tax=$4,957.38
+2026-03-13 18:02:56,310 INFO 
+  --- 1099-INT Interest (Line 2b) ---
+2026-03-13 18:02:56,310 INFO     1099-INT: Capital One  interest=$0.00
+2026-03-13 18:02:56,310 INFO 
+  ======================================================================
+2026-03-13 18:02:56,310 INFO   CROSS-VALIDATION SUMMARY: 2020
+2026-03-13 18:02:56,310 INFO   ======================================================================
+2026-03-13 18:02:56,310 INFO   Check                                                        Prepare         1040     Status
+2026-03-13 18:02:56,310 INFO   ------------------------------------------------------- ------------ ------------ ----------
+2026-03-13 18:02:56,310 INFO   W-2 wages (all, MFJ) vs 1040 line 1a                    1,445,952.99 1,503,388.00 [33m  EXPECTED[0m
+2026-03-13 18:02:56,310 INFO       Gap=$57,435.01. No spouse W-2s found in prepare folder. The $57,435.01 gap is
+2026-03-13 18:02:56,310 INFO       likely spouse's actual wages not captured in parsed W-2s.
+2026-03-13 18:02:56,310 INFO   W-2 fed withholding (all, MFJ) vs 1040 w2_withholding     495,341.61   499,475.00 [33m  EXPECTED[0m
+2026-03-13 18:02:56,310 INFO       Yi=$495,341.61, Spouse=$0.00. Gap=$4,133.39. 1040 shows more withholding — spouse
+2026-03-13 18:02:56,310 INFO       W-2 withholding not captured in parsed data.
+2026-03-13 18:02:56,310 INFO   1099-R taxable vs 1040 line 4b                            134,206.96   132,542.00 [33m  EXPECTED[0m
+2026-03-13 18:02:56,310 INFO       1099-R taxable=$134,206.96 but 1040 line 4b=$132,542.00. Likely a backdoor Roth
+2026-03-13 18:02:56,310 INFO       conversion: full amount on 1099-R but Form 8606 tracks non-deductible IRA basis,
+2026-03-13 18:02:56,310 INFO       so only gains are taxable on 1040.
+2026-03-13 18:02:56,310 INFO   1098 mortgage interest (itemized deductions)                8,598.87    24,800.00 [33m      INFO[0m
+2026-03-13 18:02:56,310 INFO       Mortgage interest=$8,598.87, property tax=$4,957.38. 1040 deductions=$24,800.00
+2026-03-13 18:02:56,310 INFO       includes SALT (capped $10K), charity, etc. Cannot directly compare — deductions
+2026-03-13 18:02:56,310 INFO       are a superset.
+2026-03-13 18:02:56,310 INFO   1099-INT interest vs 1040 line 2b                               0.00        53.00 [33m  EXPECTED[0m
+2026-03-13 18:02:56,310 INFO       Gap=$53.00. 1040 reports more interest than prepare-folder 1099-INTs. Likely
+2026-03-13 18:02:56,310 INFO       sources: brokerage 1099-INTs (Fidelity, Schwab) sent directly to CPA, not in the
+2026-03-13 18:02:56,310 INFO       prepare folder PDF collection.
+2026-03-13 18:02:56,310 INFO 
+  Result: 0 matched, 4 expected gaps, 1 info-only
+2026-03-13 18:02:56,312 INFO   Written: /Users/yichen/Obsidian/Finance/tax/archive/2020/cross-validation.yaml
+2026-03-13 18:03:12,497 INFO Tax Document Ingestion — 2026-03-13 18:03:12
+2026-03-13 18:03:12,498 INFO 
+======================================================================
+2026-03-13 18:03:12,498 INFO   CARRYFORWARD COMPUTATION
+2026-03-13 18:03:12,498 INFO ======================================================================
+2026-03-13 18:03:12,513 INFO 
+  2020:
+2026-03-13 18:03:12,513 INFO     1099-B net gain/loss:      $  236,777.68
+2026-03-13 18:03:12,513 INFO     Carryforward from prior:   $        0.00
+2026-03-13 18:03:12,513 INFO     1040 Line 7 (reported):    $  236,109.00
+2026-03-13 18:03:12,513 INFO     Carryforward to next year: $        0.00
+2026-03-13 18:03:12,520 INFO     IRA rollover (code G): Fidelity Investments (401k) gross=$21,270.57 taxable=$1,664.60
+2026-03-13 18:03:12,521 INFO     IRA rollover (code G): Fidelity Investments (IRA) gross=$132,542.36 taxable=$132,542.36
+2026-03-13 18:03:12,547 INFO 
+  2021:
+2026-03-13 18:03:12,547 INFO     1099-B net gain/loss:      $  539,720.66
+2026-03-13 18:03:12,547 INFO     Carryforward from prior:   $        0.00
+2026-03-13 18:03:12,547 INFO     1040 Line 7 (reported):    $    9,821.00
+2026-03-13 18:03:12,547 INFO     Carryforward to next year: $        0.00
+2026-03-13 18:03:12,559 INFO     IRA rollover (code G): Fidelity Investments (401k) gross=$35,930.95 taxable=$1,308.35
+2026-03-13 18:03:12,579 INFO 
+  2022:
+2026-03-13 18:03:12,579 INFO     1099-B net gain/loss:      $  217,168.58
+2026-03-13 18:03:12,579 INFO     Carryforward from prior:   $        0.00
+2026-03-13 18:03:12,579 INFO     1040 Line 7 (reported):    $   -3,000.00
+2026-03-13 18:03:12,579 INFO     Carryforward to next year: $        0.00
+2026-03-13 18:03:12,613 INFO 
+  2023:
+2026-03-13 18:03:12,613 INFO     1099-B net gain/loss:      $  249,413.79
+2026-03-13 18:03:12,613 INFO     Carryforward from prior:   $        0.00
+2026-03-13 18:03:12,613 INFO     1040 Line 7 (reported):    $   29,189.00
+2026-03-13 18:03:12,613 INFO     Carryforward to next year: $        0.00
+2026-03-13 18:03:12,657 INFO 
+  2024:
+2026-03-13 18:03:12,657 INFO     1099-B net gain/loss:      $  127,615.60
+2026-03-13 18:03:12,657 INFO     Carryforward from prior:   $        0.00
+2026-03-13 18:03:12,657 INFO     1040 Line 7 (reported):    $  126,057.00
+2026-03-13 18:03:12,657 INFO     Carryforward to next year: $        0.00
+2026-03-13 18:03:12,698 INFO 
+  2025:
+2026-03-13 18:03:12,698 INFO     1099-B net gain/loss:      $    7,123.49
+2026-03-13 18:03:12,698 INFO     Carryforward from prior:   $        0.00
+2026-03-13 18:03:12,698 INFO     1040 Line 7 (reported):    $        0.00
+2026-03-13 18:03:12,698 INFO     Carryforward to next year: $        0.00
+2026-03-13 18:03:12,711 INFO     IRA rollover (code G): Fidelity - Salesforce 401K gross=$40,500.00 taxable=$0.00
+2026-03-13 18:03:12,712 INFO     IRA rollover (code G): Fidelity - ServiceTitan 401K gross=$1,923.08 taxable=$0.00
+2026-03-13 18:03:12,717 INFO 
+  Written: /Users/yichen/Obsidian/Finance/tax/carryforwards.yaml

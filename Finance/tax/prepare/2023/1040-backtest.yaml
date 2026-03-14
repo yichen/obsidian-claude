@@ -1,0 +1,134 @@
+computed:
+  tax_year: 2023
+  filing_status: Married Filing Jointly
+  dependents_count: 2
+  income:
+    1a_w2_wages:
+      value: 709660.06
+      sources:
+      - 2024-09-19-Airbnb-w2-2023.pdf
+      - Stripe_W-2_Form_2023_Chen_2024_01_25_15_54_20_-0800_W-2_ESS.pdf
+      - W2_2023 IFS .pdf
+      - W2_2024 IFS.pdf
+      confidence: high
+    1z_total_wages:
+      value: 709660.06
+      sources:
+      - derived from 1a
+      confidence: medium
+    2b_taxable_interest:
+      value: 4397.78
+      sources:
+      - 2023-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+      - 2023-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf
+      confidence: high
+    3a_qualified_dividends:
+      value: 532.37
+      sources:
+      - 2023-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+      confidence: high
+    3b_ordinary_dividends:
+      value: 4025.48
+      sources:
+      - 2023-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+      - 2023-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+      - 2023-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf
+      - 2023-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+      confidence: high
+    4b_taxable_ira:
+      value: 6500.41
+      sources:
+      - 2023-YI-CHEN-TRADITIONAL-IRA-4208-Form-1099-R-&-Instructions.pdf
+      confidence: medium
+      note: Backdoor Roth basis on Form 8606 may reduce taxable amount
+    7_capital_gain_loss:
+      value: 249413.79
+      sources:
+      - 2023-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+      - 2023-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+      - 2023-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf
+      - 2023-JOINT-BROKERAGE-6649-Consolidated-Form-1099.pdf
+      - 2023-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+      carryforward_applied: 0
+      confidence: high
+  agi:
+    total_income: 973997.52
+    schedule_1_adjustments: 0.00
+    adjusted_gross_income: 973997.52
+    note: Schedule 1 adjustments (HSA, student loan interest, etc.) not captured
+  deductions:
+    method: itemized
+    amount: 38997.06
+    breakdown:
+      mortgage_interest: 28997.06
+      property_tax_raw: 20238.40
+      salt_capped: 10000
+      total_before_charity: 38997.06
+      note: Charitable deductions and other Schedule A items not captured — may be
+        higher
+  tax_computation:
+    taxable_income: 935000.46
+    regular_tax: 275901.67
+    child_tax_credit: 0
+    net_investment_income_tax: 9797.81
+    net_investment_income_base: 257837.05
+    amt_check: potentially_applicable — review Form 6251
+    total_tax_estimate: 285699.48
+  manual_review_items:
+  - 'Schedule 1 additional income/adjustments: verify no other income sources (alimony,
+    business, etc.)'
+  - '1z vs 1a gap: verify any ESPP supplemental wages, RSU vesting adjustments'
+  - 'QBI deduction (Section 199A): verify no pass-through / self-employment income'
+  - 'Estimated tax payments: confirm Q4 prior-year payment amount'
+  - 'Form 8606: backdoor Roth IRA basis tracking affects Line 4b taxable amount'
+  - 'AMT (Form 6251): verify not subject to alternative minimum tax'
+  - 'Schedule A charity: charitable contributions not captured in prepare folder YAMLs'
+  - '1099-R Box 2a (6,500.41): verify Form 8606 basis — backdoor Roth conversions
+    may reduce taxable amount'
+backtest:
+  test_year: 2023
+  lines_checked: 9
+  lines_matched: 1
+  lines_mismatched: 8
+  accuracy: 11.1%
+  mismatches:
+  - line: 1a_w2_wages
+    computed: 709660.06
+    actual: 677795.00
+    delta: 31865.06
+    note: Delta $+31,865.06
+  - line: 1z_total_wages
+    computed: 709660.06
+    actual: 678775.00
+    delta: 30885.06
+    note: Delta $+30,885.06
+  - line: 3b_ordinary_dividends
+    computed: 4025.48
+    actual: 4560.00
+    delta: -534.52
+    note: Delta $-534.52
+  - line: 7_capital_gain_loss
+    computed: 249413.79
+    actual: 29189.00
+    delta: 220224.79
+    note: Delta $+220,224.79
+  - line: adjusted_gross_income
+    computed: 973997.52
+    actual: 716907.00
+    delta: 257090.52
+    note: Delta $+257,090.52
+  - line: deductions
+    computed: 38997.06
+    actual: 30774.00
+    delta: 8223.06
+    note: Delta $+8,223.06
+  - line: taxable_income
+    computed: 935000.46
+    actual: 686133.00
+    delta: 248867.46
+    note: Delta $+248,867.46
+  - line: total_tax
+    computed: 285699.48
+    actual: 186104.00
+    delta: 99595.48
+    note: Delta $+99,595.48

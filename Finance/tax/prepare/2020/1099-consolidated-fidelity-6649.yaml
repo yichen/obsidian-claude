@@ -1,0 +1,56 @@
+form_type: 1099-CONSOLIDATED
+tax_year: 2020
+institution: Fidelity
+format: fidelity
+recipient:
+  name: Yi Chen
+  ssn_last4: '2622'
+account_number: X94-666649
+forms:
+  1099-DIV:
+    1a_total_ordinary_dividends: 59.35
+    1b_qualified_dividends: 31.80
+    2a_total_capital_gain_dist: 0.00
+    4_fed_tax_withheld: 0.00
+    5_section_199a_dividends: 0.00
+    7_foreign_tax_paid: 0.00
+  1099-INT:
+    1_interest_income: 0.00
+    4_fed_tax_withheld: 0.00
+  1099-B:
+    short_term:
+      proceeds: 16706.70
+      cost_basis: 15528.72
+      market_discount: 0.00
+      wash_sales: 0.00
+      gain_loss: 1177.98
+      fed_withheld: 0.00
+    long_term:
+      proceeds: 118049.38
+      cost_basis: 56394.47
+      market_discount: 0.00
+      wash_sales: 0.00
+      gain_loss: 61654.91
+      fed_withheld: 0.00
+    total:
+      proceeds: 134756.08
+      cost_basis: 71923.19
+      market_discount: 0.00
+      wash_sales: 0.00
+      gain_loss: 62832.89
+      fed_withheld: 0.00
+validation:
+  checks_passed: true
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2020/2021-02-06/2020-JOINT-BROKERAGE-X94666649-Consolidated-Form-1099.pdf
+  pages:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  processed_at: '2026-03-13T17:57:40'

@@ -1,0 +1,40 @@
+tax_year: 2021
+checks:
+- field: W-2 wages (all, MFJ) vs 1040 line 1a
+  computed: 3134196.64
+  actual_1040: 1601645.00
+  status: MISMATCH
+  note: Gap=$-1,532,551.64. Prepare folder W-2s sum exceeds 1040 line 1a — verify
+    for duplicates.
+- field: W-2 fed withholding (all, MFJ) vs 1040 w2_withholding
+  computed: 814720.70
+  actual_1040: 409229.00
+  status: EXPECTED
+  note: Yi=$814,720.70, Spouse=$0.00. Gap=$-405,491.70.
+- field: 1099-R taxable vs 1040 line 4b
+  computed: 13458.09
+  actual_1040: 3518.00
+  status: EXPECTED
+  note: '1099-R taxable=$13,458.09 but 1040 line 4b=$3,518.00. Likely a backdoor Roth
+    conversion: full amount on 1099-R but Form 8606 tracks non-deductible IRA basis,
+    so only gains are taxable on 1040.'
+- field: 1098 mortgage interest (itemized deductions)
+  computed: 16505.67
+  actual_1040: 33123.00
+  status: INFO
+  note: Mortgage interest=$16,505.67, property tax=$9,703.92. 1040 deductions=$33,123.00
+    includes SALT (capped $10K), charity, etc. Cannot directly compare — deductions
+    are a superset.
+- field: 1099-INT interest vs 1040 line 2b
+  computed: 3.16
+  actual_1040: 10.00
+  status: EXPECTED
+  note: 'Gap=$6.84. 1040 reports more interest than prepare-folder 1099-INTs. Likely
+    sources: brokerage 1099-INTs (Fidelity, Schwab) sent directly to CPA, not in the
+    prepare folder PDF collection.'
+summary:
+  matched: 0
+  expected_gaps: 3
+  mismatches: 1
+  info_only: 1
+  all_passed: false

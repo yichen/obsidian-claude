@@ -1,0 +1,47 @@
+form_type: '1040'
+tax_year: 2020
+filing_status: Married Filing Jointly
+taxpayer:
+  name: Yi Chen
+  ssn_last4: '2622'
+spouse:
+  name: Sheri Martin
+  ssn_last4: '3457'
+dependents:
+- name: Laurence Chen
+  ssn_last4: '6094'
+  relationship: Son
+- name: Ruby Chen
+  ssn_last4: '9707'
+  relationship: Daughter
+income:
+  1a_w2_wages: 1503388.00
+  2b_taxable_interest: 53.00
+  3b_ordinary_dividends: 59.00
+  4b_taxable_ira: 132542.00
+  7_capital_gain_loss: 236109.00
+  8_additional_income: 10652.00
+summary:
+  total_income: 1751926.00
+  adjustments: 1683.00
+  adjusted_gross_income: 1750143.00
+  deductions: 24800.00
+  taxable_income: 1725305.00
+  tax_line16: 561929.00
+  total_tax: 582393.00
+  w2_withholding: 499475.00
+  total_withholding: 510864.00
+  total_payments: 580864.00
+  refund_or_owed: 1529.00
+validation:
+  all_key_fields_present: true
+  mismatches:
+  - AGI (1750143.0) != total_income (1751926.0) - adjustments (1683.0)
+  - Taxable income (1725305.0) != AGI (1750143.0) - deductions (24800.0) = 1725343.0
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2020/final-returns/Yi Chen and Sheri
+    Martin's 2020 Tax Return Final.pdf
+  pages:
+  - 5
+  - 6
+  processed_at: '2026-03-13T18:01:43'

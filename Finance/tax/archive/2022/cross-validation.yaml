@@ -1,0 +1,38 @@
+tax_year: 2022
+checks:
+- field: W-2 wages (all, MFJ) vs 1040 line 1a
+  computed: 535644.70
+  actual_1040: 662516.00
+  status: EXPECTED
+  note: Gap=$126,871.30. No spouse W-2s found in prepare folder. The $126,871.30 gap
+    is likely spouse's actual wages not captured in parsed W-2s.
+- field: W-2 fed withholding (all, MFJ) vs 1040 w2_withholding
+  computed: 115284.21
+  actual_1040: 143202.00
+  status: EXPECTED
+  note: Yi=$115,284.21, Spouse=$0.00. Gap=$27,917.79. 1040 shows more withholding
+    — spouse W-2 withholding not captured in parsed data.
+- field: 1099-R taxable vs 1040 line 4b
+  computed: 6000.00
+  actual_1040: 6000.00
+  status: MATCH
+- field: 1098 mortgage interest (itemized deductions)
+  computed: 19745.67
+  actual_1040: 43346.00
+  status: INFO
+  note: Mortgage interest=$19,745.67, property tax=$16,758.76. 1040 deductions=$43,346.00
+    includes SALT (capped $10K), charity, etc. Cannot directly compare — deductions
+    are a superset.
+- field: 1099-INT interest vs 1040 line 2b
+  computed: 0.00
+  actual_1040: 288.00
+  status: EXPECTED
+  note: 'Gap=$288.00. 1040 reports more interest than prepare-folder 1099-INTs. Likely
+    sources: brokerage 1099-INTs (Fidelity, Schwab) sent directly to CPA, not in the
+    prepare folder PDF collection.'
+summary:
+  matched: 1
+  expected_gaps: 3
+  mismatches: 0
+  info_only: 1
+  all_passed: true

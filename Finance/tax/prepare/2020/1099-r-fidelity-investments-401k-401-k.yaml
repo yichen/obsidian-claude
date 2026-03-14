@@ -1,0 +1,30 @@
+form_type: 1099-R
+tax_year: 2020
+payer:
+  name: Fidelity Investments (401k)
+  tin: 04-6568107
+recipient:
+  name: Yi Chen
+  ssn_last4: '2622'
+plan_type: 401(k)
+boxes:
+  1_gross_distribution: 21270.57
+  2a_taxable_amount: 1664.60
+  2b_taxable_not_determined: false
+  2b_total_distribution: false
+  3_capital_gain: 0.00
+  4_fed_tax_withheld: 0.00
+  5_employee_contributions: 19605.97
+  6_net_unrealized_appreciation: 0.00
+  7_distribution_code: G
+  7_ira_sep_simple: false
+validation:
+  taxable_le_gross: true
+  mismatches:
+  - Code G (rollover) but Box 2a taxable = 1664.6 (expected 0)
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2020/2021-02-06/airbnb-1099-R (WA-G).pdf
+  pages:
+  - 1
+  processed_at: '2026-03-13T17:57:42'
+account_number: '20210109032104544333'
