@@ -12,6 +12,17 @@ export default function App(): React.ReactElement {
   const [prefetchedTransactions, setPrefetchedTransactions] = useState<unknown[][] | undefined>()
   const [chatHistory, setChatHistory] = useState<Message[]>([])
   const [pinnedCharts, setPinnedCharts] = useState<PinnedChart[]>([])
+  const [visitedViews, setVisitedViews] = useState<Set<string>>(new Set(['dashboard']))
+
+  // Track visited views for keep-alive
+  useEffect(() => {
+    setVisitedViews(prev => {
+      if (prev.has(activeView)) return prev
+      const next = new Set(prev)
+      next.add(activeView)
+      return next
+    })
+  }, [activeView])
 
   // Load pins from localStorage on startup
   useEffect(() => {
@@ -53,7 +64,7 @@ export default function App(): React.ReactElement {
       try {
         // Add a small delay to ensure window.api is injected
         await new Promise(resolve => setTimeout(resolve, 1000))
-        
+
         const sql = `
           SELECT t.id, t.date, t.description, COALESCE(c.name, 'Uncategorized') as category, a.name as account, t.amount, t.category_id, t.notes
           FROM transactions t
@@ -84,23 +95,31 @@ export default function App(): React.ReactElement {
       <div className="window-drag-bar" />
       <Sidebar activeView={activeView} onViewChange={setActiveView} />
       <main className="main-content">
-        {activeView === 'dashboard' && (
-          <Dashboard 
-            onDeepDive={handleDeepDive} 
-            pinnedCharts={pinnedCharts} 
-            onUnpin={handleUnpinChart}
-          />
+        {visitedViews.has('dashboard') && (
+          <div style={{ display: activeView === 'dashboard' ? 'contents' : 'none' }}>
+            <Dashboard
+              onDeepDive={handleDeepDive}
+              pinnedCharts={pinnedCharts}
+              onUnpin={handleUnpinChart}
+            />
+          </div>
         )}
-        {activeView === 'transactions' && <TransactionsView initialData={prefetchedTransactions} />}
-        {activeView === 'chat' && (
-          <ChatInterface
-            initialMessage={initialChatMessage}
-            onClearInitial={() => setInitialChatMessage(undefined)}
-            persistedMessages={chatHistory}
-            onMessagesChange={setChatHistory}
-            onPinChart={handlePinChart}
-            pinnedCharts={pinnedCharts}
-          />
+        {visitedViews.has('transactions') && (
+          <div style={{ display: activeView === 'transactions' ? 'contents' : 'none' }}>
+            <TransactionsView initialData={prefetchedTransactions} />
+          </div>
+        )}
+        {visitedViews.has('chat') && (
+          <div style={{ display: activeView === 'chat' ? 'contents' : 'none' }}>
+            <ChatInterface
+              initialMessage={initialChatMessage}
+              onClearInitial={() => setInitialChatMessage(undefined)}
+              persistedMessages={chatHistory}
+              onMessagesChange={setChatHistory}
+              onPinChart={handlePinChart}
+              pinnedCharts={pinnedCharts}
+            />
+          </div>
         )}
       </main>
     </div>

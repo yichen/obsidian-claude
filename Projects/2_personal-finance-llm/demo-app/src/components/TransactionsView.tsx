@@ -25,6 +25,14 @@ export function TransactionsView({ initialData }: TransactionsViewProps): React.
   const [pending, setPending] = useState<unknown[][]>([])
   const [pendingOpen, setPendingOpen] = useState(true)
 
+  // Collapsible month groups
+  const [collapsedMonths, setCollapsedMonths] = useState<Set<string>>(new Set())
+  const toggleMonth = (key: string) => setCollapsedMonths(prev => {
+    const next = new Set(prev)
+    next.has(key) ? next.delete(key) : next.add(key)
+    return next
+  })
+
   // Slide-out detail panel
   const [selectedTxn, setSelectedTxn] = useState<unknown[] | null>(null)
   const [categories, setCategories] = useState<Category[]>([])
@@ -316,21 +324,54 @@ export function TransactionsView({ initialData }: TransactionsViewProps): React.
                   </td>
                 </tr>
               ) : (
-                transactions.map((t, i) => {
-                  // col indices: [0]=id, [1]=date, [2]=description, [3]=category, [4]=account, [5]=amount, [6]=category_id, [7]=notes
-                  const amount = Number(t[5])
-                  return (
-                    <tr key={i} className="txn-row-clickable" onClick={() => openDetail(t)}>
-                      <td className="txn-td txn-td-date">{String(t[1])}</td>
-                      <td className="txn-td txn-td-desc">{String(t[2])}</td>
-                      <td className="txn-td">
-                        <span className="txn-category-badge">{String(t[3])}</span>
-                      </td>
-                      <td className="txn-td" style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontSize: '12px' }}>{String(t[4])}</td>
-                      <td className="txn-td txn-td-amount">{renderAmount(amount)}</td>
-                    </tr>
-                  )
-                })
+                (() => {
+                  // Group transactions by month
+                  const monthGroups: { key: string; label: string; rows: unknown[][] }[] = []
+                  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December']
+                  for (const t of transactions) {
+                    const dateStr = String(t[1])
+                    const monthKey = dateStr.slice(0, 7) // "2026-03"
+                    const last = monthGroups[monthGroups.length - 1]
+                    if (last && last.key === monthKey) {
+                      last.rows.push(t)
+                    } else {
+                      const [y, m] = monthKey.split('-')
+                      const label = `${monthNames[parseInt(m, 10) - 1]} ${y}`
+                      monthGroups.push({ key: monthKey, label, rows: [t] })
+                    }
+                  }
+                  return monthGroups.map(group => {
+                    const isCollapsed = collapsedMonths.has(group.key)
+                    return (
+                      <React.Fragment key={group.key}>
+                        <tr>
+                          <td colSpan={5} style={{ padding: 0 }}>
+                            <div className="txn-section-header" onClick={() => toggleMonth(group.key)}>
+                              <span className={`txn-section-chevron${isCollapsed ? ' collapsed' : ''}`}>
+                                <ChevronDown size={14} />
+                              </span>
+                              {group.label} ({group.rows.length})
+                            </div>
+                          </td>
+                        </tr>
+                        {!isCollapsed && group.rows.map((t, i) => {
+                          const amount = Number(t[5])
+                          return (
+                            <tr key={`${group.key}-${i}`} className="txn-row-clickable" onClick={() => openDetail(t)}>
+                              <td className="txn-td txn-td-date">{String(t[1])}</td>
+                              <td className="txn-td txn-td-desc">{String(t[2])}</td>
+                              <td className="txn-td">
+                                <span className="txn-category-badge">{String(t[3])}</span>
+                              </td>
+                              <td className="txn-td" style={{ color: 'var(--text-muted)', fontStyle: 'italic', fontSize: '12px' }}>{String(t[4])}</td>
+                              <td className="txn-td txn-td-amount">{renderAmount(amount)}</td>
+                            </tr>
+                          )
+                        })}
+                      </React.Fragment>
+                    )
+                  })
+                })()
               )}
             </tbody>
           </table>

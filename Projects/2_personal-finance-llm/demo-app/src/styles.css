@@ -485,6 +485,7 @@ textarea {
 .txn-section-chevron { transition: transform 0.2s; display: inline-flex; }
 .txn-section-chevron.collapsed { transform: rotate(-90deg); }
 
+
 /* ── Slide-out detail panel ─────────────────────────────────────────────── */
 .txn-detail-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.2); z-index: 10000;

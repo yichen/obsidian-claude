@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef, useMemo } from 'react'
 import { PinnedChart } from '../lib/types'
 
 interface DashboardProps {
@@ -44,7 +44,7 @@ function fmt(n: number, prefix = '', suffix = ''): string {
   return `${prefix}${n.toLocaleString('en-US', { maximumFractionDigits: 0 })}${suffix}`
 }
 
-export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps): React.ReactElement {
+export const Dashboard = React.memo(function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps): React.ReactElement {
   const [metrics, setMetrics] = useState<Metric[]>([
     { label: 'Savings Rate', value: '—' },
     { label: 'Financial Runway', value: '—' },
@@ -58,6 +58,20 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
   const [recentTopics, setRecentTopics] = useState<string[]>([])
   const [refreshedCharts, setRefreshedCharts] = useState<Record<string, string>>({})
   const [overviewCharts, setOverviewCharts] = useState<{ income: string | null; incomePie: string | null; spending: string | null; spendingPie: string | null }>({ income: null, incomePie: null, spending: null, spendingPie: null })
+
+  // Lazy-load: track when pinned section is visible
+  const pinsRef = useRef<HTMLDivElement>(null)
+  const [pinsVisible, setPinsVisible] = useState(false)
+
+  useEffect(() => {
+    if (!pinsRef.current) return
+    const observer = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) setPinsVisible(true) },
+      { rootMargin: '200px' }
+    )
+    observer.observe(pinsRef.current)
+    return () => observer.disconnect()
+  }, [])
 
   useEffect(() => {
     const load = async (): Promise<void> => {
@@ -157,11 +171,12 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
     load()
   }, [])
 
-  // Dynamic refresh of pinned charts
+  // Dynamic refresh of pinned charts — only refresh new pins, only when visible
   useEffect(() => {
+    if (!pinsVisible) return
     const refreshPins = async () => {
       for (const pin of pinnedCharts ?? []) {
-        if (pin.chartType) {
+        if (pin.chartType && !refreshedCharts[pin.id]) {
           const freshData = await window.api.generateChart(pin.chartType, pin.chartMonths ?? 6)
           if (freshData) {
             setRefreshedCharts(prev => ({ ...prev, [pin.id]: freshData }))
@@ -170,7 +185,7 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
       }
     }
     refreshPins()
-  }, [pinnedCharts])
+  }, [pinnedCharts, pinsVisible]) // eslint-disable-line react-hooks/exhaustive-deps
 
   // Load overview charts
   useEffect(() => {
@@ -189,6 +204,15 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
     }
     loadOverview()
   }, [])
+
+  // Memoize pinned chart display data
+  const pinnedDisplayData = useMemo(() =>
+    (pinnedCharts ?? []).map(pin => ({
+      ...pin,
+      src: refreshedCharts[pin.id] ?? pin.chartData
+    })),
+    [pinnedCharts, refreshedCharts]
+  )
 
   return (
     <div className="dashboard-container">
@@ -285,20 +309,20 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
         </div>
       </section>
 
-      <section className="pins-section">
+      <section className="pins-section" ref={pinsRef}>
         <div className="section-header">
           <h2>Pinned Insights</h2>
         </div>
         <div className="pins-grid">
-          {pinnedCharts && pinnedCharts.length > 0 ? (
-            pinnedCharts.map((pin) => (
+          {pinnedDisplayData.length > 0 ? (
+            pinnedDisplayData.map((pin) => (
               <div key={pin.id} className="pin-card">
                 <div className="pin-header">
                   <span className="pin-title">{pin.title}</span>
                   <button className="unpin-btn" onClick={() => onUnpin?.(pin.id)}>✕</button>
                 </div>
                 <div className="pin-body">
-                  <img src={refreshedCharts[pin.id] ?? pin.chartData} alt={pin.title} className="pin-image" />
+                  <img src={pin.src} alt={pin.title} className="pin-image" />
                 </div>
               </div>
             ))
@@ -314,4 +338,4 @@ export function Dashboard({ onDeepDive, pinnedCharts, onUnpin }: DashboardProps)
       </section>
     </div>
   )
-}
+})
