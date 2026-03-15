@@ -1,0 +1,22 @@
+form_type: '1098'
+tax_year: 2020
+lender:
+  name: Flagstar Bank
+  tin: 38-2734984
+borrower:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_mortgage_interest: 8598.87
+  2_outstanding_principal: 741750.00
+  5_mortgage_insurance: 0.00
+  10_property_tax: 4957.38
+validation:
+  has_interest: true
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2020/2021-02-06/primary-residence/1098-sammamish-primary.pdf
+  pages:
+  - 1
+  - 2
+  processed_at: '2026-03-13T17:57:39'

@@ -1,0 +1,1 @@
+../skills/sync-notes/SKILL.md

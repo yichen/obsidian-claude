@@ -1,0 +1,29 @@
+form_type: Schedule D
+tax_year: 2020
+boxes:
+  1b_proceeds: 307645.00
+  1b_cost: 151404.00
+  1b_gain_loss: 156241.00
+  '7': 156241.00
+  8b_proceeds: 150420.00
+  8b_cost: 71126.00
+  8b_gain_loss: 79294.00
+  9_proceeds: 2384.00
+  9_cost: 1810.00
+  9_gain_loss: 574.00
+  '15': 79868.00
+  '16': 236109.00
+  '17': 18.00
+  '18': 0.00
+  '19': 0.00
+validation:
+  has_line_16: true
+  has_line_21: false
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2020/final-returns/Yi Chen and Sheri
+    Martin's 2020 Tax Return Final.pdf
+  pages:
+  - 12
+  - 13
+  processed_at: '2026-03-13T20:12:00'

@@ -1,0 +1,89 @@
+tax_year: 2025
+filing_status: Married Filing Jointly
+dependents_count: 2
+income:
+  1a_w2_wages:
+    value: 584853.48
+    sources:
+    - Salesforce-W2.pdf
+    - W-2_Form_2025_Chen_2026_02_26_08_35_16_-0800_W-2_ESS.pdf
+    confidence: high
+  1z_total_wages:
+    value: 584853.48
+    sources:
+    - derived from 1a
+    confidence: medium
+  2b_taxable_interest:
+    value: 3056.24
+    sources:
+    - BECU-Statement-F270CEC9-4719-DD17-8228-52BFDBE7B9B3.PDF
+    - 2025-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+    - 2025-Yi's-Individual-CMA-4983-Consolidated-Form-1099.pdf
+    - MS_2025_1099-CONS_MSSB_LLC_5046_20260203.pdf
+    confidence: high
+  3a_qualified_dividends:
+    value: 409.70
+    sources:
+    - 2025-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+    - 2025-Frozen-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+    - 2025-Frozen-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+    - MS_2025_1099-CONS_MSSB_LLC_5046_20260203.pdf
+    confidence: high
+  3b_ordinary_dividends:
+    value: 718.37
+    sources:
+    - 2025-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+    - 2025-Frozen-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+    - 2025-Yi's-Individual-CMA-4983-Consolidated-Form-1099.pdf
+    - 2025-Frozen-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+    - MS_2025_1099-CONS_MSSB_LLC_5046_20260203.pdf
+    confidence: high
+  4b_taxable_ira:
+    value: 8004.16
+    sources:
+    - 2025-Traditional-IRA-9024-Form-1099-R-&-Instructions.pdf
+    confidence: medium
+    note: Backdoor Roth basis on Form 8606 may reduce taxable amount
+  7_capital_gain_loss:
+    value: 7123.49
+    sources:
+    - 2025-YI-CHEN-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+    - 2025-Frozen-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+    - 2025-Yi's-Individual-CMA-4983-Consolidated-Form-1099.pdf
+    - 2025-Frozen-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+    - MS_2025_1099-CONS_MSSB_LLC_5046_20260203.pdf
+    carryforward_applied: 0
+    confidence: high
+agi:
+  total_income: 603755.74
+  schedule_1_adjustments: 0.00
+  adjusted_gross_income: 603755.74
+  note: Schedule 1 adjustments (HSA, student loan interest, etc.) not captured
+deductions:
+  method: itemized
+  amount: 39215.34
+  breakdown:
+    mortgage_interest: 29215.34
+    property_tax_raw: 19471.10
+    salt_capped: 10000
+    total_before_charity: 39215.34
+    note: Charitable deductions and other Schedule A items not captured — may be higher
+tax_computation:
+  taxable_income: 564540.40
+  regular_tax: 136683.64
+  child_tax_credit: 0
+  net_investment_income_tax: 414.13
+  net_investment_income_base: 10898.10
+  amt_check: potentially_applicable — review Form 6251
+  total_tax_estimate: 137097.77
+manual_review_items:
+- 'Schedule 1 additional income/adjustments: verify no other income sources (alimony,
+  business, etc.)'
+- '1z vs 1a gap: verify any ESPP supplemental wages, RSU vesting adjustments'
+- 'QBI deduction (Section 199A): verify no pass-through / self-employment income'
+- 'Estimated tax payments: confirm Q4 prior-year payment amount'
+- 'Form 8606: backdoor Roth IRA basis tracking affects Line 4b taxable amount'
+- 'AMT (Form 6251): verify not subject to alternative minimum tax'
+- 'Schedule A charity: charitable contributions not captured in prepare folder YAMLs'
+- '1099-R Box 2a (8,004.16): verify Form 8606 basis — backdoor Roth conversions may
+  reduce taxable amount'

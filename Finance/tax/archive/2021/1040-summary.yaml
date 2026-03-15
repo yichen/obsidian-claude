@@ -1,0 +1,45 @@
+form_type: '1040'
+tax_year: 2021
+filing_status: Married Filing Jointly
+taxpayer:
+  name: Yi Chen
+  ssn_last4: '2622'
+spouse:
+  name: Sheri Martin
+  ssn_last4: '3457'
+dependents:
+- name: Laurence Chen
+  ssn_last4: '6094'
+  relationship: Son
+- name: Ruby Chen
+  ssn_last4: '9707'
+  relationship: Daughter
+income:
+  1a_w2_wages: 1601645.00
+  2b_taxable_interest: 10.00
+  3b_ordinary_dividends: 743.00
+  4b_taxable_ira: 3518.00
+  7_capital_gain_loss: 9821.00
+  8_additional_income: 9198.00
+summary:
+  total_income: 1624935.00
+  adjusted_gross_income: 1624935.00
+  taxable_income: 1591809.00
+  tax_line16: 525097.00
+  total_tax: 538307.00
+  w2_withholding: 409229.00
+  total_withholding: 421709.00
+  estimated_payments: 127000.00
+  total_payments: 548709.00
+  refund_or_owed: -10402.00
+validation:
+  all_key_fields_present: true
+  mismatches:
+  - Cover letter refund ($9150.0) != line 34 ($10402.0)
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2021/Yi Chen and Sheri Martin 2021 Tax
+    Return update.pdf
+  pages:
+  - 4
+  - 5
+  processed_at: '2026-03-13T20:12:01'

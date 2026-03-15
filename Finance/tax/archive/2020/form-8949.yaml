@@ -1,0 +1,31 @@
+form_type: Form 8949
+tax_year: 2020
+short_term:
+  transactions:
+  - description: ''
+    date_sold: 06/10/2021
+    proceeds: 6.00
+    cost: 10.00
+    gain_loss: 57.00
+    box: E
+  count: 1
+  total_proceeds: 6.00
+  total_cost: 10.00
+  total_gain_loss: 57.00
+long_term:
+  transactions: []
+  count: 0
+  total_proceeds: 0
+  total_cost: 0
+  total_gain_loss: 0
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2020/final-returns/Yi Chen and Sheri
+    Martin's 2020 Tax Return Final.pdf
+  pages:
+  - 14
+  - 15
+  - 16
+  - 17
+  processed_at: '2026-03-13T20:12:00'

@@ -1,0 +1,18 @@
+form_type: Schedule 1
+tax_year: 2024
+boxes:
+  4_other_gains: 1147.00
+  5_rental_income: 1147.00
+  6_farm_income: 6624.00
+  7_unemployment: 6624.00
+  10_total_additional_income: 7771.00
+  26_total_adjustments: 0.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2024/Yi Chen and Sheri Martin's 2024
+    Tax Return Final.pdf
+  pages:
+  - 4
+  - 5
+  processed_at: '2026-03-13T20:11:41'

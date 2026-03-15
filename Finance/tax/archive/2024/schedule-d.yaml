@@ -1,0 +1,29 @@
+form_type: Schedule D
+tax_year: 2024
+boxes:
+  1a_proceeds: 558.00
+  1a_cost: 636.00
+  1a_gain_loss: -78.00
+  1b_proceeds: 47210.00
+  1b_cost: 40.00
+  1b_gain_loss: -4943.00
+  '7': -5021.00
+  8a_proceeds: 258503.00
+  8a_cost: 127425.00
+  8a_gain_loss: 131078.00
+  '15': 131078.00
+  '16': 126057.00
+  '17': 18.00
+  '18': 0.00
+  '19': 0.00
+validation:
+  has_line_16: true
+  has_line_21: false
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2024/Yi Chen and Sheri Martin's 2024
+    Tax Return Final.pdf
+  pages:
+  - 11
+  - 12
+  processed_at: '2026-03-13T20:11:41'

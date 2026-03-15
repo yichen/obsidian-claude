@@ -76,3 +76,11 @@
   category: Groceries
   memo: '2x Lavazza Espresso Maestro Decaf Nespresso capsules (60ct), Order #112-8990939-1101025'
   status: pending
+
+- date: '2026-03-13'
+  account: chase-freedom
+  amount: -109.40
+  payee: Home Depot #4704
+  category: Home Improvement
+  memo: '10/4 25ft 30AMP Ridgid generator cord; paid via Apple Pay (DAN 4582 → chase-freedom 1350)'
+  status: pending

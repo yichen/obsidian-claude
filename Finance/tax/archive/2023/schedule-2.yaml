@@ -1,0 +1,17 @@
+form_type: Schedule 2
+tax_year: 2023
+boxes:
+  2_excess_ptc: 0.00
+  3_total_part1: 0.00
+  9_household_employment: 1106.00
+  11_additional_medicare: 4142.00
+  12_niit: 1450.00
+  21_total_other_taxes: 6698.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2023/2023-tax-final.pdf
+  pages:
+  - 7
+  - 8
+  processed_at: '2026-03-13T20:11:38'

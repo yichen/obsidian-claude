@@ -411,6 +411,22 @@ CREATE TABLE IF NOT EXISTS wellsfargo_car_statements (
     yaml_file TEXT NOT NULL
 );
 CREATE INDEX IF NOT EXISTS idx_wf_car_stmt_month ON wellsfargo_car_statements(statement_month);
+
+CREATE TABLE IF NOT EXISTS pending_transactions (
+    id INTEGER PRIMARY KEY,
+    date TEXT NOT NULL,
+    description TEXT NOT NULL,
+    amount REAL NOT NULL,
+    account_id INTEGER REFERENCES accounts(id),
+    category_id INTEGER REFERENCES categories(id),
+    status TEXT DEFAULT 'pending',
+    source_text TEXT,
+    notes TEXT,
+    created_at TEXT DEFAULT (datetime('now')),
+    matched_transaction_id INTEGER REFERENCES transactions(id)
+);
+CREATE INDEX IF NOT EXISTS idx_pending_status ON pending_transactions(status);
+CREATE INDEX IF NOT EXISTS idx_pending_date ON pending_transactions(date);
 """
 
 # ---------------------------------------------------------------------------
@@ -3504,6 +3520,131 @@ def cmd_match_pending():
 
 
 # ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# New commands: execute, add-pending, import-pending-yaml
+# ---------------------------------------------------------------------------
+
+def cmd_execute(sql):
+    """Execute a non-SELECT SQL statement and return JSON result."""
+    conn = get_db()
+    try:
+        conn.execute(sql)
+        conn.commit()
+        changes = conn.execute("SELECT changes()").fetchone()[0]
+        print(json.dumps({"ok": True, "rows_affected": changes}))
+    except sqlite3.Error as e:
+        print(json.dumps({"error": str(e)}))
+        sys.exit(1)
+    finally:
+        conn.close()
+
+
+def cmd_add_pending():
+    """Add a pending transaction from JSON argument.
+    Usage: finance_db.py add-pending '<json>'"""
+    if len(sys.argv) < 3:
+        print("Usage: finance_db.py add-pending '<json>'")
+        sys.exit(1)
+    try:
+        data = json.loads(sys.argv[2])
+    except json.JSONDecodeError as e:
+        print(json.dumps({"error": f"Invalid JSON: {e}"}))
+        sys.exit(1)
+
+    conn = get_db()
+    try:
+        # Resolve account by name hint if account_id not given
+        account_id = data.get("account_id")
+        if account_id is None and data.get("account"):
+            row = conn.execute(
+                "SELECT id FROM accounts WHERE name LIKE ? OR display_name LIKE ?",
+                (f"%{data['account']}%", f"%{data['account']}%")
+            ).fetchone()
+            if row:
+                account_id = row[0]
+
+        conn.execute(
+            "INSERT INTO pending_transactions (date, description, amount, account_id, category_id, notes, source_text, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')",
+            (data["date"], data["description"], data["amount"], account_id,
+             data.get("category_id"), data.get("notes", ""), data.get("source_text", ""))
+        )
+        conn.commit()
+        print(json.dumps({"ok": True}))
+    except sqlite3.Error as e:
+        print(json.dumps({"error": str(e)}))
+        sys.exit(1)
+    finally:
+        conn.close()
+
+
+def cmd_import_pending_yaml():
+    """Migrate pending-transactions.yaml → pending_transactions SQLite table (idempotent)."""
+    if not PENDING_TXN_PATH.exists():
+        print(json.dumps({"ok": True, "imported": 0, "message": "No YAML file found"}))
+        return
+
+    with open(PENDING_TXN_PATH, encoding="utf-8") as f:
+        entries = yaml.safe_load(f) or []
+
+    if not entries:
+        print(json.dumps({"ok": True, "imported": 0}))
+        return
+
+    conn = get_db()
+    # Ensure table exists (may not if DB was initialized before this table was added)
+    conn.executescript("""
+CREATE TABLE IF NOT EXISTS pending_transactions (
+    id INTEGER PRIMARY KEY,
+    date TEXT NOT NULL,
+    description TEXT NOT NULL,
+    amount REAL NOT NULL,
+    account_id INTEGER REFERENCES accounts(id),
+    category_id INTEGER REFERENCES categories(id),
+    status TEXT DEFAULT 'pending',
+    source_text TEXT,
+    notes TEXT,
+    created_at TEXT DEFAULT (datetime('now')),
+    matched_transaction_id INTEGER REFERENCES transactions(id)
+);
+CREATE INDEX IF NOT EXISTS idx_pending_status ON pending_transactions(status);
+CREATE INDEX IF NOT EXISTS idx_pending_date ON pending_transactions(date);
+""")
+    imported = 0
+    try:
+        for entry in entries:
+            status = entry.get("status", "pending")
+            if status == "matched":
+                continue  # Skip already-matched entries
+
+            date = str(entry.get("date", ""))
+            description = entry.get("description", "") or entry.get("payee", "")
+            amount = float(entry.get("amount", 0))
+            notes = entry.get("notes", "") or entry.get("memo", "")
+            source_text = entry.get("source_text", "")
+
+            # Dedup check
+            existing = conn.execute(
+                "SELECT id FROM pending_transactions WHERE date=? AND description=? AND amount=?",
+                (date, description, amount)
+            ).fetchone()
+            if existing:
+                continue
+
+            conn.execute(
+                "INSERT INTO pending_transactions (date, description, amount, notes, source_text, status) VALUES (?, ?, ?, ?, ?, ?)",
+                (date, description, amount, notes, source_text, status)
+            )
+            imported += 1
+
+        conn.commit()
+        print(json.dumps({"ok": True, "imported": imported}))
+    except sqlite3.Error as e:
+        print(json.dumps({"error": str(e)}))
+        sys.exit(1)
+    finally:
+        conn.close()
+
+
 # CLI
 # ---------------------------------------------------------------------------
 
@@ -3575,6 +3716,15 @@ def main():
             print("Usage: finance_db.py query <sql>")
             sys.exit(1)
         cmd_query(sys.argv[2])
+    elif cmd == "execute":
+        if len(sys.argv) < 3:
+            print("Usage: finance_db.py execute <sql>")
+            sys.exit(1)
+        cmd_execute(sys.argv[2])
+    elif cmd == "add-pending":
+        cmd_add_pending()
+    elif cmd == "import-pending-yaml":
+        cmd_import_pending_yaml()
     elif cmd == "add-trip":
         cmd_add_trip()
     elif cmd == "list-trips":

@@ -1,23 +1,20 @@
-# --- IGNORE LIST ---
-# Ignore heavy/internal Obsidian noise
-.obsidian/workspace
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
-.obsidian/cache/
-.obsidian/indexed-db/
-.obsidian/plugins/obsidian-git/
+# 1. First, define the "Track everything" base
+!*
+!*/
 
-# Machine-specific settings
-.claude/settings.local.json
-.claude/settings.local.sync-conflict-*
+# 2. Then, define the EXCLUSIONS (The "Last Rule Wins" section)
+# This will override the "!*" above for these specific paths.
+
+# Obsidian internals
+**/.obsidian/workspace
+**/.obsidian/workspace.json
+**/.obsidian/cache/
+**/.obsidian/plugins/
 
 # System files
-.DS_Store
-*.pyc
-__pycache__/
+**/.DS_Store
 
-# --- EXCEPTIONS ---
-# If you want to be extra sure your AI config is tracked
-!/.claude/
-!/.claude/**
-!/.gitignore
+# Finance & Projects
+Finance/reports/
+Projects/2_personal-finance-llm/demo-app/out/
+Projects/2_personal-finance-llm/demo-app/node_modules/

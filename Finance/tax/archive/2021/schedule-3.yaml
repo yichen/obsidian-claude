@@ -1,0 +1,15 @@
+form_type: Schedule 3
+tax_year: 2021
+boxes:
+  1_foreign_tax_credit: 10.00
+  8_total_nonrefundable: 10.00
+  15_total_other_payments: 0.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2021/Yi Chen and Sheri Martin 2021 Tax
+    Return update.pdf
+  pages:
+  - 10
+  - 11
+  processed_at: '2026-03-13T20:12:04'

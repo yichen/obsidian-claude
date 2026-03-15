@@ -1,0 +1,1 @@
+../skills/ingest-payslips/SKILL.md

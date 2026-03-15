@@ -1,0 +1,22 @@
+form_type: '1098'
+tax_year: 2021
+lender:
+  name: ''
+  tin: ''
+borrower:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_mortgage_interest: 3982.26
+  2_outstanding_principal: 0.00
+  5_mortgage_insurance: 0.00
+  10_property_tax: 4851.96
+validation:
+  has_interest: true
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2021/2022-04-30/1098_(Rocket_Mortgage).pdf
+  pages:
+  - 1
+  - 2
+  processed_at: '2026-03-13T17:57:26'

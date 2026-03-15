@@ -1,0 +1,33 @@
+form_type: Schedule D
+tax_year: 2022
+boxes:
+  1a_proceeds: 87791.00
+  1a_cost: 101658.00
+  1a_gain_loss: -13867.00
+  2_proceeds: 254296.00
+  2_cost: 33094.00
+  2_gain_loss: -30597.00
+  '7': -44464.00
+  8a_proceeds: 31420.00
+  8a_cost: 22428.00
+  8a_gain_loss: 8992.00
+  9_proceeds: 71523.00
+  9_cost: 4850.00
+  9_gain_loss: -35235.00
+  '15': -26243.00
+  '16': -70707.00
+  '17': 18.00
+  '18': 0.00
+  '19': 0.00
+  '21': -3000.00
+validation:
+  has_line_16: true
+  has_line_21: true
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2022/Yi Chen and Sheri Martin's 2022
+    Tax Return.pdf
+  pages:
+  - 13
+  - 14
+  processed_at: '2026-03-13T20:12:09'
