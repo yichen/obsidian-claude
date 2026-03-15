@@ -1,0 +1,22 @@
+form_type: '1098'
+tax_year: 2021
+lender:
+  name: Flagstar Bank
+  tin: 38-2734984
+borrower:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_mortgage_interest: 8541.15
+  2_outstanding_principal: 736957.52
+  5_mortgage_insurance: 0.00
+  10_property_tax: 0.00
+validation:
+  has_interest: true
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2021/2022-04-30/1098_flagstore_1.pdf
+  pages:
+  - 1
+  - 2
+  processed_at: '2026-03-13T17:57:26'

@@ -1,0 +1,146 @@
+computed:
+  tax_year: 2024
+  filing_status: Married Filing Jointly
+  dependents_count: 2
+  income:
+    1a_w2_wages:
+      value: 478225.73
+      sources:
+      - 2025-03-18-Lincoln-life-W-2.pdf
+      - 2024-W2-Salesforce.pdf
+      - W-2_Form_2024_Chen_stripe.pdf
+      - IFS W2_2024.pdf
+      confidence: high
+    1z_total_wages:
+      value: 478225.73
+      sources:
+      - derived from 1a
+      confidence: medium
+    2b_taxable_interest:
+      value: 13082.00
+      sources:
+      - 1099-INT-BECU-Statement-ECAF35A4-3155-518E-A2AE-9A0196BAFF85.PDF
+      - 2024-Yi-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+      - 2024-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf
+      - 2024-Yi-s-Individual-CMA-4983-Consolidated-Form-1099.pdf
+      confidence: high
+    3a_qualified_dividends:
+      value: 907.80
+      sources:
+      - 2024-Yi-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+      - 2024-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+      - 2024-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+      confidence: high
+    3b_ordinary_dividends:
+      value: 1705.87
+      sources:
+      - 2024-Yi-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+      - 2024-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+      - 2024-Joint-WROS-TOD-6649-Consolidated-Form-1099.pdf
+      - 2024-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+      - 2024-SHERI-INDIVIDUAL-TOD-9955-Consolidated-Form-1099.pdf
+      confidence: high
+    4b_taxable_ira:
+      value: 7000.00
+      sources:
+      - 2024-Traditional-IRA-9024-Form-1099-R-.pdf
+      confidence: medium
+      note: Backdoor Roth basis on Form 8606 may reduce taxable amount
+    7_capital_gain_loss:
+      value: 127615.60
+      sources:
+      - 2024-Yi-INDIVIDUAL-TOD-0887-Consolidated-Form-1099.pdf
+      - 2024-Ruby-UTMA-2753-Consolidated-Form-1099.pdf
+      - 2024-JOINT-CASH-MANAGEMENT-4267-Consolidated-Form-1099.pdf
+      - 2024-Yi-s-Individual-CMA-4983-Consolidated-Form-1099.pdf
+      - 2024-Joint-WROS-TOD-6649-Consolidated-Form-1099.pdf
+      - 2024-Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+      - 2024-SHERI-INDIVIDUAL-TOD-9955-Consolidated-Form-1099.pdf
+      carryforward_applied: 0
+      confidence: high
+  agi:
+    total_income: 627629.20
+    schedule_1_adjustments: 0.00
+    adjusted_gross_income: 627629.20
+    note: Schedule 1 adjustments (HSA, student loan interest, etc.) not captured
+  deductions:
+    method: itemized
+    amount: 38309.54
+    breakdown:
+      mortgage_interest: 28309.54
+      property_tax_raw: 17670.56
+      salt_capped: 10000
+      total_before_charity: 38309.54
+      note: Charitable deductions and other Schedule A items not captured — may be
+        higher
+  tax_computation:
+    taxable_income: 589319.66
+    regular_tax: 147011.38
+    child_tax_credit: 0
+    net_investment_income_tax: 5411.33
+    net_investment_income_base: 142403.47
+    amt_check: potentially_applicable — review Form 6251
+    total_tax_estimate: 152422.71
+  manual_review_items:
+  - 'Schedule 1 additional income/adjustments: verify no other income sources (alimony,
+    business, etc.)'
+  - '1z vs 1a gap: verify any ESPP supplemental wages, RSU vesting adjustments'
+  - 'QBI deduction (Section 199A): verify no pass-through / self-employment income'
+  - 'Estimated tax payments: confirm Q4 prior-year payment amount'
+  - 'Form 8606: backdoor Roth IRA basis tracking affects Line 4b taxable amount'
+  - 'AMT (Form 6251): verify not subject to alternative minimum tax'
+  - 'Schedule A charity: charitable contributions not captured in prepare folder YAMLs'
+  - '1099-R Box 2a (7,000.00): verify Form 8606 basis — backdoor Roth conversions
+    may reduce taxable amount'
+backtest:
+  test_year: 2024
+  lines_checked: 10
+  lines_matched: 1
+  lines_mismatched: 9
+  accuracy: 10.0%
+  mismatches:
+  - line: 1a_w2_wages
+    computed: 478225.73
+    actual: 396232.00
+    delta: 81993.73
+    note: Delta $+81,993.73
+  - line: 1z_total_wages
+    computed: 478225.73
+    actual: 396232.00
+    delta: 81993.73
+    note: Delta $+81,993.73
+  - line: 3b_ordinary_dividends
+    computed: 1705.87
+    actual: 1586.00
+    delta: 119.87
+    note: Delta $+119.87
+  - line: 4b_taxable_ira
+    computed: 7000.00
+    actual: 3.00
+    delta: 6997.00
+    note: Delta $+6,997.00
+  - line: 7_capital_gain_loss
+    computed: 127615.60
+    actual: 126057.00
+    delta: 1558.60
+    note: Delta $+1,558.60
+  - line: adjusted_gross_income
+    computed: 627629.20
+    actual: 544731.00
+    delta: 82898.20
+    note: Delta $+82,898.20
+  - line: deductions
+    computed: 38309.54
+    actual: 30274.00
+    delta: 8035.54
+    note: Delta $+8,035.54
+  - line: taxable_income
+    computed: 589319.66
+    actual: 514456.00
+    delta: 74863.66
+    note: Delta $+74,863.66
+  - line: total_tax
+    computed: 152422.71
+    actual: 106549.00
+    delta: 45873.71
+    note: Delta $+45,873.71

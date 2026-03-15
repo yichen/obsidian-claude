@@ -2897,3 +2897,463 @@
 2026-03-01 09:30:18,418 WARNING [31m  BALANCE MISMATCH apple-card/2024-10-31.csv: prev(2237.76) - txns + installments = 324.0, expected 337.24 (diff=$13.24)[0m
 2026-03-01 09:30:18,418 WARNING [31m  CHAIN BREAK at apple-card/2024-05-31.csv: prior new_balance=264.46 != this previous_balance=1260.06 (diff=$995.60)[0m
 2026-03-01 09:30:18,418 WARNING [31m  2 balance issue(s) found![0m
+2026-03-03 05:59:54,960 INFO Credit Card Statement Ingestion — 2026-03-03 05:59:54
+2026-03-03 05:59:54,961 INFO 
+  Processing bofa-rewards-visa (13 PDFs)...
+2026-03-03 05:59:55,108 INFO     OK eStmt_2025-01-23.pdf -> 2025-01-23.csv (2 txns, charges=$4.23, credits=$4.23)
+2026-03-03 05:59:55,287 INFO     OK eStmt_2025-02-23.pdf -> 2025-02-23.csv (2 txns, charges=$4.23, credits=$4.23)
+2026-03-03 05:59:55,479 INFO     OK eStmt_2025-03-23.pdf -> 2025-03-23.csv (2 txns, charges=$4.23, credits=$4.23)
+2026-03-03 05:59:55,915 DEBUG Retry with {'x_tolerance': 1}: mismatch $34800.00 -> $34800.00
+2026-03-03 05:59:56,118 DEBUG Retry with {'layout': True}: mismatch $34800.00 -> $34800.00
+2026-03-03 05:59:56,339 DEBUG Retry with {'x_tolerance': 5}: mismatch $34800.00 -> $34800.00
+2026-03-03 05:59:56,339 INFO     OK eStmt_2025-04-23.pdf -> 2025-04-23.csv (9 txns, charges=$36196.23, credits=$14.23) [retried 3x, mismatch=$34800.00] [33m(1 warnings)[0m
+2026-03-03 05:59:56,339 WARNING        WARNING: Charges total mismatch: parsed $36196.23 vs expected $1396.23 (purchases=$4.23 + fees=$1392.00 + interest=$0.00)
+2026-03-03 05:59:56,601 INFO     OK eStmt_2025-05-23.pdf -> 2025-05-23.csv (3 txns, charges=$4.23, credits=$800.00)
+2026-03-03 05:59:56,801 INFO     OK eStmt_2025-06-23.pdf -> 2025-06-23.csv (3 txns, charges=$30.29, credits=$0.00)
+2026-03-03 05:59:56,999 INFO     OK eStmt_2025-07-23.pdf -> 2025-07-23.csv (2 txns, charges=$0.35, credits=$734.00)
+2026-03-03 05:59:57,199 INFO     OK eStmt_2025-08-23.pdf -> 2025-08-23.csv (2 txns, charges=$0.37, credits=$347.00)
+2026-03-03 05:59:57,400 INFO     OK eStmt_2025-09-23.pdf -> 2025-09-23.csv (2 txns, charges=$0.37, credits=$343.00)
+2026-03-03 05:59:57,599 INFO     OK eStmt_2025-10-23.pdf -> 2025-10-23.csv (2 txns, charges=$0.36, credits=$340.00)
+2026-03-03 05:59:57,799 INFO     OK eStmt_2025-12-23.pdf -> 2025-12-23.csv (2 txns, charges=$0.36, credits=$333.00)
+2026-03-03 05:59:58,004 INFO     OK eStmt_2026-01-23.pdf -> 2026-01-23.csv (2 txns, charges=$0.37, credits=$330.00)
+2026-03-03 05:59:58,304 INFO     OK eStmt_2026-02-23.pdf -> 2026-02-23.csv (2 txns, charges=$0.38, credits=$326.00)
+2026-03-03 05:59:58,307 INFO 
+  Done: 13 succeeded, 0 errors, 1 warnings
+2026-03-03 05:59:58,307 INFO 
+  Checking for missing statements...
+2026-03-03 05:59:58,308 WARNING [31m  bofa-rewards-visa: 1 MISSING statement(s) (range 2025-01 to 2026-02):[0m
+2026-03-03 05:59:58,308 WARNING [31m    -> 2025-11[0m
+2026-03-03 05:59:58,308 WARNING [31m  1 missing statement(s) detected! Check source PDFs in /Users/ychen2/Dropbox/0-FinancialStatements/credit-cards[0m
+2026-03-03 05:59:58,308 INFO 
+  Verifying statement balances...
+2026-03-03 05:59:58,309 WARNING [31m  CHAIN BREAK at bofa-rewards-visa/2025-12-23.csv: prior new_balance=33658.2 != this previous_balance=33322.57 (diff=$335.63)[0m
+2026-03-03 05:59:58,309 WARNING [31m  1 balance issue(s) found![0m
+2026-03-03 06:01:09,281 INFO Credit Card Statement Ingestion — 2026-03-03 06:01:09
+2026-03-03 06:01:09,281 INFO 
+  Processing bofa-rewards-visa (14 PDFs)...
+2026-03-03 06:01:09,565 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:09,709 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:09,852 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:09,852 INFO     OK eStmt_2025-01-23.pdf -> 2025-01-23.csv (2 txns, charges=$4.23, credits=$4.23) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:10,218 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:10,406 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:10,590 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:10,590 INFO     OK eStmt_2025-02-23.pdf -> 2025-02-23.csv (2 txns, charges=$4.23, credits=$4.23) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:11,002 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:11,216 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:11,410 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:11,411 INFO     OK eStmt_2025-03-23.pdf -> 2025-03-23.csv (2 txns, charges=$4.23, credits=$4.23) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:11,637 INFO     OK eStmt_2025-04-23.pdf -> 2025-04-23.csv (9 txns, charges=$36196.23, credits=$14.23) [33m(1 warnings)[0m
+2026-03-03 06:01:11,637 WARNING        WARNING: Charges total mismatch: parsed $36196.23 vs expected $1396.23 (purchases=$4.23 + fees=$1392.00 + interest=$0.00)
+2026-03-03 06:01:12,140 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:12,398 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:12,653 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:12,654 INFO     OK eStmt_2025-05-23.pdf -> 2025-05-23.csv (3 txns, charges=$4.23, credits=$800.00) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:13,059 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:13,265 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:13,467 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:13,467 INFO     OK eStmt_2025-06-23.pdf -> 2025-06-23.csv (3 txns, charges=$30.29, credits=$0.00) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:13,842 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:14,037 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:14,213 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:14,213 INFO     OK eStmt_2025-07-23.pdf -> 2025-07-23.csv (2 txns, charges=$0.35, credits=$734.00) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:14,610 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:14,813 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:14,995 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:14,995 INFO     OK eStmt_2025-08-23.pdf -> 2025-08-23.csv (2 txns, charges=$0.37, credits=$347.00) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:15,385 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:15,588 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:15,772 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:01:15,772 INFO     OK eStmt_2025-09-23.pdf -> 2025-09-23.csv (2 txns, charges=$0.37, credits=$343.00) [retried 3x, mismatch=$14.15]
+2026-03-03 06:01:16,173 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.90 -> $13.90
+2026-03-03 06:01:16,392 DEBUG Retry with {'layout': True}: mismatch $13.90 -> $13.90
+2026-03-03 06:01:16,588 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.90 -> $13.90
+2026-03-03 06:01:16,589 INFO     OK eStmt_2025-10-23.pdf -> 2025-10-23.csv (2 txns, charges=$0.36, credits=$340.00) [retried 3x, mismatch=$13.90]
+2026-03-03 06:01:16,982 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.65 -> $13.65
+2026-03-03 06:01:17,188 DEBUG Retry with {'layout': True}: mismatch $13.65 -> $13.65
+2026-03-03 06:01:17,379 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.65 -> $13.65
+2026-03-03 06:01:17,380 INFO     OK eStmt_2025-11-23.pdf -> 2025-11-23.csv (2 txns, charges=$0.37, credits=$336.00) [retried 3x, mismatch=$13.65]
+2026-03-03 06:01:17,751 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.65 -> $13.65
+2026-03-03 06:01:17,939 DEBUG Retry with {'layout': True}: mismatch $13.65 -> $13.65
+2026-03-03 06:01:18,126 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.65 -> $13.65
+2026-03-03 06:01:18,126 INFO     OK eStmt_2025-12-23.pdf -> 2025-12-23.csv (2 txns, charges=$0.36, credits=$333.00) [retried 3x, mismatch=$13.65]
+2026-03-03 06:01:18,520 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.40 -> $13.40
+2026-03-03 06:01:18,719 DEBUG Retry with {'layout': True}: mismatch $13.40 -> $13.40
+2026-03-03 06:01:18,901 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.40 -> $13.40
+2026-03-03 06:01:18,902 INFO     OK eStmt_2026-01-23.pdf -> 2026-01-23.csv (2 txns, charges=$0.37, credits=$330.00) [retried 3x, mismatch=$13.40]
+2026-03-03 06:01:19,513 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.40 -> $13.40
+2026-03-03 06:01:19,805 DEBUG Retry with {'layout': True}: mismatch $13.40 -> $13.40
+2026-03-03 06:01:20,094 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.40 -> $13.40
+2026-03-03 06:01:20,094 INFO     OK eStmt_2026-02-23.pdf -> 2026-02-23.csv (2 txns, charges=$0.38, credits=$326.00) [retried 3x, mismatch=$13.40]
+2026-03-03 06:01:20,095 INFO 
+  Done: 14 succeeded, 0 errors, 1 warnings
+2026-03-03 06:01:20,095 INFO 
+  Checking for missing statements...
+2026-03-03 06:01:20,095 INFO   No gaps found.
+2026-03-03 06:01:20,095 INFO 
+  Verifying statement balances...
+2026-03-03 06:01:20,096 INFO   [32mAll balance checks passed.[0m
+2026-03-03 06:02:37,191 INFO Credit Card Statement Ingestion — 2026-03-03 06:02:37
+2026-03-03 06:02:37,191 INFO 
+  Processing bofa-rewards-visa (14 PDFs)...
+2026-03-03 06:02:37,472 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:37,616 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:37,758 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:37,759 INFO     OK eStmt_2025-01-23.pdf -> 2025-01-23.csv (2 txns, charges=$4.23, credits=$4.23) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:37,759 WARNING        WARNING: Charges total mismatch: parsed $4.23 vs expected $18.38 (purchases=$4.23 + fees=$0.00 + interest=$0.00 + balance_transfers=$14.15)
+2026-03-03 06:02:38,123 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:38,311 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:38,497 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:38,497 INFO     OK eStmt_2025-02-23.pdf -> 2025-02-23.csv (2 txns, charges=$4.23, credits=$4.23) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:38,497 WARNING        WARNING: Charges total mismatch: parsed $4.23 vs expected $18.38 (purchases=$4.23 + fees=$0.00 + interest=$0.00 + balance_transfers=$14.15)
+2026-03-03 06:02:38,908 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:39,123 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:39,313 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:39,313 INFO     OK eStmt_2025-03-23.pdf -> 2025-03-23.csv (2 txns, charges=$4.23, credits=$4.23) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:39,313 WARNING        WARNING: Charges total mismatch: parsed $4.23 vs expected $18.38 (purchases=$4.23 + fees=$0.00 + interest=$0.00 + balance_transfers=$14.15)
+2026-03-03 06:02:39,537 INFO     OK eStmt_2025-04-23.pdf -> 2025-04-23.csv (9 txns, charges=$36196.23, credits=$14.23)
+2026-03-03 06:02:40,037 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:40,292 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:40,547 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:40,547 INFO     OK eStmt_2025-05-23.pdf -> 2025-05-23.csv (3 txns, charges=$4.23, credits=$800.00) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:40,547 WARNING        WARNING: Charges total mismatch: parsed $4.23 vs expected $18.38 (purchases=$4.23 + fees=$0.00 + interest=$0.00 + balance_transfers=$14.15)
+2026-03-03 06:02:40,950 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:41,153 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:41,353 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:41,353 INFO     OK eStmt_2025-06-23.pdf -> 2025-06-23.csv (3 txns, charges=$30.29, credits=$0.00) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:41,354 WARNING        WARNING: Charges total mismatch: parsed $30.29 vs expected $44.44 (purchases=$2.23 + fees=$28.00 + interest=$0.06 + balance_transfers=$14.15)
+2026-03-03 06:02:41,726 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:41,922 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:42,100 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:42,100 INFO     OK eStmt_2025-07-23.pdf -> 2025-07-23.csv (2 txns, charges=$0.35, credits=$734.00) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:42,100 WARNING        WARNING: Charges total mismatch: parsed $0.35 vs expected $14.50 (purchases=$0.00 + fees=$0.00 + interest=$0.35 + balance_transfers=$14.15)
+2026-03-03 06:02:42,500 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:42,702 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:42,887 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:42,887 INFO     OK eStmt_2025-08-23.pdf -> 2025-08-23.csv (2 txns, charges=$0.37, credits=$347.00) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:42,887 WARNING        WARNING: Charges total mismatch: parsed $0.37 vs expected $14.52 (purchases=$0.00 + fees=$0.00 + interest=$0.37 + balance_transfers=$14.15)
+2026-03-03 06:02:43,274 DEBUG Retry with {'x_tolerance': 1}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:43,476 DEBUG Retry with {'layout': True}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:43,662 DEBUG Retry with {'x_tolerance': 5}: mismatch $14.15 -> $14.15
+2026-03-03 06:02:43,663 INFO     OK eStmt_2025-09-23.pdf -> 2025-09-23.csv (2 txns, charges=$0.37, credits=$343.00) [retried 3x, mismatch=$14.15] [33m(1 warnings)[0m
+2026-03-03 06:02:43,663 WARNING        WARNING: Charges total mismatch: parsed $0.37 vs expected $14.52 (purchases=$0.00 + fees=$0.00 + interest=$0.37 + balance_transfers=$14.15)
+2026-03-03 06:02:44,060 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.90 -> $13.90
+2026-03-03 06:02:44,272 DEBUG Retry with {'layout': True}: mismatch $13.90 -> $13.90
+2026-03-03 06:02:44,465 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.90 -> $13.90
+2026-03-03 06:02:44,465 INFO     OK eStmt_2025-10-23.pdf -> 2025-10-23.csv (2 txns, charges=$0.36, credits=$340.00) [retried 3x, mismatch=$13.90] [33m(1 warnings)[0m
+2026-03-03 06:02:44,465 WARNING        WARNING: Charges total mismatch: parsed $0.36 vs expected $14.26 (purchases=$0.00 + fees=$0.00 + interest=$0.36 + balance_transfers=$13.90)
+2026-03-03 06:02:44,845 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.65 -> $13.65
+2026-03-03 06:02:45,045 DEBUG Retry with {'layout': True}: mismatch $13.65 -> $13.65
+2026-03-03 06:02:45,231 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.65 -> $13.65
+2026-03-03 06:02:45,232 INFO     OK eStmt_2025-11-23.pdf -> 2025-11-23.csv (2 txns, charges=$0.37, credits=$336.00) [retried 3x, mismatch=$13.65] [33m(1 warnings)[0m
+2026-03-03 06:02:45,232 WARNING        WARNING: Charges total mismatch: parsed $0.37 vs expected $14.02 (purchases=$0.00 + fees=$0.00 + interest=$0.37 + balance_transfers=$13.65)
+2026-03-03 06:02:45,600 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.65 -> $13.65
+2026-03-03 06:02:45,785 DEBUG Retry with {'layout': True}: mismatch $13.65 -> $13.65
+2026-03-03 06:02:45,971 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.65 -> $13.65
+2026-03-03 06:02:45,972 INFO     OK eStmt_2025-12-23.pdf -> 2025-12-23.csv (2 txns, charges=$0.36, credits=$333.00) [retried 3x, mismatch=$13.65] [33m(1 warnings)[0m
+2026-03-03 06:02:45,972 WARNING        WARNING: Charges total mismatch: parsed $0.36 vs expected $14.01 (purchases=$0.00 + fees=$0.00 + interest=$0.36 + balance_transfers=$13.65)
+2026-03-03 06:02:46,364 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.40 -> $13.40
+2026-03-03 06:02:46,564 DEBUG Retry with {'layout': True}: mismatch $13.40 -> $13.40
+2026-03-03 06:02:46,747 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.40 -> $13.40
+2026-03-03 06:02:46,748 INFO     OK eStmt_2026-01-23.pdf -> 2026-01-23.csv (2 txns, charges=$0.37, credits=$330.00) [retried 3x, mismatch=$13.40] [33m(1 warnings)[0m
+2026-03-03 06:02:46,748 WARNING        WARNING: Charges total mismatch: parsed $0.37 vs expected $13.77 (purchases=$0.00 + fees=$0.00 + interest=$0.37 + balance_transfers=$13.40)
+2026-03-03 06:02:47,339 DEBUG Retry with {'x_tolerance': 1}: mismatch $13.40 -> $13.40
+2026-03-03 06:02:47,625 DEBUG Retry with {'layout': True}: mismatch $13.40 -> $13.40
+2026-03-03 06:02:47,914 DEBUG Retry with {'x_tolerance': 5}: mismatch $13.40 -> $13.40
+2026-03-03 06:02:47,915 INFO     OK eStmt_2026-02-23.pdf -> 2026-02-23.csv (2 txns, charges=$0.38, credits=$326.00) [retried 3x, mismatch=$13.40] [33m(1 warnings)[0m
+2026-03-03 06:02:47,915 WARNING        WARNING: Charges total mismatch: parsed $0.38 vs expected $13.78 (purchases=$0.00 + fees=$0.00 + interest=$0.38 + balance_transfers=$13.40)
+2026-03-03 06:02:47,915 INFO 
+  Done: 14 succeeded, 0 errors, 13 warnings
+2026-03-03 06:02:47,915 INFO 
+  Checking for missing statements...
+2026-03-03 06:02:47,915 INFO   No gaps found.
+2026-03-03 06:02:47,916 INFO 
+  Verifying statement balances...
+2026-03-03 06:02:47,917 INFO   [32mAll balance checks passed.[0m
+2026-03-03 06:03:28,046 INFO Credit Card Statement Ingestion — 2026-03-03 06:03:28
+2026-03-03 06:03:28,047 INFO 
+  Processing bofa-rewards-visa (14 PDFs)...
+2026-03-03 06:03:28,193 INFO     OK eStmt_2025-01-23.pdf -> 2025-01-23.csv (2 txns, charges=$4.23, credits=$4.23)
+2026-03-03 06:03:28,372 INFO     OK eStmt_2025-02-23.pdf -> 2025-02-23.csv (2 txns, charges=$4.23, credits=$4.23)
+2026-03-03 06:03:28,560 INFO     OK eStmt_2025-03-23.pdf -> 2025-03-23.csv (2 txns, charges=$4.23, credits=$4.23)
+2026-03-03 06:03:28,775 INFO     OK eStmt_2025-04-23.pdf -> 2025-04-23.csv (9 txns, charges=$36196.23, credits=$14.23)
+2026-03-03 06:03:29,036 INFO     OK eStmt_2025-05-23.pdf -> 2025-05-23.csv (3 txns, charges=$4.23, credits=$800.00)
+2026-03-03 06:03:29,232 INFO     OK eStmt_2025-06-23.pdf -> 2025-06-23.csv (3 txns, charges=$30.29, credits=$0.00)
+2026-03-03 06:03:29,426 INFO     OK eStmt_2025-07-23.pdf -> 2025-07-23.csv (2 txns, charges=$0.35, credits=$734.00)
+2026-03-03 06:03:29,619 INFO     OK eStmt_2025-08-23.pdf -> 2025-08-23.csv (2 txns, charges=$0.37, credits=$347.00)
+2026-03-03 06:03:29,814 INFO     OK eStmt_2025-09-23.pdf -> 2025-09-23.csv (2 txns, charges=$0.37, credits=$343.00)
+2026-03-03 06:03:30,001 INFO     OK eStmt_2025-10-23.pdf -> 2025-10-23.csv (2 txns, charges=$0.36, credits=$340.00)
+2026-03-03 06:03:30,216 INFO     OK eStmt_2025-11-23.pdf -> 2025-11-23.csv (2 txns, charges=$0.37, credits=$336.00)
+2026-03-03 06:03:30,399 INFO     OK eStmt_2025-12-23.pdf -> 2025-12-23.csv (2 txns, charges=$0.36, credits=$333.00)
+2026-03-03 06:03:30,619 INFO     OK eStmt_2026-01-23.pdf -> 2026-01-23.csv (2 txns, charges=$0.37, credits=$330.00)
+2026-03-03 06:03:30,923 INFO     OK eStmt_2026-02-23.pdf -> 2026-02-23.csv (2 txns, charges=$0.38, credits=$326.00)
+2026-03-03 06:03:30,923 INFO 
+  Done: 14 succeeded, 0 errors, 0 warnings
+2026-03-03 06:03:30,923 INFO 
+  Checking for missing statements...
+2026-03-03 06:03:30,924 INFO   No gaps found.
+2026-03-03 06:03:30,924 INFO 
+  Verifying statement balances...
+2026-03-03 06:03:30,925 INFO   [32mAll balance checks passed.[0m
+2026-03-07 07:12:34,365 INFO Credit Card Statement Ingestion — 2026-03-07 07:12:34
+2026-03-07 07:12:34,366 INFO 
+  Processing apple-card (37 PDFs)...
+2026-03-07 07:12:34,535 INFO     OK Apple Card Statement - April 2023.pdf -> 2023-04-30.csv (13 txns, charges=$142.90, credits=$405.06)
+2026-03-07 07:12:34,711 INFO     OK Apple Card Statement - August 2023.pdf -> 2023-08-31.csv (18 txns, charges=$343.69, credits=$541.24) [33m(1 warnings)[0m
+2026-03-07 07:12:34,711 WARNING        WARNING: Possible duplicate: 2023-08-23 APPLE.COM/BILL ONE APPLE PARK WAY 866-712-7753 95014 CA USA -27.98
+2026-03-07 07:12:34,891 INFO     OK Apple Card Statement - December 2023.pdf -> 2023-12-31.csv (24 txns, charges=$769.11, credits=$7949.39) [33m(1 warnings)[0m
+2026-03-07 07:12:34,891 WARNING        WARNING: Possible duplicate: 2023-12-12 LETSGO NETWORK INCORPO80 Tilman Cir, MARKHAM L3P 5V6 ON CAN -6.69
+2026-03-07 07:12:35,064 INFO     OK Apple Card Statement - February 2023.pdf -> 2023-02-28.csv (13 txns, charges=$219.85, credits=$431.29)
+2026-03-07 07:12:35,415 DEBUG Retry with {'x_tolerance': 1}: mismatch $1.56 -> $1.56
+2026-03-07 07:12:35,579 DEBUG Retry with {'layout': True}: mismatch $1.56 -> $1.56
+2026-03-07 07:12:35,763 DEBUG Retry with {'x_tolerance': 5}: mismatch $1.56 -> $1.56
+2026-03-07 07:12:35,764 INFO     OK Apple Card Statement - February 2024.pdf -> 2024-02-29.csv (19 txns, charges=$607.68, credits=$1541.86) [retried 3x, mismatch=$1.56] [33m(1 warnings)[0m
+2026-03-07 07:12:35,764 WARNING        WARNING: Charges total mismatch: parsed net $501.95 vs expected $503.51
+2026-03-07 07:12:35,935 INFO     OK Apple Card Statement - January 2023.pdf -> 2023-01-31.csv (14 txns, charges=$368.88, credits=$272.31)
+2026-03-07 07:12:36,146 INFO     OK Apple Card Statement - July 2023.pdf -> 2023-07-31.csv (21 txns, charges=$478.60, credits=$529.80) [33m(1 warnings)[0m
+2026-03-07 07:12:36,146 WARNING        WARNING: Charges total mismatch: parsed net $470.87 vs expected $471.10
+2026-03-07 07:12:36,328 INFO     OK Apple Card Statement - June 2023.pdf -> 2023-06-30.csv (18 txns, charges=$467.39, credits=$614.87)
+2026-03-07 07:12:36,689 DEBUG Retry with {'x_tolerance': 1}: mismatch $0.55 -> $0.55
+2026-03-07 07:12:36,875 DEBUG Retry with {'layout': True}: mismatch $0.55 -> $0.55
+2026-03-07 07:12:37,042 DEBUG Retry with {'x_tolerance': 5}: mismatch $0.55 -> $0.55
+2026-03-07 07:12:37,043 INFO     OK Apple Card Statement - March 2023.pdf -> 2023-03-31.csv (15 txns, charges=$342.10, credits=$282.26) [retried 3x, mismatch=$0.55] [33m(1 warnings)[0m
+2026-03-07 07:12:37,043 WARNING        WARNING: Charges total mismatch: parsed net $314.43 vs expected $314.98
+2026-03-07 07:12:37,234 INFO     OK Apple Card Statement - May 2023.pdf -> 2023-05-31.csv (14 txns, charges=$552.46, credits=$205.31)
+2026-03-07 07:12:37,413 INFO     OK Apple Card Statement - November 2023.pdf -> 2023-11-30.csv (21 txns, charges=$7949.39, credits=$264.46)
+2026-03-07 07:12:37,597 INFO     OK Apple Card Statement - October 2023.pdf -> 2023-10-31.csv (14 txns, charges=$264.46, credits=$252.82)
+2026-03-07 07:12:37,763 INFO     OK Apple Card Statement - September 2023.pdf -> 2023-09-30.csv (13 txns, charges=$190.25, credits=$406.10)
+2026-03-07 07:12:38,233 DEBUG Retry with {'x_tolerance': 1}: mismatch $2.33 -> $2.33
+2026-03-07 07:12:38,462 DEBUG Retry with {'layout': True}: mismatch $2.33 -> $2.33
+2026-03-07 07:12:38,700 DEBUG Retry with {'x_tolerance': 5}: mismatch $2.33 -> $2.33
+2026-03-07 07:12:38,701 INFO     OK Apple Card Statement - April 2024.pdf -> 2024-04-30.csv (42 txns, charges=$1257.73, credits=$1275.90) [retried 3x, mismatch=$2.33] [33m(2 warnings)[0m
+2026-03-07 07:12:38,701 WARNING        WARNING: Charges total mismatch: parsed net $1141.38 vs expected $1143.71
+2026-03-07 07:12:38,701 WARNING        WARNING: Possible duplicate: 2024-03-30 SDOT PAYBYPHONE PARKIN700 5TH AVE SEATTLE 98104 WA USA -0.75
+2026-03-07 07:12:38,904 INFO     OK Apple Card Statement - August 2024.pdf -> 2024-08-31.csv (21 txns, charges=$388.51, credits=$1062.19) [33m(1 warnings)[0m
+2026-03-07 07:12:38,904 WARNING        WARNING: Charges total mismatch: parsed net $358.51 vs expected $358.81
+2026-03-07 07:12:39,114 INFO     OK Apple Card Statement - December 2024.pdf -> 2024-12-31.csv (18 txns, charges=$610.08, credits=$885.63)
+2026-03-07 07:12:39,306 INFO     OK Apple Card Statement - January 2024.pdf -> 2024-01-31.csv (25 txns, charges=$1541.86, credits=$909.62)
+2026-03-07 07:12:39,499 INFO     OK Apple Card Statement - January 2025.pdf -> 2025-01-31.csv (15 txns, charges=$262.21, credits=$904.65)
+2026-03-07 07:12:39,683 INFO     OK Apple Card Statement - July 2024.pdf -> 2024-07-31.csv (15 txns, charges=$942.45, credits=$1352.64)
+2026-03-07 07:12:39,901 INFO     OK Apple Card Statement - June 2024.pdf -> 2024-06-30.csv (25 txns, charges=$1232.90, credits=$1197.01) [33m(1 warnings)[0m
+2026-03-07 07:12:39,901 WARNING        WARNING: Possible duplicate: 2024-06-15 TAOBAO.COM Canary Wharf 125 LONDON WAE14 5AB ENGGBR -1.78
+2026-03-07 07:12:40,139 INFO     OK Apple Card Statement - March 2024.pdf -> 2024-03-31.csv (45 txns, charges=$1275.90, credits=$609.24)
+2026-03-07 07:12:40,399 INFO     OK Apple Card Statement - May 2024.pdf -> 2024-05-31.csv (36 txns, charges=$1077.01, credits=$1260.06) [33m(1 warnings)[0m
+2026-03-07 07:12:40,399 WARNING        WARNING: Charges total mismatch: parsed net $1068.40 vs expected $1068.66
+2026-03-07 07:12:40,571 INFO     OK Apple Card Statement - November 2024.pdf -> 2024-11-30.csv (12 txns, charges=$765.89, credits=$337.24)
+2026-03-07 07:12:40,769 INFO     OK Apple Card Statement - October 2024.pdf -> 2024-10-31.csv (18 txns, charges=$204.26, credits=$2237.76) [33m(1 warnings)[0m
+2026-03-07 07:12:40,769 WARNING        WARNING: Balance check: previous(2237.76) - txns(2033.5) + installments(119.74) = 324.0, expected new_balance=337.24 (diff=$13.24)
+2026-03-07 07:12:40,945 INFO     OK Apple Card Statement - September 2024.pdf -> 2024-09-30.csv (17 txns, charges=$2118.02, credits=$508.55)
+2026-03-07 07:12:41,136 INFO     OK Apple Card Statement - April 2025.pdf -> 2025-04-30.csv (8 txns, charges=$180.19, credits=$390.43)
+2026-03-07 07:12:41,307 INFO     OK Apple Card Statement - August 2025.pdf -> 2025-08-31.csv (14 txns, charges=$583.87, credits=$516.09)
+2026-03-07 07:12:41,483 INFO     OK Apple Card Statement - December 2025.pdf -> 2025-12-31.csv (9 txns, charges=$297.68, credits=$557.94)
+2026-03-07 07:12:41,663 INFO     OK Apple Card Statement - February 2025.pdf -> 2025-02-28.csv (10 txns, charges=$188.67, credits=$556.78)
+2026-03-07 07:12:41,839 INFO     OK Apple Card Statement - July 2025.pdf -> 2025-07-31.csv (12 txns, charges=$341.26, credits=$437.71)
+2026-03-07 07:12:42,213 DEBUG Retry with {'x_tolerance': 1}: mismatch $0.37 -> $0.37
+2026-03-07 07:12:42,398 DEBUG Retry with {'layout': True}: mismatch $0.37 -> $0.37
+2026-03-07 07:12:42,588 DEBUG Retry with {'x_tolerance': 5}: mismatch $0.37 -> $0.37
+2026-03-07 07:12:42,589 INFO     OK Apple Card Statement - June 2025.pdf -> 2025-06-30.csv (17 txns, charges=$262.51, credits=$363.24) [retried 3x, mismatch=$0.37] [33m(2 warnings)[0m
+2026-03-07 07:12:42,589 WARNING        WARNING: Charges total mismatch: parsed net $225.81 vs expected $226.18
+2026-03-07 07:12:42,589 WARNING        WARNING: Possible duplicate: 2025-06-14 Letsgo Network 675 Cochrane Drive, East Tower, Suite 600 Markham L3R0B8 ON CAN -6.69
+2026-03-07 07:12:42,771 INFO     OK Apple Card Statement - March 2025.pdf -> 2025-03-31.csv (8 txns, charges=$95.86, credits=$483.24)
+2026-03-07 07:12:42,949 INFO     OK Apple Card Statement - May 2025.pdf -> 2025-05-31.csv (8 txns, charges=$188.41, credits=$474.88)
+2026-03-07 07:12:43,118 INFO     OK Apple Card Statement - November 2025.pdf -> 2025-11-30.csv (8 txns, charges=$383.07, credits=$702.52)
+2026-03-07 07:12:43,284 INFO     OK Apple Card Statement - October 2025.pdf -> 2025-10-31.csv (11 txns, charges=$527.48, credits=$927.35) [33m(1 warnings)[0m
+2026-03-07 07:12:43,284 WARNING        WARNING: Charges total mismatch: parsed net $520.48 vs expected $520.69
+2026-03-07 07:12:43,638 DEBUG Retry with {'x_tolerance': 1}: mismatch $1.00 -> $1.00
+2026-03-07 07:12:43,819 DEBUG Retry with {'layout': True}: mismatch $1.00 -> $1.00
+2026-03-07 07:12:43,983 DEBUG Retry with {'x_tolerance': 5}: mismatch $1.00 -> $1.00
+2026-03-07 07:12:43,984 INFO     OK Apple Card Statement - September 2025.pdf -> 2025-09-30.csv (11 txns, charges=$751.52, credits=$758.70) [retried 3x, mismatch=$1.00] [33m(1 warnings)[0m
+2026-03-07 07:12:43,984 WARNING        WARNING: Charges total mismatch: parsed net $651.52 vs expected $652.52
+2026-03-07 07:12:44,145 INFO     OK Apple Card Statement - January 2026.pdf -> 2026-01-31.csv (10 txns, charges=$334.19, credits=$297.68)
+2026-03-07 07:12:44,147 INFO 
+  Processing chase-prime-1158 (38 PDFs)...
+2026-03-07 07:12:44,307 INFO     OK 20230106-statements-1158-.pdf -> 2023-01-06.csv (39 txns, charges=$1117.47, credits=$2504.87)
+2026-03-07 07:12:44,489 INFO     OK 20230206-statements-1158-.pdf -> 2023-02-06.csv (50 txns, charges=$1722.12, credits=$1117.47)
+2026-03-07 07:12:44,687 INFO     OK 20230306-statements-1158-.pdf -> 2023-03-06.csv (53 txns, charges=$1783.03, credits=$1722.12) [33m(1 warnings)[0m
+2026-03-07 07:12:44,687 WARNING        WARNING: Charges total mismatch: parsed $1783.03 vs expected $1783.40 (purchases=$1783.40 + fees=$0.00 + interest=$0.00)
+2026-03-07 07:12:44,851 INFO     OK 20230406-statements-1158-.pdf -> 2023-04-06.csv (41 txns, charges=$1580.25, credits=$1783.40)
+2026-03-07 07:12:45,027 INFO     OK 20230506-statements-1158-.pdf -> 2023-05-06.csv (35 txns, charges=$1049.53, credits=$1580.25) [33m(1 warnings)[0m
+2026-03-07 07:12:45,027 WARNING        WARNING: Charges total mismatch: parsed $1049.53 vs expected $1050.07 (purchases=$1050.07 + fees=$0.00 + interest=$0.00)
+2026-03-07 07:12:45,191 INFO     OK 20230606-statements-1158-.pdf -> 2023-06-06.csv (38 txns, charges=$2343.02, credits=$1050.07)
+2026-03-07 07:12:45,374 INFO     OK 20230706-statements-1158-.pdf -> 2023-07-06.csv (37 txns, charges=$2263.53, credits=$2343.02)
+2026-03-07 07:12:45,553 INFO     OK 20230806-statements-1158-.pdf -> 2023-08-06.csv (42 txns, charges=$1711.44, credits=$2263.53)
+2026-03-07 07:12:45,716 INFO     OK 20230906-statements-1158-.pdf -> 2023-09-06.csv (40 txns, charges=$1043.99, credits=$1711.44)
+2026-03-07 07:12:45,886 INFO     OK 20231006-statements-1158-.pdf -> 2023-10-06.csv (27 txns, charges=$807.65, credits=$1043.99)
+2026-03-07 07:12:46,078 INFO     OK 20231106-statements-1158-.pdf -> 2023-11-06.csv (53 txns, charges=$1739.48, credits=$807.65)
+2026-03-07 07:12:46,312 INFO     OK 20231206-statements-1158-.pdf -> 2023-12-06.csv (71 txns, charges=$2407.56, credits=$1739.48)
+2026-03-07 07:12:46,475 INFO     OK 20240106-statements-1158-.pdf -> 2024-01-06.csv (37 txns, charges=$1332.55, credits=$2407.56)
+2026-03-07 07:12:46,644 INFO     OK 20240206-statements-1158-.pdf -> 2024-02-06.csv (35 txns, charges=$2150.66, credits=$1332.55)
+2026-03-07 07:12:47,002 INFO     OK 20240306-statements-1158-.pdf -> 2024-03-06.csv (41 txns, charges=$1130.63, credits=$2150.66)
+2026-03-07 07:12:47,324 INFO     OK 20240406-statements-1158-.pdf -> 2024-04-06.csv (17 txns, charges=$2030.02, credits=$1130.63)
+2026-03-07 07:12:47,641 INFO     OK 20240506-statements-1158-.pdf -> 2024-05-06.csv (25 txns, charges=$1081.10, credits=$2030.02)
+2026-03-07 07:12:47,978 INFO     OK 20240606-statements-1158-.pdf -> 2024-06-06.csv (35 txns, charges=$1785.35, credits=$1081.10)
+2026-03-07 07:12:48,323 INFO     OK 20240706-statements-1158-.pdf -> 2024-07-06.csv (28 txns, charges=$1062.77, credits=$1785.35)
+2026-03-07 07:12:48,628 INFO     OK 20240806-statements-1158-.pdf -> 2024-08-06.csv (15 txns, charges=$427.57, credits=$1062.77)
+2026-03-07 07:12:48,985 INFO     OK 20240906-statements-1158-.pdf -> 2024-09-06.csv (47 txns, charges=$5735.71, credits=$427.57)
+2026-03-07 07:12:49,345 INFO     OK 20241006-statements-1158-.pdf -> 2024-10-06.csv (32 txns, charges=$1208.28, credits=$5735.71) [33m(1 warnings)[0m
+2026-03-07 07:12:49,345 WARNING        WARNING: Charges total mismatch: parsed $1208.28 vs expected $1208.81 (purchases=$1208.81 + fees=$0.00 + interest=$0.00)
+2026-03-07 07:12:49,670 INFO     OK 20241106-statements-1158-.pdf -> 2024-11-06.csv (30 txns, charges=$1446.84, credits=$1208.81)
+2026-03-07 07:12:50,033 INFO     OK 20241206-statements-1158-.pdf -> 2024-12-06.csv (46 txns, charges=$3115.92, credits=$1446.84)
+2026-03-07 07:12:50,367 INFO     OK 20250106-statements-1158-.pdf -> 2025-01-06.csv (27 txns, charges=$904.65, credits=$3115.92)
+2026-03-07 07:12:50,668 INFO     OK 20250206-statements-1158-.pdf -> 2025-02-06.csv (13 txns, charges=$439.70, credits=$904.65)
+2026-03-07 07:12:50,968 INFO     OK 20250306-statements-1158-.pdf -> 2025-03-06.csv (12 txns, charges=$205.39, credits=$439.70)
+2026-03-07 07:12:51,288 INFO     OK 20250406-statements-1158-.pdf -> 2025-04-06.csv (11 txns, charges=$207.59, credits=$310.26)
+2026-03-07 07:12:51,603 INFO     OK 20250506-statements-1158-.pdf -> 2025-05-06.csv (22 txns, charges=$454.73, credits=$102.72)
+2026-03-07 07:12:51,920 INFO     OK 20250606-statements-1158-.pdf -> 2025-06-06.csv (21 txns, charges=$487.52, credits=$454.73)
+2026-03-07 07:12:52,237 INFO     OK 20250706-statements-1158-.pdf -> 2025-07-06.csv (12 txns, charges=$1173.17, credits=$487.52)
+2026-03-07 07:12:52,543 INFO     OK 20250806-statements-1158-.pdf -> 2025-08-06.csv (14 txns, charges=$388.55, credits=$1173.17)
+2026-03-07 07:12:52,866 INFO     OK 20250906-statements-1158-.pdf -> 2025-09-06.csv (16 txns, charges=$427.71, credits=$388.55)
+2026-03-07 07:12:53,183 INFO     OK 20251006-statements-1158-.pdf -> 2025-10-06.csv (22 txns, charges=$864.44, credits=$427.71)
+2026-03-07 07:12:53,503 INFO     OK 20251106-statements-1158-.pdf -> 2025-11-06.csv (26 txns, charges=$1548.39, credits=$864.44)
+2026-03-07 07:12:53,852 INFO     OK 20251206-statements-1158-.pdf -> 2025-12-06.csv (35 txns, charges=$1552.18, credits=$1548.39)
+2026-03-07 07:12:54,154 INFO     OK 20260106-statements-1158-.pdf -> 2026-01-06.csv (21 txns, charges=$489.03, credits=$1552.18)
+2026-03-07 07:12:54,472 INFO     OK 20260206-statements-1158-.pdf -> 2026-02-06.csv (11 txns, charges=$150.54, credits=$489.03)
+2026-03-07 07:12:54,474 INFO 
+  Processing chase-sapphire-2341 (38 PDFs)...
+2026-03-07 07:12:54,636 INFO     OK 20230106-statements-2341-.pdf -> 2023-01-06.csv (37 txns, charges=$2884.85, credits=$2779.72)
+2026-03-07 07:12:54,773 INFO     OK 20230206-statements-2341-.pdf -> 2023-02-06.csv (28 txns, charges=$1762.93, credits=$1680.17) [33m(1 warnings)[0m
+2026-03-07 07:12:54,773 WARNING        WARNING: Possible duplicate: 2023-01-27 HILTON CABLE 55 SAN FRANCISCO CA -4.89
+2026-03-07 07:12:54,900 INFO     OK 20230306-statements-2341-.pdf -> 2023-03-06.csv (23 txns, charges=$9521.94, credits=$1762.93)
+2026-03-07 07:12:55,039 INFO     OK 20230406-statements-2341-.pdf -> 2023-04-06.csv (28 txns, charges=$11739.91, credits=$9521.94)
+2026-03-07 07:12:55,170 INFO     OK 20230506-statements-2341-.pdf -> 2023-05-06.csv (20 txns, charges=$1009.29, credits=$11739.91)
+2026-03-07 07:12:55,321 INFO     OK 20230606-statements-2341-.pdf -> 2023-06-06.csv (42 txns, charges=$1779.45, credits=$1009.29)
+2026-03-07 07:12:55,479 INFO     OK 20230706-statements-2341-.pdf -> 2023-07-06.csv (56 txns, charges=$5871.33, credits=$1779.45) [33m(2 warnings)[0m
+2026-03-07 07:12:55,479 WARNING        WARNING: Possible duplicate: 2023-06-08 JAL PAC USD IRVINE CA -18.8
+2026-03-07 07:12:55,479 WARNING        WARNING: Possible duplicate: 2023-07-01 PILATES STUDIO 11 WWW.PILATESTU WA -10.0
+2026-03-07 07:12:55,643 INFO     OK 20230806-statements-2341-.pdf -> 2023-08-06.csv (50 txns, charges=$4358.95, credits=$5871.33) [33m(1 warnings)[0m
+2026-03-07 07:12:55,643 WARNING        WARNING: Possible duplicate: 2023-08-03 SQ *PATCHY'S ENTERPRISES, Issaquah WA -8.0
+2026-03-07 07:12:55,789 INFO     OK 20230906-statements-2341-.pdf -> 2023-09-06.csv (38 txns, charges=$6097.00, credits=$4358.95)
+2026-03-07 07:12:55,941 INFO     OK 20231006-statements-2341-.pdf -> 2023-10-06.csv (36 txns, charges=$3108.02, credits=$6097.00)
+2026-03-07 07:12:56,076 INFO     OK 20231106-statements-2341-.pdf -> 2023-11-06.csv (23 txns, charges=$1036.06, credits=$3108.02) [33m(1 warnings)[0m
+2026-03-07 07:12:56,076 WARNING        WARNING: Possible duplicate: 2023-11-04 PILATES STUDIO 11 WWW.PILATESTU WA -10.0
+2026-03-07 07:12:56,202 INFO     OK 20231206-statements-2341-.pdf -> 2023-12-06.csv (26 txns, charges=$7474.42, credits=$2449.30)
+2026-03-07 07:12:56,398 INFO     OK 20240106-statements-2341-.pdf -> 2024-01-06.csv (84 txns, charges=$10960.04, credits=$6061.18) [33m(6 warnings)[0m
+2026-03-07 07:12:56,398 WARNING        WARNING: Charges total mismatch: parsed $10960.04 vs expected $10962.56 (purchases=$10962.56 + fees=$0.00 + interest=$0.00)
+2026-03-07 07:12:56,398 WARNING        WARNING: Possible duplicate: 2023-12-19 WECHAT*TENCENT ShenZhen -1.4
+2026-03-07 07:12:56,398 WARNING        WARNING: Possible duplicate: 2023-12-21 WECHAT*TENCENT ShenZhen -1.4
+2026-03-07 07:12:56,398 WARNING        WARNING: Possible duplicate: 2023-12-21 WECHAT*TENCENT ShenZhen -1.4
+2026-03-07 07:12:56,398 WARNING        WARNING: Possible duplicate: 2023-12-26 WECHAT*TENCENT ShenZhen -1.4
+2026-03-07 07:12:56,398 WARNING        WARNING: Possible duplicate: 2023-12-27 WECHAT*TENCENT ShenZhen -1.4
+2026-03-07 07:12:56,545 INFO     OK 20240206-statements-2341-.pdf -> 2024-02-06.csv (42 txns, charges=$2505.35, credits=$10962.56)
+2026-03-07 07:12:56,837 INFO     OK 20240306-statements-2341-.pdf -> 2024-03-06.csv (11 txns, charges=$6123.53, credits=$8500.52)
+2026-03-07 07:12:57,134 INFO     OK 20240406-statements-2341-.pdf -> 2024-04-06.csv (9 txns, charges=$844.10, credits=$128.36)
+2026-03-07 07:12:57,432 INFO     OK 20240506-statements-2341-.pdf -> 2024-05-06.csv (17 txns, charges=$1129.45, credits=$844.10)
+2026-03-07 07:12:57,718 INFO     OK 20240606-statements-2341-.pdf -> 2024-06-06.csv (15 txns, charges=$451.83, credits=$1129.45)
+2026-03-07 07:12:58,023 INFO     OK 20240706-statements-2341-.pdf -> 2024-07-06.csv (28 txns, charges=$681.69, credits=$451.83)
+2026-03-07 07:12:58,302 INFO     OK 20240806-statements-2341-.pdf -> 2024-08-06.csv (11 txns, charges=$1303.31, credits=$681.69)
+2026-03-07 07:12:58,650 INFO     OK 20240906-statements-2341-.pdf -> 2024-09-06.csv (55 txns, charges=$1848.38, credits=$1303.31)
+2026-03-07 07:12:58,968 INFO     OK 20241006-statements-2341-.pdf -> 2024-10-06.csv (27 txns, charges=$1406.90, credits=$1848.38)
+2026-03-07 07:12:59,261 INFO     OK 20241106-statements-2341-.pdf -> 2024-11-06.csv (33 txns, charges=$7741.10, credits=$1406.90)
+2026-03-07 07:12:59,551 INFO     OK 20241206-statements-2341-.pdf -> 2024-12-06.csv (19 txns, charges=$637.89, credits=$1000.00)
+2026-03-07 07:12:59,848 INFO     OK 20250106-statements-2341-.pdf -> 2025-01-06.csv (15 txns, charges=$522.68, credits=$1025.33) [33m(1 warnings)[0m
+2026-03-07 07:12:59,848 WARNING        WARNING: Payment total mismatch: parsed $1025.33 vs expected $1025.40
+2026-03-07 07:13:00,144 INFO     OK 20250206-statements-2341-.pdf -> 2025-02-06.csv (25 txns, charges=$6499.62, credits=$1000.00)
+2026-03-07 07:13:00,472 INFO     OK 20250306-statements-2341-.pdf -> 2025-03-06.csv (40 txns, charges=$1941.43, credits=$14112.45)
+2026-03-07 07:13:00,764 INFO     OK 20250406-statements-2341-.pdf -> 2025-04-06.csv (18 txns, charges=$387.68, credits=$321.77)
+2026-03-07 07:13:01,059 INFO     OK 20250506-statements-2341-.pdf -> 2025-05-06.csv (28 txns, charges=$8250.04, credits=$270.78)
+2026-03-07 07:13:01,340 INFO     OK 20250606-statements-2341-.pdf -> 2025-06-06.csv (20 txns, charges=$814.30, credits=$500.00)
+2026-03-07 07:13:01,624 INFO     OK 20250706-statements-2341-.pdf -> 2025-07-06.csv (21 txns, charges=$935.24, credits=$8564.34)
+2026-03-07 07:13:01,957 INFO     OK 20250806-statements-2341-.pdf -> 2025-08-06.csv (41 txns, charges=$4129.33, credits=$2426.01)
+2026-03-07 07:13:02,281 INFO     OK 20250906-statements-2341-.pdf -> 2025-09-06.csv (77 txns, charges=$8244.43, credits=$2638.56) [33m(2 warnings)[0m
+2026-03-07 07:13:02,281 WARNING        WARNING: Possible duplicate: 2025-08-25 HBLeisure Vista CA -3.0
+2026-03-07 07:13:02,281 WARNING        WARNING: Possible duplicate: 2025-08-26 USS MIDWAY MUSEUM SAN DIEGO CA -20.0
+2026-03-07 07:13:02,570 INFO     OK 20251006-statements-2341-.pdf -> 2025-10-06.csv (20 txns, charges=$9676.42, credits=$16518.86)
+2026-03-07 07:13:02,876 INFO     OK 20251106-statements-2341-.pdf -> 2025-11-06.csv (35 txns, charges=$5742.04, credits=$1401.99) [33m(1 warnings)[0m
+2026-03-07 07:13:02,876 WARNING        WARNING: Possible duplicate: 2025-11-05 WIFIONBOARD ALASKA 877-350-0038 IL -8.0
+2026-03-07 07:13:03,173 INFO     OK 20251206-statements-2341-.pdf -> 2025-12-06.csv (28 txns, charges=$4648.47, credits=$5742.04)
+2026-03-07 07:13:03,488 INFO     OK 20260106-statements-2341-.pdf -> 2026-01-06.csv (41 txns, charges=$1716.43, credits=$4648.47) [33m(2 warnings)[0m
+2026-03-07 07:13:03,488 WARNING        WARNING: Charges total mismatch: parsed $1716.43 vs expected $1717.00 (purchases=$1717.00 + fees=$0.00 + interest=$0.00)
+2026-03-07 07:13:03,488 WARNING        WARNING: Possible duplicate: 2025-12-13 Letsgo Network Markham ON -6.69
+2026-03-07 07:13:03,785 INFO     OK 20260206-statements-2341-.pdf -> 2026-02-06.csv (24 txns, charges=$10734.65, credits=$1717.00)
+2026-03-07 07:13:03,789 INFO 
+  Processing chase-freedom-1350 (6 PDFs)...
+2026-03-07 07:13:04,088 INFO     OK 20250913-statements-1350-.pdf -> 2025-09-13.csv (18 txns, charges=$2458.98, credits=$0.00)
+2026-03-07 07:13:04,396 INFO     OK 20251013-statements-1350-.pdf -> 2025-10-13.csv (22 txns, charges=$1528.02, credits=$2458.98)
+2026-03-07 07:13:04,715 INFO     OK 20251113-statements-1350-.pdf -> 2025-11-13.csv (45 txns, charges=$4916.98, credits=$1528.02) [33m(1 warnings)[0m
+2026-03-07 07:13:04,715 WARNING        WARNING: Possible duplicate: 2025-11-08 TST*RED SILO COFFEE ROAS Golden CO -6.54
+2026-03-07 07:13:05,048 INFO     OK 20251213-statements-1350-.pdf -> 2025-12-13.csv (56 txns, charges=$3914.31, credits=$5000.00) [33m(1 warnings)[0m
+2026-03-07 07:13:05,048 WARNING        WARNING: Charges total mismatch: parsed $3914.31 vs expected $3914.82 (purchases=$3914.82 + fees=$0.00 + interest=$0.00)
+2026-03-07 07:13:05,374 INFO     OK 20260113-statements-1350-.pdf -> 2026-01-13.csv (40 txns, charges=$1730.26, credits=$3831.80) [33m(1 warnings)[0m
+2026-03-07 07:13:05,374 WARNING        WARNING: Possible duplicate: 2025-12-14 TOBEYSTUTOR.COM NEW YORK NY 29.0
+2026-03-07 07:13:05,710 INFO     OK 20260213-statements-1350-.pdf -> 2026-02-13.csv (53 txns, charges=$3455.67, credits=$1730.26)
+2026-03-07 07:13:05,713 INFO 
+  Processing fidelity-credit-card (38 PDFs)...
+2026-03-07 07:13:05,995 INFO     OK 2023-01-18.pdf -> 2023-01-18.csv (108 txns, charges=$16998.77, credits=$14137.31) [33m(1 warnings)[0m
+2026-03-07 07:13:05,995 WARNING        WARNING: Possible duplicate: 2023-01-16 DOCNETWORK INC 734-619-8300 MI -50.0
+2026-03-07 07:13:06,263 INFO     OK 2023-02-16.pdf -> 2023-02-16.csv (93 txns, charges=$11598.10, credits=$16823.68) [33m(1 warnings)[0m
+2026-03-07 07:13:06,263 WARNING        WARNING: Possible duplicate: 2023-02-06 DOCNETWORK INC 734-619-8300 MI -50.0
+2026-03-07 07:13:06,543 INFO     OK 2023-03-16 Statement - Card...5161.pdf -> 2023-03-16.csv (83 txns, charges=$15036.31, credits=$11598.10) [33m(1 warnings)[0m
+2026-03-07 07:13:06,544 WARNING        WARNING: Possible duplicate: 2023-02-16 FACTS TUITION AND FEES 402-4661063 NE -100.0
+2026-03-07 07:13:06,850 INFO     OK 2023-04-18.pdf -> 2023-04-18.csv (128 txns, charges=$15835.28, credits=$15036.31) [33m(2 warnings)[0m
+2026-03-07 07:13:06,850 WARNING        WARNING: Possible duplicate: 2023-03-30 COIN-O-MATIC VENDING WOODINVILLE WA -1.85
+2026-03-07 07:13:06,850 WARNING        WARNING: Possible duplicate: 2023-03-30 COIN-O-MATIC VENDING WOODINVILLE WA -1.85
+2026-03-07 07:13:07,139 INFO     OK 2023-05-17.pdf -> 2023-05-17.csv (104 txns, charges=$7323.95, credits=$15835.28)
+2026-03-07 07:13:07,350 INFO     OK 2023-06-16.pdf -> 2023-06-16.csv (56 txns, charges=$9528.55, credits=$9624.87) [33m(2 warnings)[0m
+2026-03-07 07:13:07,350 WARNING        WARNING: Possible duplicate: 2023-06-11 CTM GROUP INC. SALEM NH -1.5
+2026-03-07 07:13:07,350 WARNING        WARNING: Possible duplicate: 2023-06-11 CTM GROUP INC. SALEM NH -1.5
+2026-03-07 07:13:07,620 INFO     OK 2023-07-18.pdf -> 2023-07-18.csv (100 txns, charges=$9266.97, credits=$8125.63) [33m(1 warnings)[0m
+2026-03-07 07:13:07,620 WARNING        WARNING: Possible duplicate: 2023-07-13 DOCNETWORK INC ANN ARBOR MI 449.0
+2026-03-07 07:13:07,887 INFO     OK 2023-08-17.pdf -> 2023-08-17.csv (88 txns, charges=$12602.81, credits=$8369.97) [33m(1 warnings)[0m
+2026-03-07 07:13:07,887 WARNING        WARNING: Transaction date 2023-04-13 out of range for statement 2023-08-17
+2026-03-07 07:13:08,144 INFO     OK 2023-09-18.pdf -> 2023-09-18.csv (89 txns, charges=$10201.09, credits=$13193.83)
+2026-03-07 07:13:08,397 INFO     OK 2023-10-17.pdf -> 2023-10-17.csv (76 txns, charges=$6158.79, credits=$9609.07)
+2026-03-07 07:13:08,637 INFO     OK 2023-11-16.pdf -> 2023-11-16.csv (80 txns, charges=$4658.05, credits=$6181.31) [33m(1 warnings)[0m
+2026-03-07 07:13:08,637 WARNING        WARNING: Possible duplicate: 2023-11-07 MED*SWEDISH MEDICAL CT 888-294-9333 WA -18.73
+2026-03-07 07:13:08,931 INFO     OK 2023-12-18.pdf -> 2023-12-18.csv (105 txns, charges=$8842.35, credits=$4635.53) [33m(1 warnings)[0m
+2026-03-07 07:13:08,931 WARNING        WARNING: Possible duplicate: 2023-11-21 RITE AID 05187 ISSAQUAH WA -5.0
+2026-03-07 07:13:09,230 INFO     OK 2024-01-17.pdf -> 2024-01-17.csv (119 txns, charges=$6765.99, credits=$8974.47)
+2026-03-07 07:13:09,515 INFO     OK 2024-02-16.pdf -> 2024-02-16.csv (110 txns, charges=$14885.24, credits=$6634.86) [33m(1 warnings)[0m
+2026-03-07 07:13:09,515 WARNING        WARNING: Possible duplicate: 2024-02-09 STARBUCKS STORE 03222 REDMOND WA -4.8
+2026-03-07 07:13:09,754 INFO     OK 2024-03-18.pdf -> 2024-03-18.csv (75 txns, charges=$8473.39, credits=$22415.25) [33m(1 warnings)[0m
+2026-03-07 07:13:09,754 WARNING        WARNING: Possible duplicate: 2024-02-24 FRONTLINE FOOD SERVIC COUPEVILLE WA -2.4
+2026-03-07 07:13:09,920 INFO     OK 2024-04-16.pdf -> 2024-04-16.csv (22 txns, charges=$990.38, credits=$3502.02)
+2026-03-07 07:13:10,124 INFO     OK 2024-05-17.pdf -> 2024-05-17.csv (31 txns, charges=$8759.49, credits=$0.00)
+2026-03-07 07:13:10,382 INFO     OK 2024-06-17 Statement - Card...5161.pdf -> 2024-06-17.csv (64 txns, charges=$16047.43, credits=$7190.24)
+2026-03-07 07:13:10,629 INFO     OK 2024-07-17 Statement - Card...5161.pdf -> 2024-07-17.csv (43 txns, charges=$6708.84, credits=$16148.36) [33m(2 warnings)[0m
+2026-03-07 07:13:10,629 WARNING        WARNING: Transaction date 2024-03-19 out of range for statement 2024-07-17
+2026-03-07 07:13:10,629 WARNING        WARNING: Transaction date 2024-04-19 out of range for statement 2024-07-17
+2026-03-07 07:13:10,858 INFO     OK 2024-08-19 Statement - Card...5161.pdf -> 2024-08-19.csv (49 txns, charges=$5588.20, credits=$6607.91)
+2026-03-07 07:13:11,094 INFO     OK 2024-09-18 Statement - Card...5161.pdf -> 2024-09-18.csv (51 txns, charges=$11022.18, credits=$5588.20)
+2026-03-07 07:13:11,338 INFO     OK 2024-10-17 Statement - Card...5161.pdf -> 2024-10-17.csv (43 txns, charges=$4921.90, credits=$11054.18)
+2026-03-07 07:13:11,589 INFO     OK 2024-11-18 Statement - Card...5161.pdf -> 2024-11-18.csv (61 txns, charges=$11091.75, credits=$5833.76)
+2026-03-07 07:13:11,851 INFO     OK 2024-12-17 Statement - Card...5161.pdf -> 2024-12-17.csv (53 txns, charges=$10990.69, credits=$5005.99) [33m(2 warnings)[0m
+2026-03-07 07:13:11,851 WARNING        WARNING: Possible duplicate: 2024-12-02 VIRGINIA MASON MEDICAL 206-2236601 WA -27.62
+2026-03-07 07:13:11,851 WARNING        WARNING: Possible duplicate: 2024-12-15 SP COUGAR MOUNTAIN Z 142-53915508 WA -3.0
+2026-03-07 07:13:12,047 INFO     OK 2025-01-16 Statement - Card...5161.pdf -> 2025-01-16.csv (24 txns, charges=$3247.55, credits=$10024.00)
+2026-03-07 07:13:12,282 INFO     OK 2025-02-18 Statement - Card...5161.pdf -> 2025-02-18.csv (39 txns, charges=$4966.04, credits=$5000.00) [33m(1 warnings)[0m
+2026-03-07 07:13:12,282 WARNING        WARNING: Possible duplicate: 2025-01-17 SQ *ISSAQUAH COFFEE CO Issaquah WA -4.44
+2026-03-07 07:13:12,506 INFO     OK 2025-03-18 Statement - Card...5161.pdf -> 2025-03-18.csv (31 txns, charges=$4613.94, credits=$12927.78)
+2026-03-07 07:13:12,707 INFO     OK 2025-04-16 Statement - Card...5161.pdf -> 2025-04-16.csv (27 txns, charges=$3428.23, credits=$1068.96)
+2026-03-07 07:13:12,959 INFO     OK 2025-05-19 Statement - Card...5161.pdf -> 2025-05-19.csv (63 txns, charges=$7797.54, credits=$15610.12) [33m(1 warnings)[0m
+2026-03-07 07:13:12,959 WARNING        WARNING: Possible duplicate: 2025-05-13 CTLP*Emerald City Gymn REDMOND WA -2.0
+2026-03-07 07:13:13,181 INFO     OK 2025-06-17 Statement - Card...5161.pdf -> 2025-06-17.csv (52 txns, charges=$5704.41, credits=$0.00)
+2026-03-07 07:13:13,428 INFO     OK 2025-07-18 Statement - Card...5161.pdf -> 2025-07-18.csv (47 txns, charges=$3497.05, credits=$2539.40) [33m(2 warnings)[0m
+2026-03-07 07:13:13,428 WARNING        WARNING: Possible duplicate: 2025-06-18 PAYMENT THANK YOU 1259.44
+2026-03-07 07:13:13,428 WARNING        WARNING: Possible duplicate: 2025-06-23 TAOBAO 408-7855580 CA -15.73
+2026-03-07 07:13:13,632 INFO     OK 2025-08-19 Statement - Card...5161.pdf -> 2025-08-19.csv (26 txns, charges=$1663.31, credits=$2217.09)
+2026-03-07 07:13:13,825 INFO     OK 2025-09-18 Statement - Card...5161.pdf -> 2025-09-18.csv (19 txns, charges=$2255.71, credits=$1663.31)
+2026-03-07 07:13:14,010 INFO     OK 2025-10-17 Statement - Card...5161.pdf -> 2025-10-17.csv (16 txns, charges=$1130.80, credits=$2255.71)
+2026-03-07 07:13:14,216 INFO     OK 2025-11-18 Statement - Card...5161.pdf -> 2025-11-18.csv (22 txns, charges=$2856.09, credits=$1130.80)
+2026-03-07 07:13:14,392 INFO     OK 2025-12-16 Statement - Card...5161.pdf -> 2025-12-16.csv (18 txns, charges=$1951.57, credits=$2856.09)
+2026-03-07 07:13:14,638 INFO     OK 2026-01-16 Statement - Card...5161.pdf -> 2026-01-16.csv (49 txns, charges=$6031.16, credits=$1951.57) [33m(1 warnings)[0m
+2026-03-07 07:13:14,638 WARNING        WARNING: Possible duplicate: 2026-01-12 ISSAQUAH SD 425-8377000 WA -28.5
+2026-03-07 07:13:14,820 INFO     OK 2026-02-17 Statement - Card...5161.pdf -> 2026-02-17.csv (17 txns, charges=$1174.35, credits=$6031.16)
+2026-03-07 07:13:14,822 INFO 
+  Processing bofa-atmos-7982 (6 PDFs)...
+2026-03-07 07:13:15,089 INFO     OK eStmt_2025-09-28.pdf -> 2025-09-28.csv (51 txns, charges=$4523.24, credits=$0.00) [33m(1 warnings)[0m
+2026-03-07 07:13:15,089 WARNING        WARNING: Possible duplicate: 2025-09-21 LS KIDSQUEST CHILDREN 142-56378100 WA -1.0
+2026-03-07 07:13:15,287 INFO     OK eStmt_2025-10-28.pdf -> 2025-10-28.csv (24 txns, charges=$3894.07, credits=$8030.00)
+2026-03-07 07:13:15,506 INFO     OK eStmt_2025-11-28.pdf -> 2025-11-28.csv (16 txns, charges=$495.49, credits=$187.34)
+2026-03-07 07:13:15,694 INFO     OK eStmt_2025-12-28.pdf -> 2025-12-28.csv (7 txns, charges=$54.69, credits=$1082.77)
+2026-03-07 07:13:15,901 INFO     OK eStmt_2026-01-28.pdf -> 2026-01-28.csv (5 txns, charges=$245.81, credits=$0.00)
+2026-03-07 07:13:16,160 INFO     OK eStmt_2026-02-28.pdf -> 2026-02-28.csv (2 txns, charges=$56.77, credits=$0.00)
+2026-03-07 07:13:16,163 INFO 
+  Done: 163 succeeded, 0 errors, 61 warnings
+2026-03-07 07:13:16,163 INFO 
+  Checking for missing statements...
+2026-03-07 07:13:16,166 INFO   No gaps found.
+2026-03-07 07:13:16,166 INFO 
+  Verifying statement balances...
+2026-03-07 07:13:16,189 WARNING [31m  BALANCE MISMATCH apple-card/2024-10-31.csv: prev(2237.76) - txns + installments = 324.0, expected 337.24 (diff=$13.24)[0m
+2026-03-07 07:13:16,189 WARNING [31m  CHAIN BREAK at apple-card/2024-05-31.csv: prior new_balance=264.46 != this previous_balance=1260.06 (diff=$995.60)[0m
+2026-03-07 07:13:16,189 WARNING [31m  2 balance issue(s) found![0m

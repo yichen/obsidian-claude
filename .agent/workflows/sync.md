@@ -8,39 +8,9 @@ This workflow fetches the latest changes, rebases your current work, commits all
 
 // turbo-all
 
-1. Fetch the latest changes from the remote repository
+1. Run full sync process (Fetch, Commit, Rebase, Push)
 ```bash
-git fetch origin
-```
-
-2. Stage all changes (new, modified, and deleted files)
-```bash
-git add -A
-```
-
-3. Commit the changes with a timestamp message
-```bash
-git commit -m "Auto-sync: $(date '+%Y-%m-%d %H:%M:%S')"
-```
-
-4. Rebase on top of the remote branch
-```bash
-git pull --rebase origin master
-```
-
-5. Auto-resolve any rebase conflicts by taking the local version
-```bash
-# Resolve all conflicted files by keeping the local version
-git diff --name-only --diff-filter=U | xargs -r git checkout --ours
-# Stage the resolved files
-git add -A
-# Continue the rebase (ignore errors if already finished)
-GIT_EDITOR=true git rebase --continue || true
-```
-
-6. Push the changes to the remote repository
-```bash
-git push origin master
+git fetch origin && git add -A && (git commit -m "Auto-sync: $(date '+%Y-%m-%d %H:%M:%S')" || true) && (git pull --rebase origin master || (git diff --name-only --diff-filter=U | xargs -r git checkout --ours && git add -A && GIT_EDITOR=true git rebase --continue)) && git push origin master
 ```
 
 ## Notes

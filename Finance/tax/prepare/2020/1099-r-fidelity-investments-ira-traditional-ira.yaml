@@ -1,0 +1,29 @@
+form_type: 1099-R
+tax_year: 2020
+payer:
+  name: Fidelity Investments (IRA)
+  tin: 04-3523567
+recipient:
+  name: Yi Chen
+  ssn_last4: '2622'
+plan_type: Traditional IRA
+boxes:
+  1_gross_distribution: 132542.36
+  2a_taxable_amount: 132542.36
+  2b_taxable_not_determined: false
+  2b_total_distribution: false
+  3_capital_gain: 0.00
+  4_fed_tax_withheld: 0.00
+  5_employee_contributions: 0.00
+  6_net_unrealized_appreciation: 0.00
+  7_distribution_code: G
+  7_ira_sep_simple: true
+validation:
+  taxable_le_gross: true
+  mismatches:
+  - Code G (rollover) but Box 2a taxable = 132542.36 (expected 0)
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2020/2021-02-06/2020-YI-CHEN-TRADITIONAL-IRA-221984208-Form-1099-R-&-Instructions.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-13T17:57:41'

@@ -56,7 +56,9 @@
       "Bash(git rebase:*)",
       "Bash(git add:*)",
       "Bash(git commit:*)",
-      "Bash(git push:*)"
+      "Bash(git push:*)",
+      "mcp__brave-search__brave_web_search",
+      "mcp__brave-search__brave_news_search"
     ],
     "deny": [],
     "ask": []

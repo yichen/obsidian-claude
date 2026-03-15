@@ -1,0 +1,26 @@
+form_type: '5498'
+tax_year: 2021
+trustee:
+  name: Fidelity Investments
+  tin: 04-3523567
+participant:
+  name: Yi Chen
+  ssn_last4: '3457'
+ira_type: ROTH IRA
+boxes:
+  1_ira_contributions: 0.00
+  2_rollover_contributions: 0.00
+  3_roth_conversion: 31059.53
+  4_recharacterized: 0.00
+  5_fair_market_value: 113826.38
+  15a_fmv_specified_assets: 6913.86
+  15b_code: A
+validation:
+  has_data: true
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2021/2022-04-30/2021-SHERI-ROTH-IRA-2351-Form-5498.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-13T17:57:28'
+account_number: 227-592351

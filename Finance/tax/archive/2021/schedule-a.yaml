@@ -1,0 +1,20 @@
+form_type: Schedule A
+tax_year: 2021
+boxes:
+  4_medical_deduction: 0.00
+  5c_personal_property_taxes: 157361.00
+  5d_total_state_local: 157361.00
+  7_total_taxes: 10000.00
+  8e_total_mortgage_interest: 23033.00
+  10_total_interest: 23123.00
+  14_total_gifts: 0.00
+  16_other: 0.00
+  17_total_itemized: 33123.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2021/Yi Chen and Sheri Martin 2021 Tax
+    Return update.pdf
+  pages:
+  - 12
+  processed_at: '2026-03-13T20:12:04'

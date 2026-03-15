@@ -1,0 +1,22 @@
+form_type: 1099-INT
+tax_year: 2021
+payer:
+  name: Boeing Employees Credit Union
+  tin: 91-0219435
+recipient:
+  name: Yi Chen
+  ssn_last4: '2622'
+boxes:
+  1_interest_income: 3.16
+  2_early_withdrawal_penalty: 0.00
+  3_us_savings_bonds: 0.00
+  4_fed_tax_withheld: 0.00
+validation:
+  has_interest: true
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2021/2022-04-30/YI-becu-1099-INT.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-13T17:57:32'
+account_number: '3588947679'

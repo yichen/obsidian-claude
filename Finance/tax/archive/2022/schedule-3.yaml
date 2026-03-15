@@ -1,0 +1,18 @@
+form_type: Schedule 3
+tax_year: 2022
+boxes:
+  1_foreign_tax_credit: 177.00
+  2_child_care_credit: 177.00
+  8_total_nonrefundable: 177.00
+  10_extension_payment: 16925.00
+  11_excess_ss: 16925.00
+  15_total_other_payments: 16925.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2022/Yi Chen and Sheri Martin's 2022
+    Tax Return.pdf
+  pages:
+  - 10
+  - 11
+  processed_at: '2026-03-13T20:12:09'

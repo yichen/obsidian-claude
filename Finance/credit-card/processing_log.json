@@ -1,7 +1,292 @@
 {
   "version": 1,
-  "last_run": "2026-03-01T09:30:12",
+  "last_run": "2026-03-07T07:13:16",
   "cards": {
+    "bofa-rewards-visa": {
+      "processed": {
+        "eStmt_2025-01-23.pdf": {
+          "statement_date": "2025-01-23",
+          "output_csv": "2025-01-23.csv",
+          "transaction_count": 2,
+          "total_charges": 4.23,
+          "total_credits": 4.23,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:28",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 4.23,
+            "new_balance": 4.23
+          }
+        },
+        "eStmt_2025-02-23.pdf": {
+          "statement_date": "2025-02-23",
+          "output_csv": "2025-02-23.csv",
+          "transaction_count": 2,
+          "total_charges": 4.23,
+          "total_credits": 4.23,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:28",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 4.23,
+            "new_balance": 4.23
+          }
+        },
+        "eStmt_2025-03-23.pdf": {
+          "statement_date": "2025-03-23",
+          "output_csv": "2025-03-23.csv",
+          "transaction_count": 2,
+          "total_charges": 4.23,
+          "total_credits": 4.23,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:28",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 4.23,
+            "new_balance": 4.23
+          }
+        },
+        "eStmt_2025-04-23.pdf": {
+          "statement_date": "2025-04-23",
+          "output_csv": "2025-04-23.csv",
+          "transaction_count": 9,
+          "total_charges": 36196.23,
+          "total_credits": 14.23,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:28",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 4.23,
+            "new_balance": 36186.23
+          }
+        },
+        "eStmt_2025-05-23.pdf": {
+          "statement_date": "2025-05-23",
+          "output_csv": "2025-05-23.csv",
+          "transaction_count": 3,
+          "total_charges": 4.23,
+          "total_credits": 800.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:29",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 36186.23,
+            "new_balance": 35390.46
+          }
+        },
+        "eStmt_2025-06-23.pdf": {
+          "statement_date": "2025-06-23",
+          "output_csv": "2025-06-23.csv",
+          "transaction_count": 3,
+          "total_charges": 30.29,
+          "total_credits": 0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:29",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 35390.46,
+            "new_balance": 35420.75
+          }
+        },
+        "eStmt_2025-07-23.pdf": {
+          "statement_date": "2025-07-23",
+          "output_csv": "2025-07-23.csv",
+          "transaction_count": 2,
+          "total_charges": 0.35,
+          "total_credits": 734.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:29",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 35420.75,
+            "new_balance": 34687.1
+          }
+        },
+        "eStmt_2025-08-23.pdf": {
+          "statement_date": "2025-08-23",
+          "output_csv": "2025-08-23.csv",
+          "transaction_count": 2,
+          "total_charges": 0.37,
+          "total_credits": 347.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:29",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 34687.1,
+            "new_balance": 34340.47
+          }
+        },
+        "eStmt_2025-09-23.pdf": {
+          "statement_date": "2025-09-23",
+          "output_csv": "2025-09-23.csv",
+          "transaction_count": 2,
+          "total_charges": 0.37,
+          "total_credits": 343.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:29",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 34340.47,
+            "new_balance": 33997.84
+          }
+        },
+        "eStmt_2025-10-23.pdf": {
+          "statement_date": "2025-10-23",
+          "output_csv": "2025-10-23.csv",
+          "transaction_count": 2,
+          "total_charges": 0.36,
+          "total_credits": 340.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:30",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 33997.84,
+            "new_balance": 33658.2
+          }
+        },
+        "eStmt_2025-11-23.pdf": {
+          "statement_date": "2025-11-23",
+          "output_csv": "2025-11-23.csv",
+          "transaction_count": 2,
+          "total_charges": 0.37,
+          "total_credits": 336.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:30",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 33658.2,
+            "new_balance": 33322.57
+          }
+        },
+        "eStmt_2025-12-23.pdf": {
+          "statement_date": "2025-12-23",
+          "output_csv": "2025-12-23.csv",
+          "transaction_count": 2,
+          "total_charges": 0.36,
+          "total_credits": 333.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:30",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 33322.57,
+            "new_balance": 32989.93
+          }
+        },
+        "eStmt_2026-01-23.pdf": {
+          "statement_date": "2026-01-23",
+          "output_csv": "2026-01-23.csv",
+          "transaction_count": 2,
+          "total_charges": 0.37,
+          "total_credits": 330.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:30",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 32989.93,
+            "new_balance": 32660.3
+          }
+        },
+        "eStmt_2026-02-23.pdf": {
+          "statement_date": "2026-02-23",
+          "output_csv": "2026-02-23.csv",
+          "transaction_count": 2,
+          "total_charges": 0.38,
+          "total_credits": 326.0,
+          "verification": {
+            "mismatch": 0.0,
+            "mismatch_ratio": 0.0,
+            "retries": 0,
+            "extraction_settings": {}
+          },
+          "processed_at": "2026-03-03T06:03:30",
+          "status": "success",
+          "warnings": [],
+          "balance_summary": {
+            "previous_balance": 32660.3,
+            "new_balance": 32334.68
+          }
+        }
+      },
+      "errors": {}
+    },
     "apple-card": {
       "processed": {
         "Apple Card Statement - April 2023.pdf": {
@@ -16,7 +301,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:30",
+          "processed_at": "2026-03-07T07:12:34",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -37,7 +322,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:31",
+          "processed_at": "2026-03-07T07:12:34",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-08-23 APPLE.COM/BILL ONE APPLE PARK WAY 866-712-7753 95014 CA USA -27.98"
@@ -60,7 +345,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:31",
+          "processed_at": "2026-03-07T07:12:34",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-12-12 LETSGO NETWORK INCORPO80 Tilman Cir, MARKHAM L3P 5V6 ON CAN -6.69"
@@ -78,7 +363,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:31",
+          "processed_at": "2026-03-07T07:12:35",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -99,7 +384,7 @@
             "retries": 3,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:32",
+          "processed_at": "2026-03-07T07:12:35",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed net $501.95 vs expected $503.51"
@@ -117,7 +402,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:32",
+          "processed_at": "2026-03-07T07:12:35",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -138,7 +423,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:32",
+          "processed_at": "2026-03-07T07:12:36",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed net $470.87 vs expected $471.10"
@@ -161,7 +446,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:32",
+          "processed_at": "2026-03-07T07:12:36",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -182,7 +467,7 @@
             "retries": 3,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:33",
+          "processed_at": "2026-03-07T07:12:37",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed net $314.43 vs expected $314.98"
@@ -205,7 +490,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:33",
+          "processed_at": "2026-03-07T07:12:37",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -226,7 +511,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:33",
+          "processed_at": "2026-03-07T07:12:37",
           "status": "success",
           "warnings": []
         },
@@ -242,7 +527,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:33",
+          "processed_at": "2026-03-07T07:12:37",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -263,7 +548,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:34",
+          "processed_at": "2026-03-07T07:12:37",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -284,7 +569,7 @@
             "retries": 3,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:35",
+          "processed_at": "2026-03-07T07:12:38",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed net $1141.38 vs expected $1143.71",
@@ -303,7 +588,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:35",
+          "processed_at": "2026-03-07T07:12:38",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed net $358.51 vs expected $358.81"
@@ -326,7 +611,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:35",
+          "processed_at": "2026-03-07T07:12:39",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -347,7 +632,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:35",
+          "processed_at": "2026-03-07T07:12:39",
           "status": "success",
           "warnings": []
         },
@@ -363,7 +648,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:35",
+          "processed_at": "2026-03-07T07:12:39",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -384,7 +669,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:36",
+          "processed_at": "2026-03-07T07:12:39",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -405,7 +690,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:36",
+          "processed_at": "2026-03-07T07:12:39",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2024-06-15 TAOBAO.COM Canary Wharf 125 LONDON WAE14 5AB ENGGBR -1.78"
@@ -428,7 +713,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:36",
+          "processed_at": "2026-03-07T07:12:40",
           "status": "success",
           "warnings": []
         },
@@ -444,7 +729,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:36",
+          "processed_at": "2026-03-07T07:12:40",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed net $1068.40 vs expected $1068.66"
@@ -467,7 +752,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:36",
+          "processed_at": "2026-03-07T07:12:40",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -488,7 +773,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:37",
+          "processed_at": "2026-03-07T07:12:40",
           "status": "success",
           "warnings": [
             "Balance check: previous(2237.76) - txns(2033.5) + installments(119.74) = 324.0, expected new_balance=337.24 (diff=$13.24)"
@@ -511,7 +796,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:37",
+          "processed_at": "2026-03-07T07:12:40",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -532,7 +817,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:37",
+          "processed_at": "2026-03-07T07:12:41",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -553,7 +838,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:37",
+          "processed_at": "2026-03-07T07:12:41",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -574,7 +859,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:37",
+          "processed_at": "2026-03-07T07:12:41",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -595,7 +880,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:37",
+          "processed_at": "2026-03-07T07:12:41",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -616,7 +901,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:38",
+          "processed_at": "2026-03-07T07:12:41",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -637,7 +922,7 @@
             "retries": 3,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:38",
+          "processed_at": "2026-03-07T07:12:42",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed net $225.81 vs expected $226.18",
@@ -661,7 +946,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:39",
+          "processed_at": "2026-03-07T07:12:42",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -682,7 +967,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:39",
+          "processed_at": "2026-03-07T07:12:42",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -703,7 +988,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:39",
+          "processed_at": "2026-03-07T07:12:43",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -724,7 +1009,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:39",
+          "processed_at": "2026-03-07T07:12:43",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed net $520.48 vs expected $520.69"
@@ -747,7 +1032,7 @@
             "retries": 3,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:40",
+          "processed_at": "2026-03-07T07:12:43",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed net $651.52 vs expected $652.52"
@@ -770,7 +1055,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:40",
+          "processed_at": "2026-03-07T07:12:44",
           "status": "success",
           "warnings": []
         }
@@ -791,7 +1076,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:40",
+          "processed_at": "2026-03-07T07:12:44",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -811,7 +1096,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:40",
+          "processed_at": "2026-03-07T07:12:44",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -831,7 +1116,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:40",
+          "processed_at": "2026-03-07T07:12:44",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed $1783.03 vs expected $1783.40 (purchases=$1783.40 + fees=$0.00 + interest=$0.00)"
@@ -853,7 +1138,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:41",
+          "processed_at": "2026-03-07T07:12:44",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -873,7 +1158,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:41",
+          "processed_at": "2026-03-07T07:12:45",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed $1049.53 vs expected $1050.07 (purchases=$1050.07 + fees=$0.00 + interest=$0.00)"
@@ -895,7 +1180,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:41",
+          "processed_at": "2026-03-07T07:12:45",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -915,7 +1200,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:41",
+          "processed_at": "2026-03-07T07:12:45",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -935,7 +1220,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:41",
+          "processed_at": "2026-03-07T07:12:45",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -955,7 +1240,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:42",
+          "processed_at": "2026-03-07T07:12:45",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -975,7 +1260,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:42",
+          "processed_at": "2026-03-07T07:12:45",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -995,7 +1280,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:42",
+          "processed_at": "2026-03-07T07:12:46",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1015,7 +1300,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:42",
+          "processed_at": "2026-03-07T07:12:46",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1035,7 +1320,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:42",
+          "processed_at": "2026-03-07T07:12:46",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1055,7 +1340,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:42",
+          "processed_at": "2026-03-07T07:12:46",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1075,7 +1360,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:43",
+          "processed_at": "2026-03-07T07:12:47",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1095,7 +1380,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:43",
+          "processed_at": "2026-03-07T07:12:47",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1115,7 +1400,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:43",
+          "processed_at": "2026-03-07T07:12:47",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1135,7 +1420,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:44",
+          "processed_at": "2026-03-07T07:12:47",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1155,7 +1440,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:44",
+          "processed_at": "2026-03-07T07:12:48",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1175,7 +1460,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:44",
+          "processed_at": "2026-03-07T07:12:48",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1195,7 +1480,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:45",
+          "processed_at": "2026-03-07T07:12:48",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1215,7 +1500,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:45",
+          "processed_at": "2026-03-07T07:12:49",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed $1208.28 vs expected $1208.81 (purchases=$1208.81 + fees=$0.00 + interest=$0.00)"
@@ -1237,7 +1522,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:45",
+          "processed_at": "2026-03-07T07:12:49",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1257,7 +1542,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:46",
+          "processed_at": "2026-03-07T07:12:50",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1277,7 +1562,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:46",
+          "processed_at": "2026-03-07T07:12:50",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1297,7 +1582,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:46",
+          "processed_at": "2026-03-07T07:12:50",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1317,7 +1602,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:47",
+          "processed_at": "2026-03-07T07:12:50",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1337,7 +1622,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:47",
+          "processed_at": "2026-03-07T07:12:51",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1357,7 +1642,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:47",
+          "processed_at": "2026-03-07T07:12:51",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1377,7 +1662,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:48",
+          "processed_at": "2026-03-07T07:12:51",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1397,7 +1682,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:48",
+          "processed_at": "2026-03-07T07:12:52",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1417,7 +1702,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:48",
+          "processed_at": "2026-03-07T07:12:52",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1437,7 +1722,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:49",
+          "processed_at": "2026-03-07T07:12:52",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1457,7 +1742,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:49",
+          "processed_at": "2026-03-07T07:12:53",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1477,7 +1762,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:49",
+          "processed_at": "2026-03-07T07:12:53",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1497,7 +1782,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:49",
+          "processed_at": "2026-03-07T07:12:53",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1517,7 +1802,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:50",
+          "processed_at": "2026-03-07T07:12:54",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1537,7 +1822,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:50",
+          "processed_at": "2026-03-07T07:12:54",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1562,7 +1847,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:50",
+          "processed_at": "2026-03-07T07:12:54",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1582,7 +1867,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:50",
+          "processed_at": "2026-03-07T07:12:54",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-01-27 HILTON CABLE 55 SAN FRANCISCO CA -4.89"
@@ -1604,7 +1889,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:51",
+          "processed_at": "2026-03-07T07:12:54",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1624,7 +1909,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:51",
+          "processed_at": "2026-03-07T07:12:55",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1644,7 +1929,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:51",
+          "processed_at": "2026-03-07T07:12:55",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1664,7 +1949,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:51",
+          "processed_at": "2026-03-07T07:12:55",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1684,7 +1969,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:51",
+          "processed_at": "2026-03-07T07:12:55",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-06-08 JAL PAC USD IRVINE CA -18.8",
@@ -1707,7 +1992,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:51",
+          "processed_at": "2026-03-07T07:12:55",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-08-03 SQ *PATCHY'S ENTERPRISES, Issaquah WA -8.0"
@@ -1729,7 +2014,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:51",
+          "processed_at": "2026-03-07T07:12:55",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1749,7 +2034,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:52",
+          "processed_at": "2026-03-07T07:12:55",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1769,7 +2054,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:52",
+          "processed_at": "2026-03-07T07:12:56",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-11-04 PILATES STUDIO 11 WWW.PILATESTU WA -10.0"
@@ -1791,7 +2076,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:52",
+          "processed_at": "2026-03-07T07:12:56",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1811,7 +2096,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:52",
+          "processed_at": "2026-03-07T07:12:56",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed $10960.04 vs expected $10962.56 (purchases=$10962.56 + fees=$0.00 + interest=$0.00)",
@@ -1838,7 +2123,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:52",
+          "processed_at": "2026-03-07T07:12:56",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1858,7 +2143,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:52",
+          "processed_at": "2026-03-07T07:12:56",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1878,7 +2163,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:53",
+          "processed_at": "2026-03-07T07:12:57",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1898,7 +2183,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:53",
+          "processed_at": "2026-03-07T07:12:57",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1918,7 +2203,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:53",
+          "processed_at": "2026-03-07T07:12:57",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1938,7 +2223,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:54",
+          "processed_at": "2026-03-07T07:12:58",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1958,7 +2243,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:54",
+          "processed_at": "2026-03-07T07:12:58",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1978,7 +2263,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:54",
+          "processed_at": "2026-03-07T07:12:58",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -1998,7 +2283,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:55",
+          "processed_at": "2026-03-07T07:12:58",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2018,7 +2303,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:55",
+          "processed_at": "2026-03-07T07:12:59",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2038,7 +2323,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:55",
+          "processed_at": "2026-03-07T07:12:59",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2058,7 +2343,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:55",
+          "processed_at": "2026-03-07T07:12:59",
           "status": "success",
           "warnings": [
             "Payment total mismatch: parsed $1025.33 vs expected $1025.40"
@@ -2080,7 +2365,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:56",
+          "processed_at": "2026-03-07T07:13:00",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2100,7 +2385,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:56",
+          "processed_at": "2026-03-07T07:13:00",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2120,7 +2405,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:56",
+          "processed_at": "2026-03-07T07:13:00",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2140,7 +2425,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:57",
+          "processed_at": "2026-03-07T07:13:01",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2160,7 +2445,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:57",
+          "processed_at": "2026-03-07T07:13:01",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2180,7 +2465,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:57",
+          "processed_at": "2026-03-07T07:13:01",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2200,7 +2485,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:58",
+          "processed_at": "2026-03-07T07:13:01",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2220,7 +2505,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:58",
+          "processed_at": "2026-03-07T07:13:02",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2025-08-25 HBLeisure Vista CA -3.0",
@@ -2243,7 +2528,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:58",
+          "processed_at": "2026-03-07T07:13:02",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2263,7 +2548,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:58",
+          "processed_at": "2026-03-07T07:13:02",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2025-11-05 WIFIONBOARD ALASKA 877-350-0038 IL -8.0"
@@ -2285,7 +2570,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:59",
+          "processed_at": "2026-03-07T07:13:03",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2305,7 +2590,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:59",
+          "processed_at": "2026-03-07T07:13:03",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed $1716.43 vs expected $1717.00 (purchases=$1717.00 + fees=$0.00 + interest=$0.00)",
@@ -2328,7 +2613,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:29:59",
+          "processed_at": "2026-03-07T07:13:03",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2353,7 +2638,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:00",
+          "processed_at": "2026-03-07T07:13:04",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2373,7 +2658,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:00",
+          "processed_at": "2026-03-07T07:13:04",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2393,7 +2678,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:00",
+          "processed_at": "2026-03-07T07:13:04",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2025-11-08 TST*RED SILO COFFEE ROAS Golden CO -6.54"
@@ -2415,7 +2700,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:01",
+          "processed_at": "2026-03-07T07:13:05",
           "status": "success",
           "warnings": [
             "Charges total mismatch: parsed $3914.31 vs expected $3914.82 (purchases=$3914.82 + fees=$0.00 + interest=$0.00)"
@@ -2437,7 +2722,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:01",
+          "processed_at": "2026-03-07T07:13:05",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2025-12-14 TOBEYSTUTOR.COM NEW YORK NY 29.0"
@@ -2459,7 +2744,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:01",
+          "processed_at": "2026-03-07T07:13:05",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2484,7 +2769,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:02",
+          "processed_at": "2026-03-07T07:13:05",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-01-16 DOCNETWORK INC 734-619-8300 MI -50.0"
@@ -2506,7 +2791,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:02",
+          "processed_at": "2026-03-07T07:13:06",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-02-06 DOCNETWORK INC 734-619-8300 MI -50.0"
@@ -2528,7 +2813,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:02",
+          "processed_at": "2026-03-07T07:13:06",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-02-16 FACTS TUITION AND FEES 402-4661063 NE -100.0"
@@ -2550,7 +2835,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:02",
+          "processed_at": "2026-03-07T07:13:06",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-03-30 COIN-O-MATIC VENDING WOODINVILLE WA -1.85",
@@ -2573,7 +2858,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:03",
+          "processed_at": "2026-03-07T07:13:07",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2593,7 +2878,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:03",
+          "processed_at": "2026-03-07T07:13:07",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-06-11 CTM GROUP INC. SALEM NH -1.5",
@@ -2616,7 +2901,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:03",
+          "processed_at": "2026-03-07T07:13:07",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-07-13 DOCNETWORK INC ANN ARBOR MI 449.0"
@@ -2638,7 +2923,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:03",
+          "processed_at": "2026-03-07T07:13:07",
           "status": "success",
           "warnings": [
             "Transaction date 2023-04-13 out of range for statement 2023-08-17"
@@ -2660,7 +2945,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:04",
+          "processed_at": "2026-03-07T07:13:08",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2680,7 +2965,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:04",
+          "processed_at": "2026-03-07T07:13:08",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2700,7 +2985,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:04",
+          "processed_at": "2026-03-07T07:13:08",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-11-07 MED*SWEDISH MEDICAL CT 888-294-9333 WA -18.73"
@@ -2722,7 +3007,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:04",
+          "processed_at": "2026-03-07T07:13:08",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2023-11-21 RITE AID 05187 ISSAQUAH WA -5.0"
@@ -2744,7 +3029,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:05",
+          "processed_at": "2026-03-07T07:13:09",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2764,7 +3049,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:05",
+          "processed_at": "2026-03-07T07:13:09",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2024-02-09 STARBUCKS STORE 03222 REDMOND WA -4.8"
@@ -2786,7 +3071,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:05",
+          "processed_at": "2026-03-07T07:13:09",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2024-02-24 FRONTLINE FOOD SERVIC COUPEVILLE WA -2.4"
@@ -2808,7 +3093,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:05",
+          "processed_at": "2026-03-07T07:13:09",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2828,7 +3113,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:06",
+          "processed_at": "2026-03-07T07:13:10",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2848,7 +3133,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:06",
+          "processed_at": "2026-03-07T07:13:10",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2868,7 +3153,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:06",
+          "processed_at": "2026-03-07T07:13:10",
           "status": "success",
           "warnings": [
             "Transaction date 2024-03-19 out of range for statement 2024-07-17",
@@ -2891,7 +3176,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:06",
+          "processed_at": "2026-03-07T07:13:10",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2911,7 +3196,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:07",
+          "processed_at": "2026-03-07T07:13:11",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2931,7 +3216,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:07",
+          "processed_at": "2026-03-07T07:13:11",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2951,7 +3236,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:07",
+          "processed_at": "2026-03-07T07:13:11",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -2971,7 +3256,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:07",
+          "processed_at": "2026-03-07T07:13:11",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2024-12-02 VIRGINIA MASON MEDICAL 206-2236601 WA -27.62",
@@ -2994,7 +3279,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:08",
+          "processed_at": "2026-03-07T07:13:12",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3014,7 +3299,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:08",
+          "processed_at": "2026-03-07T07:13:12",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2025-01-17 SQ *ISSAQUAH COFFEE CO Issaquah WA -4.44"
@@ -3036,7 +3321,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:08",
+          "processed_at": "2026-03-07T07:13:12",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3056,7 +3341,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:08",
+          "processed_at": "2026-03-07T07:13:12",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3076,7 +3361,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:08",
+          "processed_at": "2026-03-07T07:13:12",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2025-05-13 CTLP*Emerald City Gymn REDMOND WA -2.0"
@@ -3098,7 +3383,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:09",
+          "processed_at": "2026-03-07T07:13:13",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3118,7 +3403,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:09",
+          "processed_at": "2026-03-07T07:13:13",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2025-06-18 PAYMENT THANK YOU 1259.44",
@@ -3141,7 +3426,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:09",
+          "processed_at": "2026-03-07T07:13:13",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3161,7 +3446,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:09",
+          "processed_at": "2026-03-07T07:13:13",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3181,7 +3466,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:10",
+          "processed_at": "2026-03-07T07:13:14",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3201,7 +3486,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:10",
+          "processed_at": "2026-03-07T07:13:14",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3221,7 +3506,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:10",
+          "processed_at": "2026-03-07T07:13:14",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3241,7 +3526,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:10",
+          "processed_at": "2026-03-07T07:13:14",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2026-01-12 ISSAQUAH SD 425-8377000 WA -28.5"
@@ -3263,7 +3548,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:10",
+          "processed_at": "2026-03-07T07:13:14",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3288,7 +3573,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:11",
+          "processed_at": "2026-03-07T07:13:15",
           "status": "success",
           "warnings": [
             "Possible duplicate: 2025-09-21 LS KIDSQUEST CHILDREN 142-56378100 WA -1.0"
@@ -3310,7 +3595,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:11",
+          "processed_at": "2026-03-07T07:13:15",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3330,7 +3615,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:11",
+          "processed_at": "2026-03-07T07:13:15",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3350,7 +3635,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:11",
+          "processed_at": "2026-03-07T07:13:15",
           "status": "success",
           "warnings": [],
           "balance_summary": {
@@ -3370,7 +3655,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:11",
+          "processed_at": "2026-03-07T07:13:15",
           "status": "success",
           "warnings": []
         },
@@ -3386,7 +3671,7 @@
             "retries": 0,
             "extraction_settings": {}
           },
-          "processed_at": "2026-03-01T09:30:12",
+          "processed_at": "2026-03-07T07:13:16",
           "status": "success",
           "warnings": []
         }

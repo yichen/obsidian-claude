@@ -1,0 +1,21 @@
+form_type: Form 8949
+tax_year: 2023
+short_term:
+  transactions: []
+  count: 0
+  total_proceeds: 0
+  total_cost: 0
+  total_gain_loss: 0
+long_term:
+  transactions: []
+  count: 0
+  total_proceeds: 0
+  total_cost: 0
+  total_gain_loss: 0
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2023/2023-tax-final.pdf
+  pages:
+  - 17
+  processed_at: '2026-03-13T20:11:38'

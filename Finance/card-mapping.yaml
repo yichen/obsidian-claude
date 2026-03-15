@@ -1,0 +1,65 @@
+# Credit Card → Account Mapping
+# Maps last-4 digits on receipts/statements to internal account names
+#
+# Notes:
+#   - A card may have multiple last-4 entries if renewed (old number stays for history)
+#   - Apple Pay / Google Pay generate a Device Account Number (DAN) — a virtual
+#     token number that differs from the physical card number. The DAN appears on
+#     receipts and varies by device. Physical card number is what appears on statements.
+#   - When a receipt last-4 doesn't match any known entry, check if Apple Pay was used.
+#   - Sources: directory names in Finance/credit-card/, statement PDFs in
+#     ~/Dropbox/0-FinancialStatements/credit-cards/
+
+accounts:
+  apple-card:
+    network: Mastercard
+    last4: []
+    notes: >
+      Apple Card — Apple intentionally omits the card number from PDF statements
+      for privacy. Last-4 unknown unless checked in Apple Wallet app.
+
+  chase-freedom:
+    network: Visa
+    last4:
+      - digits: "1350"
+        label: "Chase Freedom Unlimited (current)"
+    notes: "Chase Freedom Unlimited Visa"
+
+  chase-prime:
+    network: Visa
+    last4:
+      - digits: "1158"
+        label: "Chase Amazon Prime Visa (current)"
+    notes: "Chase Amazon Prime Visa"
+
+  chase-sapphire:
+    network: Visa
+    last4:
+      - digits: "2341"
+        label: "Chase Sapphire (current)"
+    notes: "Chase Sapphire Preferred or Reserve Visa"
+
+  bofa-atmos:
+    network: Visa
+    last4:
+      - digits: "7982"
+        label: "BofA Atmos Rewards (current)"
+    notes: "Bank of America Atmos Rewards Visa"
+
+  fidelity-cc:
+    network: Visa
+    last4:
+      - digits: "5161"
+        label: "Fidelity Rewards Visa Signature (current)"
+    notes: >
+      Two statement folders exist: fidelity-credit-card (older statements) and
+      fidelity-rewards (current) — both are the same card ending 5161.
+      Confirmed from PDF: "Account ending in: 5161"
+
+# Apple Pay Device Account Numbers (DANs)
+# These virtual numbers appear on receipts when paying with Apple Pay.
+# They do NOT match the physical card number on statements.
+apple_pay_dans:
+  - digits: "4582"
+    maps_to: chase-freedom
+    notes: "Apple Pay DAN for Chase Freedom Unlimited on Yi's iPhone/Watch (seen 2026-03-13)"

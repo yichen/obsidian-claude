@@ -1,0 +1,14 @@
+form_type: Schedule 1
+tax_year: 2022
+boxes:
+  10_total_additional_income: 61.00
+  26_total_adjustments: 0.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2022/Yi Chen and Sheri Martin's 2022
+    Tax Return.pdf
+  pages:
+  - 6
+  - 7
+  processed_at: '2026-03-13T20:12:09'

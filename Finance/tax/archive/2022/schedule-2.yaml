@@ -1,0 +1,16 @@
+form_type: Schedule 2
+tax_year: 2022
+boxes:
+  2_excess_ptc: 0.00
+  3_total_part1: 0.00
+  11_additional_medicare: 3981.00
+  21_total_other_taxes: 3981.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2022/Yi Chen and Sheri Martin's 2022
+    Tax Return.pdf
+  pages:
+  - 8
+  - 9
+  processed_at: '2026-03-13T20:12:09'

@@ -1,0 +1,24 @@
+form_type: 5498-SA
+tax_year: 2021
+trustee:
+  name: HealthEquity
+  tin: 52-2383166
+participant:
+  name: Yi Chen
+  ssn_last4: '2622'
+account_type: HSA
+boxes:
+  1_employee_contributions: 0.00
+  2_total_contributions: 7200.02
+  3_contributions_following_year: 0.00
+  4_rollover_contributions: 0.00
+  5_fair_market_value: 695.86
+validation:
+  has_contributions: true
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2021/2022-04-30/HealthEquity_f5498sa_2021.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-13T17:57:29'
+account_number: '2401494'

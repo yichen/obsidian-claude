@@ -1,0 +1,13 @@
+form_type: Schedule 3
+tax_year: 2020
+boxes:
+  1_foreign_tax_credit: 525.00
+  2_child_care_credit: 525.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2020/final-returns/Yi Chen and Sheri
+    Martin's 2020 Tax Return Final.pdf
+  pages:
+  - 9
+  processed_at: '2026-03-13T20:12:00'

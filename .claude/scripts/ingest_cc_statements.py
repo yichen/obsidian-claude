@@ -45,6 +45,7 @@ RETRY_SETTINGS = [
     {"layout": True},
     {"x_tolerance": 5},
 ]
+MAX_PARSE_ATTEMPTS = 3  # Retry budget for transient PDF parse failures
 
 # --- Logging ---
 logger = logging.getLogger("ingest_cc")
@@ -81,6 +82,7 @@ class CardConfig:
     filename_pattern: str  # regex
     parser_class: str
     has_year_subfolders: bool = True
+    account_suffix: str | None = None  # last 4 digits of card number for BofA regex
 
 
 # --- Card Registry ---
@@ -123,6 +125,14 @@ CARD_CONFIGS = {
     "bofa-atmos-7982": CardConfig(
         name="bofa-atmos-7982",
         source_dir="bank-of-america-atmos-rewards",
+        filename_pattern=r"eStmt_(\d{4}-\d{2}-\d{2})\.pdf$",
+        parser_class="BankOfAmericaParser",
+        has_year_subfolders=True,
+        account_suffix="7982",
+    ),
+    "bofa-rewards-visa": CardConfig(
+        name="bofa-rewards-visa",
+        source_dir="bank-of-america-rewards-visa-signature",
         filename_pattern=r"eStmt_(\d{4}-\d{2}-\d{2})\.pdf$",
         parser_class="BankOfAmericaParser",
         has_year_subfolders=True,
@@ -809,25 +819,18 @@ class FidelityParser(BaseParser):
 
 
 class BankOfAmericaParser(BaseParser):
-    """Parser for Bank of America credit card statements (Atmos Rewards).
+    """Parser for Bank of America credit card statements.
 
-    Transaction format: MM/DD MM/DD Description RefNum 7982 Amount
+    Transaction format: MM/DD MM/DD Description RefNum AcctSuffix Amount
     - Payments section: amounts are negative in PDF
     - Purchases section: amounts are positive in PDF
     - Fees: positive, may lack separate refnum
     - Interest: positive, no refnum or account number
     - Sign convention: negate all raw amounts (charges->negative, payments->positive)
+    - account_suffix from CardConfig anchors the regex; defaults to \\d{4} if not set
     """
 
-    # Standard transaction: date date desc refnum 7982 amount
-    TX_RE = re.compile(
-        r"^(\d{2}/\d{2})\s+\d{2}/\d{2}\s+(.+?)\s+\d{3,5}\s+7982\s+([-]?[\d,]+\.\d{2})\s*$"
-    )
-    # Fee-style: date date desc 7982 amount (no separate refnum)
-    FEE_RE = re.compile(
-        r"^(\d{2}/\d{2})\s+\d{2}/\d{2}\s+(.+?)\s+7982\s+([-]?[\d,]+\.\d{2})\s*$"
-    )
-    # Interest-style: date date desc amount (no refnum, no account)
+    # Interest-style: date date desc amount (no refnum, no account) — not suffix-dependent
     INT_RE = re.compile(
         r"^(\d{2}/\d{2})\s+\d{2}/\d{2}\s+(.+?)\s+([-]?[\d,]+\.\d{2})\s*$"
     )
@@ -855,6 +858,17 @@ class BankOfAmericaParser(BaseParser):
         self._expected_payments: float | None = None
         self._expected_fees: float | None = None
         self._expected_interest: float | None = None
+        self._expected_balance_transfers: float | None = None
+        # Build suffix-dependent regexes from config (or use \d{4} for any 4-digit suffix)
+        suffix = config.account_suffix or r"\d{4}"
+        # Standard transaction: date date desc refnum suffix amount
+        self.TX_RE = re.compile(
+            rf"^(\d{{2}}/\d{{2}})\s+\d{{2}}/\d{{2}}\s+(.+?)\s+\d{{3,5}}\s+{suffix}\s+([-]?[\d,]+\.\d{{2}})\s*$"
+        )
+        # Fee-style: date date desc suffix amount (no separate refnum)
+        self.FEE_RE = re.compile(
+            rf"^(\d{{2}}/\d{{2}})\s+\d{{2}}/\d{{2}}\s+(.+?)\s+{suffix}\s+([-]?[\d,]+\.\d{{2}})\s*$"
+        )
 
     def extract_statement_date(self) -> date:
         match = re.search(r"eStmt_(\d{4}-\d{2}-\d{2})\.pdf", self.pdf_path.name)
@@ -888,6 +902,9 @@ class BankOfAmericaParser(BaseParser):
         m = re.search(r"Interest Charged\s+\$?([\d,]+\.\d{2})", text)
         if m:
             self._expected_interest = float(m.group(1).replace(",", ""))
+        m = re.search(r"Balance Transfers\s+\$([\d,]+\.\d{2})", text)
+        if m:
+            self._expected_balance_transfers = float(m.group(1).replace(",", ""))
 
         section = None
         in_transactions = False
@@ -915,6 +932,9 @@ class BankOfAmericaParser(BaseParser):
                 continue
             elif line == "Purchases and Adjustments":
                 section = "purchases"
+                continue
+            elif line == "Balance Transfers":
+                section = "balance_transfers"
                 continue
             elif line == "Fees":
                 section = "fees"
@@ -971,11 +991,12 @@ class BankOfAmericaParser(BaseParser):
     def compute_mismatch(self, transactions: list[Transaction]) -> tuple[float, float]:
         mismatches = []
 
-        # Total charges: purchases + fees + interest (all negative in CSV)
+        # Total charges: purchases + fees + interest + balance transfers (all negative in CSV)
         expected_charges = (
             (self._expected_purchases or 0)
             + (self._expected_fees or 0)
             + (self._expected_interest or 0)
+            + (self._expected_balance_transfers or 0)
         )
         if expected_charges > 0:
             actual_charges = round(
@@ -1132,18 +1153,21 @@ def generate_mismatch_warnings(parser: BaseParser, transactions: list[Transactio
             (parser._expected_purchases or 0)
             + (parser._expected_fees or 0)
             + (parser._expected_interest or 0)
+            + (parser._expected_balance_transfers or 0)
         )
         if expected_charges > 0:
             actual_charges = round(
                 sum(-t.amount for t in transactions if t.amount < 0), 2
             )
             if abs(actual_charges - expected_charges) > 0.02:
+                bt_str = f" + balance_transfers=${parser._expected_balance_transfers or 0:.2f}" if parser._expected_balance_transfers else ""
                 warnings.append(
                     f"Charges total mismatch: parsed ${actual_charges:.2f} "
                     f"vs expected ${expected_charges:.2f} "
                     f"(purchases=${parser._expected_purchases or 0:.2f} "
                     f"+ fees=${parser._expected_fees or 0:.2f} "
-                    f"+ interest=${parser._expected_interest or 0:.2f})"
+                    f"+ interest=${parser._expected_interest or 0:.2f}"
+                    f"{bt_str})"
                 )
         if parser._expected_payments is not None and parser._expected_payments > 0:
             actual_payments = round(
@@ -1514,7 +1538,14 @@ def run_ingest(
 
         for pdf_path, filename in new_pdfs:
             try:
-                result = process_pdf(pdf_path, config)
+                for _attempt in range(1, MAX_PARSE_ATTEMPTS + 1):
+                    try:
+                        result = process_pdf(pdf_path, config)
+                        break
+                    except Exception as e:
+                        if _attempt == MAX_PARSE_ATTEMPTS:
+                            raise
+                        print(f"  Attempt {_attempt}/{MAX_PARSE_ATTEMPTS} failed: {e}, retrying...")
                 card_log["processed"][filename] = result
                 card_log["errors"].pop(filename, None)
 

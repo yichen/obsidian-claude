@@ -1,0 +1,27 @@
+form_type: Schedule D
+tax_year: 2021
+boxes:
+  1a_proceeds: 11469.00
+  1a_cost: 11470.00
+  1a_gain_loss: -1.00
+  1b_proceeds: 88329.00
+  1b_cost: 159.00
+  1b_gain_loss: 8075.00
+  '7': 8074.00
+  '13': 1747.00
+  '15': 1747.00
+  '16': 9821.00
+  '17': 18.00
+  '18': 0.00
+  '19': 0.00
+validation:
+  has_line_16: true
+  has_line_21: false
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2021/Yi Chen and Sheri Martin 2021 Tax
+    Return update.pdf
+  pages:
+  - 13
+  - 14
+  processed_at: '2026-03-13T20:12:04'

@@ -1,0 +1,31 @@
+form_type: W-2
+tax_year: 2021
+employer:
+  name: ''
+  ein: 37-1430960
+employee:
+  name: Yi Chen
+  ssn_last4: '3457'
+boxes:
+  1_wages: 0.00
+  2_fed_tax_withheld: 0.00
+  3_ss_wages: 0.00
+  4_ss_tax_withheld: 0.00
+  5_medicare_wages: 0.00
+  6_medicare_tax_withheld: 0.00
+  '13':
+    retirement_plan: false
+    statutory_employee: false
+    third_party_sick_pay: false
+  15_state: WA
+  16_state_wages: 0.00
+  17_state_tax: 0.00
+validation:
+  checks_passed: true
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2021/2022-04-30/Sheri-W-2 2021 Eastside
+    Preparatory.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-13T17:57:32'

@@ -1,0 +1,56 @@
+issues:
+  - id: TAX-001
+    created: "2026-03-13"
+    status: OPEN
+    year: 2023
+    category: capital_gains
+    title: "$220K cap gain discrepancy: 1099-B total vs 1040 Line 7"
+    description: |
+      Account 0887 1099-B shows $249,413 net gain.
+      Filed 1040 Line 7 shows $29,189. Gap: ~$220K.
+      All PDFs in prepare folder checked — no missing documents explain the gap.
+    hypothesis: |
+      CPA made Schedule D adjustments for RSU/ESPP adjusted cost basis
+      from supplemental broker statements (basis "not reported to IRS" lots).
+      This is expected and normal — the raw 1099-B totals don't match the
+      adjusted Schedule D that CPAs use for filing.
+    resolution_path: |
+      Obtain filed Schedule D from 2023 tax return PDF (ask CPA or find in
+      Dropbox archive). Map each adjustment line to confirm hypothesis.
+    resolved_at: null
+    resolution_note: null
+
+  - id: TAX-002
+    created: "2026-03-13"
+    status: OPEN
+    year: null
+    category: computation_accuracy
+    title: "Backtest accuracy ~10% — Schedule D adjustments not modeled"
+    description: |
+      compute_1040.py backtest shows ~10% accuracy on capital gains line.
+      Root cause: raw 1099-B totals are inputs, but CPAs apply adjusted
+      basis from supplemental broker statements that are not parsed.
+    hypothesis: |
+      Once TAX-001 is resolved and Schedule D adjustment pattern is understood,
+      can add an adjustment factor or parse supplemental statements.
+    resolution_path: |
+      Resolve TAX-001 first. Then either:
+      (a) Parse Fidelity supplemental PDF (shows adjusted cost basis per lot), or
+      (b) Model a fixed adjustment ratio derived from historical Schedule D data.
+    resolved_at: null
+    resolution_note: null
+
+  - id: TAX-003
+    created: "2026-03-13"
+    status: RESOLVED
+    year: 2023
+    category: data_quality
+    title: "Account 0887 incorrectly believed to be joint"
+    description: |
+      User believed account X86-610887 was a joint account.
+      Investigation confirmed it is Yi's individual TOD account (confirmed
+      by PDF filename: 2023-YI-CHEN-INDIVIDUAL-TOD-0887 and recipient SSN 2622).
+    hypothesis: null
+    resolution_path: null
+    resolved_at: "2026-03-13"
+    resolution_note: "Confirmed individual TOD account. All years (2022, 2023, 2024) consistent."

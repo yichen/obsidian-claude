@@ -1,0 +1,323 @@
+# Seattle-area Latin Dance Events Registry
+# Source: golatindance.com/events/category/seattle/
+# Last full refresh: 2026-03-07
+
+home:
+  label: Sammamish
+  lat: 47.6164
+  lon: -122.0356
+
+events:
+  # ── Sunday ──────────────────────────────────────────────
+  - name: "Salsaymotion Sunset Social"
+    day: Sunday
+    frequency: weekly
+    start_time: "18:00"
+    end_time: "20:30"
+    venue: "Bravo Dance School"
+    address: "13635 NE 8th St Suite 104, Bellevue, WA 98005"
+    lat: 47.6169
+    lon: -122.1571
+    style: [salsa, bachata]
+    cost: null
+    source_url: "https://golatindance.com/event/salsaymotion-sunset-social/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "50/50 Salsa/Bachata music always"
+
+  - name: "eSOeS Salsa/Bachata at Aria Ballroom"
+    day: Sunday
+    frequency: weekly
+    start_time: "19:00"
+    end_time: "23:00"
+    venue: "Aria Ballroom"
+    address: "15300 NE 95th St, Redmond, WA"
+    lat: 47.6859
+    lon: -122.1355
+    style: [salsa, bachata]
+    cost: null
+    source_url: "https://golatindance.com/event/esos-salsa-bachata-at-aria-ballroom/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "Mix of Salsa, Bachata, and Latin rhythms"
+
+  - name: "PIVOT Sunday Mambo Social"
+    day: Sunday
+    frequency: weekly
+    start_time: "18:00"
+    end_time: "22:00"
+    venue: "PIVOT Dance Emporium"
+    address: "3220 1st Ave S Ste B600, Seattle, WA 98134"
+    lat: 47.5750
+    lon: -122.3339
+    style: [salsa, mambo]
+    cost: "$10"
+    source_url: "https://golatindance.com/event/pivots-sunday-mambo-social/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "Footwork and partner work class included"
+
+  # ── Monday ──────────────────────────────────────────────
+  - name: "Salsa Practica"
+    day: Monday
+    frequency: weekly
+    start_time: "21:00"
+    end_time: "23:00"
+    venue: "Reverie Ballroom"
+    address: "915 E Pine St, Seattle, WA 98122"
+    lat: 47.6150
+    lon: -122.3198
+    style: [salsa]
+    cost: "$15 ($5 student)"
+    source_url: "https://golatindance.com/event/salsa-practica/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "On1 style"
+
+  # ── Tuesday ─────────────────────────────────────────────
+  - name: "Latin Heat Tuesdays"
+    day: Tuesday
+    frequency: weekly
+    start_time: "20:00"
+    end_time: "23:00"
+    venue: "The New Local Restaurante"
+    address: "10432 SE Kent-Kangley Rd, Kent, WA"
+    lat: 47.3720
+    lon: -122.1991
+    style: [salsa, bachata]
+    cost: "$10"
+    source_url: "https://golatindance.com/event/latin-heat-tuesdays/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "Taco Tuesday dining promotion"
+
+  # ── Wednesday ───────────────────────────────────────────
+  - name: "El Centro Adult Latino Skate Nights"
+    day: Wednesday
+    frequency: bimonthly  # 1st and 3rd Wednesday
+    start_time: "19:30"
+    end_time: "22:00"
+    venue: "El Centro Skate Rink"
+    address: "34222 Pacific Hwy S, Federal Way, WA 98003"
+    lat: 47.2947
+    lon: -122.3143
+    style: [latin]
+    cost: "$13-18"
+    source_url: "https://golatindance.com/event/el-centro-skate-rink-adult-latino-skate-nights/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "1st and 3rd Wednesday only. Tropical and Latin rhythms, roller skating"
+
+  - name: "Suenos de Salsa y Bachata"
+    day: Wednesday
+    frequency: weekly
+    start_time: "20:30"
+    end_time: "23:00"
+    venue: "Suenos de Salsa"
+    address: "6512 Roosevelt Way NE, Seattle, WA 98115"
+    lat: 47.6763
+    lon: -122.3172
+    style: [salsa, bachata]
+    cost: "$10 online / $15 door ($5 student)"
+    source_url: "https://golatindance.com/event/suenos-de-salsa/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "Half-price for students"
+
+  # ── Thursday ────────────────────────────────────────────
+  - name: "PIVOT Thursday Bachata Social"
+    day: Thursday
+    frequency: monthly  # 2nd Thursday
+    start_time: "19:30"
+    end_time: "23:00"
+    venue: "PIVOT Dance Emporium"
+    address: "3220 1st Ave S Ste B600, Seattle, WA 98134"
+    lat: 47.5750
+    lon: -122.3339
+    style: [bachata]
+    cost: "$10"
+    source_url: "https://golatindance.com/event/pivots-thursday-bachata-social/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "2nd Thursday only. Complimentary beginner class 7:30-8:30 PM"
+
+  - name: "Latin Dance Thursday at Aurora Borealis"
+    day: Thursday
+    frequency: weekly
+    start_time: "20:30"
+    end_time: "00:00"
+    venue: "Aurora Borealis Restaurant"
+    address: "16708 Aurora Ave N, Shoreline, WA 98133"
+    lat: 47.7507
+    lon: -122.3449
+    style: [salsa, bachata]
+    cost: "$10"
+    source_url: "https://golatindance.com/event/latin-dance-thursday/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "Class 8:30-9:30 PM, 21+ after 10 PM"
+
+  - name: "Bachata Night at Reverie Ballroom"
+    day: Thursday
+    frequency: weekly
+    start_time: "21:00"
+    end_time: "01:00"
+    venue: "Reverie Ballroom"
+    address: "915 E Pine St, Seattle, WA 98122"
+    lat: 47.6150
+    lon: -122.3198
+    style: [bachata]
+    cost: "$15 ($5 student)"
+    source_url: "https://golatindance.com/event/bachata-night-at-reverie/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "Dominican and Modern style"
+
+  # ── Friday ──────────────────────────────────────────────
+  - name: "Salsa and Bachata Social at LaVida"
+    day: Friday
+    frequency: weekly
+    start_time: "20:00"
+    end_time: "23:30"
+    venue: "LaVida Dance Studio"
+    address: "11961 124th Ave NE, Kirkland, WA 98034"
+    lat: 47.7061
+    lon: -122.1776
+    style: [salsa, bachata]
+    cost: null
+    source_url: "https://golatindance.com/event/salsa-bachata-social-lavida/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "Classes 8-9:30 PM, social 9:30-11:30 PM. Live DJ on 3rd Friday"
+
+  - name: "Latin Night at Seattle Harbor"
+    day: Friday
+    frequency: weekly
+    start_time: "21:00"
+    end_time: "02:00"
+    venue: "Seattle Harbor"
+    address: "2040 Westlake Ave N, Seattle, WA 98109"
+    lat: 47.6375
+    lon: -122.3399
+    style: [salsa, bachata]
+    cost: null
+    source_url: "https://golatindance.com/event/latin-night-seattle-harbor/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "Lessons 9-10 PM, social dancing 10 PM onward"
+
+  - name: "Salsa Con Todo"
+    day: Friday
+    frequency: weekly
+    start_time: "22:00"
+    end_time: "01:00"
+    venue: "Salsa Con Todo Studio"
+    address: "211 N 36th St, Seattle, WA 98103"
+    lat: 47.6524
+    lon: -122.3561
+    style: [salsa, bachata, zouk, kizomba]
+    cost: null
+    source_url: "https://golatindance.com/event/salsa-con-todo/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "3 rooms, 3 DJs covering multiple Latin styles"
+
+  # ── Saturday ────────────────────────────────────────────
+  - name: "Live Salsa Saturdays at Sea Monster Lounge"
+    day: Saturday
+    frequency: weekly
+    start_time: "19:00"
+    end_time: "21:00"
+    venue: "Sea Monster Lounge"
+    address: "2202 N 45th St, Seattle, WA 98103"
+    lat: 47.6615
+    lon: -122.3323
+    style: [salsa]
+    cost: null
+    source_url: "https://golatindance.com/event/live-salsa-saturdays/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "Rotating tropical music bands"
+
+  - name: "Second Saturday Salsa and Bachata Social"
+    day: Saturday
+    frequency: monthly  # 2nd Saturday
+    start_time: "21:00"
+    end_time: "00:30"
+    venue: "Reverie Ballroom"
+    address: "915 E Pine St, Seattle, WA 98122"
+    lat: 47.6150
+    lon: -122.3198
+    style: [salsa, bachata]
+    cost: null
+    source_url: "https://golatindance.com/event/second-saturday-salsa-bachata/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "2nd Saturday only. On1 and Bachata styles"
+
+  - name: "AVS Vinyl Salsa Night at Reverie Ballroom"
+    day: Saturday
+    frequency: weekly
+    start_time: "20:30"
+    end_time: "01:30"
+    venue: "Reverie Ballroom"
+    address: "915 E Pine St, Seattle, WA 98122"
+    lat: 47.6150
+    lon: -122.3198
+    style: [salsa]
+    cost: null
+    source_url: "https://golatindance.com/event/avs-vinyl-salsa-night/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "All-vinyl records"
+
+  - name: "Rumba Tropical Sonidera"
+    day: Saturday
+    frequency: weekly
+    start_time: "21:00"
+    end_time: "03:00"
+    venue: "Seattle Harbor"
+    address: "2040 Westlake Ave N, Seattle, WA 98109"
+    lat: 47.6375
+    lon: -122.3399
+    style: [salsa, cumbia]
+    cost: "$20 cash"
+    source_url: "https://golatindance.com/event/rumba-tropical-sonidera/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "Table reservations available"
+
+  # ── Monthly / Special ───────────────────────────────────
+  - name: "Bliss Salsa Bachata Social"
+    day: Saturday
+    frequency: monthly  # varies
+    start_time: "20:00"
+    end_time: "00:00"
+    venue: "704 19th Ave E"
+    address: "704 19th Ave E, Seattle, WA 98112"
+    lat: 47.6256
+    lon: -122.3070
+    style: [salsa, bachata]
+    cost: null
+    source_url: "https://golatindance.com/event/bliss-salsa-bachata/"
+    status: active
+    last_confirmed: "2026-03-07"
+    notes: "Monthly event (dates vary). Intro lesson 7-8 PM"
+
+# Reference coordinates for common location queries
+reference_locations:
+  Sammamish: {lat: 47.6164, lon: -122.0356}
+  Bellevue: {lat: 47.6101, lon: -122.2015}
+  Redmond: {lat: 47.6740, lon: -122.1215}
+  Kirkland: {lat: 47.6815, lon: -122.2087}
+  Seattle: {lat: 47.6062, lon: -122.3321}
+  Shoreline: {lat: 47.7557, lon: -122.3447}
+  Lynnwood: {lat: 47.8209, lon: -122.3151}
+  Kent: {lat: 47.3809, lon: -122.2348}
+  Renton: {lat: 47.4829, lon: -122.2171}
+  Federal-Way: {lat: 47.3223, lon: -122.3126}
+  Issaquah: {lat: 47.5301, lon: -122.0326}
+  Bothell: {lat: 47.7623, lon: -122.2054}
+  Woodinville: {lat: 47.7543, lon: -122.1635}
+  Everett: {lat: 47.9790, lon: -122.2021}
+  Tacoma: {lat: 47.2529, lon: -122.4443}

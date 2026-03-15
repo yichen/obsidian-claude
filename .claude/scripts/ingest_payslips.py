@@ -38,6 +38,7 @@ SOURCE_ROOT = Path.home() / "Dropbox" / "0-FinancialStatements" / "payslips"
 OUTPUT_ROOT = OBSIDIAN_ROOT / "Finance" / "payslips"
 LOG_FILE = OUTPUT_ROOT / "ingest.log"
 PROCESSING_LOG_PATH = OUTPUT_ROOT / "processing_log.json"
+MAX_PARSE_ATTEMPTS = 3  # Retry budget for transient PDF parse failures
 
 # --- Logging ---
 logger = logging.getLogger("ingest_payslips")
@@ -1432,7 +1433,14 @@ def run_ingest(
             parser = PARSER_CLASSES[emp_name](config)
 
             try:
-                payslips = parser.extract_payslips(pdf_path)
+                for _attempt in range(1, MAX_PARSE_ATTEMPTS + 1):
+                    try:
+                        payslips = parser.extract_payslips(pdf_path)
+                        break
+                    except Exception as e:
+                        if _attempt == MAX_PARSE_ATTEMPTS:
+                            raise
+                        print(f"  Attempt {_attempt}/{MAX_PARSE_ATTEMPTS} failed: {e}, retrying...")
             except Exception as e:
                 logger.error(f"    FAIL {pdf_path.name}: {e}")
                 total_errors += 1

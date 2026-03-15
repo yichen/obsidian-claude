@@ -1,0 +1,22 @@
+form_type: 1099-INT
+tax_year: 2020
+payer:
+  name: Capital One
+  tin: 72-0210640
+recipient:
+  name: Yi Chen
+  ssn_last4: '3457'
+boxes:
+  1_interest_income: 0.00
+  2_early_withdrawal_penalty: 0.00
+  3_us_savings_bonds: 0.00
+  4_fed_tax_withheld: 0.00
+validation:
+  has_interest: false
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2020/2021-02-06/Capital One 1099-INT
+    2020.pdf
+  pages:
+  - 1
+  processed_at: '2026-03-13T17:57:42'

@@ -1,0 +1,54 @@
+form_type: 1099-CONSOLIDATED
+tax_year: 2021
+institution: Fidelity
+format: fidelity
+recipient:
+  name: Laurence Chen
+  ssn_last4: '6094'
+account_number: Z08-759437
+forms:
+  1099-DIV:
+    1a_total_ordinary_dividends: 0.02
+    1b_qualified_dividends: 0.00
+    2a_total_capital_gain_dist: 0.00
+    4_fed_tax_withheld: 0.00
+    5_section_199a_dividends: 0.00
+    7_foreign_tax_paid: 0.00
+  1099-INT:
+    1_interest_income: 0.00
+    4_fed_tax_withheld: 0.00
+  1099-B:
+    short_term:
+      proceeds: 19.01
+      cost_basis: 24.98
+      market_discount: 0.00
+      wash_sales: 0.00
+      gain_loss: -5.97
+      fed_withheld: 0.00
+    long_term:
+      proceeds: 2727.68
+      cost_basis: 816.14
+      market_discount: 0.00
+      wash_sales: 0.00
+      gain_loss: 1911.54
+      fed_withheld: 0.00
+    total:
+      proceeds: 2746.69
+      cost_basis: 841.12
+      market_discount: 0.00
+      wash_sales: 0.00
+      gain_loss: 1905.57
+      fed_withheld: 0.00
+validation:
+  checks_passed: true
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/2-prepare/2021/2022-04-30/Laurence-UTMA-9437-Consolidated-Form-1099.pdf
+  pages:
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  processed_at: '2026-03-13T17:57:30'

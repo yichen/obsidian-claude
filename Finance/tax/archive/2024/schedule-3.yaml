@@ -1,0 +1,17 @@
+form_type: Schedule 3
+tax_year: 2024
+boxes:
+  1_foreign_tax_credit: 617.00
+  2_child_care_credit: 617.00
+  8_total_nonrefundable: 617.00
+  10_extension_payment: 1736.00
+  11_excess_ss: 1736.00
+  15_total_other_payments: 1736.00
+validation:
+  mismatches: []
+source:
+  file: /Users/yichen/Dropbox/1-Tax/3-archive/2024/Yi Chen and Sheri Martin's 2024
+    Tax Return Final.pdf
+  pages:
+  - 8
+  processed_at: '2026-03-13T20:11:41'

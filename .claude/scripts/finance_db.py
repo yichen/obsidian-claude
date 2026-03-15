@@ -7,7 +7,9 @@ import os
 import re
 import shutil
 import sqlite3
+import subprocess
 import sys
+from datetime import datetime
 from pathlib import Path
 
 import yaml
@@ -21,7 +23,46 @@ TAX_ROOT = VAULT_ROOT / "Finance" / "tax"
 FIDELITY_ROOT = VAULT_ROOT / "Finance" / "fidelity-accounts"
 SOFI_ROOT = VAULT_ROOT / "Finance" / "sofi-loan"
 BECU_ROOT = VAULT_ROOT / "Finance" / "becu"
+WF_CAR_ROOT = VAULT_ROOT / "Finance" / "wellsfargo-car-loan"
 RULES_BACKUP_PATH = VAULT_ROOT / "Finance" / "categorization_rules.json"
+PENDING_TXN_PATH = VAULT_ROOT / "Finance" / "pending-transactions.yaml"
+ISSUES_PATH = VAULT_ROOT / "Finance" / "pipeline-issues.md"
+
+SCRIPTS_DIR = Path(__file__).resolve().parent
+VENV_PYTHON = str(VAULT_ROOT / "Scripts" / "venv" / "bin" / "python3")
+
+PROCESSING_LOGS = {
+    "CC Statements": VAULT_ROOT / "Finance" / "credit-card" / "processing_log.json",
+    "Tax Documents": VAULT_ROOT / "Finance" / "tax" / "processing_log.json",
+    "Payslips": VAULT_ROOT / "Finance" / "payslips" / "processing_log.json",
+    "Fidelity": VAULT_ROOT / "Finance" / "fidelity-accounts" / "processing_log.json",
+    "SoFi Loan": VAULT_ROOT / "Finance" / "sofi-loan" / "processing_log.json",
+    "BECU": VAULT_ROOT / "Finance" / "becu" / "processing_log.json",
+    "WF Car Loan": VAULT_ROOT / "Finance" / "wellsfargo-car-loan" / "processing_log.json",
+}
+
+SOURCE_DIRS = {
+    "CC Statements": Path.home() / "Dropbox" / "0-FinancialStatements" / "credit-cards",
+    "Tax Documents": [
+        Path.home() / "Dropbox" / "1-Tax" / "2-prepare",
+        Path.home() / "Dropbox" / "1-Tax" / "3-archive",
+    ],
+    "Payslips": Path.home() / "Dropbox" / "0-FinancialStatements" / "payslips",
+    "Fidelity": Path.home() / "Dropbox" / "0-FinancialStatements" / "fidelity-accounts",
+    "SoFi Loan": Path.home() / "Dropbox" / "0-FinancialStatements" / "sofi-loan",
+    "BECU": Path.home() / "Dropbox" / "0-FinancialStatements" / "BECU",
+    "WF Car Loan": Path.home() / "Dropbox" / "0-FinancialStatements" / "wellsfargo-car-loan",
+}
+
+INGEST_SCRIPTS = [
+    ("CC Statements", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_cc_statements.py"), "--run"]),
+    ("Tax Documents", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_tax.py"), "--run"]),
+    ("Payslips", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_payslips.py"), "--run"]),
+    ("Fidelity", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_fidelity_accounts.py"), "run"]),
+    ("SoFi Loan", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_sofi_loan.py"), "run"]),
+    ("BECU", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_becu.py"), "run"]),
+    ("WF Car Loan", [VENV_PYTHON, str(SCRIPTS_DIR / "ingest_wellsfargo_car.py"), "run"]),
+]
 
 # ---------------------------------------------------------------------------
 # Schema
@@ -76,6 +117,18 @@ CREATE INDEX IF NOT EXISTS idx_txn_date ON transactions(date);
 CREATE INDEX IF NOT EXISTS idx_txn_category ON transactions(category_id);
 CREATE INDEX IF NOT EXISTS idx_txn_account ON transactions(account_id);
 CREATE INDEX IF NOT EXISTS idx_txn_source ON transactions(source_file);
+
+CREATE TABLE IF NOT EXISTS trips (
+    id TEXT PRIMARY KEY,
+    name TEXT NOT NULL,
+    start_date TEXT NOT NULL,
+    end_date TEXT NOT NULL,
+    trip_type TEXT,
+    booking_method TEXT,
+    location_keywords TEXT,
+    trip_file TEXT,
+    notes TEXT
+);
 
 CREATE TABLE IF NOT EXISTS amazon_orders (
     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -335,6 +388,45 @@ CREATE TABLE IF NOT EXISTS becu_heloc_statements (
 CREATE INDEX IF NOT EXISTS idx_becu_check_month ON becu_checking_statements(statement_month);
 CREATE INDEX IF NOT EXISTS idx_becu_check_txn ON becu_checking_transactions(statement_id);
 CREATE INDEX IF NOT EXISTS idx_becu_heloc_month ON becu_heloc_statements(statement_month);
+
+CREATE TABLE IF NOT EXISTS wellsfargo_car_statements (
+    id INTEGER PRIMARY KEY,
+    statement_month TEXT NOT NULL UNIQUE,
+    statement_date TEXT NOT NULL,
+    account_number TEXT NOT NULL,
+    vehicle TEXT,
+    interest_rate REAL,
+    monthly_payment REAL,
+    maturity_date TEXT,
+    daily_interest REAL,
+    payoff_amount REAL,
+    payoff_date TEXT,
+    payment_due_date TEXT,
+    total_amount_due REAL,
+    principal_paid REAL,
+    interest_paid REAL,
+    extra_principal REAL,
+    total_paid REAL,
+    ytd_interest_paid REAL,
+    yaml_file TEXT NOT NULL
+);
+CREATE INDEX IF NOT EXISTS idx_wf_car_stmt_month ON wellsfargo_car_statements(statement_month);
+
+CREATE TABLE IF NOT EXISTS pending_transactions (
+    id INTEGER PRIMARY KEY,
+    date TEXT NOT NULL,
+    description TEXT NOT NULL,
+    amount REAL NOT NULL,
+    account_id INTEGER REFERENCES accounts(id),
+    category_id INTEGER REFERENCES categories(id),
+    status TEXT DEFAULT 'pending',
+    source_text TEXT,
+    notes TEXT,
+    created_at TEXT DEFAULT (datetime('now')),
+    matched_transaction_id INTEGER REFERENCES transactions(id)
+);
+CREATE INDEX IF NOT EXISTS idx_pending_status ON pending_transactions(status);
+CREATE INDEX IF NOT EXISTS idx_pending_date ON pending_transactions(date);
 """
 
 # ---------------------------------------------------------------------------
@@ -348,6 +440,7 @@ ACCOUNTS = [
     ("chase-freedom-1350", "Chase Freedom"),
     ("fidelity-credit-card", "Fidelity Credit Card"),
     ("bofa-atmos-7982", "BofA Atmos Rewards"),
+    ("bofa-rewards-visa", "BofA Rewards Visa Signature"),
 ]
 
 # (name, parent_name_or_None)
@@ -870,6 +963,15 @@ def cmd_init():
     conn = get_db()
     conn.executescript(SCHEMA)
 
+    # Add trip_id column to transactions if missing (migration)
+    cols = [r[1] for r in conn.execute("PRAGMA table_info(transactions)").fetchall()]
+    if "trip_id" not in cols:
+        conn.execute("ALTER TABLE transactions ADD COLUMN trip_id TEXT REFERENCES trips(id)")
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_txn_trip ON transactions(trip_id)")
+        print("Added trip_id column to transactions.")
+    else:
+        conn.execute("CREATE INDEX IF NOT EXISTS idx_txn_trip ON transactions(trip_id)")
+
     # Seed accounts
     for name, display in ACCOUNTS:
         conn.execute(
@@ -1000,6 +1102,63 @@ def validate_balances(card_filter: str | None = None) -> list[dict]:
     return errors
 
 
+def log_issues(balance_errors=None, parse_errors=None, categorization=None):
+    """Persist pipeline issues to Finance/pipeline-issues.md for later review."""
+    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M")
+    sections = []
+
+    if balance_errors:
+        lines = ["### Balance Validation"]
+        for e in balance_errors:
+            if e.get("type") == "balance_mismatch":
+                lines.append(
+                    f"- [ ] **{e['source_file']}**: computed {e['computed_new_balance']}"
+                    f" vs PDF {e['pdf_new_balance']} (diff ${e['diff']:.2f})"
+                )
+            elif e.get("type") == "chain_break":
+                lines.append(
+                    f"- [ ] **{e['statement']}**: chain break — expected previous"
+                    f" {e['expected_previous']}, actual {e['actual_previous']}"
+                    f" (diff ${e['diff']:.2f})"
+                )
+            else:
+                lines.append(f"- [ ] {json.dumps(e)}")
+        sections.append("\n".join(lines))
+
+    if parse_errors:
+        lines = ["### Parse Errors"]
+        for name, detail in parse_errors:
+            lines.append(f"- [ ] **{name}**: {detail}")
+        sections.append("\n".join(lines))
+
+    if categorization:
+        cc_uncat = categorization.get("cc_uncategorized", 0)
+        amz_uncat = categorization.get("amazon_uncategorized", 0)
+        if cc_uncat > 0 or amz_uncat > 0:
+            lines = ["### Uncategorized"]
+            if cc_uncat > 0:
+                lines.append(f"- [ ] CC transactions: {cc_uncat} uncategorized")
+            if amz_uncat > 0:
+                lines.append(f"- [ ] Amazon orders: {amz_uncat} uncategorized")
+            sections.append("\n".join(lines))
+
+    if not sections:
+        # No issues — write clean status
+        content = (
+            "# Finance Pipeline Issues\n\n"
+            f"**Last updated:** {timestamp}\n\n"
+            "No open issues.\n"
+        )
+    else:
+        content = (
+            "# Finance Pipeline Issues\n\n"
+            f"**Last updated:** {timestamp}\n\n"
+            + "\n\n".join(sections) + "\n"
+        )
+
+    ISSUES_PATH.write_text(content)
+
+
 def cmd_validate():
     """Run balance validation and print results."""
     errors = validate_balances()
@@ -1007,6 +1166,7 @@ def cmd_validate():
         print(json.dumps({"status": "ok", "message": "All balance checks passed"}, indent=2))
     else:
         print(json.dumps({"status": "errors", "errors": errors}, indent=2))
+    log_issues(balance_errors=errors if errors else None)
 
 
 def cmd_import():
@@ -1998,6 +2158,74 @@ def cmd_import_becu():
     }, indent=2))
 
 
+def cmd_import_wellsfargo_car():
+    """Import Wells Fargo car loan YAML files into the database (idempotent)."""
+    backup_db()
+    conn = get_db()
+    conn.executescript(SCHEMA)
+
+    new_stmts = 0
+    skipped = 0
+
+    yaml_files = sorted(WF_CAR_ROOT.glob("*.yaml"))
+    if not yaml_files:
+        print("No Wells Fargo car loan YAML files found.")
+        return
+
+    for yaml_file in yaml_files:
+        with open(yaml_file, encoding="utf-8") as f:
+            data = yaml.safe_load(f)
+        if not data:
+            continue
+
+        stmt_month = data.get("statement_month", "")
+        agg = data.get("aggregates", {})
+        ytd_info = data.get("ytd_interest") or {}
+
+        try:
+            conn.execute(
+                """INSERT OR IGNORE INTO wellsfargo_car_statements
+                   (statement_month, statement_date, account_number, vehicle,
+                    interest_rate, monthly_payment, maturity_date, daily_interest,
+                    payoff_amount, payoff_date, payment_due_date, total_amount_due,
+                    principal_paid, interest_paid, extra_principal, total_paid,
+                    ytd_interest_paid, yaml_file)
+                   VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)""",
+                (
+                    stmt_month,
+                    data.get("statement_date"),
+                    data.get("account_number"),
+                    data.get("vehicle"),
+                    data.get("interest_rate"),
+                    data.get("monthly_payment"),
+                    data.get("maturity_date"),
+                    data.get("daily_interest"),
+                    data.get("payoff_amount"),
+                    data.get("payoff_date"),
+                    data.get("payment_due_date"),
+                    data.get("total_amount_due"),
+                    agg.get("principal_paid"),
+                    agg.get("interest_paid"),
+                    agg.get("extra_principal"),
+                    agg.get("total_paid"),
+                    ytd_info.get("amount"),
+                    f"Finance/wellsfargo-car-loan/{yaml_file.name}",
+                ),
+            )
+            if conn.execute("SELECT changes()").fetchone()[0] > 0:
+                new_stmts += 1
+            else:
+                skipped += 1
+        except sqlite3.IntegrityError:
+            skipped += 1
+
+    conn.commit()
+    print(json.dumps({
+        "new_statements": new_stmts,
+        "skipped_existing": skipped,
+    }, indent=2))
+
+
 def cmd_status():
     """Print database statistics."""
     conn = get_db()
@@ -2324,16 +2552,1112 @@ def _apply_single_rule(conn, pattern, cat_id):
 
 
 # ---------------------------------------------------------------------------
+# Dashboard, Preflight, Rebuild
+# ---------------------------------------------------------------------------
+
+
+def _count_log_files(source_name):
+    """Count files tracked in a processing log. Returns (count, last_run)."""
+    log_path = PROCESSING_LOGS.get(source_name)
+    if not log_path or not log_path.exists():
+        return 0
+
+    try:
+        data = json.loads(log_path.read_text())
+    except (json.JSONDecodeError, KeyError):
+        return 0
+
+    if source_name == "CC Statements":
+        # cards -> {card_name -> {processed: {filename: ...}}}
+        count = 0
+        for card in data.get("cards", {}).values():
+            count += len(card.get("processed", {}))
+        return count
+    elif source_name == "Tax Documents":
+        # files -> {filename: {...}}
+        return len(data.get("files", {}))
+    elif source_name == "Payslips":
+        # employers -> {name -> {files_scanned: {filename: ...}}}
+        count = 0
+        for emp in data.get("employers", {}).values():
+            fs = emp.get("files_scanned", {})
+            if isinstance(fs, dict):
+                count += len(fs)
+        return count
+    elif source_name == "Fidelity":
+        # Flat dict: {filename.pdf: {...}, ...} — no version wrapper
+        return len([k for k in data if k.endswith(".pdf")])
+    elif source_name in ("SoFi Loan", "BECU", "WF Car Loan"):
+        # pdfs -> {filename: {...}}
+        return len(data.get("pdfs", {}))
+    return 0
+
+
+def _count_pending_files(source_name):
+    """Count PDF files in source dir not yet in processing log."""
+    dirs = SOURCE_DIRS.get(source_name, [])
+    if isinstance(dirs, Path):
+        dirs = [dirs]
+
+    processed = _count_log_files(source_name)
+
+    # Count PDFs in source dirs
+    total_pdfs = 0
+    for d in dirs:
+        if d.exists():
+            total_pdfs += len(list(d.rglob("*.pdf")))
+
+    return total_pdfs, max(0, total_pdfs - processed)
+
+
+def _get_log_last_run(log_path):
+    """Extract last_run timestamp from a processing log."""
+    if not log_path.exists():
+        return None
+    try:
+        data = json.loads(log_path.read_text())
+        # Most logs have a top-level last_run key
+        if "last_run" in data:
+            return data["last_run"]
+        # Fidelity uses flat format — find latest processed_at
+        timestamps = []
+        for v in data.values():
+            if isinstance(v, dict) and "processed_at" in v:
+                timestamps.append(v["processed_at"])
+        return max(timestamps) if timestamps else None
+    except (json.JSONDecodeError, KeyError):
+        return None
+
+
+def cmd_dashboard():
+    """Print comprehensive pipeline status as JSON."""
+    conn = get_db()
+    sources = []
+
+    # DB table configs: source_name -> (table, date_col)
+    db_tables = {
+        "CC Statements": ("transactions", "date"),
+        "Tax Documents": ("tax_documents", "tax_year"),
+        "Payslips": ("payslips", "pay_date"),
+        "Fidelity": ("fidelity_cma_transactions", "date"),
+        "SoFi Loan": ("sofi_loan_statements", "statement_month"),
+        "BECU": ("becu_checking_statements", "statement_month"),
+        "WF Car Loan": ("wellsfargo_car_statements", "statement_month"),
+    }
+
+    for name, log_path in PROCESSING_LOGS.items():
+        # Processing log stats
+        files_processed = _count_log_files(name)
+        last_ingest = _get_log_last_run(log_path)
+
+        # DB row count and date range
+        db_rows = 0
+        date_range = None
+        table, date_col = db_tables.get(name, (None, None))
+        if table:
+            try:
+                db_rows = conn.execute(f"SELECT COUNT(*) FROM {table}").fetchone()[0]
+                dr = conn.execute(
+                    f"SELECT MIN({date_col}), MAX({date_col}) FROM {table}"
+                ).fetchone()
+                if dr and dr[0]:
+                    date_range = f"{dr[0]} to {dr[1]}"
+            except sqlite3.OperationalError:
+                pass
+
+        # Pending files
+        total_pdfs, pending = _count_pending_files(name)
+
+        # Staleness: >7 days since last ingest
+        stale = False
+        if last_ingest:
+            try:
+                last_dt = datetime.fromisoformat(last_ingest.replace("Z", "+00:00"))
+                stale = (datetime.now(last_dt.tzinfo) - last_dt).days > 7
+            except (ValueError, TypeError):
+                pass
+
+        sources.append({
+            "name": name,
+            "files_processed": files_processed,
+            "db_rows": db_rows,
+            "date_range": date_range,
+            "last_ingest": last_ingest,
+            "pending_files": pending,
+            "stale": stale,
+        })
+
+    # Categorization stats
+    cc_total = cc_cat = 0
+    amz_total = amz_cat = 0
+    try:
+        cc_total = conn.execute(
+            "SELECT COUNT(*) FROM transactions WHERE is_transfer=0"
+        ).fetchone()[0]
+        cc_cat = conn.execute(
+            "SELECT COUNT(*) FROM transactions WHERE is_transfer=0 AND category_id IS NOT NULL"
+        ).fetchone()[0]
+    except sqlite3.OperationalError:
+        pass
+    try:
+        amz_total = conn.execute("SELECT COUNT(*) FROM amazon_orders").fetchone()[0]
+        amz_cat = conn.execute(
+            "SELECT COUNT(*) FROM amazon_orders WHERE category_id IS NOT NULL"
+        ).fetchone()[0]
+    except sqlite3.OperationalError:
+        pass
+
+    cc_pct = round(cc_cat / cc_total * 100, 1) if cc_total else 0
+    amz_pct = round(amz_cat / amz_total * 100, 1) if amz_total else 0
+
+    # DB size
+    db_size_kb = round(DB_PATH.stat().st_size / 1024) if DB_PATH.exists() else 0
+
+    # Freshness warnings
+    warnings = []
+    for s in sources:
+        if s["stale"]:
+            warnings.append(f"{s['name']}: stale (last ingest {s['last_ingest']})")
+        if s["pending_files"] > 0:
+            warnings.append(f"{s['name']}: {s['pending_files']} new PDFs detected")
+    if cc_total - cc_cat > 0:
+        warnings.append(f"CC: {cc_total - cc_cat} uncategorized transactions")
+    if amz_total - amz_cat > 0:
+        warnings.append(f"Amazon: {amz_total - amz_cat} uncategorized orders")
+
+    conn.close()
+    result = {
+        "sources": sources,
+        "categorization": {
+            "cc_pct": cc_pct,
+            "amazon_pct": amz_pct,
+            "cc_uncategorized": cc_total - cc_cat,
+            "amazon_uncategorized": amz_total - amz_cat,
+        },
+        "db_size_kb": db_size_kb,
+        "freshness_warnings": warnings,
+    }
+    print(json.dumps(result, indent=2))
+
+
+def cmd_preflight():
+    """Run pre-flight checks and report readiness as JSON."""
+    checks = []
+    blocked = []
+
+    # Source dirs
+    for name, dirs in SOURCE_DIRS.items():
+        if isinstance(dirs, Path):
+            dirs = [dirs]
+        all_ok = True
+        for d in dirs:
+            if not d.exists():
+                all_ok = False
+                checks.append({"name": f"Source: {name}", "status": "blocked",
+                                "detail": f"Missing: {d}"})
+                blocked.append(f"Source: {name} — {d} not found")
+                break
+        if all_ok:
+            log_count = _count_log_files(name)
+            _, pending = _count_pending_files(name)
+            checks.append({"name": f"Source: {name}", "status": "ok",
+                            "detail": f"{log_count} processed, {pending} new"})
+
+    # DB writable
+    db_dir = DB_PATH.parent
+    if db_dir.exists() and os.access(str(db_dir), os.W_OK):
+        checks.append({"name": "DB writable", "status": "ok"})
+    else:
+        checks.append({"name": "DB writable", "status": "blocked",
+                        "detail": f"{db_dir} not writable"})
+        blocked.append("DB directory not writable")
+
+    # Venv
+    venv_path = Path(VENV_PYTHON)
+    if venv_path.exists():
+        checks.append({"name": "Venv", "status": "ok"})
+    else:
+        checks.append({"name": "Venv", "status": "blocked",
+                        "detail": f"{VENV_PYTHON} not found"})
+        blocked.append("Python venv not found")
+
+    # Dependencies (pdfminer)
+    try:
+        subprocess.run(
+            [VENV_PYTHON, "-c", "import pdfminer"],
+            capture_output=True, timeout=5, check=True,
+        )
+        checks.append({"name": "Dependencies", "status": "ok"})
+    except (subprocess.CalledProcessError, subprocess.TimeoutExpired, FileNotFoundError):
+        checks.append({"name": "Dependencies", "status": "blocked",
+                        "detail": "pdfminer not importable"})
+        blocked.append("pdfminer dependency missing")
+
+    # Processing logs
+    for name, log_path in PROCESSING_LOGS.items():
+        if log_path.exists():
+            checks.append({"name": f"Log: {name}", "status": "ok"})
+        else:
+            checks.append({"name": f"Log: {name}", "status": "ok",
+                            "detail": "will be created"})
+
+    # Rules backup
+    if RULES_BACKUP_PATH.exists():
+        try:
+            rules_data = json.loads(RULES_BACKUP_PATH.read_text())
+            if isinstance(rules_data, dict) and "rules" in rules_data:
+                count = len(rules_data["rules"])
+            elif isinstance(rules_data, list):
+                count = len(rules_data)
+            else:
+                count = 0
+            checks.append({"name": "Rules backup", "status": "ok",
+                            "detail": f"{count} rules"})
+        except (json.JSONDecodeError, KeyError):
+            checks.append({"name": "Rules backup", "status": "ok",
+                            "detail": "exists but unreadable format"})
+    else:
+        checks.append({"name": "Rules backup", "status": "warn",
+                        "detail": "categorization_rules.json not found"})
+
+    ready = len(blocked) == 0
+    print(json.dumps({"ready": ready, "checks": checks, "blocked": blocked}, indent=2))
+    return ready
+
+
+def cmd_rebuild():
+    """Full pipeline rebuild: parallel parse → sequential import."""
+    args = sys.argv[2:]
+    force = "--force" in args
+    import_only = "--import-only" in args
+    parse_only = "--parse-only" in args
+
+    # Pre-flight gate
+    print("=== Pre-flight checks ===")
+    ready = cmd_preflight()
+    if not ready:
+        print("\nERROR: Pre-flight checks failed. Fix blocked items before rebuild.")
+        sys.exit(1)
+    print()
+
+    # Collect issues across phases for log_issues() at the end
+    rebuild_parse_errors = []
+    rebuild_balance_errors = None
+    rebuild_categorization = None
+
+    # Phase 1: Parallel Parse
+    if not import_only:
+        print("=== Phase 1: Parallel Parse (PDF → YAML/CSV) ===")
+        procs = []
+        for name, cmd in INGEST_SCRIPTS:
+            full_cmd = list(cmd)
+            if force:
+                full_cmd.append("--force")
+            proc = subprocess.Popen(
+                full_cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+                text=True, cwd=str(VAULT_ROOT),
+            )
+            procs.append((name, proc))
+            print(f"  Started: {name}")
+
+        # Collect results
+        errors = []
+        for i, (name, proc) in enumerate(procs, 1):
+            stdout, stderr = proc.communicate()
+            status = "done" if proc.returncode == 0 else "FAILED"
+            if proc.returncode != 0:
+                errors.append(name)
+                rebuild_parse_errors.append((name, stderr.strip().split("\n")[-1] if stderr else "unknown error"))
+            # Count new files from stdout if possible
+            detail = ""
+            if stdout:
+                lines = stdout.strip().split("\n")
+                # Show last meaningful line as summary
+                for line in reversed(lines):
+                    line = line.strip()
+                    if line and not line.startswith("{"):
+                        detail = f" — {line}"
+                        break
+            print(f"  [{i}/{len(procs)}] {name}: {status}{detail}")
+            if proc.returncode != 0 and stderr:
+                for line in stderr.strip().split("\n")[-3:]:
+                    print(f"    stderr: {line}")
+
+        if errors:
+            print(f"\nWARNING: {len(errors)} ingest script(s) had errors: {', '.join(errors)}")
+            print("Continuing with import phase...\n")
+        else:
+            print(f"\nAll {len(procs)} ingest scripts completed successfully.\n")
+
+    if parse_only:
+        print("=== Parse-only mode: skipping import phase ===")
+        return
+
+    # Phase 2: Sequential Import
+    print("=== Phase 2: Sequential Import (YAML/CSV → SQLite) ===")
+    import_steps = [
+        ("Init schema", cmd_init),
+        ("Restore rules", cmd_restore_rules),
+        ("Import CC transactions", cmd_import),
+        ("Categorize CC", cmd_categorize),
+        ("Import Amazon orders", cmd_import_amazon),
+        ("Categorize Amazon", cmd_categorize_amazon),
+        ("Import payslips", cmd_import_payslips),
+        ("Import tax documents", cmd_import_tax),
+        ("Import Fidelity", cmd_import_fidelity),
+        ("Import SoFi", cmd_import_sofi),
+        ("Import BECU", cmd_import_becu),
+        ("Import WF Car Loan", cmd_import_wellsfargo_car),
+        ("Validate balances", cmd_validate),
+    ]
+
+    # Capture stdout from import steps to extract issues
+    import io
+    from contextlib import redirect_stdout
+
+    for i, (step_name, func) in enumerate(import_steps, 1):
+        print(f"\n  [{i}/{len(import_steps)}] {step_name}...")
+        try:
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                func()
+            output = buf.getvalue()
+            print(output, end="")
+
+            # Extract issues from specific steps
+            if step_name == "Validate balances":
+                try:
+                    data = json.loads(output)
+                    if data.get("status") == "errors":
+                        rebuild_balance_errors = data["errors"]
+                except (json.JSONDecodeError, ValueError):
+                    pass
+            elif step_name in ("Categorize CC", "Categorize Amazon"):
+                try:
+                    data = json.loads(output)
+                    if rebuild_categorization is None:
+                        rebuild_categorization = {}
+                    if step_name == "Categorize CC":
+                        rebuild_categorization["cc_uncategorized"] = data.get("remaining_uncategorized", 0)
+                    else:
+                        rebuild_categorization["amazon_uncategorized"] = data.get("remaining_uncategorized", 0)
+                except (json.JSONDecodeError, ValueError):
+                    pass
+        except Exception as e:
+            print(f"    ERROR: {e}")
+            print(f"    Continuing with next step...")
+
+    # Persist all issues
+    log_issues(
+        balance_errors=rebuild_balance_errors,
+        parse_errors=rebuild_parse_errors if rebuild_parse_errors else None,
+        categorization=rebuild_categorization,
+    )
+    print(f"\n  Issues log: {ISSUES_PATH}")
+    print("\n=== Rebuild complete ===")
+
+
+# ---------------------------------------------------------------------------
+# Trip Tagging
+# ---------------------------------------------------------------------------
+
+# Patterns that are clearly NOT trip-related (home subscriptions, recurring, etc.)
+NON_TRIP_PATTERNS = [
+    "AMAZON", "APPLE.COM/BILL", "STARLINK", "COMCAST", "GOOGLE *FI",
+    "CLAUDE.AI", "OPENAI", "LEETCODE", "BACKBLAZE", "SQSP*",
+    "ADOBE", "W8TECH", "CAMPNAB", "D J*WSJ", "GARMIN",
+    "TESLA SUBSCRIPTION", "TESLA SUPERCHARGER",
+    "YMCA", "ADVANTAGE PHYSICAL", "VIRGINIA MASON", "NEW VISION",
+    "Yu Ding", "ISSAQUAH SCHOOL", "BRIGHT HORIZONS",
+    "SAMMAMISH PLATEAU WATE", "CTLP*CSC",
+    "GREAT WOLF",  # separate trip
+    "FlexiSpot", "eBay", "VERITASVANS", "TOBEYSTUTO",
+    "Audible*", "Kindle Svcs",
+]
+
+
+def cmd_add_trip():
+    """Register a trip. Usage: add-trip <id> <start> <end> [--name N] [--type T]
+    [--booking B] [--keywords k1,k2,...] [--file F] [--notes N]"""
+    args = sys.argv[2:]
+    if len(args) < 3:
+        print("Usage: add-trip <id> <start-date> <end-date> [--name ...] [--type solo|family] "
+              "[--booking costco|direct|expedia|chase-points] [--keywords k1,k2,...] [--file path] [--notes ...]")
+        sys.exit(1)
+
+    trip_id, start_date, end_date = args[0], args[1], args[2]
+
+    def _get_flag(flag):
+        for i, a in enumerate(args):
+            if a == flag and i + 1 < len(args):
+                return args[i + 1]
+        return None
+
+    name = _get_flag("--name") or trip_id
+    trip_type = _get_flag("--type")
+    booking = _get_flag("--booking")
+    keywords = _get_flag("--keywords")
+    trip_file = _get_flag("--file")
+    notes = _get_flag("--notes")
+
+    # Store keywords as JSON array
+    kw_json = json.dumps(keywords.split(",")) if keywords else None
+
+    conn = get_db()
+    conn.execute(
+        """INSERT OR REPLACE INTO trips(id, name, start_date, end_date, trip_type,
+           booking_method, location_keywords, trip_file, notes)
+           VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)""",
+        (trip_id, name, start_date, end_date, trip_type, booking, kw_json, trip_file, notes),
+    )
+    conn.commit()
+    conn.close()
+    print(f"Trip '{trip_id}' registered: {start_date} to {end_date}")
+
+
+def cmd_list_trips():
+    """List all registered trips."""
+    conn = get_db()
+    rows = conn.execute(
+        """SELECT t.id, t.name, t.start_date, t.end_date, t.trip_type, t.booking_method,
+                  COUNT(tx.id) as tagged_txns,
+                  ROUND(SUM(CASE WHEN tx.is_transfer=0 THEN ABS(tx.amount) ELSE 0 END), 2) as total_cost
+           FROM trips t
+           LEFT JOIN transactions tx ON tx.trip_id = t.id
+           GROUP BY t.id ORDER BY t.start_date"""
+    ).fetchall()
+    conn.close()
+
+    result = []
+    for r in rows:
+        result.append({
+            "id": r[0], "name": r[1], "start_date": r[2], "end_date": r[3],
+            "type": r[4], "booking": r[5], "tagged_txns": r[6],
+            "total_cost": r[7] or 0,
+        })
+    print(json.dumps(result, indent=2))
+
+
+def cmd_tag_trip():
+    """Auto-tag transactions for a trip by date range + location keywords.
+    Usage: tag-trip <trip-id> [--dry-run] [--include-pre-trip]"""
+    if len(sys.argv) < 3:
+        print("Usage: tag-trip <trip-id> [--dry-run] [--include-pre-trip]")
+        sys.exit(1)
+
+    trip_id = sys.argv[2]
+    dry_run = "--dry-run" in sys.argv
+    include_pre = "--include-pre-trip" in sys.argv
+
+    conn = get_db()
+    trip = conn.execute("SELECT * FROM trips WHERE id = ?", (trip_id,)).fetchone()
+    if not trip:
+        print(f"Trip '{trip_id}' not found. Use list-trips to see registered trips.")
+        conn.close()
+        sys.exit(1)
+
+    trip_name = trip[1]
+    start_date = trip[2]
+    end_date = trip[3]
+    kw_json = trip[6]
+    keywords = json.loads(kw_json) if kw_json else []
+
+    # Build query: transactions within date range, not already tagged, not transfers
+    query = """
+        SELECT t.id, t.date, t.description, t.amount, a.name as card,
+               COALESCE(c.name, 'Uncategorized') as category, t.is_transfer, t.trip_id
+        FROM transactions t
+        JOIN accounts a ON a.id = t.account_id
+        LEFT JOIN categories c ON c.id = t.category_id
+        WHERE t.date BETWEEN ? AND ?
+        ORDER BY t.date, t.description
+    """
+    rows = conn.execute(query, (start_date, end_date)).fetchall()
+
+    tagged = []
+    skipped_non_trip = []
+    skipped_already = []
+
+    for r in rows:
+        txn_id, date, desc, amount, card, category, is_transfer, existing_trip = r
+        desc_upper = desc.upper()
+
+        # Skip if already tagged to another trip
+        if existing_trip and existing_trip != trip_id:
+            skipped_already.append(r)
+            continue
+
+        # Skip non-trip patterns
+        is_non_trip = any(pat.upper() in desc_upper for pat in NON_TRIP_PATTERNS)
+        if is_non_trip:
+            skipped_non_trip.append(r)
+            continue
+
+        # Check if description matches location keywords
+        matches_location = any(kw.upper() in desc_upper for kw in keywords)
+
+        # Also include travel-category transactions (flights, lodging, rental car, etc.)
+        travel_categories = {"Flights", "Lodging", "Rental Car", "Travel", "Parking"}
+        is_travel_cat = category in travel_categories
+
+        # Include if: matches location OR is a travel category OR is a restaurant/gas/coffee at trip location
+        local_categories = {"Restaurants", "Fast Food", "Coffee", "Groceries", "Gas"}
+        is_local_spend = category in local_categories
+
+        if matches_location or is_travel_cat or is_local_spend:
+            tagged.append(r)
+
+    # Print results
+    print(f"\n=== Auto-tag results for trip '{trip_id}' ({trip_name}) ===")
+    print(f"Date range: {start_date} to {end_date}")
+    print(f"Location keywords: {keywords}")
+    print(f"\n--- WILL TAG ({len(tagged)} transactions) ---")
+    total = 0
+    for r in tagged:
+        amt = abs(r[3]) if r[3] < 0 else -r[3]  # show charges as positive
+        total += abs(r[3])
+        sign = "" if r[3] < 0 else "(refund) "
+        print(f"  {r[1]}  ${abs(r[3]):>9.2f}  {sign}{r[2][:55]:<55}  [{r[5]}]")
+    print(f"  {'':>10} ----------")
+    print(f"  {'':>10} ${total:>9.2f}  TOTAL")
+
+    if skipped_non_trip:
+        print(f"\n--- SKIPPED as non-trip ({len(skipped_non_trip)}) ---")
+        for r in skipped_non_trip:
+            print(f"  {r[1]}  ${abs(r[3]):>9.2f}  {r[2][:55]}")
+
+    if skipped_already:
+        print(f"\n--- SKIPPED as tagged to other trip ({len(skipped_already)}) ---")
+        for r in skipped_already:
+            print(f"  {r[1]}  ${abs(r[3]):>9.2f}  {r[2][:55]}  [trip: {r[7]}]")
+
+    if dry_run:
+        print(f"\n(Dry run — no changes made. Remove --dry-run to apply.)")
+    else:
+        for r in tagged:
+            conn.execute("UPDATE transactions SET trip_id = ? WHERE id = ?", (trip_id, r[0]))
+        conn.commit()
+        print(f"\nTagged {len(tagged)} transactions to trip '{trip_id}'.")
+
+    conn.close()
+
+
+def cmd_untag_trip():
+    """Remove all trip tags for a trip. Usage: untag-trip <trip-id>"""
+    if len(sys.argv) < 3:
+        print("Usage: untag-trip <trip-id>")
+        sys.exit(1)
+    trip_id = sys.argv[2]
+    conn = get_db()
+    cur = conn.execute("UPDATE transactions SET trip_id = NULL WHERE trip_id = ?", (trip_id,))
+    conn.commit()
+    print(f"Untagged {cur.rowcount} transactions from trip '{trip_id}'.")
+    conn.close()
+
+
+def cmd_tag_txn():
+    """Manually tag a transaction to a trip. Usage: tag-txn <txn-id> <trip-id>"""
+    if len(sys.argv) < 4:
+        print("Usage: tag-txn <txn-id> <trip-id>")
+        sys.exit(1)
+    txn_id, trip_id = sys.argv[2], sys.argv[3]
+    conn = get_db()
+    # Verify trip exists
+    if not conn.execute("SELECT 1 FROM trips WHERE id = ?", (trip_id,)).fetchone():
+        print(f"Trip '{trip_id}' not found.")
+        conn.close()
+        sys.exit(1)
+    cur = conn.execute("UPDATE transactions SET trip_id = ? WHERE id = ?", (trip_id, txn_id))
+    if cur.rowcount == 0:
+        print(f"Transaction {txn_id} not found.")
+    else:
+        row = conn.execute(
+            "SELECT date, description, amount FROM transactions WHERE id = ?", (txn_id,)
+        ).fetchone()
+        print(f"Tagged txn {txn_id} ({row[0]} ${abs(row[2]):.2f} {row[1][:50]}) → trip '{trip_id}'")
+    conn.commit()
+    conn.close()
+
+
+def cmd_trip_cost():
+    """Show cost breakdown for a trip. Usage: trip-cost <trip-id>"""
+    if len(sys.argv) < 3:
+        print("Usage: trip-cost <trip-id> [--detail]")
+        sys.exit(1)
+    trip_id = sys.argv[2]
+    detail = "--detail" in sys.argv
+
+    conn = get_db()
+    trip = conn.execute("SELECT * FROM trips WHERE id = ?", (trip_id,)).fetchone()
+    if not trip:
+        print(f"Trip '{trip_id}' not found.")
+        conn.close()
+        sys.exit(1)
+
+    # Get all tagged transactions
+    rows = conn.execute(
+        """SELECT t.date, t.description, t.amount, a.name as card,
+                  COALESCE(cp.name, c.name, 'Uncategorized') as top_category,
+                  COALESCE(c.name, 'Uncategorized') as sub_category,
+                  t.is_transfer
+           FROM transactions t
+           JOIN accounts a ON a.id = t.account_id
+           LEFT JOIN categories c ON c.id = t.category_id
+           LEFT JOIN categories cp ON cp.id = c.parent_id
+           WHERE t.trip_id = ?
+           ORDER BY t.date""",
+        (trip_id,),
+    ).fetchall()
+
+    if not rows:
+        print(f"No transactions tagged for trip '{trip_id}'.")
+        conn.close()
+        return
+
+    # Build breakdown by category
+    by_category = {}
+    grand_total = 0
+    txn_list = []
+
+    for r in rows:
+        date, desc, amount, card, top_cat, sub_cat, is_xfer = r
+        cost = abs(amount) if amount < 0 else -amount  # charges positive, refunds negative
+        if is_xfer:
+            continue
+        by_category.setdefault(top_cat, {"total": 0, "items": []})
+        by_category[top_cat]["total"] += cost
+        by_category[top_cat]["items"].append((date, desc, cost, card, sub_cat))
+        grand_total += cost
+        txn_list.append(r)
+
+    result = {
+        "trip_id": trip_id,
+        "name": trip[1],
+        "dates": f"{trip[2]} to {trip[3]}",
+        "type": trip[4],
+        "booking_method": trip[5],
+        "total_cost": round(grand_total, 2),
+        "transaction_count": len(txn_list),
+        "breakdown": {},
+    }
+
+    for cat in sorted(by_category, key=lambda c: by_category[c]["total"], reverse=True):
+        info = by_category[cat]
+        cat_data = {"total": round(info["total"], 2), "count": len(info["items"])}
+        if detail:
+            cat_data["transactions"] = [
+                {"date": i[0], "description": i[1][:60], "amount": round(i[2], 2), "card": i[3]}
+                for i in info["items"]
+            ]
+        result["breakdown"][cat] = cat_data
+
+    print(json.dumps(result, indent=2))
+    conn.close()
+
+
+# ---------------------------------------------------------------------------
+# Pending transaction matching
+# ---------------------------------------------------------------------------
+
+ACCOUNT_TABLE_MAP = {
+    # CMA
+    "cma": "fidelity_cma_transactions",
+    # Credit cards
+    "apple-card": "transactions",
+    "chase-prime": "transactions",
+    "chase-sapphire": "transactions",
+    "chase-freedom": "transactions",
+    "fidelity-cc": "transactions",
+    "bofa-atmos": "transactions",
+    # BECU
+    "becu-checking": "becu_checking_transactions",
+    # Amazon
+    "amazon": "amazon_orders",
+}
+
+# Map short account names to DB account names (for CC transactions table)
+ACCOUNT_NAME_MAP = {
+    "apple-card": "apple-card",
+    "chase-prime": "chase-prime-1158",
+    "chase-sapphire": "chase-sapphire-2341",
+    "chase-freedom": "chase-freedom-1350",
+    "fidelity-cc": "fidelity-credit-card",
+    "bofa-atmos": "bofa-atmos-7982",
+}
+
+
+def cmd_match_pending():
+    """Match pending transactions from YAML log against imported DB transactions."""
+    if not PENDING_TXN_PATH.exists():
+        print(json.dumps({"error": "No pending transactions file found"}))
+        return
+
+    with open(PENDING_TXN_PATH, encoding="utf-8") as f:
+        entries = yaml.safe_load(f) or []
+
+    if not entries:
+        print(json.dumps({"message": "No pending entries", "matched": 0, "stale": 0}))
+        return
+
+    # Detect duplicate pending entries (same account + amount + date ±1 day)
+    duplicates = []
+    pending = [e for e in entries if e.get("status") == "pending"]
+    seen = set()
+    for e in pending:
+        key = (e.get("account", ""), round(float(e.get("amount", 0)), 2), e.get("date", ""))
+        if key in seen:
+            duplicates.append({
+                "date": e.get("date"),
+                "account": e.get("account"),
+                "amount": e.get("amount"),
+                "memo": e.get("memo"),
+            })
+        seen.add(key)
+
+    conn = get_db()
+    matched = 0
+    stale = 0
+    results = []
+    today = datetime.now()
+
+    for entry in entries:
+        if entry.get("status") != "pending":
+            continue
+
+        account = entry.get("account", "")
+        table = ACCOUNT_TABLE_MAP.get(account)
+        if not table:
+            results.append({
+                "entry": entry.get("memo", ""),
+                "result": f"unknown account: {account}",
+            })
+            continue
+
+        target_date = entry.get("date", "")
+        target_amount = float(entry.get("amount", 0))
+        category = entry.get("category", "")
+
+        # Check for stale (45+ days)
+        try:
+            entry_date = datetime.strptime(target_date, "%Y-%m-%d")
+            if (today - entry_date).days > 45:
+                entry["status"] = "stale"
+                stale += 1
+                results.append({
+                    "entry": entry.get("memo", ""),
+                    "result": "stale (45+ days)",
+                })
+                continue
+        except ValueError:
+            pass
+
+        # Match based on table type
+        match_found = False
+
+        if table == "fidelity_cma_transactions":
+            rows = conn.execute(
+                """SELECT id, date, amount, description, category
+                   FROM fidelity_cma_transactions
+                   WHERE date BETWEEN date(?, '-5 days') AND date(?, '+5 days')
+                     AND ABS(amount - ?) < 1.0""",
+                (target_date, target_date, target_amount),
+            ).fetchall()
+
+            for row in rows:
+                txn_id, txn_date, txn_amount, txn_desc, txn_cat = row
+                if txn_cat and txn_cat == category:
+                    # Already correctly categorized
+                    entry["status"] = "matched"
+                    matched += 1
+                    match_found = True
+                    results.append({
+                        "entry": entry.get("memo", ""),
+                        "result": f"matched (already categorized): id={txn_id} {txn_date} ${txn_amount}",
+                    })
+                    break
+                elif not txn_cat or txn_cat in ("Uncategorized", "Divorce — Other"):
+                    # Update category
+                    conn.execute(
+                        "UPDATE fidelity_cma_transactions SET category=? WHERE id=?",
+                        (category, txn_id),
+                    )
+                    entry["status"] = "matched"
+                    matched += 1
+                    match_found = True
+                    results.append({
+                        "entry": entry.get("memo", ""),
+                        "result": f"matched & categorized: id={txn_id} {txn_date} ${txn_amount} → {category}",
+                    })
+                    break
+
+        elif table == "transactions":
+            # CC transactions — need account_id join
+            db_account = ACCOUNT_NAME_MAP.get(account)
+            if db_account:
+                rows = conn.execute(
+                    """SELECT t.id, t.date, t.amount, t.description, t.category_id
+                       FROM transactions t
+                       JOIN accounts a ON a.id = t.account_id
+                       WHERE a.name = ?
+                         AND t.date BETWEEN date(?, '-5 days') AND date(?, '+5 days')
+                         AND ABS(t.amount - ?) < 1.0""",
+                    (db_account, target_date, target_date, target_amount),
+                ).fetchall()
+
+                for row in rows:
+                    txn_id, txn_date, txn_amount, txn_desc, txn_cat_id = row
+                    if txn_cat_id is None:
+                        # Look up category_id by name
+                        cat_row = conn.execute(
+                            "SELECT id FROM categories WHERE name=?", (category,)
+                        ).fetchone()
+                        if cat_row:
+                            conn.execute(
+                                "UPDATE transactions SET category_id=? WHERE id=?",
+                                (cat_row[0], txn_id),
+                            )
+                            entry["status"] = "matched"
+                            matched += 1
+                            match_found = True
+                            results.append({
+                                "entry": entry.get("memo", ""),
+                                "result": f"matched & categorized: id={txn_id} {txn_date} ${txn_amount} → {category}",
+                            })
+                            break
+                    else:
+                        # Already categorized
+                        entry["status"] = "matched"
+                        matched += 1
+                        match_found = True
+                        results.append({
+                            "entry": entry.get("memo", ""),
+                            "result": f"matched (already categorized): id={txn_id} {txn_date} ${txn_amount}",
+                        })
+                        break
+
+        elif table == "amazon_orders":
+            rows = conn.execute(
+                """SELECT id, order_date, total_amount, product_name, category_id
+                   FROM amazon_orders
+                   WHERE order_date BETWEEN date(?, '-5 days') AND date(?, '+5 days')
+                     AND ABS(total_amount - ABS(?)) < 1.0""",
+                (target_date, target_date, target_amount),
+            ).fetchall()
+
+            for row in rows:
+                order_id, order_date, amount, product, cat_id = row
+                if cat_id is None:
+                    cat_row = conn.execute(
+                        "SELECT id FROM categories WHERE name=?", (category,)
+                    ).fetchone()
+                    if cat_row:
+                        conn.execute(
+                            "UPDATE amazon_orders SET category_id=? WHERE id=?",
+                            (cat_row[0], order_id),
+                        )
+                        entry["status"] = "matched"
+                        matched += 1
+                        match_found = True
+                        results.append({
+                            "entry": entry.get("memo", ""),
+                            "result": f"matched & categorized: id={order_id} {order_date} ${amount} → {category}",
+                        })
+                        break
+                else:
+                    entry["status"] = "matched"
+                    matched += 1
+                    match_found = True
+                    results.append({
+                        "entry": entry.get("memo", ""),
+                        "result": f"matched (already categorized): id={order_id} {order_date} ${amount}",
+                    })
+                    break
+
+        elif table == "becu_checking_transactions":
+            rows = conn.execute(
+                """SELECT t.id, t.date, t.amount, t.description
+                   FROM becu_checking_transactions t
+                   WHERE t.date BETWEEN date(?, '-5 days') AND date(?, '+5 days')
+                     AND ABS(t.amount - ?) < 1.0""",
+                (target_date, target_date, target_amount),
+            ).fetchall()
+
+            if rows:
+                row = rows[0]
+                entry["status"] = "matched"
+                matched += 1
+                match_found = True
+                results.append({
+                    "entry": entry.get("memo", ""),
+                    "result": f"matched: id={row[0]} {row[1]} ${row[2]}",
+                })
+
+        if not match_found:
+            results.append({
+                "entry": entry.get("memo", ""),
+                "result": "no match yet",
+            })
+
+    conn.commit()
+    conn.close()
+
+    # Write back updated statuses
+    with open(PENDING_TXN_PATH, "w", encoding="utf-8") as f:
+        f.write("# Manually logged transactions — reconciled during statement ingestion\n")
+        f.write("# Usage: /finance log <description>\n")
+        f.write("# Matched by: finance_db.py match-pending (runs after imports)\n")
+        f.write("# Matching: account + date ±5 days + amount ±$1\n")
+        f.write("# Statuses: pending → matched | stale (45+ days unmatched)\n\n")
+        yaml.dump(entries, f, default_flow_style=False, allow_unicode=True, sort_keys=False)
+
+    print(json.dumps({
+        "total_pending": sum(1 for e in entries if e.get("status") == "pending"),
+        "matched": matched,
+        "stale": stale,
+        "duplicates": duplicates,
+        "details": results,
+    }, indent=2))
+
+
+# ---------------------------------------------------------------------------
+# ---------------------------------------------------------------------------
+# New commands: execute, add-pending, import-pending-yaml
+# ---------------------------------------------------------------------------
+
+def cmd_execute(sql):
+    """Execute a non-SELECT SQL statement and return JSON result."""
+    conn = get_db()
+    try:
+        conn.execute(sql)
+        conn.commit()
+        changes = conn.execute("SELECT changes()").fetchone()[0]
+        print(json.dumps({"ok": True, "rows_affected": changes}))
+    except sqlite3.Error as e:
+        print(json.dumps({"error": str(e)}))
+        sys.exit(1)
+    finally:
+        conn.close()
+
+
+def cmd_add_pending():
+    """Add a pending transaction from JSON argument.
+    Usage: finance_db.py add-pending '<json>'"""
+    if len(sys.argv) < 3:
+        print("Usage: finance_db.py add-pending '<json>'")
+        sys.exit(1)
+    try:
+        data = json.loads(sys.argv[2])
+    except json.JSONDecodeError as e:
+        print(json.dumps({"error": f"Invalid JSON: {e}"}))
+        sys.exit(1)
+
+    conn = get_db()
+    try:
+        # Resolve account by name hint if account_id not given
+        account_id = data.get("account_id")
+        if account_id is None and data.get("account"):
+            row = conn.execute(
+                "SELECT id FROM accounts WHERE name LIKE ? OR display_name LIKE ?",
+                (f"%{data['account']}%", f"%{data['account']}%")
+            ).fetchone()
+            if row:
+                account_id = row[0]
+
+        conn.execute(
+            "INSERT INTO pending_transactions (date, description, amount, account_id, category_id, notes, source_text, status) VALUES (?, ?, ?, ?, ?, ?, ?, 'pending')",
+            (data["date"], data["description"], data["amount"], account_id,
+             data.get("category_id"), data.get("notes", ""), data.get("source_text", ""))
+        )
+        conn.commit()
+        print(json.dumps({"ok": True}))
+    except sqlite3.Error as e:
+        print(json.dumps({"error": str(e)}))
+        sys.exit(1)
+    finally:
+        conn.close()
+
+
+def cmd_import_pending_yaml():
+    """Migrate pending-transactions.yaml → pending_transactions SQLite table (idempotent)."""
+    if not PENDING_TXN_PATH.exists():
+        print(json.dumps({"ok": True, "imported": 0, "message": "No YAML file found"}))
+        return
+
+    with open(PENDING_TXN_PATH, encoding="utf-8") as f:
+        entries = yaml.safe_load(f) or []
+
+    if not entries:
+        print(json.dumps({"ok": True, "imported": 0}))
+        return
+
+    conn = get_db()
+    # Ensure table exists (may not if DB was initialized before this table was added)
+    conn.executescript("""
+CREATE TABLE IF NOT EXISTS pending_transactions (
+    id INTEGER PRIMARY KEY,
+    date TEXT NOT NULL,
+    description TEXT NOT NULL,
+    amount REAL NOT NULL,
+    account_id INTEGER REFERENCES accounts(id),
+    category_id INTEGER REFERENCES categories(id),
+    status TEXT DEFAULT 'pending',
+    source_text TEXT,
+    notes TEXT,
+    created_at TEXT DEFAULT (datetime('now')),
+    matched_transaction_id INTEGER REFERENCES transactions(id)
+);
+CREATE INDEX IF NOT EXISTS idx_pending_status ON pending_transactions(status);
+CREATE INDEX IF NOT EXISTS idx_pending_date ON pending_transactions(date);
+""")
+    imported = 0
+    try:
+        for entry in entries:
+            status = entry.get("status", "pending")
+            if status == "matched":
+                continue  # Skip already-matched entries
+
+            date = str(entry.get("date", ""))
+            description = entry.get("description", "") or entry.get("payee", "")
+            amount = float(entry.get("amount", 0))
+            notes = entry.get("notes", "") or entry.get("memo", "")
+            source_text = entry.get("source_text", "")
+
+            # Dedup check
+            existing = conn.execute(
+                "SELECT id FROM pending_transactions WHERE date=? AND description=? AND amount=?",
+                (date, description, amount)
+            ).fetchone()
+            if existing:
+                continue
+
+            conn.execute(
+                "INSERT INTO pending_transactions (date, description, amount, notes, source_text, status) VALUES (?, ?, ?, ?, ?, ?)",
+                (date, description, amount, notes, source_text, status)
+            )
+            imported += 1
+
+        conn.commit()
+        print(json.dumps({"ok": True, "imported": imported}))
+    except sqlite3.Error as e:
+        print(json.dumps({"error": str(e)}))
+        sys.exit(1)
+    finally:
+        conn.close()
+
+
 # CLI
 # ---------------------------------------------------------------------------
 
 def main():
     if len(sys.argv) < 2:
         print("Usage: finance_db.py <command> [args]")
-        print("Commands: init, import, import-amazon, import-payslips, import-tax, import-fidelity, import-sofi, import-becu,")
-        print("          status, categorize, categorize-amazon, uncategorized, add-rule <pattern> <category>,")
+        print("Commands: init, import, import-amazon, import-payslips, import-tax, import-fidelity, import-sofi, import-becu, import-wellsfargo-car,")
+        print("          status, dashboard, preflight, rebuild [--force|--import-only|--parse-only],")
+        print("          categorize, categorize-amazon, uncategorized, add-rule <pattern> <category>,")
         print("          set-category <id> <category> [--create-rule], query <sql>,")
-        print("          backup-rules, restore-rules")
+        print("          backup-rules, restore-rules, validate,")
+        print("          add-trip, list-trips, tag-trip, untag-trip, tag-txn, trip-cost,")
+        print("          match-pending")
         sys.exit(1)
 
     cmd = sys.argv[1]
@@ -2354,6 +3678,8 @@ def main():
         cmd_import_sofi()
     elif cmd == "import-becu":
         cmd_import_becu()
+    elif cmd == "import-wellsfargo-car":
+        cmd_import_wellsfargo_car()
     elif cmd == "status":
         cmd_status()
     elif cmd == "categorize":
@@ -2375,6 +3701,12 @@ def main():
         cmd_set_category(sys.argv[2], sys.argv[3], create_rule)
     elif cmd == "validate":
         cmd_validate()
+    elif cmd == "dashboard":
+        cmd_dashboard()
+    elif cmd == "preflight":
+        cmd_preflight()
+    elif cmd == "rebuild":
+        cmd_rebuild()
     elif cmd == "backup-rules":
         cmd_backup_rules()
     elif cmd == "restore-rules":
@@ -2384,6 +3716,29 @@ def main():
             print("Usage: finance_db.py query <sql>")
             sys.exit(1)
         cmd_query(sys.argv[2])
+    elif cmd == "execute":
+        if len(sys.argv) < 3:
+            print("Usage: finance_db.py execute <sql>")
+            sys.exit(1)
+        cmd_execute(sys.argv[2])
+    elif cmd == "add-pending":
+        cmd_add_pending()
+    elif cmd == "import-pending-yaml":
+        cmd_import_pending_yaml()
+    elif cmd == "add-trip":
+        cmd_add_trip()
+    elif cmd == "list-trips":
+        cmd_list_trips()
+    elif cmd == "tag-trip":
+        cmd_tag_trip()
+    elif cmd == "untag-trip":
+        cmd_untag_trip()
+    elif cmd == "tag-txn":
+        cmd_tag_txn()
+    elif cmd == "trip-cost":
+        cmd_trip_cost()
+    elif cmd == "match-pending":
+        cmd_match_pending()
     else:
         print(f"Unknown command: {cmd}")
         sys.exit(1)

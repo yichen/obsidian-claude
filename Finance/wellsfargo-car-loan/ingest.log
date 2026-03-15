@@ -1,0 +1,48 @@
+2026-03-08 06:11:36,335 INFO Wells Fargo Car Loan Statement Ingestion -- 2026-03-08 06:11:36
+2026-03-08 06:11:36,336 INFO Processing 4 PDFs...
+2026-03-08 06:11:36,336 INFO 
+--- 2025-11 (111025 WellsFargo.pdf) ---
+2026-03-08 06:11:36,378 INFO   Written: 2025-11.yaml
+2026-03-08 06:11:36,378 INFO 
+--- 2025-12 (121025 WellsFargo.pdf) ---
+2026-03-08 06:11:36,419 INFO   Written: 2025-12.yaml
+2026-03-08 06:11:36,419 INFO 
+--- 2026-01 (011026 WellsFargo.pdf) ---
+2026-03-08 06:11:36,464 INFO   Written: 2026-01.yaml
+2026-03-08 06:11:36,464 INFO 
+--- 2026-02 (020826 WellsFargo.pdf) ---
+2026-03-08 06:11:36,514 INFO   Written: 2026-02.yaml
+2026-03-08 06:11:36,514 INFO 
+Done: 4 processed, 0 errors
+2026-03-08 06:12:36,039 INFO Wells Fargo Car Loan Statement Ingestion -- 2026-03-08 06:12:36
+2026-03-08 06:12:36,040 INFO Processing 4 PDFs...
+2026-03-08 06:12:36,040 INFO 
+--- 2025-11 (111025 WellsFargo.pdf) ---
+2026-03-08 06:12:36,084 INFO   Written: 2025-11.yaml
+2026-03-08 06:12:36,084 INFO 
+--- 2025-12 (121025 WellsFargo.pdf) ---
+2026-03-08 06:12:36,127 INFO   Written: 2025-12.yaml
+2026-03-08 06:12:36,127 INFO 
+--- 2026-01 (011026 WellsFargo.pdf) ---
+2026-03-08 06:12:36,171 INFO   Written: 2026-01.yaml
+2026-03-08 06:12:36,172 INFO 
+--- 2026-02 (020826 WellsFargo.pdf) ---
+2026-03-08 06:12:36,222 INFO   Written: 2026-02.yaml
+2026-03-08 06:12:36,223 INFO 
+Done: 4 processed, 0 errors
+2026-03-08 06:12:43,470 INFO Wells Fargo Car Loan Statement Ingestion -- 2026-03-08 06:12:43
+2026-03-08 06:12:43,474 INFO Chain validation FAILED:
+2026-03-08 06:12:43,474 WARNING   YTD interest mismatch at 2026-01: computed=136.55, reported=397.31
+2026-03-08 06:12:43,474 WARNING   YTD interest mismatch at 2026-02: computed=296.44, reported=397.31
+2026-03-08 06:13:01,091 INFO Wells Fargo Car Loan Statement Ingestion -- 2026-03-08 06:13:01
+2026-03-08 06:13:01,095 INFO Chain validation PASSED -- all statements consistent
+2026-03-08 06:15:11,087 INFO Wells Fargo Car Loan Statement Ingestion -- 2026-03-08 06:15:11
+2026-03-08 06:15:11,087 INFO Source: /Users/ychen2/Dropbox/0-FinancialStatements/wellsfargo-car-loan
+2026-03-08 06:15:11,087 INFO Found 4 statement PDFs
+
+2026-03-08 06:15:11,087 INFO   2025-11   processed  111025 WellsFargo.pdf
+2026-03-08 06:15:11,087 INFO   2025-12   processed  121025 WellsFargo.pdf
+2026-03-08 06:15:11,087 INFO   2026-01   processed  011026 WellsFargo.pdf
+2026-03-08 06:15:11,087 INFO   2026-02   processed  020826 WellsFargo.pdf
+2026-03-08 06:15:11,087 INFO 
+0 new / 4 total

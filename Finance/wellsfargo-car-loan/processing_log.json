@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "last_run": "2026-03-08T06:12:36",
+  "pdfs": {
+    "111025 WellsFargo.pdf": {
+      "statement_month": "2025-11",
+      "output_file": "Finance/wellsfargo-car-loan/2025-11.yaml",
+      "processed_at": "2026-03-08T06:12:36",
+      "validation_passed": true
+    },
+    "121025 WellsFargo.pdf": {
+      "statement_month": "2025-12",
+      "output_file": "Finance/wellsfargo-car-loan/2025-12.yaml",
+      "processed_at": "2026-03-08T06:12:36",
+      "validation_passed": true
+    },
+    "011026 WellsFargo.pdf": {
+      "statement_month": "2026-01",
+      "output_file": "Finance/wellsfargo-car-loan/2026-01.yaml",
+      "processed_at": "2026-03-08T06:12:36",
+      "validation_passed": true
+    },
+    "020826 WellsFargo.pdf": {
+      "statement_month": "2026-02",
+      "output_file": "Finance/wellsfargo-car-loan/2026-02.yaml",
+      "processed_at": "2026-03-08T06:12:36",
+      "validation_passed": true
+    }
+  }
+}

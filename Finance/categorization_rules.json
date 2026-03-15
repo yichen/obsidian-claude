@@ -1,6 +1,6 @@
 {
-  "exported_at": "2026-03-01T20:46:11.449210",
-  "count": 1239,
+  "exported_at": "2026-03-08T06:14:19.508452",
+  "count": 1334,
   "rules": [
     {
       "pattern": "ACH DEPOSIT",
@@ -4019,6 +4019,14 @@
       "parent_category": "Subscriptions"
     },
     {
+      "pattern": "22176 MACS CONV",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "2410202_HKG",
       "pattern_type": "keyword",
       "priority": 100,
@@ -4131,6 +4139,14 @@
       "parent_category": "Travel"
     },
     {
+      "pattern": "ALBERTA PARKS",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Travel",
+      "parent_category": null
+    },
+    {
       "pattern": "ALL CLIMATE HEATING",
       "pattern_type": "keyword",
       "priority": 100,
@@ -4145,6 +4161,14 @@
       "source": "manual",
       "category": "Lodging",
       "parent_category": "Travel"
+    },
+    {
+      "pattern": "ALPHAGVRD",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Home Services",
+      "parent_category": "Home & Utilities"
     },
     {
       "pattern": "AMANDA PARK TRADING",
@@ -4347,6 +4371,14 @@
       "parent_category": "Shopping"
     },
     {
+      "pattern": "ATS TRANS LLC",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Car Maintenance",
+      "parent_category": "Transportation"
+    },
+    {
       "pattern": "AU PAIR CARE",
       "pattern_type": "keyword",
       "priority": 100,
@@ -4412,6 +4444,22 @@
     },
     {
       "pattern": "BAMBOO GARDEN",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "BANFF GONDOLA",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Travel",
+      "parent_category": null
+    },
+    {
+      "pattern": "BANFF SWEET SHOPPE",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
@@ -4507,6 +4555,14 @@
       "parent_category": "Food & Drink"
     },
     {
+      "pattern": "BLACK ANCHOR",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "BLAZE ROBOTICS",
       "pattern_type": "keyword",
       "priority": 100,
@@ -4595,6 +4651,14 @@
       "parent_category": "Food & Drink"
     },
     {
+      "pattern": "BOW VALLEY TRANSIT",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Transportation",
+      "parent_category": null
+    },
+    {
       "pattern": "BRAGANZA TEA",
       "pattern_type": "keyword",
       "priority": 100,
@@ -4675,6 +4739,14 @@
       "parent_category": "Food & Drink"
     },
     {
+      "pattern": "BUTTERED",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "BUY THE YEARBOOK",
       "pattern_type": "keyword",
       "priority": 100,
@@ -4699,7 +4771,23 @@
       "parent_category": "Food & Drink"
     },
     {
+      "pattern": "Black Rock Fudge",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "Booking BV",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Lodging",
+      "parent_category": "Travel"
+    },
+    {
+      "pattern": "Booking.com",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
@@ -4747,6 +4835,14 @@
       "parent_category": "Food & Drink"
     },
     {
+      "pattern": "CAFFE LADRO",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "CAKES N PARTY",
       "pattern_type": "keyword",
       "priority": 100,
@@ -4769,6 +4865,30 @@
       "source": "manual",
       "category": "Media",
       "parent_category": "Subscriptions"
+    },
+    {
+      "pattern": "CAMPSTUFF COFFEE",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "CANMORE CANNABIS",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Shopping",
+      "parent_category": null
+    },
+    {
+      "pattern": "CANMORE SHAWARMA",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
     },
     {
       "pattern": "CANTEEN VENDING",
@@ -4803,12 +4923,28 @@
       "parent_category": "Transportation"
     },
     {
+      "pattern": "CBS NUTS",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "CENTERED MIND",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
       "category": "Therapy",
       "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "CENTRAL KITCHEN",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
     },
     {
       "pattern": "CENTURY THEATRES",
@@ -4840,6 +4976,14 @@
       "priority": 100,
       "source": "manual",
       "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "CHERRY ST MARKET",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Groceries",
       "parent_category": "Food & Drink"
     },
     {
@@ -5003,6 +5147,22 @@
       "parent_category": "Shopping"
     },
     {
+      "pattern": "COUGAR MOUNTAIN Z",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Kids Activities",
+      "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "COUGAR MOUNTAIN ZOO",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Kids Activities",
+      "parent_category": "Kids & Family"
+    },
+    {
       "pattern": "COUNTRY INN",
       "pattern_type": "keyword",
       "priority": 100,
@@ -5012,6 +5172,14 @@
     },
     {
       "pattern": "CRAZY MONK",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "CREPES/ BLINCHIKI",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
@@ -5041,6 +5209,14 @@
       "source": "manual",
       "category": "Parking",
       "parent_category": "Transportation"
+    },
+    {
+      "pattern": "CURRAN COFFEE",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
     },
     {
       "pattern": "CURRY AND WILLIAMS",
@@ -5091,6 +5267,22 @@
       "parent_category": "Shopping"
     },
     {
+      "pattern": "DAIRY QUEEN",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Fast Food",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "DANISH BAKERY",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "DANJI",
       "pattern_type": "keyword",
       "priority": 100,
@@ -5105,6 +5297,14 @@
       "source": "manual",
       "category": "Travel",
       "parent_category": null
+    },
+    {
+      "pattern": "DECEPTION PASS PAR",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Kids Activities",
+      "parent_category": "Kids & Family"
     },
     {
       "pattern": "DELLINO LAW",
@@ -5227,6 +5427,14 @@
       "parent_category": "Kids & Family"
     },
     {
+      "pattern": "DOSE COFFEE",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "DROPBOX",
       "pattern_type": "keyword",
       "priority": 100,
@@ -5299,6 +5507,14 @@
       "parent_category": "Kids & Family"
     },
     {
+      "pattern": "ENDEAVOUR ELEMENTAR",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Kids Education",
+      "parent_category": "Kids & Family"
+    },
+    {
       "pattern": "ENOM.COM",
       "pattern_type": "keyword",
       "priority": 100,
@@ -5347,6 +5563,14 @@
       "parent_category": "Shopping"
     },
     {
+      "pattern": "EVERGREEN VILLAGE",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "EVERGREENHEALTH",
       "pattern_type": "keyword",
       "priority": 100,
@@ -5387,12 +5611,28 @@
       "parent_category": null
     },
     {
+      "pattern": "FACE X",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Kids Activities",
+      "parent_category": "Kids & Family"
+    },
+    {
       "pattern": "FACING EAST",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
       "category": "Restaurants",
       "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "FACTS TUITION",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Kids Education",
+      "parent_category": "Kids & Family"
     },
     {
       "pattern": "FAIRFIELD INN",
@@ -5459,6 +5699,22 @@
       "parent_category": "Kids & Family"
     },
     {
+      "pattern": "FGP40100",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Gas",
+      "parent_category": "Transportation"
+    },
+    {
+      "pattern": "FGP40123",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Gas",
+      "parent_category": "Transportation"
+    },
+    {
       "pattern": "FIDALGO FUDGE",
       "pattern_type": "keyword",
       "priority": 100,
@@ -5489,6 +5745,14 @@
       "source": "manual",
       "category": "Kids Activities",
       "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "FOOD & BEVERAGE, BANFF",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
     },
     {
       "pattern": "FOREIGN TRANSACTION",
@@ -5595,6 +5859,14 @@
       "parent_category": "Kids & Family"
     },
     {
+      "pattern": "Fjallraven",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
       "pattern": "FlexiSpot",
       "pattern_type": "keyword",
       "priority": 100,
@@ -5651,6 +5923,14 @@
       "parent_category": "Shopping"
     },
     {
+      "pattern": "GIRL SCOUT",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Kids Activities",
+      "parent_category": "Kids & Family"
+    },
+    {
       "pattern": "GIRL SCOUTS",
       "pattern_type": "keyword",
       "priority": 100,
@@ -5665,6 +5945,14 @@
       "source": "manual",
       "category": "Software",
       "parent_category": "Subscriptions"
+    },
+    {
+      "pattern": "GLACIER NP",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Travel",
+      "parent_category": null
     },
     {
       "pattern": "GLAMOURLASH",
@@ -5729,6 +6017,22 @@
       "source": "manual",
       "category": "Parking",
       "parent_category": "Transportation"
+    },
+    {
+      "pattern": "GOODWILL",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Shopping",
+      "parent_category": null
+    },
+    {
+      "pattern": "GOOGLE *CLOUD",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Software",
+      "parent_category": "Subscriptions"
     },
     {
       "pattern": "GOOGLE *DOMAINS",
@@ -5800,6 +6104,22 @@
       "priority": 100,
       "source": "manual",
       "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "GRANDE KITCHEN",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "GRAZE FOOD",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
       "parent_category": "Food & Drink"
     },
     {
@@ -5921,6 +6241,14 @@
       "source": "manual",
       "category": "Clothing",
       "parent_category": "Shopping"
+    },
+    {
+      "pattern": "HANS PLUMBING",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
     },
     {
       "pattern": "HANSEN'S MINI",
@@ -6171,6 +6499,14 @@
       "parent_category": "Shopping"
     },
     {
+      "pattern": "INREACH BY SODEXO",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Kids Education",
+      "parent_category": "Kids & Family"
+    },
+    {
       "pattern": "INSLEE BEST",
       "pattern_type": "keyword",
       "priority": 100,
@@ -6209,6 +6545,14 @@
       "source": "manual",
       "category": "Kids Activities",
       "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "IRISHMAN ENTERPRISES",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
     },
     {
       "pattern": "ISLAND COUNTRY MKTS",
@@ -6267,6 +6611,14 @@
       "parent_category": "Kids & Family"
     },
     {
+      "pattern": "ISSAQUAH TAILOR",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
       "pattern": "IVAR'S",
       "pattern_type": "keyword",
       "priority": 100,
@@ -6281,6 +6633,14 @@
       "source": "manual",
       "category": "Flights",
       "parent_category": "Travel"
+    },
+    {
+      "pattern": "JAVA CLAY CAFE",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
     },
     {
       "pattern": "JAVA KAI",
@@ -6304,6 +6664,14 @@
       "priority": 100,
       "source": "manual",
       "category": "Fast Food",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "JESSICA'S UNIQUE BITE",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
       "parent_category": "Food & Drink"
     },
     {
@@ -6403,6 +6771,14 @@
       "parent_category": "Shopping"
     },
     {
+      "pattern": "KAHANLAWFIR",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Legal",
+      "parent_category": "Legal & Professional"
+    },
+    {
       "pattern": "KAIROS ICE CREAM",
       "pattern_type": "keyword",
       "priority": 100,
@@ -6443,6 +6819,14 @@
       "parent_category": "Travel"
     },
     {
+      "pattern": "KAURS KITCHEN",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "KIDSQUEST",
       "pattern_type": "keyword",
       "priority": 100,
@@ -6475,6 +6859,14 @@
       "parent_category": null
     },
     {
+      "pattern": "KLAHANIE CLEANERS",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Home Services",
+      "parent_category": "Home & Utilities"
+    },
+    {
       "pattern": "KNOWN TRAVELER CREDIT",
       "pattern_type": "keyword",
       "priority": 100,
@@ -6484,6 +6876,14 @@
     },
     {
       "pattern": "KOA CRESCENT",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Lodging",
+      "parent_category": "Travel"
+    },
+    {
+      "pattern": "KOA WINTHROP",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
@@ -6587,6 +6987,14 @@
       "parent_category": "Health & Wellness"
     },
     {
+      "pattern": "LACASITA",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "LAKE QUINAULT",
       "pattern_type": "keyword",
       "priority": 100,
@@ -6659,6 +7067,14 @@
       "parent_category": "Legal & Professional"
     },
     {
+      "pattern": "LEGENDARY DOUGHNUTS",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Fast Food",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "LEGO BELLEVUE",
       "pattern_type": "keyword",
       "priority": 100,
@@ -6715,6 +7131,14 @@
       "parent_category": "Food & Drink"
     },
     {
+      "pattern": "LONG'S FLOORS",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Home Improvement",
+      "parent_category": "Home & Utilities"
+    },
+    {
       "pattern": "LONGHOUSE CAFE",
       "pattern_type": "keyword",
       "priority": 100,
@@ -6755,12 +7179,28 @@
       "parent_category": "Home & Utilities"
     },
     {
+      "pattern": "LOWER ELWHA FOOD",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Gas",
+      "parent_category": "Transportation"
+    },
+    {
       "pattern": "LOWES",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
       "category": "Home Improvement",
       "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "LS MAIN OUTLET",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Shopping",
+      "parent_category": null
     },
     {
       "pattern": "LS PACIFIC NORTHWEST",
@@ -6819,7 +7259,23 @@
       "parent_category": "Home & Utilities"
     },
     {
+      "pattern": "MACGREGOR",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "MACKY DIM SUM",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "MADALINE'S GRILL",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
@@ -6907,12 +7363,28 @@
       "parent_category": "Travel"
     },
     {
+      "pattern": "MARYS MOTEL",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Lodging",
+      "parent_category": "Travel"
+    },
+    {
       "pattern": "MASA MEXICAN",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
       "category": "Restaurants",
       "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "MASSAGEBOOK",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Massage",
+      "parent_category": "Personal Care"
     },
     {
       "pattern": "MASTER BUTLER",
@@ -6952,6 +7424,14 @@
       "priority": 100,
       "source": "manual",
       "category": "Fast Food",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "MECREPE",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
       "parent_category": "Food & Drink"
     },
     {
@@ -7099,6 +7579,22 @@
       "parent_category": "Shopping"
     },
     {
+      "pattern": "MORAINE LAKE RETAIL",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Shopping",
+      "parent_category": null
+    },
+    {
+      "pattern": "MOUNTAIN CHOCOLATES",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "MOX BOARDING",
       "pattern_type": "keyword",
       "priority": 100,
@@ -7121,6 +7617,14 @@
       "source": "manual",
       "category": "Online Shopping",
       "parent_category": "Shopping"
+    },
+    {
+      "pattern": "MUKILTEO LIGHTHOUSE",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Kids Activities",
+      "parent_category": "Kids & Family"
     },
     {
       "pattern": "MULTICARE",
@@ -7219,6 +7723,14 @@
       "parent_category": "Subscriptions"
     },
     {
+      "pattern": "NEMO EQUIPMENT",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Camping and Outdoor",
+      "parent_category": "Shopping"
+    },
+    {
       "pattern": "NETFLIX",
       "pattern_type": "keyword",
       "priority": 100,
@@ -7249,6 +7761,14 @@
       "source": "manual",
       "category": "Kids Activities",
       "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "NOBLE PIG BREWHOUSE",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
     },
     {
       "pattern": "NOBLE PLUMBING",
@@ -7411,6 +7931,14 @@
       "parent_category": null
     },
     {
+      "pattern": "OTTER PRODUCTS",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Tech and Electronics",
+      "parent_category": "Shopping"
+    },
+    {
       "pattern": "OUR FAMILY WIZARD",
       "pattern_type": "keyword",
       "priority": 100,
@@ -7441,6 +7969,14 @@
       "source": "manual",
       "category": "Online Shopping",
       "parent_category": "Shopping"
+    },
+    {
+      "pattern": "Olde Tyme Candy",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
     },
     {
       "pattern": "PAKAPERU",
@@ -7651,6 +8187,22 @@
       "parent_category": "Personal Care"
     },
     {
+      "pattern": "PETRO CANADA04325",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Gas",
+      "parent_category": "Transportation"
+    },
+    {
+      "pattern": "PETRO CANADA39071",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Gas",
+      "parent_category": "Transportation"
+    },
+    {
       "pattern": "PHILLIPS 66",
       "pattern_type": "keyword",
       "priority": 100,
@@ -7771,6 +8323,14 @@
       "parent_category": "Health & Wellness"
     },
     {
+      "pattern": "PS EXPRESS",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Kids Activities",
+      "parent_category": "Kids & Family"
+    },
+    {
       "pattern": "PSP TRIO",
       "pattern_type": "keyword",
       "priority": 100,
@@ -7793,6 +8353,14 @@
       "source": "manual",
       "category": "Home Services",
       "parent_category": "Home & Utilities"
+    },
+    {
+      "pattern": "PUGET SOUND EXPRES",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Kids Activities",
+      "parent_category": "Kids & Family"
     },
     {
       "pattern": "Pacific Science Center",
@@ -8019,6 +8587,22 @@
       "parent_category": "Shopping"
     },
     {
+      "pattern": "ROCKWATER / WHITETOOTH",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "ROCKY MOUNTAIN GIFTS",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Shopping",
+      "parent_category": null
+    },
+    {
       "pattern": "ROOSEVELT LODGE",
       "pattern_type": "keyword",
       "priority": 100,
@@ -8080,6 +8664,14 @@
       "priority": 100,
       "source": "manual",
       "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "SALTY HEFFERS",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
       "parent_category": "Food & Drink"
     },
     {
@@ -8155,6 +8747,14 @@
       "parent_category": "Shopping"
     },
     {
+      "pattern": "SAVE ON FOODS",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Groceries",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "SBUX",
       "pattern_type": "keyword",
       "priority": 100,
@@ -8171,11 +8771,27 @@
       "parent_category": "Shopping"
     },
     {
+      "pattern": "SCOOPZ ICE CREAM",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "SCOOTER'S COFFEE",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
       "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "SCREAMIN CHICKEN",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
       "parent_category": "Food & Drink"
     },
     {
@@ -8187,7 +8803,23 @@
       "parent_category": "Food & Drink"
     },
     {
+      "pattern": "SEA AIRPORT PARKING",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Travel",
+      "parent_category": null
+    },
+    {
       "pattern": "SEA BAD EGG",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "SEA CAP FD HALL",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
@@ -8315,6 +8947,30 @@
       "parent_category": "Food & Drink"
     },
     {
+      "pattern": "SHELL C12380",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Gas",
+      "parent_category": "Transportation"
+    },
+    {
+      "pattern": "SHELL C21804",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Gas",
+      "parent_category": "Transportation"
+    },
+    {
+      "pattern": "SHELL C44232",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Gas",
+      "parent_category": "Transportation"
+    },
+    {
       "pattern": "SHELL OIL",
       "pattern_type": "keyword",
       "priority": 100,
@@ -8363,6 +9019,14 @@
       "parent_category": "Travel"
     },
     {
+      "pattern": "SIREN STORE",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "SK219",
       "pattern_type": "keyword",
       "priority": 100,
@@ -8408,6 +9072,14 @@
       "priority": 100,
       "source": "manual",
       "category": "Clothing",
+      "parent_category": "Shopping"
+    },
+    {
+      "pattern": "SMARTSAKER",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Online Shopping",
       "parent_category": "Shopping"
     },
     {
@@ -8521,6 +9193,14 @@
       "source": "manual",
       "category": "Parking",
       "parent_category": "Transportation"
+    },
+    {
+      "pattern": "SPACE NEEDLE",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Kids Activities",
+      "parent_category": "Kids & Family"
     },
     {
       "pattern": "SPACETEK",
@@ -8665,6 +9345,14 @@
       "source": "manual",
       "category": "Kids Activities",
       "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "SQSP*",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Subscriptions",
+      "parent_category": null
     },
     {
       "pattern": "SQUARE LOTUS",
@@ -9123,6 +9811,14 @@
       "parent_category": "Shopping"
     },
     {
+      "pattern": "TIMELESS DESSERT",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "TIN TABLE",
       "pattern_type": "keyword",
       "priority": 100,
@@ -9164,6 +9860,14 @@
     },
     {
       "pattern": "TODO MEXICO",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "TOMMY'S NEIGHBOURHOOD",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
@@ -9347,6 +10051,14 @@
       "parent_category": null
     },
     {
+      "pattern": "UNDER THE BIG TOP",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Shopping",
+      "parent_category": null
+    },
+    {
       "pattern": "UNITED 016",
       "pattern_type": "keyword",
       "priority": 100,
@@ -9467,6 +10179,14 @@
       "parent_category": "Food & Drink"
     },
     {
+      "pattern": "VILLAGE BOOKS",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Shopping",
+      "parent_category": null
+    },
+    {
       "pattern": "VINASON PHO",
       "pattern_type": "keyword",
       "priority": 100,
@@ -9492,6 +10212,14 @@
     },
     {
       "pattern": "VITAL TEA LEAF",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "VOLUME SERVICES",
       "pattern_type": "keyword",
       "priority": 100,
       "source": "manual",
@@ -9619,6 +10347,22 @@
       "parent_category": "Food & Drink"
     },
     {
+      "pattern": "WENDY'S",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Fast Food",
+      "parent_category": "Food & Drink"
+    },
+    {
+      "pattern": "WEST END TAP ROOM",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Restaurants",
+      "parent_category": "Food & Drink"
+    },
+    {
       "pattern": "WESTEND TAPROOM",
       "pattern_type": "keyword",
       "priority": 100,
@@ -9649,6 +10393,14 @@
       "source": "manual",
       "category": "Medical",
       "parent_category": "Health & Wellness"
+    },
+    {
+      "pattern": "WHOLE CAT AND KABO",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Pet Care",
+      "parent_category": "Personal Care"
     },
     {
       "pattern": "WHOLE FOODS",
@@ -9721,6 +10473,14 @@
       "source": "manual",
       "category": "Kids Activities",
       "parent_category": "Kids & Family"
+    },
+    {
+      "pattern": "WOODS COFFEE",
+      "pattern_type": "keyword",
+      "priority": 100,
+      "source": "manual",
+      "category": "Coffee",
+      "parent_category": "Food & Drink"
     },
     {
       "pattern": "WOOREE",
