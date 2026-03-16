@@ -13,7 +13,7 @@
 | Phase | Status | Date | Notes |
 |-------|--------|------|-------|
 | Research | COMPLETED | 2026-03-15 | 14 web search categories, multiple page fetches |
-| Critique | PENDING | | |
+| Critique | COMPLETED | 2026-03-16 | Verdict: REVISE — distribution is the core challenge |
 | Compose | PENDING | | |
 | Final Review | PENDING | | |
 
@@ -35,3 +35,18 @@
 - Court moat is relationship-based, not certification-based — biggest unknown is how many orders name OFW specifically
 **User decision**: Awaiting review
 **Next**: Phase 2 (Critique) after user approval
+
+### Entry #2 — 2026-03-16 — Phase 2: Critique
+**Agent**: Critic (Opus)
+**Input**: Market-Research-Brief.md + 4 founder insights (two-party switching, OFW distribution flywheel, practitioner dashboard, founder's core use case)
+**Output**: Critic-Review.md
+**Key findings**:
+- Verdict: REVISE — distribution is the entire game and the brief treats it as secondary
+- Top issue: OFW's 25-year institutional flywheel is likely unbeatable by a solo founder
+- Two-party switching problem invalidates most growth models
+- AI schedule swap is not defensible — OFW already has Trade/Swap and can copy AI features in months
+- Real US market is probably $30-60M (not $440M) based on bottom-up math
+- Dead competitors (Onward, WeParent) are warning signals not analyzed
+- Most viable path: cooperative co-parents, freemium, SEO, lifestyle business ($500K-$2M ARR)
+**User decision**: Awaiting review
+**Next**: Phase 3 (Compose) after user approval
