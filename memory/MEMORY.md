@@ -1,5 +1,34 @@
 # Key Learnings
 
+### /market-research Skill — Multi-Agent Research Pipeline (2026-03-16)
+- **Workflow**: Researcher (Opus) → Critic (Opus) → Composer (Sonnet) → Final Audit (Opus). Orchestrator manages gates between phases.
+- **MarketLog.md**: Append-only process log enables resume, rollback, and auditability. Phase tracker + numbered entries.
+- **Key pattern**: Founder insights discovered BETWEEN phases (e.g., during review gates) must be fed into subsequent phases explicitly — agents don't share context.
+
+### Coparenting App Market Research (2026-03-16)
+- **OFW (OurFamilyWizard)**: $10.5M revenue, ~52K active subscribers, PE-backed (Spectrum Equity), 25-year court-order moat. 1.5-star SiteJabber but 4.6-star App Store (43K ratings).
+- **OFW's distribution flywheel**: No financial kickbacks to lawyers. Instead: free practitioner accounts, full-time Judicial Education Coordinators, CLE credit presentations, Diamond AFCC sponsor, sample court order language judges copy-paste. Unbeatable by solo founder.
+- **OFW practitioner dashboard**: Shows ALL messages (full text), calendar, expenses, payments, journal, call logs, login history with IP addresses, court-formatted reports. Connection requires parent consent (both paths). Must-have for lawyer adoption.
+- **Two-party switching problem**: Both parents must agree to switch apps. Court-ordered users can't switch. Real acquisition channel = new divorces (660K+/yr) where no tool is chosen yet.
+- **TalkingParents**: Bootstrapped to $10M+ ARR, 100K paying / 750K total users, 65 employees, profitable. Took 14 years. Founded by FL family lawyer Stephen Nixon (2010).
+- **AI-native entrants**: BestInterest (9K users, communication-focused, no payments), DivorceX ($0-$36/mo), Parent Copilot (beta). None combines AI + payments + scheduling.
+- **Dead competitors warning**: Onward (died Oct 2024), WeParent (zombie), Cozi (acquired by OFW). Expense-only apps can't survive alone.
+- **Founder's positioning**: Schedule + payments only (not full OFW replacement). Target cooperative non-court-ordered parents. Lifestyle business ($500K-$2M ARR). Complementary to BestInterest.
+- **Payment economics**: OFW charges $150-$300/yr per parent; actual Stripe ACH costs ~$19-24/yr for 24 payments. 90%+ margin on payments.
+- **Stripe Connect**: Eliminates state-by-state money transmission licensing. Platform operates under Stripe's licenses.
+- **Cooperative parent acquisition**: SEO, mediator partnerships (not attorneys), parenting blog outreach, TikTok. Free tier mandatory to solve two-party problem. Position away from court/conflict language.
+- **Market expansion**: Not just coparents — separated couples with spousal support but no kids can use payments feature too.
+- **Verdict**: Conditional Build — prove distribution with $0 experiments (landing page, 10 real couples, 20 mediator emails) before committing to full build.
+- **Project files**: `Projects/family-support-app/` — market-research.md (final), Market-Research-Brief.md, Critic-Review.md, MarketLog.md
+
+### Personal Finance LLM Market Research (2026-03-16)
+- **Research brief completed** at `Projects/2_personal-finance-llm/Market-Research-Brief.md` — Phase 1 only (paused at review gate, critique not yet run)
+- **SenticMoney**: Closest direct competitor to local-first finance app ($29-39/yr, local-first, but no NL queries, no PDF parsing, no itemized Amazon)
+- **Pricing gap narrowed**: Monarch, Copilot, YNAB all raised to $14.99/mo — proposed $15-25/mo is only 1-2x cloud alternatives
+- **Maybe Finance (54K GitHub stars)**: Shut down Jul 2025 because bank integration too expensive — validates PDF-over-Plaid approach
+- **Addressable market**: Likely 50K-200K (tighter than idea doc's 100K-500K), central case ~100K → $12M ARR potential
+- **LLM costs dropping 50-200x/yr**: BYOK costs likely $2-5/mo within 12 months
+
 ### Personal Finance Demo App — Electron Desktop (2026-03-13)
 - **Stack**: Electron 35 + React 18 + TypeScript, built with electron-vite
 - **LLM backend**: OpenRouter API (`anthropic/claude-3.7-sonnet`), OpenAI-compatible SDK
@@ -219,6 +248,18 @@
 - **Obsidian file naming**: Use hyphens instead of spaces. Avoid `&` and other special characters — they break Obsidian wiki-links. Use `and` instead of `&`.
 
 # Active Context
+
+### Coparenting App — Market Research Complete (2026-03-16) `(active)`
+- Full market research pipeline completed: Research → Critique → Compose → Audit (ACCEPT)
+- **Verdict**: Conditional Build — lifestyle business targeting cooperative parents
+- **Next steps**: 90-day distribution validation ($0 experiments: landing page, 10 real couples, 20 mediator emails)
+- **Domain candidates**: fairbridge.app, twoaccord.com, twofair.com, parentpact.app (all available)
+- Files at `Projects/family-support-app/`
+
+### Personal Finance LLM — Market Research Phase 1 (2026-03-16) `(active)`
+- Research brief completed, paused at review gate before Critique phase
+- Files at `Projects/2_personal-finance-llm/Market-Research-Brief.md`
+- Say "continue" to run Critique phase
 
 ### Personal Finance Demo App (2026-03-14) `(active)`
 - Base64 chart rendering working, timing instrumentation in place, session logs to `Finance/reports/debug/sessions/`
