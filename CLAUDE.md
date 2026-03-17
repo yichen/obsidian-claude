@@ -76,6 +76,10 @@ Your content here...
       - `divorce_settlement_agreement.md` - Financial terms, property, spousal maintenance, child support
       - `2025-05-29-final-parenting-plan.md` - Custody schedule, decision-making, communication requirements, travel rules
 
+7.  **Documentation & Analysis Writing**
+    - **Triggers**: Writing any standalone .md document with 3+ sections that will be read by stakeholders. Includes: MVP definitions, spec reviews, market analyses, competitive landscapes, technical proposals, panel reports, compliance analyses, cost-benefit analyses, launch plans, post-mortems. Also triggers on: "write up", "document", "draft a report", "summarize findings into a document".
+    - **Action**: Read `.claude/skills/documentation-writer/SKILL.md` and apply its style guide (narrative executive summary, descriptive headers, contextualized evidence, mandatory appendix with citations). This is a STYLE GUIDE that applies on top of whatever workflow is producing the document.
+
 ## Proactive Seasonal Alerts
 
 **Two-stage alert system for China travel during Chinese New Year:**
