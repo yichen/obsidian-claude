@@ -175,6 +175,50 @@ This works because:
 
 ---
 
+## Two Acquisition Personas — Same Funnel, Different Entry Points
+
+### Persona 1: New Divorce (Primary Target)
+
+Parents separating now who haven't chosen a co-parenting tool yet. This is 660K+ new divorces per year in the US — the only segment where you don't fight an incumbent.
+
+| Stage | What Happens |
+|-------|-------------|
+| Discovery | SEO ("child support tracking app"), mediator referral, parenting blog |
+| Entry | Payer signs up, adds first expense, sends "money waiting" invite |
+| Conversion | Payee clicks invite, sees money waiting, links bank, claims payment |
+| Retention | Calendar becomes weekly habit; expenses accumulate documentation value |
+
+**No free trial needed.** The payer is motivated (wants documentation + convenience). The payee joins because money is waiting. The free tier (expense logging, calendar, CSV export) already lets both parents evaluate the UX before any money moves.
+
+### Persona 2: OFW Switcher (Upside Scenario, Not Core Target)
+
+Dissatisfied OFW users paying $25/mo who want something cheaper and less adversarial. These users face a unique blocker: both parents must agree to switch (or the court-ordered parent can't leave).
+
+| Stage | What Happens |
+|-------|-------------|
+| Discovery | "OFW alternative" search, app store browsing, Reddit/Facebook groups |
+| **Evaluation barrier** | Wants to see the product before convincing co-parent to switch |
+| Entry | Signs up on free tier, explores calendar + expense tracking |
+| Conversion trigger | Sends first "money waiting" invite to co-parent |
+
+**How to convert without a free trial:**
+
+1. **Marketing site** — Screenshots, 60-second demo video showing the payment flow, calendar, and export screens. Table stakes; do this regardless.
+2. **Interactive sandbox** (V2) — Pre-populated demo account with fake data. "See how it works" button. Moderate effort but high-value for comparison shoppers.
+3. **Free tier as the trial** — Calendar + expense tracking + CSV export is enough to evaluate the UX. The paywall gate is exactly where it should be: the moment someone wants to move money.
+4. **First ACH fee waived** — Waive the 0.8% on payment #1 to remove the last objection.
+
+**Why a 30-day free trial is counterproductive for this product:**
+
+- The **payer** is the only revenue source. A trial delays revenue on your most motivated user.
+- At **$7/mo**, the price barrier is already negligible — the real barrier is getting the co-parent to join, which the free payee model solves.
+- Trial creates a **churn window**: couples needing only 1-2 documented payments could leave before ever paying.
+- The **"money waiting" invite** is more compelling than any trial — it proves value on the first interaction.
+
+**The OFW switcher's real blocker isn't "I can't see the app" — it's "I need my ex to agree to switch."** No free trial solves that. What solves it: "I sent you $1,254 on FairBridge, click here to claim it."
+
+---
+
 ## 20 Weeks to Soft Launch with 2 Devs — 9-12 Months Solo
 
 ### Tech Stack
