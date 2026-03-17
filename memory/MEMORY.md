@@ -1,5 +1,20 @@
 # Key Learnings
 
+### Trademark Review for Product Naming (2026-03-17)
+- Single dictionary-word domains (.app/.ai) carry HIGH trademark risk — multiple companies in adjacent categories will already use the word
+- "Trove" has 6+ fintech conflicts including Trove Finance (400K-user investing app) and Microsoft Class 9 trademark — AVOID
+- "Fathom" conflicts with Fathom Analytics (privacy-focused, same messaging overlap) — AVOID
+- Compound neologisms (like "bambooleap", "rebalancefi", "keepgrain") inherently carry lower trademark risk than dictionary words
+- Always run USPTO TESS search ($0) before committing to a name; trademark attorney clearance opinion costs $500-$1,500
+
+### Personal Finance App Naming — Multi-Agent Approach (2026-03-17)
+- Used 3 parallel agents (Branding Manager, Marketing Manager, Product Manager) + Domain Broker (WHOIS) + Trademark Agent
+- **Branding** favored emotional/evocative names: Grove, Burrow, Finch, Trove
+- **Marketing** favored positioning names: Trove, Dossier, Fathom
+- **Product** favored feature-aligned names: Grain (granularity), Scope (analysis), Clerk (parsing)
+- **Trademark** killed the top picks: trove.app (HIGH risk), fathom.app (HIGH risk)
+- Final decision: **rebalancefi.com** — "Rebalance" = financial term + life rebalancing, "Fi" = finance suffix
+
 ### /market-research Skill — Multi-Agent Research Pipeline (2026-03-16)
 - **Workflow**: Researcher (Opus) → Critic (Opus) → Composer (Sonnet) → Final Audit (Opus). Orchestrator manages gates between phases.
 - **MarketLog.md**: Append-only process log enables resume, rollback, and auditability. Phase tracker + numbered entries.
@@ -249,18 +264,24 @@
 
 # Active Context
 
-### Coparenting App — Market Research Complete (2026-03-16) `(active)`
+### Bamboo Leap — Umbrella Company for Lifestyle Businesses (2026-03-17) `(active)`
+- **Company**: Bamboo Leap — **bambooleap.com** (registered)
+- **Products**:
+  - **FairBridge** — fairbridge.app (registered) — coparenting app (schedule + payments)
+  - **RebalanceFi** — rebalancefi.com (registered on Cloudflare) — AI personal finance app
+- **Strategy**: Multiple lifestyle businesses ($500K-$2M ARR each) under one umbrella entity
+- **Naming preferences**: No .dev TLD. .com for company, .app/.com for products. Two short words preferred. No medieval words. Chinese-inspired OK if modern pairing.
+
+### Coparenting App (FairBridge) — Market Research Complete (2026-03-16) `(active)`
 - Full market research pipeline completed: Research → Critique → Compose → Audit (ACCEPT)
 - **Verdict**: Conditional Build — lifestyle business targeting cooperative parents
 - **Next steps**: 90-day distribution validation ($0 experiments: landing page, 10 real couples, 20 mediator emails)
-- **Domain candidates**: fairbridge.app (registered), jadeleaplabs.com, longleaplabs.com, largeleaplabs.com, bambooleap.com (all available)
-- **Umbrella company strategy**: User wants one company running multiple lifestyle businesses (coparenting app, personal finance app, others). Needs a generic company name, not product-specific.
-- **Domain naming preferences**: No .dev TLD. Prefers .com. Two short words ideal, with optional labs/tech suffix. No "medieval" words (loom, forge, earnest). Chinese-inspired names OK but avoid "Jade Garden" restaurant connotation. Previously owned TinyTimeTable.com and ColorfulMemory.com.
 - Files at `Projects/family-support-app/`
 
-### Personal Finance LLM — Market Research Phase 1 (2026-03-16) `(active)`
+### Personal Finance App (RebalanceFi) — Market Research Phase 1 (2026-03-16) `(active)`
 - Research brief completed, paused at review gate before Critique phase
 - Files at `Projects/2_personal-finance-llm/Market-Research-Brief.md`
+- Trademark review at `Projects/2_personal-finance-llm/Trademark-Review.md`
 - Say "continue" to run Critique phase
 
 ### Personal Finance Demo App (2026-03-14) `(active)`
