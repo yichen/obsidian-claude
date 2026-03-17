@@ -253,7 +253,9 @@
 - Full market research pipeline completed: Research → Critique → Compose → Audit (ACCEPT)
 - **Verdict**: Conditional Build — lifestyle business targeting cooperative parents
 - **Next steps**: 90-day distribution validation ($0 experiments: landing page, 10 real couples, 20 mediator emails)
-- **Domain candidates**: fairbridge.app, twoaccord.com, twofair.com, parentpact.app (all available)
+- **Domain candidates**: fairbridge.app (registered), jadeleaplabs.com, longleaplabs.com, largeleaplabs.com, bambooleap.com (all available)
+- **Umbrella company strategy**: User wants one company running multiple lifestyle businesses (coparenting app, personal finance app, others). Needs a generic company name, not product-specific.
+- **Domain naming preferences**: No .dev TLD. Prefers .com. Two short words ideal, with optional labs/tech suffix. No "medieval" words (loom, forge, earnest). Chinese-inspired names OK but avoid "Jade Garden" restaurant connotation. Previously owned TinyTimeTable.com and ColorfulMemory.com.
 - Files at `Projects/family-support-app/`
 
 ### Personal Finance LLM — Market Research Phase 1 (2026-03-16) `(active)`

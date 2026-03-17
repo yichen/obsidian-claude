@@ -20,19 +20,19 @@ The MVP ships three features — ACH payments, expense tracking, and a custody c
 
 ### Pillar 1: ACH Payments That Settle in 3-4 Days via Stripe Connect
 
-| Feature | Detail |
-|---------|--------|
-| Stripe Connect Express accounts | Both parents create connected accounts |
-| Stripe Financial Connections | Instant bank linking via OAuth — NOT microdeposits (payee funnel dies without instant verification [5]) |
-| Payment initiation | Payer submits expense → links payment → payee approves → ACH settles (3-4 business days) |
-| "Money waiting" invite | Payee invite email shows amount waiting — reframes "join app" as "claim payment" |
-| Progressive KYC | Email+phone at signup; bank+identity at first payout |
-| Transaction fee | **0.8%** Stripe pass-through to payer (~$1.60/mo on a typical $200 monthly payment), no platform markup at V1 |
-| Authorization evidence | IP, timestamp, device fingerprint, confirmation action stored per debit [6] |
-| Ramp-up limits | $2,500/week first 6 payments, $5,000/week after — internal control, NOT published in UI or marketing [7] |
-| $5 minimum | Anti-harassment floor (prevents micropayment flooding [8]) |
-| Reg E dispute intake | Email-based consumer dispute channel + provisional credit within 10 business days [9] |
-| Reserve fund | ~$5,000-10,000 operating reserve (~1-3% of projected Year 1 transaction volume) for Reg E provisional credits |
+| Feature                         | Detail                                                                                                        |
+| ------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| Stripe Connect Express accounts | Both parents create connected accounts                                                                        |
+| Stripe Financial Connections    | Instant bank linking via OAuth — NOT microdeposits (payee funnel dies without instant verification [5])       |
+| Payment initiation              | Payer submits expense → links payment → payee approves → ACH settles (3-4 business days)                      |
+| "Money waiting" invite          | Payee invite email shows amount waiting — reframes "join app" as "claim payment"                              |
+| Progressive KYC                 | Email+phone at signup; bank+identity at first payout                                                          |
+| Transaction fee                 | **0.8%** Stripe pass-through to payer (~$1.60/mo on a typical $200 monthly payment), no platform markup at V1 |
+| Authorization evidence          | IP, timestamp, device fingerprint, confirmation action stored per debit [6]                                   |
+| Ramp-up limits                  | $2,500/week first 6 payments, $5,000/week after — internal control, NOT published in UI or marketing [7]      |
+| $5 minimum                      | Anti-harassment floor (prevents micropayment flooding [8])                                                    |
+| Reg E dispute intake            | Email-based consumer dispute channel + provisional credit within 10 business days [9]                         |
+| Reserve fund                    | ~$5,000-10,000 operating reserve (~1-3% of projected Year 1 transaction volume) for Reg E provisional credits |
 
 **Cut for V2+:** Plaid bank feed ($500/mo minimum [4]), AI receipt verification (~$200-500/mo), biometric re-auth, platform transaction fee markup, credit-push fallback for abusive disputers, Custom Stripe accounts.
 
