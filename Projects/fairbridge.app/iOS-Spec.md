@@ -134,41 +134,59 @@ Notification permission **must be requested before pairing is allowed**. This is
 1. Both parents must be reachable for the expense confirmation loop to function
 2. A parent who denies notifications cannot participate in the two-party confirmation model
 
-**Permission gate flow**:
-1. After email verification but **before** the "Invite your co-parent" step, show a full-screen permission pre-prompt screen
-2. Pre-prompt explains: "FairBridge needs notifications to alert you when expenses need approval. Without this, you may miss time-sensitive requests."
-3. Primary CTA: "Enable Notifications" → calls `UNUserNotificationCenter.requestAuthorization(options: [.alert, .sound, .badge, .timeSensitive])`
-4. If denied: show inline warning banner on the pairing screen. Pairing is **blocked** until the user either grants permission or explicitly acknowledges the limitation (secondary "Continue without notifications" button, shown only after one denial)
-5. If permanently denied (`.denied` status): show deep link to Settings → FairBridge → Notifications
+**Critical iOS constraint**: iOS grants each app exactly **one** system permission dialog for notifications per app lifetime. If the user dismisses it, the dialog can never be shown again (only Settings can re-enable). This means the timing and framing of the pre-prompt is critical.
 
-**React Native implementation**:
+**Permission gate flow** (aligned with UX Screen 8.1):
+1. After email verification, **before** "Invite your co-parent" — show a full-screen pre-prompt rationale screen (our UI, not the system dialog)
+2. Pre-prompt explains why notifications are required: "FairBridge needs notifications to alert you when expenses need approval."
+3. Two options on pre-prompt screen:
+   - "Enable Notifications" (primary) → immediately triggers the iOS system dialog → on grant, register token
+   - "Not now" (secondary) → do NOT trigger the system dialog. Save the one-shot opportunity. Show inline banner on pairing screen instead.
+4. **If "Not now" tapped**: record `notif_deferred = true` in local state. Show pairing screen with a soft banner. On any subsequent app open where `notif_deferred = true`, re-show the pre-prompt (but never the system dialog unless the pre-prompt primary CTA is tapped)
+5. **If system dialog denied** (`.denied`): show one-time banner with deep link to `UIApplication.openSettingsURLString` — `UIApplication.shared.open(URL(string: UIApplication.openSettingsURLString)!)`
+6. **If permanently denied** (checked via `getPermissionsAsync()` returning `.denied` without ever having shown dialog): treat same as step 5
+
 ```typescript
 import * as Notifications from 'expo-notifications';
+import { Linking } from 'react-native';
 
-async function requestNotificationPermission(): Promise<boolean> {
+async function handleNotificationPrePromptCTA(): Promise<'granted' | 'denied' | 'deferred'> {
   const { status: existing } = await Notifications.getPermissionsAsync();
-  if (existing === 'granted') return true;
+  if (existing === 'granted') return 'granted';
 
+  // Only call requestPermissionsAsync when user explicitly taps the primary CTA
+  // — never call speculatively, as this consumes the one-shot system dialog
   const { status } = await Notifications.requestPermissionsAsync({
     ios: {
       allowAlert: true,
       allowSound: true,
       allowBadge: true,
-      allowCriticalAlerts: false, // don't request critical — App Review rejects unless medical/safety
+      allowCriticalAlerts: false,
       provideAppNotificationSettings: true,
     },
   });
-  return status === 'granted';
+
+  if (status === 'granted') {
+    await registerAPNsToken();
+    return 'granted';
+  }
+  return 'denied';
+}
+
+async function openNotificationSettings() {
+  await Linking.openSettings(); // opens UIApplication.openSettingsURLString
 }
 ```
 
-**APNs device token registration**:
+**APNs device token registration** (UX Screen 8.2 — POST to `/user/push-token`):
 ```typescript
-// Register for remote notifications after permission granted
-const token = await Notifications.getDevicePushTokenAsync({
-  projectId: Constants.expoConfig?.extra?.eas?.projectId,
-});
-// Send token.data to backend: POST /api/devices/register
+async function registerAPNsToken(): Promise<void> {
+  const token = await Notifications.getDevicePushTokenAsync({
+    projectId: Constants.expoConfig?.extra?.eas?.projectId,
+  });
+  // UX spec: POST /user/push-token (user_id from auth JWT)
+  await api.post('/user/push-token', { token: token.data, platform: 'ios' });
+}
 ```
 
 ---
@@ -463,6 +481,17 @@ class ScreenProtection: RCTEventEmitter {
       selector: #selector(captureDidChange),
       name: UIScreen.capturedDidChangeNotification,
       object: nil)
+    // Fire initial state synchronously — handles the case where recording
+    // was already active before the JS bridge initialized and registered
+    // its listener. Without this, a cold-launch race (recording started
+    // before root component mounts) drops the notification entirely.
+    if UIScreen.main.isCaptured {
+      sendEvent(withName: "screenCaptureChanged", body: ["captured": true])
+    }
+  }
+
+  override func stopObserving() {
+    NotificationCenter.default.removeObserver(self)
   }
 
   @objc func captureDidChange() {
@@ -473,10 +502,46 @@ class ScreenProtection: RCTEventEmitter {
   @objc func isCaptured(_ resolve: RCTPromiseResolveBlock, reject: RCTPromiseRejectBlock) {
     resolve(UIScreen.main.isCaptured)
   }
+
+  override func supportedEvents() -> [String] {
+    return ["screenCaptureChanged"]
+  }
 }
 ```
 
+**Cold-launch timing note**: The `NotificationCenter` observer is registered when `startObserving()` fires (when the first JS listener attaches). This happens ~1–3 seconds into cold launch after the JS bridge initializes. The synchronous `isCaptured` check in `startObserving()` + the `NativeModules.ScreenProtection?.isCaptured` initial `useState` value together close this gap for practical cases. A narrow race remains if recording starts in the first ~100ms of cold launch before `startObserving()` runs — documented as a known V1 limitation (P2 test scenario).
+
 **Limitation vs Android**: iOS cannot prevent screenshots via the system API — `UIScreen.isCaptured` detects recording but not static screenshots. This is a platform constraint, not a spec gap. DV safety documentation should note this difference.
+
+---
+
+## 7a. DV Safety — Settings Screen Requirements
+
+The iOS Settings screen must include a **Safety Resources** section containing:
+- Link to the National Domestic Violence Hotline (thehotline.org / 1-800-799-7233)
+- "Delete my account and all data" destructive action (silent, no confirmation dialog that could be observed)
+- "Deactivate silently" option — logs out and clears all local data without any visible completion screen
+
+**Critical implementation detail — Safety Resources link**:
+The DV hotline link must open in `SFSafariViewController` (in-app browser), NOT via `Linking.openURL()` which launches Safari. Reason: Safari maintains browser history. A co-parent inspecting the device's Safari history could discover the user sought DV resources. `SFSafariViewController` does not write to Safari history.
+
+```typescript
+import { WebBrowser } from 'expo-web-browser';
+
+async function openSafetyResources() {
+  await WebBrowser.openBrowserAsync('https://www.thehotline.org', {
+    presentationStyle: WebBrowser.WebBrowserPresentationStyle.FORM_SHEET,
+    createTask: false, // prevents adding to recent apps / history on Android
+  });
+}
+```
+
+**Silent deactivation** (see also Section 5 Keychain):
+1. Clear all Keychain items (no dialog)
+2. Clear AsyncStorage / MMKV local cache
+3. Navigate to a blank/logo screen (no "Account deleted" toast)
+4. After 2 seconds, reset navigation stack to the login screen
+5. No analytics event fired for silent deactivation — no server-side log that could be subpoenaed by an abuser's attorney
 
 ---
 
@@ -662,25 +727,288 @@ The following features require Android equivalents — coordinate with android-d
 | App Store IAP exemption | Google Play Billing exempt for P2P money transfers (same exemption exists) |
 | `NSCalendarsWriteOnlyAccessUsageDescription` | `android.permission.WRITE_CALENDAR` (no read needed) |
 
-**Notification channels** (Android requires explicit channels; iOS uses categories):
-- `EXPENSE_CONFIRMATION` — time-sensitive, sound on, vibrate
-- `PAYMENT_STATUS` — default priority
-- `CALENDAR_REMINDER` — low priority, no sound
+**Notification channel/category IDs** (standardized with Android — use these exact IDs in backend FCM/APNs dispatch):
+
+| ID | iOS interruption level | Android channel importance | Use cases |
+|----|----------------------|--------------------------|-----------|
+| `fairbridge_expenses` | `time-sensitive` | `IMPORTANCE_HIGH` | Expense pending co-parent approval (24h deadline), dispute filed |
+| `fairbridge_payments` | `active` / `time-sensitive` | `IMPORTANCE_HIGH` | Payment succeeded (active), payment failed (time-sensitive) |
+| `fairbridge_calendar` | `passive` | `IMPORTANCE_LOW` | Calendar reminders, custody schedule changes |
+
+**Android note on payment importance granularity**: Android channel importance is set at channel creation and applies to all notifications on that channel — per-notification importance is not supported. Both payment success and payment failure land on `fairbridge_payments` (`IMPORTANCE_HIGH`). The urgency distinction (failure = time-sensitive, success = informational) is conveyed via notification body and action buttons rather than channel importance. iOS retains the full `interruption-level` split.
+
+**iOS category registration** (map channel IDs to `UNNotificationCategory`):
+```typescript
+await Notifications.setNotificationCategoryAsync('fairbridge_expenses', [
+  { identifier: 'APPROVE', buttonTitle: 'Approve', options: { opensAppToForeground: true } },
+  { identifier: 'VIEW', buttonTitle: 'View', options: { opensAppToForeground: true } },
+]);
+await Notifications.setNotificationCategoryAsync('fairbridge_payments', []);
+await Notifications.setNotificationCategoryAsync('fairbridge_calendar', []);
+```
+
+The backend sets `"fairbridge_channel": "fairbridge_expenses"` (or `fairbridge_payments`/`fairbridge_calendar`) in the data payload. iOS reads this to apply the correct category; Android uses it to route to the correct notification channel.
 
 ---
 
 ## 12. Security Considerations
 
-1. **Certificate pinning**: Use `react-native-ssl-pinning` or Expo's network security config to pin the FairBridge API certificate. Prevents MITM on financial data.
-2. **Jailbreak detection**: Use `react-native-device-info` `isEmulator()` + basic jailbreak heuristics. Show warning (not block) if jailbreak detected — DV users may need jailbroken devices for safety apps.
-3. **Screenshot prevention**: Consider `FLAG_SECURE` equivalent on sensitive screens (expense list, bank linking). iOS does not have a direct equivalent — the app switcher mask (section 7) is the primary protection.
-4. **Token refresh**: Access tokens expire in 15 minutes. Refresh tokens in 30 days. On Keychain read failure (device restarted without unlock), handle gracefully — prompt re-auth instead of crash.
+1. **Certificate pinning** (**V2 — not V1**): `react-native-ssl-pinning` supports both iOS and Android (Android equivalent: `network_security_config.xml` with cert hash). Deferred to V2 because pinning requires an operational cert rotation process — a pinned cert that expires without a coordinated app update bricks the app for all users. V1 relies on TLS 1.3 + OS certificate validation, which is sufficient for MVP. Android-dev confirmed their V1 `network_security_config.xml` only disables cleartext; no pinning yet.
+2. **Jailbreak detection**: Use `react-native-device-info` `isEmulator()` + basic jailbreak heuristics (e.g., check for `/Applications/Cydia.app`, `cydia://` URL scheme). Show a **warning only** — do not block app access. DV users may rely on jailbroken devices for safety apps; blocking would strand vulnerable users.
+3. **Screenshot prevention**: iOS app-switcher masking via `AppState 'inactive'` + BlurView (Section 7) covers the thumbnail. `UIScreen.isCaptured` detects active screen recording (Section 7, recording detection). Static screenshot prevention is not possible on iOS at the OS level — documented platform gap vs Android `FLAG_SECURE`.
+4. **Token refresh**: Access tokens expire in 15 minutes. Refresh tokens in 30 days. On Keychain read failure (device restarted without unlock), prompt re-auth gracefully — do not crash.
+5. **Keychain mapping to Android Keystore** (aligned with android-dev):
+   - Session tokens: `WHEN_UNLOCKED_THIS_DEVICE_ONLY` (iOS) ↔ `KeyGenParameterSpec` without `setUserAuthenticationRequired` + device-unlock dependency (Android). Accessible when phone is unlocked, no biometric prompt.
+   - Biometric PIN (V2): `WHEN_PASSCODE_SET_THIS_DEVICE_ONLY` + `requireAuthentication: true` (iOS) ↔ `setUserAuthenticationRequired(true)` + `setInvalidatedByBiometricEnrollment(true)` (Android).
 
 ---
 
-## 13. Open Questions for Team
+## 13. Stripe Web Flows — SFSafariViewController
 
-1. **UX-engineer**: What is the exact screen count in the notification permission gate? Should the pre-prompt be a modal sheet or full-screen? (Coordinate with ux-engineer)
-2. **Backend-eng**: APNs device token registration endpoint — is it `POST /api/devices/register` with `{ token, platform: 'ios', user_id }`? Confirm payload schema.
-3. **Program-manager**: Should biometric app lock (Face ID) be V1 or V2? It's a significant UX and security win but adds complexity.
-4. **Android-dev**: Confirm `react-native-vision-camera` v4 is used on Android too (same version) to avoid dependency divergence.
+Both Stripe flows (UX Screens 1.6 and 2.5) **must** use `SFSafariViewController`, not `WKWebView`.
+
+**Why SFSafariViewController is required**:
+- Shares the Safari cookie jar — users already logged into their bank don't re-enter credentials
+- `WKWebView` has an isolated cookie store; bank OAuth redirects fail or require re-login
+- Stripe's own iOS SDK wraps `SFSafariViewController` for this reason
+
+**Screen 1.6 — Payer bank linking (Stripe Connect Express)**:
+```typescript
+import { useStripe } from '@stripe/stripe-react-native';
+
+// Stripe React Native SDK opens SFSafariViewController internally
+// for the Connect Express onboarding URL — no manual WebBrowser call needed
+const { presentConnectSheet } = useStripe();
+
+async function openStripeConnectOnboarding(accountLinkUrl: string) {
+  // Stripe SDK handles SFSafariViewController presentation
+  await Linking.openURL(accountLinkUrl);
+  // Or use expo-web-browser which also uses SFSafariViewController:
+  await WebBrowser.openAuthSessionAsync(accountLinkUrl, 'fairbridge://stripe-return');
+}
+```
+
+**Screen 2.5 — Payee bank linking (Stripe Financial Connections)**:
+```typescript
+import { collectBankAccountForSetup } from '@stripe/stripe-react-native';
+
+// Stripe Financial Connections uses a native sheet on iOS (not a webview)
+// — it presents its own UIViewController sheet using ASWebAuthenticationSession
+// which also shares Safari cookies
+async function linkPayeeBankAccount(clientSecret: string) {
+  const { paymentMethod, error } = await collectBankAccountForSetup({
+    clientSecret,
+    params: {
+      paymentMethodType: 'us_bank_account',
+      paymentMethodData: { billingDetails: { name: userName } },
+    },
+  });
+}
+```
+
+**Do NOT use**: `WebBrowser.openBrowserAsync()` (opens full Safari, leaves history) or `WKWebView` component (isolated cookies, bank OAuth fails).
+
+---
+
+## 14. Universal Links
+
+The payee invite link (`https://fairbridge.app/claim/[token]`) must open directly in the installed app. This requires Universal Links configuration (Apple's equivalent of Android App Links).
+
+### 14.1 Apple App Site Association (AASA) File
+
+The backend must serve this file at `https://fairbridge.app/.well-known/apple-app-site-association` with `Content-Type: application/json` (no `.json` extension):
+
+```json
+{
+  "applinks": {
+    "apps": [],
+    "details": [
+      {
+        "appID": "TEAMID.com.fairbridge.app",
+        "paths": ["/claim/*", "/invite/*"]
+      }
+    ]
+  }
+}
+```
+
+### 14.2 Entitlements
+
+```xml
+<!-- FairBridge.entitlements -->
+<key>com.apple.developer.associated-domains</key>
+<array>
+  <string>applinks:fairbridge.app</string>
+</array>
+```
+
+### 14.3 React Native Handler
+
+```typescript
+import { Linking } from 'react-native';
+import { useEffect } from 'react';
+
+function useUniversalLinks() {
+  useEffect(() => {
+    // Handle cold-start Universal Link
+    Linking.getInitialURL().then(url => {
+      if (url) handleIncomingLink(url);
+    });
+
+    // Handle foreground Universal Link
+    const sub = Linking.addEventListener('url', ({ url }) => handleIncomingLink(url));
+    return () => sub.remove();
+  }, []);
+}
+
+function handleIncomingLink(url: string) {
+  const match = url.match(/\/claim\/([a-zA-Z0-9_-]+)/);
+  if (match) {
+    const token = match[1];
+    // Navigate to payee onboarding with pre-filled invite token
+    navigation.navigate('PayeeOnboarding', { inviteToken: token });
+  }
+}
+```
+
+### 14.4 Web Fallback
+
+If the app is not installed, `fairbridge.app/claim/[token]` must serve a web page with:
+- "Money is waiting for you" landing page (UX Screen 2.0)
+- App Store download button
+- After 1.5 seconds with no app response, show the web onboarding flow directly
+- Store the invite token in a cookie/sessionStorage so it survives the App Store install → first launch flow via `SKAdNetwork` / deferred deep link (use Branch.io or Expo's built-in deferred linking)
+
+---
+
+## 15. Sign in with Apple
+
+**App Store requirement**: "Sign in with Apple" must appear as the **first** social login option when any third-party social login is offered (App Store Guideline 4.8).
+
+### 15.1 Button Ordering (UX Screens 1.3 / 2.2)
+
+```
+[ Sign in with Apple ]   ← MUST be first
+[ Sign in with Google ]  ← secondary
+[ Continue with email ]  ← tertiary
+```
+
+Violating this ordering is grounds for App Review rejection.
+
+### 15.2 Implementation
+
+```typescript
+import * as AppleAuthentication from 'expo-apple-authentication';
+
+async function signInWithApple() {
+  const credential = await AppleAuthentication.signInAsync({
+    requestedScopes: [
+      AppleAuthentication.AppleAuthenticationScope.FULL_NAME,
+      AppleAuthentication.AppleAuthenticationScope.EMAIL,
+    ],
+  });
+  // credential.identityToken → send to backend for verification
+  // NOTE: Apple only sends name/email on FIRST sign-in.
+  // Store them immediately — subsequent sign-ins return null for name.
+  await api.post('/auth/apple', {
+    identityToken: credential.identityToken,
+    fullName: credential.fullName,
+    email: credential.email,
+  });
+}
+```
+
+**Critical Apple behavior**: `credential.fullName` and `credential.email` are only provided on the first authentication. If the backend fails to persist them on first call, they are lost permanently (user must revoke and re-authorize in their Apple ID settings). The backend must save these immediately.
+
+### 15.3 Entitlement
+
+```xml
+<key>com.apple.developer.applesignin</key>
+<array>
+  <string>Default</string>
+</array>
+```
+
+---
+
+## 16. Accessibility (iOS-Specific Requirements)
+
+All interactive elements must meet iOS accessibility standards — required for App Store review and non-negotiable per UX spec.
+
+### 16.1 Touch Target Minimum
+
+All tappable elements must be ≥ **44×44pt** (Apple HIG requirement). Use `minHeight: 44, minWidth: 44` in StyleSheet. For small visual elements (icons, badges), expand the hit area with `hitSlop`:
+
+```typescript
+<TouchableOpacity hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}>
+  <Icon name="close" size={20} />
+</TouchableOpacity>
+```
+
+### 16.2 Currency Amount Accessibility Labels
+
+Screen readers read "$42.50" as "dollar sign forty-two point fifty". All currency display components must override the accessibility label:
+
+```typescript
+function CurrencyAmount({ cents }: { cents: number }) {
+  const dollars = Math.floor(cents / 100);
+  const centsRemainder = cents % 100;
+  const displayText = `$${dollars}.${String(centsRemainder).padStart(2, '0')}`;
+  const accessibilityLabel = `${dollars} dollar${dollars !== 1 ? 's' : ''} and ${centsRemainder} cent${centsRemainder !== 1 ? 's' : ''}`;
+
+  return (
+    <Text
+      accessibilityLabel={accessibilityLabel}
+      accessibilityRole="text"
+    >
+      {displayText}
+    </Text>
+  );
+}
+```
+
+### 16.3 Dynamic Type
+
+All `Text` components must support Dynamic Type — use `allowFontScaling={true}` (default in RN) and never hardcode font sizes without a maximum scale cap on layout-critical elements:
+
+```typescript
+// Layout-critical elements (e.g., nav bar title) — cap at accessibility large
+<Text maxFontSizeMultiplier={1.5} style={{ fontSize: 17 }}>
+  FairBridge
+</Text>
+
+// Content text — allow full scaling
+<Text style={{ fontSize: 16 }}>
+  Expense description
+</Text>
+```
+
+### 16.4 VoiceOver Semantic Roles
+
+```typescript
+// Expense list items
+<TouchableOpacity
+  accessibilityRole="button"
+  accessibilityLabel={`Expense: ${description}, ${amountLabel}, pending approval`}
+  accessibilityHint="Double tap to review this expense"
+>
+
+// Status badges
+<View
+  accessibilityRole="text"
+  accessibilityLabel={`Status: ${statusText}`}
+>
+```
+
+---
+
+## 13. Open Questions for Team (updated)
+
+~~1. UX-engineer: notification permission gate screen count~~ — resolved by UX spec (Screen 8.1: full-screen pre-prompt, "Not now" defers system dialog)
+~~3. Program-manager: biometric app lock V1 or V2~~ — resolved: V2
+~~4. Android-dev: vision-camera version~~ — resolved: v4 on both platforms
+
+**Remaining open:**
+1. **Backend-eng**: Confirm `/user/push-token` endpoint upserts on `(user_id, platform)` — reinstall generates new token, old must be replaced not accumulated.
+2. **Backend-eng**: AASA file hosting — must be served at `https://fairbridge.app/.well-known/apple-app-site-association` with correct Content-Type before app ships. Confirm infra ownership.
+3. **UX-engineer**: Deferred deep link on App Store install (invite token survives install) — do we use Branch.io or Expo's built-in deferred linking? This affects the Universal Links fallback web page implementation.

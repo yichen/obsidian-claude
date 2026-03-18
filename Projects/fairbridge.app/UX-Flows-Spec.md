@@ -221,7 +221,7 @@ For payers who skipped bank linking. Home screen shows expenses and calendar but
 **Privacy note**: The invite email subject line and preview do NOT contain the sender's name or "co-parent" language — it reads "You have money waiting" to avoid alerting anyone who might be monitoring the recipient's email. Full DV safety rationale in Flow 7.
 
 **Asymmetric verification** (runs silently in background, does not block UX):
-- After invite is sent, payer is prompted on Screen 1.9 to enter the children's names and dates of birth
+- After invite is sent, payer is prompted on Screen 1.9 to enter the children's names and birth years (year only — not full DOB, to minimize sensitive data collection)
 - Payee is prompted for the same data on their onboarding (Flow 2, Screen 2.6)
 - Backend matches these independently — if they don't match within 72 hours, a soft warning is shown to payer only (not payee)
 
@@ -242,7 +242,7 @@ For payers who skipped bank linking. Home screen shows expenses and calendar but
 **Layout**:
 - Headline: "Tell us about your children"
 - Body: "This helps us verify the connection with your co-parent. We never share this with them."
-- Fields: Child 1 first name, Child 1 date of birth (date picker)
+- Fields: Child 1 first name, Child 1 birth year (4-digit year input, not a full date picker — minimizes sensitive data collected)
 - "Add another child" link (for multiple children)
 - CTA: "Save"
 - Skip link: "Skip for now"
@@ -312,8 +312,8 @@ After expenses accumulate, payer initiates a payment.
 **Error states**:
 - Payer bank not linked: redirect to Screen 1.6
 - Payee bank not linked: "Your co-parent hasn't set up their bank yet. We'll send them a reminder." — payment is queued, not sent
-- Payment amount below Stripe minimum ($1): "Minimum payment is $1.00"
-- ACH return (R01 insufficient funds, etc.): push notification "Payment returned — insufficient funds"; Screen shows "Payment failed" with retry option
+- Payment amount below minimum ($5): "Minimum payment is $5.00"
+- ACH return (R01 insufficient funds, etc.): push notification "A payment needs your attention" (no amount or name in lock screen payload — DV safety); in-app inbox and full screen show amount + error detail + retry option
 
 ---
 
@@ -525,14 +525,22 @@ Same as Screen 1.10, but both parties can submit expenses.
 - Status badge: "Pending your review"
 - Actions:
   - "Approve" (primary green button)
-  - "Dispute" (secondary, outlined red button)
+  - "Decline" (secondary, outlined button — neutral color, not red; red implies conflict)
 
 **Approve flow**:
 - POST /expenses/[id]/approve → expense status = "approved"
 - Toast: "Expense approved"
 - If payment balance is >$0, smart nudge: "You have $[X] outstanding. Pay now?" with "Pay" and "Later" buttons
 
-**Dispute flow** → Flow 6.
+**Decline flow**:
+- Inline expansion (not a new screen): "Add a note (optional)" text field appears below the Decline button
+- No minimum character requirement
+- CTA changes to "Confirm decline"
+- POST /expenses/[id]/decline → expense status = "declined"
+- If note provided: other party notified "[Name] declined this expense: [note]"
+- If no note: other party notified "[Name] declined this expense." — no reason shown
+- Declined expenses remain in the ledger (append-only); balance adjusts to exclude them
+- Either party can re-open a declined expense by tapping "Reopen" on the expense detail (no time limit)
 
 ---
 
@@ -557,8 +565,8 @@ Triggered from "Pay now" nudge or from the balance banner.
 **Recurring settlement**: Users can opt into a "Pay automatically on the 1st of each month" toggle. If enabled:
 - BullMQ job runs on the 1st
 - Initiates ACH payment for outstanding balance
-- Sends push notification: "Automatic payment of $[X] initiated"
-- User can cancel within 1 hour (cancel window) via notification action button
+- Sends push notification: "Your scheduled payment was initiated" (no amount in lock screen payload — DV safety); in-app inbox shows full amount
+- User can cancel within 1 hour (cancel window) via notification action button or in-app inbox
 
 ---
 
@@ -700,7 +708,8 @@ Disputes can be raised on: expenses (any type), external payment logs, or ACH pa
   - "The amount is wrong"
   - "This was already paid another way"
   - "Other"
-- If "Other": text field (required, 20–500 chars)
+- Note field: "Add a note (optional)" — visible and empty by default, no minimum character requirement. If left blank, the other party is notified "[Name] disputed this expense." with no reason shown. If filled, the note is included in the notification.
+- **DV rationale**: mandatory reasons create evidentiary pressure — a coercive co-parent can weaponize written justifications. Optional notes give cooperative parents a way to communicate without forcing anyone to argue in writing.
 - CTA: "Submit dispute"
 - Cancel
 
@@ -862,40 +871,61 @@ These are architectural defaults, not UI flows, but they affect every screen:
 
 1. **No activity timestamps exposed to co-parent**: "Last seen" or "last active" data is never shown to the other party.
 2. **Invite email subject**: "You have money waiting" — no "co-parent" or sender name in preview
-3. **Push notification preview**: Payment and expense notifications show amounts only, not sender name (to avoid exposing relationship to device bystanders)
-4. **Screenshot protection** **[iOS]**: `isProtectedDataAvailable` check; app blurs on App Switcher preview
-5. **Screenshot protection** **[Android]**: `FLAG_SECURE` on all screens containing financial data
+3. **Push notification lock screen payload**: No amounts, no co-parent names, no expense descriptions in any push notification body visible on the lock screen. Assertions must be made on the `notification.body` field of the FCM/APNs payload itself — not just the rendered UI, since platforms can re-render body text differently. Full details visible only inside the authenticated app or in-app inbox. The invite landing page shows the full dollar amount (conversion hook) — acceptable because it requires active navigation and authentication intent, unlike the passive lock screen.
+
+   **Approved push notification copy — canonical reference for all platforms and test assertions:**
+   | Event | Lock screen body |
+   |-------|-----------------|
+   | New expense added | "A new expense was added." |
+   | Expense approved | "An expense was approved." |
+   | Expense declined | "An expense was declined." |
+   | Expense disputed | "An expense needs your review." |
+   | Payment initiated | "A payment is on its way." |
+   | Scheduled payment | "Your scheduled payment was initiated." |
+   | Payment failed | "A payment needs your attention." |
+   | Payment received | "A payment has arrived." |
+   | Dispute filed | "An expense needs your review." |
+   | Dispute deadline | "A response is due soon." |
+   | Calendar update | "Your custody calendar was updated." |
+
+4. **SMS** (highest-stakes events only: payment failure, dispute deadline): Same rule — no amounts, no names in SMS body. SMS text: "FairBridge: [generic event description]. Open the app for details."
+5. **Invite email open tracking**: No tracking pixel, no open/click webhook reported to the payer. The only payer-visible invite state changes are "Invite sent" (triggered by payer's send action) and "Co-parent joined" (triggered by payee completing onboarding and bank linking). No intermediate states. `viewed_at` and `opened_at` fields must be absent or null in the invite API response returned to the payer.
+6. **Screenshot protection** **[iOS]**: App blurs on App Switcher preview via BlurView overlay activated on `AppState 'inactive'`
+7. **Screenshot protection** **[Android]**: `FLAG_SECURE` on all screens containing financial data
 
 ---
 
 ## Flow 8: Notification Permission Gates
 
-Notifications are critical for the two-party confirmation model — if the payee doesn't get notified about payments, the app fails. But requesting permissions too early kills grant rates.
+Notifications are mandatory before pairing — the two-party confirmation model fails if either parent cannot be reached. A co-parent who can't receive push notifications cannot confirm expenses or receive payment alerts, breaking the core product loop.
+
+**MVP rule**: Notification permission must be requested and granted (or a fallback acknowledged) BEFORE the co-parent invite step. This is a hard gate, not a soft nudge. The payee onboarding is an exception — the payee may grant permission at any point during their funnel since they arrive via link and the payer has already been gated.
 
 ### Permission Request Timing
 
-**Rule**: Never request notification permission on first launch or during account creation. Request at a moment of clear value.
+| User | When | Blocking? |
+|------|------|-----------|
+| Payer | After email verification, before "Invite co-parent" | Yes — cannot proceed to invite without acknowledging |
+| Payee | After bank linking, before payment confirmation | Soft — can proceed; shown as recommended step |
 
-| Trigger | When to ask | Expected grant rate |
-|---------|-------------|-------------------|
-| After payer sends first payment | "Get notified when your payment arrives" | ~70% (high motivation) |
-| After payee bank is linked | "Get notified when the transfer arrives" | ~75% |
-| After expense is added | "Get notified when your co-parent reviews it" | ~55% |
+The pre-permission rationale screen is shown at this mandatory gate. Tapping "Not now" on the rationale screen does NOT skip the gate — it re-shows the rationale with stronger copy and the option to "Continue without notifications" (which routes to email-only mode with a clear warning).
 
 ---
 
 ### Screen 8.1 — Pre-Permission Rationale Screen (iOS)
 
-**[iOS only]** — iOS allows only ONE system permission prompt per app lifetime. A pre-permission rationale screen is shown first to filter out users who would deny.
+**[iOS only]** — iOS allows only ONE system permission prompt per app lifetime. A pre-permission rationale screen is shown first to maximize the chance of a grant before the irreversible system dialog fires.
+
+**Placement**: Between email verification and co-parent invite (payer flow, Screen 1.6a → here → Screen 1.8).
 
 **Layout**:
 - Illustration: phone with notification badge
 - Headline: "Stay on top of payments"
-- Body: "We'll let you know when you're paid, when expenses are added, and when your co-parent responds. You can change this anytime in Settings."
+- Body: "We'll notify you when you're paid, when expenses are added, and when your co-parent responds. Notifications are required for the two-party confirmation system."
 - CTA: "Turn on notifications" → triggers iOS system dialog
-- Secondary: "Not now" → skips; no system dialog shown (preserving the one-shot iOS prompt for a better moment)
+- Secondary: "Continue without notifications" → routes to email-only mode; shows warning "You'll receive updates by email only. This may delay time-sensitive payment alerts."
 
-**If user taps "Not now"**: tracked; shown again after second meaningful action (e.g., second payment sent).
+**If user taps "Continue without notifications"**: notification permission gate is satisfied; pairing proceeds; email notification frequency set to high; user shown a persistent in-app banner on home screen ("Enable notifications for faster alerts — tap here").
 
 ---
 
@@ -1003,9 +1033,10 @@ After OS dialog:
 
 **Trigger**: Stripe webhook `payment_intent.payment_failed` or ACH return code received.
 
-**User-facing notification** (push + in-app):
-- Title: "Payment didn't go through"
-- Body: "Your $[X] payment to [co-parent] failed. Tap to retry."
+**User-facing notification** (push + in-app + SMS for payment failure):
+- Push (lock screen payload): Title: "Action required", Body: "A payment needs your attention." — no amount, no co-parent name in lock screen payload (DV safety)
+- SMS (payment failure only — highest-stakes): "FairBridge: A payment needs your attention. Open the app for details." — no amount in SMS body
+- In-app inbox: full detail — "[Co-parent name]'s payment of $[X] failed. Tap to retry." (amount visible only inside the authenticated app)
 
 **Screen — Payment Failed Detail**:
 - Amount, date, recipient

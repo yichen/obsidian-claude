@@ -347,19 +347,19 @@ When the other parent receives an expense notification and taps "Review":
 │                                     │
 │  Notes: "Annual cleaning + x-ray"   │
 │                                     │
-│  [Approve & Pay $120]  [Decline]    │
+│  [Approve & Pay $120]  [Decline expense]  │
 └─────────────────────────────────────┘
 ```
 
 - "Approve & Pay" → triggers Stripe payment (ACH pull from payer's linked account)
-- "Decline" → opens reason dialog (required field, 10+ chars) → submitter notified
+- "Decline expense" → opens dialog with optional "Add a note (optional)" field (no minimum, not required) → submitter notified; blank note sends "[Name] declined this expense." with no reason appended
 - Approved expenses appear in payment history with expense reference
 - Receipt stored immutably; URL never changes after submission
 
 ### 8.4 Expense State Machine
 ```
 submitted → pending_confirmation → approved → payment_initiated → payment_completed
-                                → declined (with reason)
+                                → declined (optional note)
                                 → disputed (escalation path — future feature)
 ```
 
@@ -408,8 +408,8 @@ For ad-hoc payments outside the schedule:
 │  Export: —       │  │  PDF Export: ✓   │
 │  History: 3 mo   │  │  History: ∞      │
 │                  │  │                  │
-│  Free forever    │  │  $9.99/mo        │
-│                  │  │  or $79/yr       │
+│  Free forever    │  │  $7/mo           │
+│                  │  │  or $70/yr       │
 │  [Current Plan]  │  │  [Upgrade]       │
 └──────────────────┘  └──────────────────┘
 ```
@@ -555,22 +555,27 @@ Client: download link + hash displayed
 
 ### 13.1 Global Safety Exit Button
 
-Present on **every page** — fixed position, top-right corner.
+Present on **every page** — fixed position, bottom-right corner. Icon only (no label) — ambiguous to a casual observer, clear to the user who needs it.
 
 ```tsx
 // components/SafetyExitButton.tsx
 export function SafetyExitButton() {
   const handleExit = () => {
-    // Replace current session history to prevent back-navigation
+    // Replace entire history stack — back button cannot return to FairBridge
+    window.history.replaceState(null, '', '/');
     window.location.replace('https://weather.com');
   };
   return (
     <button
       onClick={handleExit}
-      className="fixed top-3 right-3 z-[10000] bg-red-600 text-white px-3 py-1.5 rounded text-sm font-semibold hover:bg-red-700"
-      aria-label="Quick exit"
+      className="fixed bottom-5 right-5 z-[10000] w-11 h-11 rounded-full
+                 bg-white/70 backdrop-blur-sm shadow-md
+                 flex items-center justify-center
+                 hover:bg-white/90 focus-visible:ring-2 focus-visible:ring-offset-2"
+      aria-label="Leave this page"
+      title="Leave this page"
     >
-      Exit
+      <XIcon className="w-5 h-5 text-gray-600" />
     </button>
   );
 }
@@ -747,11 +752,12 @@ const ExportPage = lazy(() => import('./pages/export/ExportPage'));
 3. Rate limiting on expense submission? (suggest: 20/day per user)
 4. Invite token expiry: 7 days acceptable?
 
-**For ux-engineer (ux-engineer)**:
-1. Payee invite landing page: show payment amount before signup? (conversion vs. privacy tradeoff)
-2. Two-parent confirmation: should declining an expense require a reason or allow anonymous decline?
-3. Calendar: should both parents see the same view, or can each customize custody colors?
-4. Safety exit: bottom-right vs. top-right? Any brand conflict?
+**For ux-engineer (ux-engineer)**: *(all resolved)*
+1. Amount shown on landing page before signup — **YES, show amount** (conversion > marginal DV risk already mitigated by email)
+2. Decline reason — **optional**, no minimum, field visible but empty by default
+3. Calendar — **shared view**; per-parent label customization only (stored client-side, never in DB or exports); PDF uses neutral "Parent A / Parent B"
+4. Safety exit — **bottom-right, icon only** (44×44px, semi-transparent, `aria-label="Leave this page"`)
+5. Phone number in web payer onboarding — **pending ux-engineer response**
 
 **For frontend-tester**:
 1. Critical paths to cover in E2E: (a) payer onboarding, (b) payee invite accept, (c) expense submit + approve, (d) payment failure + retry

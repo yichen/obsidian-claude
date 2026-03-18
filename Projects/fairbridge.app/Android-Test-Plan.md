@@ -326,8 +326,9 @@ Auth tokens must be stored using `react-native-keychain` backed by the Android K
 **TC-KEY-002: Hardware-backed storage on API 28+ device**
 - Device: Pixel 7 (API 33), Samsung S23 (API 33)
 - Action: Log in; query key properties
-- Verification: Use `react-native-keychain`'s `getSecurityLevel()` — must return `SECURE_HARDWARE` or `BIOMETRICS`
-- Pass criteria: Security level is NOT `ANY` or `SOFTWARE` on supported devices
+- Verification: Use `react-native-keychain`'s `getSecurityLevel()` — returns one of `SECURE_HARDWARE`, `SECURE_SOFTWARE`, or `ANY`
+- Pass criteria: Must return `SECURE_HARDWARE`; must NOT return `SECURE_SOFTWARE` or `ANY` on API 28+ devices with StrongBox/TEE
+- Correction note: `BIOMETRICS` is a storage *option* constant, not a `getSecurityLevel()` return value — earlier versions of this test case contained an error; `getSecurityLevel()` returns `SECURE_HARDWARE | SECURE_SOFTWARE | ANY` only
 
 **TC-KEY-003: Biometric authentication required for token access**
 - Preconditions: Fingerprint enrolled on device; app configured with biometric protection
@@ -496,10 +497,14 @@ FairBridge must handle network loss gracefully: expense submission queued locall
 - Pass criteria: Payment NOT submitted to backend; error message shown; user not confused about whether payment was sent
 
 **TC-OFF-005: Offline → reconnect → WorkManager sync**
-- Preconditions: WorkManager registered for connectivity-change sync job
+- Preconditions: `ConnectivityManager.NetworkCallback` registered; one-shot `WorkRequest` with `NetworkType.CONNECTED` constraint enqueued on network callback fire; pending expense in local queue
 - Action: Background app; disable network; re-enable network
-- Expected: WorkManager fires sync job within 60 seconds of reconnection (even with app backgrounded)
-- Pass criteria: Pending expenses sync automatically without user reopening the app
+- Expected: NetworkCallback fires → one-shot WorkRequest enqueued → WorkManager executes sync job
+- Pass criteria (tiered by OEM):
+  - Stock Android (Pixel): pending expenses synced within 60 seconds of reconnection — PASS
+  - Samsung/Xiaomi/OnePlus with battery optimization exemption: synced within 120 seconds — PASS
+  - Samsung/Xiaomi without exemption: document actual sync delay; no hard pass threshold (WorkManager job execution not guaranteed within any fixed window without exemption)
+- Note: This tests the one-shot NetworkCallback path, not the periodic 15-min WorkManager sync. Both must be implemented; this TC verifies only the immediate-reconnect path.
 
 **TC-OFF-006: Offline indicator in UI**
 - Action: Disable network while app is in foreground
@@ -662,8 +667,8 @@ curl -X POST https://api.fairbridge.app/test/send-fcm \
 | OEM | Setting Path | Intent Action |
 |-----|-------------|--------------|
 | Samsung One UI | Settings > Battery > App Power Management > Unrestricted | `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` |
-| Xiaomi MIUI | Security app > Permissions > Autostart | `miui.intent.action.APP_PERM_EDITOR` |
-| Xiaomi HyperOS | Settings > Apps > FairBridge > Battery > No restrictions | `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` |
+| Xiaomi MIUI 14 (Xiaomi 13) | Security app > Permissions > Autostart | `miui.intent.action.APP_PERM_EDITOR` + extras: `pkg_name`, `pkg_uid` |
+| Xiaomi HyperOS 1.0 (Xiaomi 14) | Settings > Apps > FairBridge > Battery > No restrictions | `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` (standard) |
 | OnePlus OxygenOS | Settings > Battery > Battery Optimization > FairBridge | `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` |
 | Stock Android | Settings > Apps > FairBridge > Battery > Unrestricted | `android.settings.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` |
 

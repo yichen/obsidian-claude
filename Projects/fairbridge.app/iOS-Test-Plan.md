@@ -188,23 +188,63 @@ All test suites must be executed across the following matrix. Mark each cell pas
 |---|---|
 | **ID** | IOS-NOTIF-008 |
 | **Priority** | P0 — Non-negotiable V1 requirement |
-| **Device** | iPhone 14, iOS 17 (physical, locked screen) |
+| **Device** | iPhone 14, iOS 17 (physical, locked screen) + payload interception (all environments) |
 
-**Context**: DV safety requires that push notification payloads never expose amounts, names, or transaction details on the lock screen — an abuser with physical access to the device must not be able to read financial activity at a glance.
+**Context**: DV safety requires that push notification payloads never expose amounts, names, or transaction details on the lock screen — an abuser with physical access to the device must not be able to read financial activity at a glance. This is a P0 DV safety requirement, not a UX preference.
 
-**Steps**:
+**Primary verification — payload interception (preferred, environment-independent)**:
+The OS may truncate or wrap notification text differently across devices and iOS versions, making visual lock screen inspection unreliable as a sole test. The authoritative check is the raw APNs payload dispatched by the backend.
+
+Steps:
+1. Configure a proxy (e.g., mitmproxy or Charles) or use backend test harness logging to capture outbound APNs payloads for each notification type.
+2. Trigger each notification type: expense confirmation required, payment update (succeeded/failed), dispute opened.
+3. Inspect the captured JSON payload for each.
+
+Expected payload structure — all notification types must conform to:
+```json
+{
+  "aps": {
+    "alert": {
+      "title": "<generic — no amounts, no names>",
+      "body": "<generic — no amounts, no names, no child names>"
+    },
+    "badge": 1,
+    "sound": "default"
+  },
+  "data": {
+    "fairbridge_type": "expense_confirmation",
+    "expense_id": "exp_abc123"
+  }
+}
+```
+
+**Field-level assertions** (verify for every notification type):
+- `aps.alert.title` must NOT match `\$[\d,]+` (dollar amounts).
+- `aps.alert.title` must NOT contain any value from the user's stored co-parent name or child name fields.
+- `aps.alert.body` must NOT match `\$[\d,]+`.
+- `aps.alert.body` must NOT contain co-parent name or child name.
+- `data.expense_id`, `data.fairbridge_type`, and similar machine-readable fields are present in the `data` dict — these are not rendered on the lock screen and are permitted.
+- `data` dict fields must NOT be hoisted into `aps.alert` (OS does not render `data` on lock screen; `aps.alert` fields are always visible).
+
+**Accepted generic copy examples**:
+- Expense confirmation: title "FairBridge", body "An expense is waiting for your review."
+- Payment update: title "FairBridge", body "You have a payment update."
+- Payment failure: title "FairBridge", body "A payment needs your attention."
+- Dispute: title "FairBridge", body "Action required on a disputed expense."
+
+**Secondary verification — physical lock screen (physical device, locked)**:
 1. Lock device.
-2. Trigger each notification type from test harness: payment received, expense submitted, expense confirmation required, payment failed, dispute opened.
-3. Observe lock screen banner for each notification.
+2. Trigger each notification type from test harness.
+3. Observe lock screen banner without unlocking.
 
-**Expected**:
-- Notification body contains NO dollar amounts (e.g., must NOT show "$450.00 payment received").
-- Notification body contains NO co-parent name.
-- Notification body is generic (e.g., "You have a new payment update" or "An expense needs your attention").
-- Full details are revealed only after device unlock + app authentication.
-- APNs `content-available: 1` (silent push) may be used to trigger in-app badge without lock screen exposure.
+Expected on lock screen:
+- Generic title and body only (per accepted copy above).
+- No dollar amounts visible.
+- No co-parent name visible.
+- No child name visible.
+- Full details revealed only after device unlock + in-app authentication.
 
-**Verify via**: Inspect raw APNs payload in backend test harness. Confirm `alert.body` contains no PII, amounts, or transaction identifiers.
+**Note**: `content-available: 1` (silent push) may also be used to trigger in-app badge increment with no lock screen display at all — this is the most conservative DV-safe option for non-urgent notifications.
 
 ---
 
@@ -295,8 +335,10 @@ All test suites must be executed across the following matrix. Mark each cell pas
 | Field | Value |
 |---|---|
 | **ID** | IOS-PHOTO-002 |
-| **Priority** | P1 |
+| **Priority** | P2 (post-MVP — blur detection deferred to V2) |
 | **Device** | Physical device only (camera unavailable in Simulator) |
+
+**Note**: Blur detection is deferred post-MVP. V1 trusts the user to attach a legible photo — no automatic quality check. If V2 adds blur detection, it will use Vision framework (`VNGenerateImageFeaturePrintRequest` or a `CIFilter` sharpness check). This test case covers only camera permission flow and basic capture for V1.
 
 **Preconditions**: `NSCameraUsageDescription` in Info.plist. Camera permission granted.
 
@@ -304,17 +346,12 @@ All test suites must be executed across the following matrix. Mark each cell pas
 1. Tap "Add Receipt" → "Take Photo".
 2. Observe `NSCameraUsageDescription` permission prompt on first launch (must appear).
 3. Grant camera access.
-4. Capture a clear, in-focus receipt photo.
-5. Capture a deliberately blurry photo (shake device during capture).
+4. Capture a receipt photo (clear or blurry — both accepted in V1).
 
-**Expected (clear photo)**:
+**Expected (capture)**:
 - Photo accepted, thumbnail shown in form.
 - Upload proceeds without error.
-
-**Expected (blurry photo)**:
-- App detects blur (using Vision framework `VNDetectImageRequest` or equivalent blur metric).
-- User sees inline warning: "Photo appears blurry. Retake for better results?" with Retake / Keep options.
-- User can choose to keep blurry photo (not hard-blocked).
+- No blur warning in V1 (deferred).
 
 **Expected (permission flow)**:
 - First-time prompt uses `NSCameraUsageDescription` string from Info.plist.
@@ -484,17 +521,22 @@ All test suites must be executed across the following matrix. Mark each cell pas
 
 **Preconditions**: User is authenticated and viewing a screen with financial data (expense list, payment amount, bank account info).
 
+**Implementation**: `expo-blur` `BlurView` overlay mounted at root `<App />` level, activated on React Native `AppState` → `'inactive'` transition. The `'inactive'` state fires before iOS captures the app-switcher snapshot, so the blur is captured in the thumbnail. This is NOT `UIApplication.ignoreSnapshotOnNextApplicationLaunch()` or the UIScene snapshot API.
+
+**Test type**: MANUAL / VISUAL — XCUITest cannot directly inspect the app-switcher thumbnail. Automate the trigger; verify the result visually.
+
 **Steps**:
-1. Navigate to expense list screen showing dollar amounts.
+1. Navigate to expense list screen showing dollar amounts (physical device, any iOS version).
 2. Press Home button (or swipe up on Face ID devices) to enter app switcher.
-3. Observe the app preview card in the multitasking view.
+3. Visually inspect the FairBridge app card in the multitasking view.
+4. Optionally: use `XCUIDevice.shared.press(.home)` in an XCTest, then `XCTAttachment` to capture a springboard screenshot for the test record.
 
 **Expected**:
-- App preview shows a blurred/masked overlay OR a branded splash screen (e.g., FairBridge logo on white background).
-- No dollar amounts, names, account numbers, or transaction details visible in app switcher preview.
-- App switcher preview is NOT a live view of the financial screen.
+- App card shows FairBridge logo on a dark blur (expo-blur overlay) — NOT a live financial screen.
+- No dollar amounts, names, account numbers, or transaction details visible in the app card.
+- Return to app: blur overlay dismisses immediately, financial data visible again.
 
-**Implementation to verify**: `UIApplication.ignoreSnapshotOnNextApplicationLaunch()` or `UIView.isHidden` overlay applied in `applicationWillResignActive`.
+**Documentation**: Record a screen capture video of this test for each device/OS combination in the matrix. Attach video as test artifact — this is the audit trail for App Store review if queried.
 
 ---
 
@@ -515,6 +557,73 @@ All test suites must be executed across the following matrix. Mark each cell pas
 **Steps**: Navigate to each screen, enter app switcher, verify masking.
 
 **Expected**: Masking applied consistently on all screens listed. Non-financial screens (e.g., calendar overview without amounts) may optionally show preview — but default to masked if in doubt.
+
+---
+
+### 6.3 Screen Recording Detection
+
+| Field | Value |
+|---|---|
+| **ID** | IOS-PRIVACY-003 |
+| **Priority** | See per-scenario priorities below |
+
+**Context**: The `ScreenProtection` native Swift `RCTEventEmitter` registers a `NotificationCenter` observer for `UIScreen.capturedDidChangeNotification` in its `startObserving()` method. `startObserving()` is called by the RN bridge when the first JS listener is added via `emitter.addListener('screenCaptureChanged', ...)` — which happens when the root `<App />` mounts and `useScreenRecordingProtection()` runs its `useEffect`. The JS side also reads `NativeModules.ScreenProtection?.isCaptured` synchronously as the initial `useState` value.
+
+**Timing implication**: The observer is NOT active until the JS bridge initializes and root component mounts (typically 1–3 seconds on real device, longer on older hardware). The `startObserving()` implementation must also call `UIScreen.main.isCaptured` synchronously and fire an initial event if already `true` — this handles recording that was active before the observer registered.
+
+---
+
+**Scenario A — Recording started after app is fully loaded (P1)**
+
+Steps:
+1. Launch app. Wait for home screen / expense list to fully render (~3 seconds after tap).
+2. Open Control Center → tap Screen Recording to start recording.
+3. Return to app and observe UI.
+4. Stop screen recording.
+5. Review recording in Photos app.
+
+Expected:
+- Overlay (BlurView) appears within 1 second of recording start.
+- No dollar amounts, names, or account numbers visible in the recording video.
+- After recording stops: overlay dismissed, financial data visible again.
+- No crash.
+
+---
+
+**Scenario B — Recording started before or during cold launch (P2 — known timing gap, acceptable V1 limitation)**
+
+Steps:
+1. Start screen recording from Control Center (app not running).
+2. Immediately tap FairBridge app icon.
+3. Observe first rendered screen.
+
+Expected:
+- Overlay should appear on first rendered screen IF `NativeModules.ScreenProtection?.isCaptured` synchronous read in `useState` initializer returns `true` before bridge init completes.
+- If overlay is absent for up to 3 seconds after app launch: this is a known limitation of the JS-bridge timing gap. Document as KNOWN LIMITATION in test results — not a blocking failure for V1.
+- Once bridge is ready and `startObserving()` fires its synchronous `isCaptured` check, overlay must appear without requiring any user interaction.
+
+Pass criteria for V1: overlay present within 5 seconds of app launch while recording is active.
+
+---
+
+**Scenario C — AirPlay mirroring (P1)**
+
+Steps:
+1. Connect device to AirPlay mirror target (Apple TV or Mac with AirPlay receiver).
+2. Launch app and navigate to expense list.
+3. Observe app UI on both device and mirror target.
+
+Expected:
+- `UIScreen.main.isCaptured` returns `true` for AirPlay mirror (same code path as screen recording).
+- Overlay appears on device UI within 1 second of mirror connection.
+- Mirror target shows the overlay (BlurView), not financial data.
+- No crash.
+
+Note: Requires physical Apple TV or Mac with AirPlay receiver. Run on iPhone 14+ (iOS 17+). If AirPlay hardware unavailable, mark this scenario as DEFERRED and note in test results.
+
+---
+
+**Cross-scenario**: All scenarios — verify app does NOT crash when recording/mirror state changes. Verify overlay dismisses cleanly when recording/mirror stops (no stuck blur).
 
 ---
 
@@ -903,7 +1012,8 @@ Run this checklist on every TestFlight build before distribution:
 - [ ] Camera capture works with blur warning on blurry photo
 - [ ] Calendar export creates events in Apple Calendar
 - [ ] Keychain token survives app background and foreground
-- [ ] App switcher shows masked screen (no financial data visible)
+- [ ] App switcher shows masked screen (no financial data visible) — visual verification, attach screenshot
+- [ ] Screen recording: blur overlay appears when recording starts, dismissed when stopped
 - [ ] Offline: expense submission queued, payment blocked with error
 - [ ] Stripe bank linking OAuth completes in SFSafariViewController
 - [ ] Stripe Connect Express onboarding loads and completes
@@ -923,7 +1033,8 @@ Run this checklist on every TestFlight build before distribution:
 | Calendar write-only access (iOS 17+) silently falls back to full access on iOS 16 | Low | Code must branch on iOS version and use appropriate `EKAuthorizationStatus` check. |
 | Stripe Financial Connections redirects to external Safari instead of SFSafariViewController | Medium | Verify Stripe SDK version supports `SFSafariViewController` presentation. Test with latest Stripe iOS SDK on all devices. |
 | App Store rejection for subscription pricing shown in-app | High | Do not display any price in-app. Use "Subscribe at fairbridge.app" text only. |
-| Screen masking not applied on all financial screens | Medium | Automated UI test: enumerate all tab/screen routes, enter app switcher after each, verify masked state. |
+| Screen masking not applied on all financial screens | Medium | IOS-PRIVACY-001/002 are manual/visual — use XCTest + XCTAttachment to capture springboard screenshot for each screen route. expo-blur BlurView must be in view hierarchy when AppState is 'inactive'. |
+| Screen recording overlay not firing (UIScreen.isCaptured) | Low | IOS-PRIVACY-003: verify with Control Center screen recording + AirPlay mirror. Native Swift module must subscribe to `capturedDidChangeNotification` at app startup. |
 | DV safety: sensitive data leaks into push payload on lock screen | High | Backend must strip amounts/names from APNs `alert.body`. QA must verify on physical locked device for every notification type before beta. |
 | DV safety: silent deactivation accidentally notifies other parent | Medium | Backend-tester to verify no webhook/email fires on deactivation. iOS-tester verifies no local push triggered on deactivation event received. |
 | SMS body exposes financial details violating DV safety | Medium | Twilio message templates reviewed by security-eng before launch. Generic body required for all SMS. |

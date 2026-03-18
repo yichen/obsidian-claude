@@ -3,7 +3,7 @@
 **Document Owner**: frontend-tester
 **Version**: 1.0
 **Date**: 2026-03-17
-**Status**: Draft — awaiting coordination input from web-dev and ux-engineer
+**Status**: v1.2 — all coordination questions resolved (web-dev + ux-engineer) 2026-03-17
 
 ---
 
@@ -132,10 +132,17 @@ The payee invite is the single most important conversion surface. A payer sends 
 - Action: Visit invite link more than 7 days after creation
 - Expected: "This invite has expired" page; no ability to proceed without a new link
 
-**TC-ONB-023: Payee signup from invite — minimal friction path**
-- Action: On invite landing page, click "Claim your money"; complete signup (email + password); complete co-parent child verification
-- Expected: User arrives at bank linking step (Stripe Financial Connections) within 3 screens from landing page click
-- Verify: Step count is ≤3 (landing → signup → bank linking); no unnecessary intermediate screens
+**TC-ONB-023-standard: Payee signup from invite — email/password path step count**
+- Action: On invite landing page, click "Claim your money"; complete signup via email + password; complete email OTP verification; enter name; reach bank linking screen
+- Confirmed screen sequence: (1) Landing `/claim/[token]` → (2) Quick Signup (email + password) → (3) Email OTP verification → (4) Name collection → (5) Bank linking (Stripe Financial Connections)
+- Expected: User reaches bank linking screen after exactly 4 intermediate screens. Assert step count ≤4. Any build where bank linking is reached in >4 screens is a funnel regression.
+- Negative assertion: Child verification screen must NOT appear before bank linking. If `[data-testid="child-verification"]` is `.toBeAttached()` before bank linking is reached, flag as funnel regression (child verification belongs after bank linking, and is skippable).
+
+**TC-ONB-023-social: Payee signup from invite — Google/Apple social login path step count**
+- Action: On invite landing page, click "Claim your money"; tap "Continue with Google"; complete name collection; reach bank linking screen
+- Confirmed screen sequence: (1) Landing → (2) Quick Signup (social button tap) → (3) Name collection (OTP skipped entirely) → (4) Bank linking
+- Expected: User reaches bank linking screen after exactly 3 intermediate screens. Assert step count ≤3.
+- Negative assertion: Email OTP screen must NOT appear in the social login path — assert `[data-testid="otp-verification"]` is never `.toBeAttached()` during this flow.
 
 **TC-ONB-024: Payee signup — existing account**
 - Action: Click invite link; enter email of an existing account
@@ -149,10 +156,14 @@ The payee invite is the single most important conversion surface. A payer sends 
 - Action: Open invite link on iOS with app installed
 - Expected: App opens directly to invite acceptance screen (universal link behavior); web page is not shown
 
-**TC-ONB-027: "Money waiting" email click-through — tracking pixel not leaking activity**
-- Action: Open email, click link
-- Expected: No activity timestamp or read-receipt metadata is exposed in any DOM element, URL param, or API response visible to the payer
-- Verify: Payer cannot determine whether the email was opened (DV safety requirement)
+**TC-ONB-027: "Money waiting" invite — no payer-visible activity between "Invite sent" and "Co-parent joined"**
+- Action: Payee opens the invite email and clicks the link. Check payer's dashboard and API for any state change.
+- Expected: The only two payer-visible invite states are "Invite sent" (triggered by the send action) and "Co-parent joined" (triggered by payee completing onboarding + bank linking). No intermediate state appears between them.
+- Assertions:
+  - GET /api/invites/:id as payer — response does not contain `viewed_at`, `opened_at`, `clicked_at`, or any equivalent field with a non-null value after payee clicks the link
+  - No push notification dispatched to the payer device when invite link is opened (verify via push notification log in staging — zero payer-addressed events triggered by link click)
+  - Payer dashboard shows no "Invite viewed" badge, tooltip, or activity feed entry
+  - "Co-parent joined" state only appears after payee completes bank linking, not after email open or invite page view
 
 ### 2.3 Subscription Purchase Flow
 
@@ -266,10 +277,14 @@ Subscriptions are purchased on web only (not in-app, to avoid Apple IAP 30% fee)
 - Action: Check "Paid externally (Venmo/Zelle/check/cash)"; select payment method; enter reference note
 - Expected: Expense marked as external; no ACH payment initiated; record shows external payment method
 
-**TC-EXP-019: Append-only constraint — no edit button shown**
-- Action: View a submitted expense
-- Expected: No "Edit" button present in DOM (not just hidden — must be absent)
+**TC-EXP-019: Append-only constraint — edit button not attached to DOM**
+- Action: View a submitted expense (any status other than `pending_confirmation` submitted by self)
+- Expected: No "Edit" button in DOM. Use `expect(page.locator('[data-testid="edit-expense"]')).not.toBeAttached()` — NOT `.not.toBeInViewport()`, which would pass even if the element is hidden. The JSX branch for edit is never reached after an expense record exists per the component state machine.
 - Verify: Direct API call to edit endpoint returns 405 Method Not Allowed or 403 Forbidden
+
+**TC-EXP-019b: Append-only constraint — delete button not attached to DOM**
+- Action: View a submitted expense at any status
+- Expected: `expect(page.locator('[data-testid="delete-expense"]')).not.toBeAttached()`. No delete button exists in the component tree at any expense status. Same `.not.toBeAttached()` assertion pattern as TC-EXP-019.
 
 **TC-EXP-020: Hash chain integrity — hash displayed on expense detail**
 - Action: Open expense detail view
@@ -366,9 +381,18 @@ Subscriptions are purchased on web only (not in-app, to avoid Apple IAP 30% fee)
 
 ### 5.1 Custody Pattern Rendering
 
-**TC-CAL-001: 2-2-5-5 pattern renders correctly**
-- Action: Configure 2-2-5-5 custody schedule starting a known Monday
-- Expected: Calendar shows correct parent assignment for each day across a 4-week view; no off-by-one errors at month boundaries
+**TC-CAL-001: `getCustodyForDate` — 2-2-5-5 pattern correctness (pure unit test)**
+- Method: Call `getCustodyForDate(date, schedule)` directly with `pattern: '2-2-5-5'`, `startDate: '2025-01-06'` (known Monday), `startsWith: 'A'`. No API fixture seeding needed — function is pure client-side.
+- Expected assignments:
+  - Day 0 (Jan 6) → `'parent-a'`
+  - Day 2 (Jan 8, first switch) → `'parent-b'`
+  - Day 4 (Jan 10, second switch) → `'parent-a'`
+  - Day 9 (Jan 15, cycle repeat) → same as day 0 (`'parent-a'`)
+  - Override date (any date in `overrides` array) → override `custody` value, not pattern value
+
+**TC-CAL-001b: Calendar rendering — correct CSS classes on day cells**
+- Method: Render calendar component with fixed `startDate: '2025-01-06'`, `pattern: '2-2-5-5'`, `startsWith: 'A'`. Assert that specific date cells have the correct custody CSS class applied via `dayCellDidMount`.
+- Expected: Jan 6 cell has class `custody-parent-a`; Jan 8 cell has class `custody-parent-b`; Jan 10 cell has class `custody-parent-a`
 
 **TC-CAL-002: Week view — color coding**
 - Action: View week containing a custody switch day
@@ -430,9 +454,10 @@ Subscriptions are purchased on web only (not in-app, to avoid Apple IAP 30% fee)
 
 ### 6.1 Express Account Onboarding
 
-**TC-STRIPE-001: Payer opens bank linking — modal opens**
+**TC-STRIPE-001: Payer opens bank linking — pre-redirect interstitial shown**
 - Action: Click "Link your bank account" from payment settings
-- Expected: Stripe Connect Express onboarding opens as a full-screen modal overlay (not a new tab); URL does not change (no navigation away from app)
+- Expected: shadcn Dialog interstitial opens with trust copy and Stripe logo (focus trap via Radix UI FocusScope). This is NOT an iframe — it is a pre-redirect Dialog. After user confirms, `window.location.href` navigates to `connect.stripe.com`. Stripe then redirects back to `/onboarding/payer?stripe=connect_result`.
+- Implementation note: Do NOT attempt to test the Stripe-hosted Connect portion in Playwright (it is outside the app DOM). Test the interstitial Dialog and the return URL handler separately.
 
 **TC-STRIPE-002: Stripe Connect — successful onboarding**
 - Action: Complete Stripe Express onboarding with test data (test SSN `000-00-0000`, test bank account)
@@ -456,9 +481,18 @@ Subscriptions are purchased on web only (not in-app, to avoid Apple IAP 30% fee)
 - Action: User with completed Stripe account clicks "Manage bank account"
 - Expected: Stripe Connect dashboard opens (not re-onboarding flow); user can view/update account details
 
-**TC-STRIPE-007: Stripe Connect modal — keyboard accessible**
-- Action: Open modal using keyboard (Tab to button, Enter to activate)
-- Expected: Modal opens; focus moves inside modal; Tab cycles through modal content only (focus trap); Escape closes modal; focus returns to trigger button on close
+**TC-STRIPE-007: Stripe Connect interstitial Dialog — keyboard accessible**
+- Action: Open interstitial Dialog using keyboard (Tab to button, Enter to activate)
+- Expected: Dialog opens; focus moves inside Dialog; Tab cycles through Dialog content only (focus trap provided by Radix UI FocusScope — no custom implementation needed); Escape closes Dialog; focus returns to trigger button on close.
+- Implementation note: The Stripe-hosted Connect pages are outside the app DOM and cannot be keyboard-tested in Playwright. This test covers only the pre-redirect interstitial Dialog.
+
+**TC-STRIPE-007b: Stripe Connect — return URL handler (success)**
+- Action: Navigate directly to `/onboarding/payer?stripe=connect_result` with mocked `/api/stripe/connect/status` returning `{ status: 'complete' }`
+- Expected: App renders "Bank account linked" confirmation; next onboarding step visible; no redirect loop.
+
+**TC-STRIPE-007c: Stripe Connect — return URL handler (incomplete/failure)**
+- Action: Navigate to `/onboarding/payer?stripe=connect_result` with mocked status returning `{ status: 'incomplete' }`
+- Expected: App renders "Verification in progress" or "Please complete setup" with retry CTA; same Stripe account ID reused on retry (no duplicate account creation).
 
 **TC-STRIPE-008: Stripe Connect modal — mobile web**
 - Action: Open on iOS Safari (375px viewport)
@@ -466,29 +500,31 @@ Subscriptions are purchased on web only (not in-app, to avoid Apple IAP 30% fee)
 
 ### 6.2 Stripe Financial Connections (Bank Linking)
 
-**TC-STRIPE-020: Financial Connections — bank search**
-- Action: Open bank linking flow; type bank name in search
-- Expected: Bank suggestions appear within 1 second; selecting a bank proceeds to OAuth or credentials flow
+**Implementation note**: Financial Connections renders inside a Stripe-owned iframe injected into the DOM by the Stripe.js SDK. Playwright cannot cross the iframe boundary. Tests for this section use the Stripe.js test mode with a stubbed `confirmUsBankAccountSetup` response to drive the wrapper component's loading/error/success states. The internal bank search UI inside the iframe is not testable.
 
-**TC-STRIPE-021: Financial Connections — OAuth bank success**
-- Action: Complete OAuth bank linking with a test institution
-- Expected: Bank account linked; last 4 digits of account number displayed; "Linked" status shown
+**TC-STRIPE-020: Financial Connections — wrapper loads**
+- Action: Trigger bank linking flow (Stripe.js SDK initializes); inspect wrapper component
+- Expected: Loading state renders while Stripe iframe mounts; no JS errors in console; wrapper does not show error state on successful SDK init
 
-**TC-STRIPE-022: Financial Connections — credentials bank success**
-- Action: Complete credentials-based linking with test institution `stripe_test_credentials_bank`
-- Expected: Bank account linked; micro-deposit verification step (if required) is explained clearly
+**TC-STRIPE-021: Financial Connections — success state (stubbed)**
+- Method: Stub `confirmUsBankAccountSetup` to resolve with `{ setupIntent: { status: 'succeeded' }, bankAccount: { last4: '6789' } }`
+- Expected: Wrapper component renders "Bank account linked ••••6789"; "Linked" status badge shown; no error state
 
-**TC-STRIPE-023: Financial Connections — failure (wrong credentials)**
-- Action: Enter incorrect credentials for a test institution
-- Expected: "Unable to connect to your bank — please check your credentials and try again"; retry button present
+**TC-STRIPE-022: Financial Connections — requires micro-deposit (stubbed)**
+- Method: Stub `confirmUsBankAccountSetup` to resolve with `{ setupIntent: { status: 'requires_action', next_action: { type: 'verify_with_microdeposits' } } }`
+- Expected: Wrapper renders micro-deposit explanation copy with instructions; "Check back in 1-2 business days" messaging shown
+
+**TC-STRIPE-023: Financial Connections — failure state (stubbed)**
+- Method: Stub `confirmUsBankAccountSetup` to reject with a Stripe error `{ code: 'bank_account_unverified' }`
+- Expected: Wrapper renders "Unable to connect your bank — please try again"; retry button present and re-triggers flow
 
 **TC-STRIPE-024: Financial Connections — user exits flow**
-- Action: Open bank linking; click "Cancel" or close popup
-- Expected: User returns to previous state; no partial bank connection created; "Link bank account" button still visible
+- Method: Stub Stripe SDK to emit `cancel` event from the Financial Connections flow
+- Expected: Wrapper returns to pre-linking state; no partial connection created; "Link bank account" button re-rendered
 
-**TC-STRIPE-025: Financial Connections — retry after failure**
-- Action: After a failed bank link attempt, click retry
-- Expected: Flow restarts cleanly; previous failed attempt does not cause a persistent error state
+**TC-STRIPE-025: Financial Connections — retry after failure is clean**
+- Method: Stub failure response; click retry; stub success response on second call
+- Expected: Second call succeeds; no stale error state from first attempt persists in wrapper
 
 ---
 
@@ -669,17 +705,44 @@ Domestic violence (DV) safety defaults are non-negotiable. These tests verify th
 - Action: Navigate to expense submission page with a pending expense
 - Expected: Browser tab title shows "FairBridge" or "Expenses — FairBridge"; does not show dollar amounts that could be visible in taskbar or shared-screen scenarios
 
-**TC-DV-011: Notification preview — no financial details**
-- Action: Trigger a notification (in-app notification banner)
-- Expected: Notification banner shows generic message ("You have a new expense request") without dollar amount or description in the preview; user must click through to see details
+**TC-DV-011: Notification payload — approved lock-screen copy, no amounts or names**
+- Method: Simulate each notification event type via API/webhook and capture the FCM/APNs payload object (specifically `notification.body`). Test both the push payload and the rendered in-app banner.
+- Expected payload bodies must match the approved copy table exactly (non-negotiable DV safety defaults):
+
+| Event | Required `notification.body` |
+|-------|------------------------------|
+| New expense added | "A new expense was added." |
+| Expense approved | "An expense was approved." |
+| Expense declined | "An expense was declined." |
+| Expense disputed | "An expense needs your review." |
+| Payment initiated | "A payment is on its way." |
+| Scheduled payment | "Your scheduled payment was initiated." |
+| Payment failed | "A payment needs your attention." |
+| Payment received | "A payment has arrived." |
+| Dispute filed | "An expense needs your review." |
+| Dispute deadline | "A response is due soon." |
+| Calendar update | "Your custody calendar was updated." |
+
+- Any payload body containing a dollar amount, co-parent name, child name, or expense description is a P0 DV safety failure.
+- SMS (payment failure and dispute deadline only): body must be "FairBridge: [generic event description]. Open the app for details." — no amounts, no names.
+- Full detail (amounts, descriptions) accessible only inside the authenticated app and in-app inbox.
 
 **TC-DV-012: Safety resources — always accessible**
 - Action: Navigate to Settings > Safety
 - Expected: Safety resources page accessible without entering a password; shows National DV Hotline contact; "Quick exit" button present
 
-**TC-DV-013: Quick exit button**
-- Action: Click "Quick exit" button from any page in the app
-- Expected: Browser navigates immediately to a neutral page (e.g., Google.com or weather.com); no app state visible; browser back button disabled or redirected (so navigating back does not re-expose the app)
+**TC-DV-013a: Quick exit button — present on all authenticated routes**
+- Action: Navigate to each authenticated route (onboarding steps, expense list, expense detail, calendar, payment flows, settings)
+- Expected: Fixed-position button (bottom-right, 20px inset) is `.toBeAttached()` on every authenticated screen. Button is 44×44px touch target. Icon only (no visible label — label would be conspicuous to bystanders). Has `aria-label="Leave this page"`.
+- Negative assertion: Button must NOT be present on the pre-auth landing page `/claim/[token]` — assert `[data-testid="quick-exit"]` is `.not.toBeAttached()` on that route.
+
+**TC-DV-013b: Quick exit button — navigation and history clearing**
+- Action: On an authenticated page, click the Quick Exit button
+- Expected: Browser navigates immediately to the user-configured cover page (default: a neutral external URL). Browser history is cleared such that pressing the back button does not return to FairBridge. Verify by calling `window.history.length` before and after — after quick exit there should be no FairBridge entries navigable via back.
+
+**TC-DV-013c: Quick exit button — keyboard and screen reader accessible**
+- Action: Tab to Quick Exit button; press Enter
+- Expected: Same navigation-away behavior as click. `aria-label="Leave this page"` is announced by screen reader. Button is reachable via Tab from any page position (fixed positioning does not remove it from tab order).
 
 **TC-DV-014: Silent deactivation — account deactivation does not notify co-parent**
 - Action: User deactivates account from Settings
@@ -767,9 +830,10 @@ The following critical user journeys must be verified on each browser in the mat
 - Action: Measure TTI on `/` (unauthenticated) and `/dashboard` (authenticated) with Lighthouse CI
 - Expected: TTI under 3 seconds on simulated 4G (10 Mbps / 50ms RTT); LCP under 2.5 seconds
 
-**TC-PERF-002: Expense list — 100 items render time**
-- Action: Load expense list with 100 items
-- Expected: List renders within 500ms; no visible jank on scroll; virtualized rendering if applicable
+**TC-PERF-002: Expense list — 100 items render time (no virtualization in MVP)**
+- Method: Seed 100 expense fixtures via API mock; navigate to expense list; measure time from navigation to last list item appearing in DOM.
+- Expected: All 100 items rendered in DOM within 500ms (no scroll simulation needed — MVP renders all items directly, no react-window or TanStack Virtual).
+- Note: If virtualization is added post-MVP (web-dev indicated TanStack Virtual would be used), revise this test to simulate scroll and assert windowed rendering. Flag for revision at that point.
 
 **TC-PERF-003: Offline — graceful degradation**
 - Action: Load dashboard; disable network; attempt to view expense list
@@ -829,17 +893,20 @@ The following critical user journeys must be verified on each browser in the mat
 | UX flow accuracy | Screen transitions match spec | ux-engineer |
 | Component test coverage | Component interface contracts | web-dev |
 
-### Open Questions for web-dev
+### web-dev Coordination — Resolved 2026-03-17
 
-1. Does the Stripe Connect Express modal open as an iframe overlay or navigate to Stripe's hosted URL? This affects how TC-STRIPE-007 (keyboard accessibility) is tested — iframe focus management requires different test logic than in-page modal.
-2. Is calendar rendering handled client-side (computed from pattern + start date) or does the API return pre-computed day-by-day assignments? This affects TC-CAL-001 through TC-CAL-004.
-3. Does expense list use virtualization (react-window / react-virtual)? Affects TC-PERF-002.
+1. **Stripe Connect Express delivery**: Confirmed redirect (not iframe). Pre-redirect interstitial is a shadcn Dialog (Radix UI FocusScope). TC-STRIPE-001 and TC-STRIPE-007 updated accordingly. The Stripe-hosted Connect pages are out of scope for Playwright. Added TC-STRIPE-007b/007c for return URL handler testing.
+2. **Calendar rendering**: Confirmed fully client-side. API returns `{ pattern, startDate, startsWith, overrides }`. `getCustodyForDate()` is a pure function. TC-CAL-001 through TC-CAL-004 are pure unit tests — no API fixture seeding needed. Added TC-CAL-001b for FullCalendar CSS class rendering.
+3. **Expense list virtualization**: Confirmed no virtualization in MVP. TC-PERF-002 updated to assert all 100 items in DOM directly. Flag for TanStack Virtual revision post-MVP.
+4. **Edit button DOM presence**: Confirmed absent from component tree (not conditionally hidden). TC-EXP-019 updated to use `.not.toBeAttached()`. Added TC-EXP-019b for delete button (same pattern).
+5. **Financial Connections iframe**: Confirmed Stripe-owned iframe via Stripe.js SDK — Playwright cannot cross frame boundary. TC-STRIPE-020 through TC-STRIPE-025 updated to use stubbed `confirmUsBankAccountSetup` responses.
 
-### Open Questions for ux-engineer
+### ux-engineer Coordination — Resolved 2026-03-17
 
-1. What is the exact screen count for the payee invite funnel (TC-ONB-023)? The test assumes ≤3 screens from landing page click to bank linking. If the UX spec requires more screens, the test threshold needs updating.
-2. Is there a "Quick exit" button specification beyond Settings > Safety? Should it appear on all pages or just certain ones?
-3. For TC-DV-011 (notification preview), what is the approved notification copy for expense requests?
+1. **Payee funnel step count**: Confirmed standard path = 4 intermediate screens (landing → signup → OTP → name → bank linking). Social login path = 3 screens (landing → signup → name → bank linking). TC-ONB-023 split into TC-ONB-023-standard (≤4) and TC-ONB-023-social (≤3). Negative assertion added: child verification must NOT appear before bank linking.
+2. **Quick Exit button placement**: Confirmed global — fixed bottom-right (20px inset), 44×44px, every authenticated screen. NOT on `/claim/[token]` pre-auth. TC-DV-013 split into 013a (presence on all authenticated routes + absent on pre-auth), 013b (navigation + history clearing), 013c (keyboard + screen reader accessibility). `aria-label="Leave this page"` confirmed.
+3. **Notification copy**: Full approved copy table received (11 event types). TC-DV-011 updated to assert `notification.body` payload field matches exact approved strings. Any amount, name, or description in payload body = P0 DV safety failure. SMS copy confirmed: "FairBridge: [generic description]. Open the app for details."
+4. **Invite open activity**: Confirmed no intermediate state between "Invite sent" and "Co-parent joined". TC-ONB-027 updated to assert: `viewed_at`/`opened_at`/`clicked_at` absent or null in GET /api/invites/:id response; no payer push notification on link click; no dashboard badge or activity feed entry for invite view.
 
 ---
 
@@ -866,7 +933,7 @@ P0 = blocking for launch. P1 = required before general availability. P2 = requir
 
 For each release, run the following as the automated regression gate (Playwright CI):
 
-1. TC-ONB-001, TC-ONB-020, TC-ONB-023, TC-ONB-031 (onboarding happy paths)
+1. TC-ONB-001, TC-ONB-020, TC-ONB-023-standard, TC-ONB-023-social, TC-ONB-031 (onboarding happy paths)
 2. TC-EXP-001 through TC-EXP-007 (expense form validation)
 3. TC-CONF-002, TC-CONF-010 (approve and dispute happy paths)
 4. TC-CAL-001, TC-CAL-020 (calendar render + .ics export)

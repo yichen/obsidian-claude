@@ -103,8 +103,10 @@ Backend sends all FCM payloads with `priority: "high"` and `content_available: t
     "android": {
       "priority": "HIGH",
       "notification": {
-        "channel_id": "payments",
+        "channel_id": "fairbridge_payments",
         "notification_priority": "PRIORITY_HIGH",
+        "title": "Payment update",
+        "body": "A payment has been completed. Tap to view details.",
         "default_sound": true,
         "default_vibrate_timings": true,
         "click_action": "FLUTTER_NOTIFICATION_CLICK"
@@ -125,15 +127,17 @@ Backend sends all FCM payloads with `priority: "high"` and `content_available: t
 
 **Critical**: The `android.priority` field at the message level controls delivery priority (wake device). The `notification.notification_priority` field controls how the notification is displayed in the shade. Both must be set for correct behavior.
 
+**Payment failure vs success**: Both route to the `fairbridge_payments` channel (IMPORTANCE_HIGH). Android does not support per-notification importance overrides within a channel — importance is fixed at channel creation. The distinction between payment failure urgency and payment success (informational) is communicated through notification body copy and action buttons, not channel importance. Users who find success notifications too prominent can downgrade the channel manually in system settings (this is preserved across app updates per Section 2.2 TC-CHAN-005). iOS handles this more granularly via `interruption-level: time-sensitive` (failure) vs `interruption-level: active` (success) — an inherent platform difference.
+
 ### 2.2 Notification Channels
 
 Notification channels must be created before the first notification is displayed. FairBridge creates three channels at app startup in `MainApplication.onCreate()` via a native module.
 
-| Channel ID | Display Name | Importance | Use Case |
-|---|---|---|---|
-| `payments` | Payment Alerts | `IMPORTANCE_HIGH` | Payment initiated, succeeded, failed, dispute |
-| `expenses` | Expense Updates | `IMPORTANCE_DEFAULT` | New expense submitted, confirmed, disputed |
-| `calendar` | Schedule Reminders | `IMPORTANCE_LOW` | Custody handoff reminders, calendar sync |
+| Channel ID | Display Name | Importance | Lock Screen | Use Case |
+|---|---|---|---|---|
+| `payments` | Payment Alerts | `IMPORTANCE_HIGH` | `VISIBILITY_PRIVATE` | Payment initiated, succeeded, failed, dispute |
+| `expenses` | Expense Updates | `IMPORTANCE_HIGH` | `VISIBILITY_PRIVATE` | Expense confirmation requests (deadline-sensitive), batch updates |
+| `calendar` | Schedule Reminders | `IMPORTANCE_LOW` | `VISIBILITY_PUBLIC` | Custody handoff reminders, calendar sync |
 
 ```kotlin
 // android/app/src/main/java/com/fairbridge/NotificationChannelModule.kt
@@ -143,7 +147,7 @@ class NotificationChannelModule(private val context: Context) {
         val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
 
         val paymentsChannel = NotificationChannel(
-            "payments",
+            "fairbridge_payments",
             "Payment Alerts",
             NotificationManager.IMPORTANCE_HIGH
         ).apply {
@@ -156,16 +160,16 @@ class NotificationChannelModule(private val context: Context) {
         }
 
         val expensesChannel = NotificationChannel(
-            "expenses",
+            "fairbridge_expenses",
             "Expense Updates",
-            NotificationManager.IMPORTANCE_DEFAULT
+            NotificationManager.IMPORTANCE_HIGH  // HIGH: expense confirmation has a deadline (matches iOS time-sensitive)
         ).apply {
             description = "Notifications for co-parent expense submissions and confirmations"
             lockscreenVisibility = Notification.VISIBILITY_PRIVATE
         }
 
         val calendarChannel = NotificationChannel(
-            "calendar",
+            "fairbridge_calendar",
             "Schedule Reminders",
             NotificationManager.IMPORTANCE_LOW
         ).apply {
@@ -200,7 +204,7 @@ Backend payload for expense batching:
       "collapse_key": "expense_update_user_abc123",
       "priority": "NORMAL",
       "notification": {
-        "channel_id": "expenses",
+        "channel_id": "fairbridge_expenses",
         "title": "3 expenses pending review",
         "body": "Your co-parent submitted new expenses"
       },
@@ -295,6 +299,46 @@ async function promptBatteryExemption() {
 ```
 
 **Onboarding placement**: Show after notification permission, before co-parent pairing. Frame it as: "Allow FairBridge to run in the background so you never miss a payment alert."
+
+**API-level timing**:
+- API 33+: fire immediately after the notification permission dialog closes (regardless of grant or deny)
+- API 24–32: no notification permission prompt exists; fire after email verification, before co-parent pairing
+
+**Re-prompt suppression**: If the user denies the exemption, do not re-prompt on every launch. Re-prompt at most once every 7 days.
+
+```kotlin
+val prefs = context.getSharedPreferences("fairbridge_prefs", Context.MODE_PRIVATE)
+val lastPromptMs = prefs.getLong("battery_opt_prompt_last_ms", 0L)
+val sevenDaysMs = 7 * 24 * 60 * 60 * 1000L
+if ((System.currentTimeMillis() - lastPromptMs) > sevenDaysMs) {
+    prefs.edit().putLong("battery_opt_prompt_last_ms", System.currentTimeMillis()).apply()
+    requestBatteryOptimizationExemption()
+}
+```
+
+**OEM-specific Autostart (Xiaomi)**:
+
+Xiaomi devices require BOTH battery optimization exemption AND Autostart permission for reliable FCM delivery. The Autostart setting location differs by firmware:
+
+- **MIUI 14** (e.g., Xiaomi 13): Autostart lives in the MIUI Security app. Use this intent:
+  ```kotlin
+  Intent("miui.intent.action.APP_PERM_EDITOR").apply {
+      setClassName("com.miui.securitycenter",
+          "com.miui.permcenter.autostart.AutoStartManagementActivity")
+      putExtra("pkg_name", packageName)
+  }
+  ```
+- **HyperOS 1.0** (e.g., Xiaomi 14): Autostart moved to native Settings. Use the standard `ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` intent — it routes to the correct screen on HyperOS.
+
+Detect via presence of the MIUI Security app package (`com.miui.securitycenter`) to branch:
+```kotlin
+fun isMiuiWithSecurityApp(context: Context): Boolean {
+    return try {
+        context.packageManager.getPackageInfo("com.miui.securitycenter", 0)
+        true
+    } catch (e: PackageManager.NameNotFoundException) { false }
+}
+```
 
 **Play Store compliance**: `ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` is explicitly permitted for apps that need reliable background message delivery. FairBridge qualifies under the "financial transactions" exemption. No additional Play Store policy declaration needed for this specific permission (unlike some others).
 
@@ -752,7 +796,59 @@ fun schedulePaymentSync(context: Context) {
 
 **15-minute minimum**: WorkManager enforces a 15-minute minimum interval for periodic work. For real-time payment updates, FCM push notifications (Section 2) are the primary delivery mechanism. WorkManager is the fallback for when FCM is delayed by battery optimization.
 
-### 7.4 Boot Receiver
+### 7.4 Immediate Reconnection Sync (NetworkCallback + One-Shot WorkRequest)
+
+The 15-minute periodic job is too slow for the offline-queue flush use case. When the device regains connectivity after being offline, FairBridge must immediately sync any queued expenses. Implement this via `ConnectivityManager.NetworkCallback`:
+
+```kotlin
+// android/app/src/main/java/com/fairbridge/NetworkReconnectModule.kt
+class NetworkReconnectModule(private val context: Context) {
+
+    private val connectivityManager =
+        context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+
+    private val networkCallback = object : ConnectivityManager.NetworkCallback() {
+        override fun onAvailable(network: Network) {
+            // Network just became available — enqueue a one-shot sync immediately
+            enqueueImmediateSync()
+        }
+    }
+
+    fun register() {
+        val request = NetworkRequest.Builder()
+            .addCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
+            .build()
+        connectivityManager.registerNetworkCallback(request, networkCallback)
+    }
+
+    fun unregister() {
+        connectivityManager.unregisterNetworkCallback(networkCallback)
+    }
+
+    private fun enqueueImmediateSync() {
+        val constraints = Constraints.Builder()
+            .setRequiredNetworkType(NetworkType.CONNECTED)
+            .build()
+
+        val syncRequest = OneTimeWorkRequestBuilder<PaymentSyncWorker>()
+            .setConstraints(constraints)
+            .addTag("payment_sync_immediate")
+            .build()
+
+        WorkManager.getInstance(context).enqueueUniqueWork(
+            "payment_sync_immediate",
+            ExistingWorkPolicy.REPLACE, // Replace any pending immediate sync
+            syncRequest
+        )
+    }
+}
+```
+
+**Expected latency**: ~30–90 seconds on stock Android after network reconnect. On Samsung/Xiaomi with battery optimization exemption: ~60–120 seconds. This is the trigger for TC-OFF-005 in the Android test plan.
+
+Register the callback in `MainApplication.onCreate()` and unregister in `onTerminate()`. The callback is process-scoped — if the app process is killed while offline, the periodic WorkManager job handles sync on next background execution.
+
+### 7.5 Boot Receiver
 
 WorkManager re-schedules itself after device reboot, but the React Native app bridge may not be initialized. Use a `BroadcastReceiver` for the boot signal:
 
@@ -918,22 +1014,28 @@ The following table documents Android vs iOS implementation differences for feat
 
 | Feature | Android | iOS |
 |---|---|---|
-| Push notifications | FCM high-priority + channels | APNs + time-sensitive |
-| Credential storage | Android Keystore / EncryptedSharedPreferences | Keychain (kSecAttrAccessibleWhenUnlockedThisDeviceOnly) |
-| Screen protection | FLAG_SECURE | Screen content masking in app switcher |
-| Camera | CameraX via react-native-vision-camera | Same library (VisionCamera abstracts CameraX / AVFoundation) |
-| Receipt selection | Activity picker (any file/photo app) | PHPickerViewController (no full library permission) |
-| Calendar export | CalendarContract (device-native) | EventKit (.ics export) |
-| Background sync | WorkManager (15-min periodic) | Background App Refresh (discretionary, OS-controlled) |
-| Battery/background | REQUEST_IGNORE_BATTERY_OPTIMIZATIONS | No equivalent — APNs handles wakeup |
-| Notification permission | Runtime (Android 13+ / API 33+) | Must request at runtime (iOS 10+) |
-| Notification batching | FCM collapse keys | APNs collapse ID |
-| Minimum OS | Android 7.0 (API 24) | iOS 16.0 |
-| Financial screen protection | FLAG_SECURE (prevents screenshots) | UIScreen.isCaptured check + overlay |
+| Push notifications | FCM high-priority + channels | APNs + time-sensitive interruption level |
+| Credential storage | Android Keystore / EncryptedSharedPreferences | Keychain (`kSecAttrAccessibleWhenUnlockedThisDeviceOnly`) |
+| Screenshot prevention | `FLAG_SECURE` blocks screenshots AND recording | **Platform limit**: iOS cannot block static screenshots at OS level |
+| Screen recording detection | `FLAG_SECURE` blocks recording capture automatically | `UIScreen.capturedDidChangeNotification` + BlurView overlay |
+| App switcher masking | `FLAG_SECURE` blanks thumbnail on financial screens | `AppState 'inactive'` + BlurView (global, unconditional) |
+| Camera | CameraX via react-native-vision-camera v4 | AVFoundation via react-native-vision-camera v4 (same TS API) |
+| Gallery selection | System Photo Picker (API 33+, no permission); `READ_EXTERNAL_STORAGE` on API 24–32 | PHPickerViewController (no library permission, iOS 14+) |
+| Calendar export | CalendarContract — writes to device calendar directly | EventKit write-only OR `.ics` share sheet fallback |
+| Background sync | WorkManager 15-min periodic (guaranteed) + NetworkCallback one-shot on reconnect | BGAppRefreshTask (discretionary, OS-scheduled) |
+| Battery/background | `REQUEST_IGNORE_BATTERY_OPTIMIZATIONS` + OEM AutoStart (Samsung, Xiaomi, Huawei) | No equivalent — APNs handles wakeup without exemption |
+| Notification permission | Runtime `POST_NOTIFICATIONS` (API 33+ only); denial count tracked; permanent deny → Settings | Runtime always required; pre-prompt rationale screen; permanent deny → Settings deep link |
+| Notification batching | FCM `collapse_key: "expense_update_{user_id}"` | APNs `apns-collapse-id: "expense_update_{user_id}"` (same format) |
+| Stripe bank linking | Chrome Custom Tab (shares Chrome cookies); fallback to `ACTION_VIEW` | SFSafariViewController (shares Safari cookies) |
+| Payee invite deep link | Android App Links (`https://` + `assetlinks.json`) | Universal Links (`https://` + `apple-app-site-association`) |
+| Quick Exit (DV safety) | `finishAndRemoveTask()` — removes from Recents entirely | `UIApplication.shared` home simulation |
+| Minimum OS | Android 7.0 (API 24) ~95% coverage | iOS 16.0 ~97% coverage |
 
-**Key parity gap**: iOS has no equivalent to `FLAG_SECURE`. The iOS spec must implement an explicit content-masking overlay when `UIScreen.isCaptured` is true, or use `UITextField.isSecureTextEntry` for sensitive fields.
+**Confirmed platform asymmetry — DV safety disclosure required**: Android `FLAG_SECURE` blocks both static screenshots and screen recording on financial screens. iOS can detect and overlay screen recording via `UIScreen.capturedDidChangeNotification` but cannot prevent static screenshots at the OS level. This difference must be disclosed in FairBridge's DV safety documentation and reviewed by security-eng in Section 11.
 
-**WorkManager vs Background App Refresh**: Android's WorkManager provides guaranteed execution (will run when constraints met). iOS Background App Refresh is discretionary — the OS decides when to run it based on usage patterns. For FairBridge, FCM/APNs push is the authoritative delivery mechanism on both platforms; background sync is a belt-and-suspenders fallback.
+**Notification collapse key alignment (CONFIRMED)**: Backend must set both `collapse_key` (FCM Android field) and `apns-collapse-id` (APNs HTTP/2 header) to the same value `expense_update_{user_id}`. Both platforms collapse to a single "N expenses awaiting approval" notification. Backend-eng owns this dual-field dispatch.
+
+**Background sync authoritative path (CONFIRMED)**: FCM/APNs push is the authoritative ACH payment status delivery mechanism on both platforms. WorkManager (Android) and BGAppRefreshTask (iOS) are belt-and-suspenders fallbacks only.
 
 ---
 
@@ -1006,9 +1108,11 @@ All custom native modules must be registered in `MainApplication.kt`:
 override fun getPackages(): List<ReactPackage> = listOf(
     MainReactPackage(),
     NotificationChannelPackage(),    // Creates FCM channels on startup
-    BatteryOptimizationPackage(),    // Battery exemption prompt
+    BatteryOptimizationPackage(),    // Battery exemption prompt (all OEMs)
     SecureScreenPackage(),           // FLAG_SECURE management
     CalendarPackage(),               // CalendarContract export
+    ChromeTabPackage(),              // Chrome Custom Tabs for Stripe flows
+    QuickExitPackage(),              // DV safety quick exit
 )
 
 override fun onCreate() {
@@ -1022,4 +1126,257 @@ override fun onCreate() {
 
 ---
 
-*Spec version: 1.0 | Date: 2026-03-17 | Author: android-dev*
+## 13. UX-Driven Android Requirements
+
+Additional implementation requirements derived from `UX-Flows-Spec.md` Screens 1.6, 2.0–2.5, 7.4, 8.3, 9.x.
+
+### 13.1 Chrome Custom Tabs for Stripe Flows (Screens 1.6, 2.5)
+
+Stripe Financial Connections and Stripe Connect Express onboarding must open in a Chrome Custom Tab — NOT a `WebView`. Chrome Custom Tabs share the user's Chrome cookie jar, enabling credential-free bank OAuth (user already logged into their bank in Chrome). `WebView` does not share cookies and breaks this flow.
+
+```kotlin
+// android/app/src/main/java/com/fairbridge/ChromeTabModule.kt
+@ReactMethod
+fun openInCCT(url: String) {
+    val activity = currentActivity ?: return
+    val chromePackage = getChromePackage(activity)
+
+    if (chromePackage != null) {
+        val customTabsIntent = CustomTabsIntent.Builder()
+            .setToolbarColor(ContextCompat.getColor(activity, R.color.fairbridge_blue))
+            .setShowTitle(true)
+            .build()
+        customTabsIntent.intent.setPackage(chromePackage)
+        customTabsIntent.launchUrl(activity, Uri.parse(url))
+    } else {
+        // Fallback: open in default browser via ACTION_VIEW
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        activity.startActivity(intent)
+    }
+}
+
+private fun getChromePackage(context: Context): String? {
+    val candidates = listOf(
+        "com.android.chrome",           // Chrome stable
+        "com.chrome.beta",              // Chrome Beta
+        "com.chrome.dev",               // Chrome Dev
+        "org.mozilla.firefox",          // Firefox (supports CCT)
+        "com.samsung.android.sbrowser", // Samsung Internet (supports CCT)
+    )
+    val pm = context.packageManager
+    return candidates.firstOrNull { pkg ->
+        try { pm.getPackageInfo(pkg, 0); true } catch (e: PackageManager.NameNotFoundException) { false }
+    }
+}
+```
+
+```typescript
+// React Native — open Stripe URL in CCT
+import { NativeModules } from 'react-native';
+const { ChromeTabModule } = NativeModules;
+
+async function openStripeConnect(stripeUrl: string) {
+  ChromeTabModule.openInCCT(stripeUrl);
+}
+```
+
+**Screen 1.6 (payer bank linking)** and **Screen 2.5 (payee bank linking)** both use this. The CCT closes automatically when Stripe redirects back to `fairbridge://stripe-callback` — handle the intent in the manifest:
+
+```xml
+<activity android:name=".MainActivity">
+  <intent-filter android:autoVerify="true">
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:scheme="fairbridge" android:host="stripe-callback" />
+  </intent-filter>
+</activity>
+```
+
+### 13.2 Android App Links for Payee Invite (Screens 2.0–2.2)
+
+Payee invite links must use Android App Links (verified deep links) so that tapping the invite in SMS/email opens the app directly rather than the browser. If the app is not installed, the link falls back to the web landing page.
+
+**Manifest intent filter** (requires asset links verification at `https://app.fairbridge.app/.well-known/assetlinks.json`):
+```xml
+<activity android:name=".MainActivity">
+  <intent-filter android:autoVerify="true">
+    <action android:name="android.intent.action.VIEW" />
+    <category android:name="android.intent.category.DEFAULT" />
+    <category android:name="android.intent.category.BROWSABLE" />
+    <data android:scheme="https"
+          android:host="app.fairbridge.app"
+          android:pathPrefix="/invite" />
+  </intent-filter>
+</activity>
+```
+
+**`assetlinks.json`** must be served at `https://app.fairbridge.app/.well-known/assetlinks.json` with the app's release keystore SHA-256 fingerprint. This is a backend/infra requirement to coordinate with backend-eng.
+
+**React Native — read the invite token on app launch**:
+```typescript
+import { Linking } from 'react-native';
+
+async function getInitialInviteToken(): Promise<string | null> {
+  const url = await Linking.getInitialURL();
+  if (url?.includes('/invite/')) {
+    return url.split('/invite/')[1].split('?')[0];
+  }
+  return null;
+}
+
+// Also handle links when app is already open
+Linking.addEventListener('url', ({ url }) => {
+  if (url?.includes('/invite/')) {
+    const token = url.split('/invite/')[1].split('?')[0];
+    navigateToPayeeOnboarding(token);
+  }
+});
+```
+
+After install and first launch, the invite token must be preserved through the signup flow (store in `AsyncStorage` until account creation completes, then POST to backend to link the pair).
+
+### 13.3 Notification Permission — Denial Count Tracking (Screen 8.3)
+
+Android allows `requestPermissions` for `POST_NOTIFICATIONS` up to 2 times before the system permanently suppresses the dialog (showing "Don't ask again"). Track the denial count to show the correct recovery UI.
+
+```typescript
+import { PermissionsAndroid, Linking, Platform } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+async function requestNotificationPermissionWithTracking(): Promise<'granted' | 'denied' | 'permanent_deny'> {
+  if (Platform.OS !== 'android' || Platform.Version < 33) {
+    return 'granted'; // API <33: notifications granted by default, skip flow
+  }
+
+  const denialCount = parseInt(await AsyncStorage.getItem('notif_denial_count') ?? '0');
+
+  const result = await PermissionsAndroid.request(
+    PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS,
+    {
+      title: 'Enable payment alerts',
+      message: 'FairBridge needs notification permission to alert you when expenses need approval or payments are processed.',
+      buttonPositive: 'Enable Notifications',
+      buttonNegative: 'Not now',
+    }
+  );
+
+  if (result === PermissionsAndroid.RESULTS.GRANTED) {
+    await AsyncStorage.removeItem('notif_denial_count');
+    return 'granted';
+  }
+
+  if (result === PermissionsAndroid.RESULTS.NEVER_ASK_AGAIN || denialCount >= 1) {
+    // Permanent deny — link to app settings
+    return 'permanent_deny';
+  }
+
+  // First denial — can still re-ask
+  await AsyncStorage.setItem('notif_denial_count', String(denialCount + 1));
+  return 'denied';
+}
+
+function openAppNotificationSettings() {
+  Linking.openSettings(); // Opens ACTION_APPLICATION_DETAILS_SETTINGS for this app
+}
+```
+
+**UX gate**: On `permanent_deny`, show a banner with "Open Settings" button that calls `openAppNotificationSettings()`. Do not block onboarding permanently — show a "Continue without notifications" secondary button after permanent deny, per UX spec Screen 8.3.
+
+### 13.4 OEM Battery Exemption — Samsung and Huawei/Honor (Flow 9)
+
+Section 3.2 already covers Xiaomi MIUI/HyperOS. Additional OEM-specific handling per UX Flow 9:
+
+```kotlin
+fun getOemBatterySettingsIntent(context: Context): Intent? {
+    val manufacturer = Build.MANUFACTURER.lowercase()
+    val pkg = context.packageName
+
+    return when {
+        manufacturer == "samsung" -> {
+            // Samsung One UI: Settings > Apps > [App] > Battery > Unrestricted
+            // Also prompt user to check "Allow background activity" in Samsung's app battery settings
+            Intent().apply {
+                component = ComponentName(
+                    "com.samsung.android.lool",
+                    "com.samsung.android.sm.ui.battery.BatteryActivity"
+                )
+            }.takeIf { it.resolveActivity(context.packageManager) != null }
+        }
+        manufacturer.contains("huawei") || manufacturer.contains("honor") -> {
+            // Huawei/Honor EMUI: Protected Apps setting
+            Intent().apply {
+                component = ComponentName(
+                    "com.huawei.systemmanager",
+                    "com.huawei.systemmanager.startupmgr.ui.StartupNormalAppListActivity"
+                )
+            }.takeIf { it.resolveActivity(context.packageManager) != null }
+        }
+        else -> null // Fall back to standard ACTION_REQUEST_IGNORE_BATTERY_OPTIMIZATIONS
+    }
+}
+```
+
+**Fallback for unrecognized OEMs**: Show generic message with link to `https://dontkillmyapp.com` (as specified in UX Flow 9). Open via `Linking.openURL('https://dontkillmyapp.com')`.
+
+**Prompt sequence per UX Flow 9 / Screen 9.1**:
+1. Show in-app explanation screen with OEM-specific copy (detect manufacturer)
+2. User taps "Allow" → launch OEM intent (or standard exemption intent)
+3. User returns from settings → check `isIgnoringBatteryOptimizations()` again
+4. If still not exempted → show "Notifications may be delayed" warning card (non-blocking)
+
+### 13.5 DV Safety — Quick Exit (Screen 7.4)
+
+The Quick Exit button on Screen 7.4 must:
+1. Immediately leave FairBridge and show a neutral app (e.g., open weather/maps)
+2. Clear FairBridge from the Recents list so an observer cannot return to it via the task switcher
+
+```kotlin
+// android/app/src/main/java/com/fairbridge/QuickExitModule.kt
+@ReactMethod
+fun quickExit() {
+    val activity = currentActivity ?: return
+    activity.runOnUiThread {
+        // 1. Remove from Recents (API 21+)
+        activity.finishAndRemoveTask()
+
+        // 2. Open a neutral app (Google Maps or default home) — looks like normal phone use
+        val intent = Intent(Intent.ACTION_MAIN).apply {
+            addCategory(Intent.CATEGORY_HOME)
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK
+        }
+        activity.startActivity(intent)
+    }
+}
+```
+
+`finishAndRemoveTask()` is preferred over `moveTaskToBack(true)` — it removes the app from Recents entirely rather than just moving it behind other apps. This is the correct DV safety behavior: an abuser checking Recents will not see FairBridge.
+
+### 13.6 Accessibility Requirements
+
+Per UX spec accessibility section:
+
+**Touch target size**: All interactive elements must be ≥ 48×48dp. In React Native:
+```typescript
+// Enforce minimum touch target via hitSlop on small elements
+<TouchableOpacity hitSlop={{ top: 8, bottom: 8, left: 8, right: 8 }} style={{ width: 32, height: 32 }}>
+```
+
+**TalkBack labels on currency amounts**: All `Text` components displaying monetary values must have explicit `accessibilityLabel` that spells out the amount naturally:
+```typescript
+<Text
+  accessibilityLabel={`${amount} dollars`}
+  accessible={true}
+>
+  {formatCurrency(amount)}
+</Text>
+```
+
+**Font scaling**: Do not use `allowFontScaling={false}` anywhere. All text must respect the user's system font size setting. Use `sp` units (React Native's default for `fontSize`) — never `dp` for font sizes.
+
+**FLAG_SECURE and TalkBack**: There is a known conflict on some OEM skins where `FLAG_SECURE` + TalkBack causes content to be inaccessible to screen readers. If this is detected in testing, the mitigation is to use `importantForAccessibility="no-hide-descendants"` on the secure container and provide an alternative accessible description via a visually-hidden element. Document in Known Limitations if encountered.
+
+---
+
+*Spec version: 1.2 | Date: 2026-03-18 | Author: android-dev*

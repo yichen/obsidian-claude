@@ -1,11 +1,24 @@
 # FairBridge Backend Test Specification
 
-**Version**: 1.1
+**Version**: 1.2
 **Author**: backend-tester
 **Date**: 2026-03-17
 **Status**: Draft — for program-manager integration
 
 **v1.1 changes**: Co-parent verification updated from full DOB to birth year only. Fraud section updated with $2,500/$5,000 ramp-up limits, $5 minimum transaction, and Nacha 0.5% return rate threshold tests. SMS added to notification architecture.
+
+**v1.2 changes** (from backend-eng coordination):
+- HASH-001: genesis is `'0'.repeat(64)`, not `SHA256("GENESIS")`
+- HASH-002/003: hash input is pipe-delimited positional string, not JSON.stringify
+- HASH-006: Unicode test updated (amount is bigint cents, no float precision concern)
+- HASH-007 removed (float precision n/a — amounts are bigint cents)
+- SIG-* tests: use `stripe.webhooks.generateTestHeaderString()` pattern
+- IDEM-004: advisory lock is `pg_advisory_xact_lock` (transaction-scoped, auto-releases) — no `finally` needed for lock
+- APPEND-001/003: RULE replaced by trigger DDL; SQLSTATE `restrict_violation` (23001)
+- APPEND-013: new test for `advance_payment_status()` SECURITY DEFINER exemption
+- CHAIN-INT-005: PDF export test (unchanged); CHAIN-INT-006 (new): concurrent insert race via `hash_chain_heads` sentinel table
+- DV-001: expanded timestamp suppression list
+- Fraud FRAUD_CONFIG constants imported from source for test setup
 
 ---
 
@@ -64,14 +77,33 @@ The expense ledger is append-only with a SHA-256 chain: each record's hash cover
 
 **File**: `src/ledger/hash-chain.test.ts`
 
+**Hash function signature** (from backend-eng):
+```typescript
+computeEntryHash(tableName, recordId, scopeKey, amountCents: bigint,
+                 currency, createdAt: string, prevHash: string): string
+// Input: [tableName, recordId, scopeKey, amountCents.toString(), currency, createdAt, prevHash].join('|')
+// Output: SHA-256 hex digest (64 chars)
+// createdAt: always microsecond ISO-8601 UTC, e.g. "2026-03-17T00:05:00.000000Z"
 ```
-HASH-001: Genesis record has prev_hash = SHA256("GENESIS")
-HASH-002: Record hash = SHA256(JSON.stringify(record_fields_sorted) + prev_hash)
-HASH-003: Field ordering is deterministic (alphabetical key sort before JSON.stringify)
-HASH-004: hash() is pure — same inputs always produce same output
-HASH-005: Two records with identical data but different prev_hash produce different hashes
-HASH-006: Unicode in description field does not break hash (emoji, CJK, RTL chars)
-HASH-007: Large amount field (9 decimal places) hashes correctly without float precision loss
+
+```
+HASH-001: Genesis record has prev_hash = '0'.repeat(64) (64 zero chars — not SHA256("GENESIS"))
+
+HASH-002: Record hash = SHA256("expenses|<uuid>|<pair_id>|500|USD|2026-03-17T00:05:00.000000Z|<prevHash>")
+          Input is pipe-delimited positional string — NOT JSON.stringify with alphabetical key sort
+
+HASH-003: Field order is fixed and positional: tableName|recordId|scopeKey|amountCents|currency|createdAt|prevHash
+          Swapping any two adjacent fields produces a different hash
+
+HASH-004: computeEntryHash() is pure — same 7 inputs always produce same 64-char hex output
+
+HASH-005: Two records with identical fields but different prevHash produce different hashes
+
+HASH-006: Unicode in a description field has NO effect on hash — description is not an input field;
+          hash covers only the 7 positional fields (all scalar, no free-text)
+
+HASH-007: amountCents is bigint — no floating-point representation;
+          computeEntryHash(... 199999999n ...) produces same hash on every call (no precision loss)
 ```
 
 ### 2.2 Unit Tests — Chain Verification
@@ -94,12 +126,37 @@ VERIFY-008: Chain spanning multiple days verifies correctly (daily anchor is inc
 **File**: `src/ledger/hash-chain.integration.test.ts`
 
 ```
-CHAIN-INT-001: POST /expenses creates record; DB hash matches computed hash
-CHAIN-INT-002: 10 sequential expense inserts produce valid chain (verified via verifyChain)
-CHAIN-INT-003: Attempting direct SQL UPDATE on expenses table raises exception (see §7)
-CHAIN-INT-004: After DB restore from backup, chain still verifies (hash is self-contained)
-CHAIN-INT-005: PDF export includes chain hash; verifyChain on exported data matches stored hash
+CHAIN-INT-001: POST /expenses creates record; DB entry_hash matches computeEntryHash() output
+
+CHAIN-INT-002: 10 sequential expense inserts for same pair produce valid chain
+               (SELECT entry_hash, prev_hash ORDER BY created_at → verifyChain() passes)
+
+CHAIN-INT-003: Direct SQL UPDATE on expenses table raises SQLSTATE 23001 (restrict_violation)
+
+CHAIN-INT-004: After DB restore from backup, chain still verifies (hash is self-contained;
+               no external state needed)
+
+CHAIN-INT-005: PDF export includes per-record entry_hash; verifyChain on exported data
+               matches stored DB hashes
+
+CHAIN-INT-006 (RACE): 50 concurrent expense inserts for same pair via hash_chain_heads sentinel
+  Setup: 50 concurrent transactions each calling insertWithHashChain()
+  Assert: SELECT COUNT(*) = 50 (no lost inserts)
+  Assert: verifyChain() returns { valid: true, chainLength: 50 }
+  Assert: each row's prev_hash equals the entry_hash of the chronologically prior row
+  Assert: hash_chain_heads row for pair has last_hash = entry_hash of final insert
+  Pattern:
+    await Promise.all(
+      Array.from({ length: 50 }, () =>
+        db.transaction(trx => insertWithHashChain(trx, 'expenses', PAIR_ID, makeExpense()))
+      )
+    );
+
+CHAIN-INT-007: Cross-pair inserts are fully parallel — 100 concurrent inserts across 10 pairs
+               (10 per pair) complete without deadlock; all 10 chains verify independently
 ```
+
+**Concurrent insert design** (confirmed by backend-eng): serialization via `SELECT ... FOR UPDATE` on `hash_chain_heads(table_name, scope_key)` sentinel table — one row per pair acts as a mutex and prev_hash cache. Transaction-scoped lock; auto-releases on commit/rollback. NOT advisory locks (those are for webhook idempotency) and NOT SERIALIZABLE isolation (too broad).
 
 ### 2.4 Daily Merkle Root Tests
 
@@ -140,27 +197,56 @@ SIG-005: Replayed event with valid signature but stale timestamp → 400 rejecte
 
 ```
 IDEM-001: Processing stripe_event_id twice — second invocation returns 200 without side effects
+
 IDEM-002: stripe_processed_events table has UNIQUE constraint on stripe_event_id
-IDEM-003: Race condition test — 2 concurrent workers receive same event; only 1 processes it
-           Setup: advisory lock held by worker-1; worker-2 acquires lock → finds event already
-           processed → exits without processing
-IDEM-004: Advisory lock released even when handler throws (lock is released in finally block)
-IDEM-005: Idempotency check happens BEFORE any business logic mutations
+
+IDEM-003: Race condition — 2 concurrent workers receive same event; only 1 processes it
+           Lock: pg_advisory_xact_lock(stripeEventToLockKey(event.id)) — transaction-scoped
+           Worker-2 acquires lock after worker-1 commits → finds event in stripe_processed_events
+           → exits immediately without processing any side effects
+
+IDEM-004: Advisory lock is pg_advisory_xact_lock (transaction-scoped) — auto-releases on
+           commit or rollback. NO explicit finally block needed for lock release.
+           Test: handler that throws mid-processing → transaction rolls back → lock released →
+           next worker can acquire lock and reprocess
+
+IDEM-005: Idempotency check (SELECT from stripe_processed_events) happens BEFORE any
+           business logic mutations, inside the same transaction as the advisory lock
 ```
 
 **Race Condition Test Pattern (IDEM-003)**:
 ```typescript
-// Simulate concurrent receipt of same webhook
 const [result1, result2] = await Promise.all([
   handleWebhook(event, db),
   handleWebhook(event, db),
 ]);
 const processedCount = await db.query(
-  'SELECT COUNT(*) FROM payment_intent_events WHERE stripe_event_id = $1',
+  'SELECT COUNT(*) FROM stripe_processed_events WHERE stripe_event_id = $1',
   [event.id]
 );
 expect(processedCount.rows[0].count).toBe('1');
 ```
+
+**Advisory lock key derivation** (IDEM-003 setup):
+```typescript
+// SHA-256 of event ID → first 8 bytes → signed int64 (PostgreSQL bigint range)
+stripeEventToLockKey('evt_test_abc123') → BigInt value used in pg_advisory_xact_lock($1)
+```
+
+**SIG-* test pattern** (use `generateTestHeaderString`, not `constructEvent` with real signing):
+```typescript
+const payload = JSON.stringify(stripeEvent);
+const header = stripe.webhooks.generateTestHeaderString({
+  payload, secret: TEST_WEBHOOK_SECRET
+});
+const response = await app.inject({
+  method: 'POST', url: '/v1/webhooks/stripe',
+  headers: { 'stripe-signature': header, 'content-type': 'application/json' },
+  body: payload,
+});
+```
+
+**Webhook route config** (for test setup): `POST /v1/webhooks/stripe` — no JWT auth, no rate limiting, no CSRF. Raw body captured by `@fastify/rawbody` before JSON parser.
 
 ### 3.3 payment_intent.created
 
@@ -344,13 +430,28 @@ FRAUD-VEL-002: $500+ in expenses within 24 hours for a pair → velocity alert q
 FRAUD-VEL-003: 10-15 expenses/day soft rate limit — above 15 triggers 429; 10-15 triggers warning log
 FRAUD-VEL-004: Velocity check happens synchronously before PaymentIntent creation
 FRAUD-VEL-005: Velocity counters reset at rolling 7-day window (not calendar week)
-FRAUD-VEL-006: Payment below $5 minimum → rejected at API layer before PaymentIntent creation (HTTP 422)
-FRAUD-VEL-007: Weeks 1-6 ramp-up: weekly ACH total > $2,500 → payment blocked with generic error
-               (ramp-up limit NOT disclosed to user; no hint in error message)
-FRAUD-VEL-008: After 6 settled payments: weekly ACH total > $5,000 → payment blocked with generic error
-FRAUD-VEL-009: Ramp-up counter based on settled payments only; failed/pending payments do not advance counter
-FRAUD-VEL-010: Ramp-up limits are internal only — no error message, UI hint, or API field reveals
-               the $2,500/$5,000 thresholds to users
+FRAUD-VEL-006: Payment below $5 minimum (FRAUD_CONFIG.MIN_PAYMENT_CENTS = 500n) → HTTP 422
+               before PaymentIntent creation
+
+FRAUD-VEL-007: Weeks 1-6 ramp-up: weekly ACH total > FRAUD_CONFIG.RAMPUP_PHASE1_MAX_CENTS
+               ($2,500 = 250_000n cents) → payment blocked; generic error returned to user
+               (threshold value NOT in error message, NOT in any API response field)
+
+FRAUD-VEL-008: After 6 settled payments: weekly ACH total > FRAUD_CONFIG.RAMPUP_PHASE2_MAX_CENTS
+               ($5,000 = 500_000n cents) → payment blocked with same generic error
+
+FRAUD-VEL-009: Ramp-up counter based on settled payments only (status='succeeded');
+               failed/pending/initiated payments do NOT advance the 6-payment counter
+
+FRAUD-VEL-010: Ramp-up limits are hardcoded constants (not config table) — no API endpoint,
+               schema introspection, or error message reveals the $2,500/$5,000 values
+```
+
+**Test setup note**: import constants directly from source to stay in sync with implementation:
+```typescript
+import { FRAUD_CONFIG } from 'src/services/fraud';
+// Use FRAUD_CONFIG.RAMPUP_PHASE1_MAX_CENTS rather than hardcoding 250000 in tests
+```
 ```
 
 ### 5.5 Nacha Return Rate Compliance
@@ -483,29 +584,58 @@ NOTIF-INT-005: SMS and push can fire simultaneously for payment failure (indepen
 
 **File**: `src/db/append-only.test.ts`
 
-The `expenses`, `payments`, `ledger_entries`, and `merkle_anchors` tables must be append-only. PostgreSQL `RULE` + trigger DDL prevents UPDATE and DELETE at the DB layer.
+The `expenses`, `payments`, `disputes`, `merkle_anchors`, `payment_events`, and `expense_events` tables are append-only. Enforced by **BEFORE triggers** (not RULE — RULE silently swallows ops and returns success, which would make these tests pass vacuously). Triggers raise SQLSTATE `restrict_violation` (23001).
 
 ```
-APPEND-001: Direct SQL UPDATE on expenses table → raises exception 'ERROR: append-only table'
-APPEND-002: Direct SQL DELETE on expenses table → raises exception
-APPEND-003: UPDATE via ORM (Prisma/Drizzle) on expenses table → exception propagated to app layer
-APPEND-004: DELETE via ORM on expenses table → exception propagated
-APPEND-005: UPDATE on ledger_entries table → exception
-APPEND-006: DELETE on ledger_entries table → exception
-APPEND-007: UPDATE on merkle_anchors table → exception
-APPEND-008: DELETE on merkle_anchors table → exception
-APPEND-009: INSERT on expenses table → succeeds (append-only allows inserts)
-APPEND-010: Soft-delete pattern: expenses have 'voided' boolean field; voiding an expense
-             inserts a new 'void' record referencing original, does NOT update original
-APPEND-011: DB superuser role also blocked by rule (not just application role)
-APPEND-012: pg_dump + restore preserves append-only rules (rules are schema-level)
+APPEND-001: Direct SQL UPDATE on expenses → raises PostgreSQL exception with SQLSTATE 23001
+            Assert: error message contains 'append-only' and table name 'expenses'
+
+APPEND-002: Direct SQL DELETE on expenses → raises SQLSTATE 23001
+
+APPEND-003: ORM UPDATE on expenses (e.g. drizzle .update().set()) → SQLSTATE 23001 propagated
+            to application layer as a catchable database error (NOT silent success)
+
+APPEND-004: ORM DELETE on expenses → SQLSTATE 23001 propagated
+
+APPEND-005: UPDATE on payments → exception (note: status advancement via advance_payment_status()
+            SECURITY DEFINER function is the only permitted exception — see APPEND-013)
+
+APPEND-006: DELETE on payments → exception
+
+APPEND-007: UPDATE on merkle_anchors → exception
+
+APPEND-008: DELETE on merkle_anchors → exception
+
+APPEND-009: INSERT on expenses → succeeds (triggers are BEFORE UPDATE/DELETE only)
+
+APPEND-010: Soft-delete: voiding an expense inserts a new record with type='void' referencing
+            original record_id; does NOT UPDATE the original row
+
+APPEND-011: DB superuser also blocked — triggers fire for ALL roles (trigger function does NOT
+            check current_user, except for the fairbridge.allow_status_update session variable)
+
+APPEND-012: pg_dump + restore preserves triggers (triggers are schema objects)
+
+APPEND-013: advance_payment_status(payment_id, new_status) SECURITY DEFINER function
+            succeeds in advancing payment status (sets fairbridge.allow_status_update = 'true'
+            locally before UPDATE)
+            Assert: direct UPDATE on payments still raises 23001 (session var not set)
+            Assert: advance_payment_status() succeeds and status is updated
 ```
 
-**Rule DDL to test against**:
+**Trigger DDL** (do NOT use RULE):
 ```sql
-CREATE RULE no_update_expenses AS ON UPDATE TO expenses DO INSTEAD NOTHING;
-CREATE RULE no_delete_expenses AS ON DELETE TO expenses DO INSTEAD NOTHING;
--- Plus trigger raising exception for visibility
+CREATE OR REPLACE FUNCTION enforce_append_only() RETURNS TRIGGER LANGUAGE plpgsql AS $$
+BEGIN
+  IF current_setting('fairbridge.allow_status_update', true) = 'true' THEN
+    RETURN NEW;
+  END IF;
+  RAISE EXCEPTION 'Table "%" is append-only. Operation "%" is not permitted.',
+    TG_TABLE_NAME, TG_OP
+  USING ERRCODE = 'restrict_violation';
+END;
+$$;
+-- Applied as BEFORE UPDATE / BEFORE DELETE trigger on each append-only table
 ```
 
 ---
@@ -515,8 +645,13 @@ CREATE RULE no_delete_expenses AS ON DELETE TO expenses DO INSTEAD NOTHING;
 **File**: `src/safety/dv-safety.test.ts`
 
 ```
-DV-001: No activity timestamps in API responses
-  Assert: GET /expenses/:id response does NOT contain last_login, last_active, read_at, seen_at
+DV-001: No activity timestamps in API responses (all users have dv_safe_mode=true by default in V1)
+  Assert: GET /expenses/:id response does NOT contain any of:
+    last_login, last_active, read_at, seen_at,      // (original list)
+    updated_at, processed_at, initiated_at,          // payments table fields
+    sent_at, last_used_at, revoked_at               // notification/token fields
+  Assert: initiated_at and settled_at appear as date-only strings ("2026-03-17"),
+          NOT as full timestamps ("2026-03-17T14:23:00Z")
 
 DV-002: No activity timestamps in push notification payloads
   Assert: FCM/APNs payload does not include any timestamp beyond payment date
@@ -644,44 +779,46 @@ The following interfaces must be finalized before integration tests can be writt
 ```
 src/
   ledger/
-    hash-chain.test.ts          # HASH-001 through HASH-007
-    verify-chain.test.ts        # VERIFY-001 through VERIFY-008
-    merkle-anchor.test.ts       # MERKLE-001 through MERKLE-008
-    hash-chain.integration.test.ts  # CHAIN-INT-001 through CHAIN-INT-005
+    hash-chain.test.ts              # HASH-001 through HASH-007
+    verify-chain.test.ts            # VERIFY-001 through VERIFY-008
+    merkle-anchor.test.ts           # MERKLE-001 through MERKLE-008
+    hash-chain.integration.test.ts  # CHAIN-INT-001 through CHAIN-INT-007 (incl. RACE)
   webhooks/stripe/
-    signature.test.ts           # SIG-001 through SIG-005
-    idempotency.test.ts         # IDEM-001 through IDEM-005
-    payment-intent.test.ts      # PI-CREATED-*, PI-PROC-*, PI-SUC-*, PI-FAIL-*
-    dispute.test.ts             # DISPUTE-001 through DISPUTE-CLS-004
-    customer.test.ts            # CUST-UPD-001 through CUST-UPD-003
-    account.test.ts             # ACCT-UPD-001 through DEAUTH-005
-    dlq.test.ts                 # DLQ-001 through DLQ-007
+    signature.test.ts               # SIG-001 through SIG-005
+    idempotency.test.ts             # IDEM-001 through IDEM-005
+    payment-intent.test.ts          # PI-CREATED-*, PI-PROC-*, PI-SUC-*, PI-FAIL-*
+    dispute.test.ts                 # DISPUTE-001 through DISPUTE-CLS-004
+    customer.test.ts                # CUST-UPD-001 through CUST-UPD-003
+    account.test.ts                 # ACCT-UPD-001 through DEAUTH-005
+    dlq.test.ts                     # DLQ-001 through DLQ-007
   payments/
-    ach-flow.e2e.test.ts        # ACH-HAPPY-*, ACH-FAIL-*, REGE-*
+    ach-flow.e2e.test.ts            # ACH-HAPPY-*, ACH-FAIL-*, REGE-*
   fraud/
-    fraud-controls.test.ts      # FRAUD-VEL-*, FRAUD-CROSS-*, FRAUD-IP-*, FRAUD-RET-*
+    fraud-controls.test.ts          # FRAUD-VEL-*, FRAUD-CROSS-*, FRAUD-IP-*, FRAUD-RET-*, FRAUD-NACHA-*
   pairing/
-    verification.test.ts        # VERIFY-PAIR-001 through VERIFY-PAIR-012
+    verification.test.ts            # VERIFY-PAIR-001 through VERIFY-PAIR-012
   notifications/
-    delivery.test.ts            # NOTIF-PUSH-*, NOTIF-EMAIL-*, NOTIF-INBOX-*, NOTIF-INT-*
+    delivery.test.ts                # NOTIF-PUSH-*, NOTIF-EMAIL-*, NOTIF-INBOX-*, NOTIF-SMS-*, NOTIF-INT-*
   db/
-    append-only.test.ts         # APPEND-001 through APPEND-012
+    append-only.test.ts             # APPEND-001 through APPEND-013
   safety/
-    dv-safety.test.ts           # DV-001 through DV-011
+    dv-safety.test.ts               # DV-001 through DV-011
 load-tests/
-  k6-scenarios.js               # LOAD-001 through LOAD-FAIL-003
+  k6-scenarios.js                   # LOAD-001 through LOAD-FAIL-003
 ```
 
 ---
 
 ## Appendix B: Key Risk Areas
 
-1. **Hash chain race conditions**: Concurrent inserts could assign same `prev_hash` if not serialized. Requires row-level locking or serializable transaction isolation on expense inserts. Test CHAIN-INT-005 specifically validates this.
+1. **Hash chain race conditions** (RESOLVED): Concurrent inserts serialized via `SELECT ... FOR UPDATE` on `hash_chain_heads(table_name, scope_key)` sentinel table. One row per pair acts as mutex. Cross-pair inserts remain fully parallel. CHAIN-INT-006 and LOAD-006 validate correctness under concurrency.
 
-2. **Webhook idempotency under load**: Advisory lock + idempotency check must be atomic. Test IDEM-003 uses concurrent promises to validate the race condition is correctly handled.
+2. **Webhook idempotency under load**: `pg_advisory_xact_lock` (transaction-scoped) + UNIQUE constraint on `stripe_processed_events.stripe_event_id`. Lock auto-releases on rollback — no finally block needed. IDEM-003 validates the race condition with concurrent `Promise.all`.
 
-3. **Reg E timeline compliance**: 10-business-day provisional credit window is legally mandated. Automated tests must verify the `provisional_credit_due_by` calculation correctly excludes weekends and federal holidays.
+3. **Reg E timeline compliance**: 10-business-day provisional credit window is legally mandated. `provisional_credit_due_by` calculation must exclude weekends and US federal holidays. REGE-002 must use a date arithmetic library that handles this correctly (e.g., `date-fns` with a holiday calendar).
 
-4. **DV timestamp leakage**: The most likely leakage vectors are (a) push notification `created_at` fields, (b) email `Date:` headers (acceptable — this is a transport header, not activity data), and (c) API response timestamps beyond payment date. Test DV-001 through DV-003 cover all three.
+4. **DV timestamp leakage**: Three leakage vectors: (a) API responses — 11 field names suppressed entirely, 3 truncated to date-only (DV-001), (b) push notification payloads — no amounts/names/timestamps in lock-screen-visible body (NOTIF-PUSH-006/007), (c) email content — no "last seen" language (DV-003). Email `Date:` transport header is acceptable.
 
-5. **Append-only bypass via ORM**: ORMs often generate UPDATE statements transparently (e.g., on `.save()` calls). Tests APPEND-003 and APPEND-004 verify that ORM-level updates are also blocked at the DB layer.
+5. **Append-only bypass via ORM**: PostgreSQL RULE silently swallows ops and returns success — tests would pass vacuously. Using BEFORE triggers with SQLSTATE 23001 instead. ORM exceptions (APPEND-003/004) are raised by PostgreSQL and propagated through the ORM's error channel.
+
+6. **`advance_payment_status()` exemption**: SECURITY DEFINER function sets `fairbridge.allow_status_update` session variable to bypass trigger for status-only advances. Test APPEND-013 validates both directions: the function succeeds; direct UPDATE still fails.
