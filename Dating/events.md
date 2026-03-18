@@ -1,4 +1,4 @@
-> Last Updated: 2026-03-16 04:35:16
+> Last Updated: 2026-03-02 04:01:43
 
 
 
@@ -59,119 +59,111 @@
 
 
 
+## Mar 02, Monday
 
-
-## Mar 16, Monday
-
-*   **[FB] FULL**
-    *   **Time:** 6 PM
+*   **[FB] Meme Mondays**
+    *   **Time:** 12 AM
+    *   **Loc:** Longman Performing Arts Center at Issaquah High School, 700 2nd Ave SE, Issaquah, WA
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Longman%20Performing%20Arts%20Center%20at%20Issaquah%20High%20School%2C%20700%202nd%20Ave%20SE%2C%20Issaquah%2C%20WA)
+    *   **Facebook Group:** Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/2378137489298488/
+*   **[FB] Bruni's Snowbowl scouting hike.**
+    *   **Time:** 9:30 AM
     *   **Facebook Group:** 40+ Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/1666287731380079/
+    *   **Link:** https://www.facebook.com/events/1252096366890865/
 *   **[Latin] Salsa Practica**
-    *   **Time:** March 16 @ 9:00 pm - 11:00 pm
+    *   **Time:** March 2 @ 9:00 pm - 11:00 pm
     *   **Loc:** Reverie Ballroom - Seattle, 915 E Pine St, Seattle, WA, United States
     *   **Drive:** 33m (20.7 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/salsa-practica/2026-03-16/
+    *   **Link:** https://golatindance.com/event/salsa-practica/2026-03-02/
 
-## Mar 17, Tuesday
+## Mar 03, Tuesday
 
-*   **[FB] 5th Annual St. Patrick’s Day at the Poo**
-    *   **Time:** 4:30 PM
-    *   **Facebook Group:** 40+ Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/842615032127932/
-*   **[FB] The Paperboys' Annual St. Patrick's Day Show**
-    *   **Time:** 6:30 PM
-    *   **Facebook Group:** 40+ Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/1200908384831001/
 *   **[Latin] Latin Heat Tuesdays**
-    *   **Time:** March 17 @ 8:00 pm - 11:00 pm
+    *   **Time:** March 3 @ 8:00 pm - 11:00 pm
     *   **Loc:** The New Local Restaurante, 10432 SE Kent-Kangley Rd, Kent, WA, United States
     *   **Drive:** 45m (27.1 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/10432%20SE%20Kent-Kangley%20Rd%2C%20Kent%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/latin-heat-tuesdays-5/2026-03-17/
-*   **[Latin] Latin Heat Tuesdays**
-    *   **Time:** March 17 @ 8:00 pm - 11:00 pm
-    *   **Loc:** The New Local Restaurante, 10432 SE Kent-Kangley Rd, Kent, WA, United States
-    *   **Drive:** 45m (27.1 miles)
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/10432%20SE%20Kent-Kangley%20Rd%2C%20Kent%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/latin-heat-tuesdays-2-3/2026-03-17/
+    *   **Link:** https://golatindance.com/event/latin-heat-tuesdays-5/2026-03-03/
 
-## Mar 18, Wednesday
+## Mar 04, Wednesday
 
+*   **[Latin] El Centro Skate Rink: Adult Latino Skate Nights**
+    *   **Time:** March 4 @ 7:30 am - 10:00 pm
+    *   **Loc:** El Centro Skate Rink, 34222 Pacific Hwy S., Federal Way, WA, United States
+    *   **Drive:** 52m (36.3 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/34222%20Pacific%20Hwy%20S.%2C%20Federal%20Way%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/el-centro-skate-rink-adult-latino-skate-nights/2026-03-04/
 *   **[Latin] Sueños de Salsa Salsa y Bachata**
-    *   **Time:** March 18 @ 8:30 pm - 11:00 pm
+    *   **Time:** March 4 @ 8:30 pm - 11:00 pm
     *   **Loc:** Sueños de Salsa, 6512 Roosevelt Way NE, Seattle, WA, US
     *   **Drive:** 37m (25.0 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/6512%20Roosevelt%20Way%20NE%2C%20Seattle%2C%20WA%2C%20US)
-    *   **Link:** https://golatindance.com/event/suenos-de-salsa-salsa-y-bachata/2026-03-18/
+    *   **Link:** https://golatindance.com/event/suenos-de-salsa-salsa-y-bachata/2026-03-04/
 
-## Mar 19, Thursday
+## Mar 05, Thursday
 
 *   **[Latin] Latin Dance & DJ Thursday Nights**
-    *   **Time:** March 19 @ 8:30 pm - 12:00 am
+    *   **Time:** March 5 @ 8:30 pm - 12:00 am
     *   **Loc:** Aurora Borealis Restaurant, 16708 Aurora Ave N, Shoreline, WA, United States
     *   **Drive:** 47m (31.2 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/16708%20Aurora%20Ave%20N%2C%20Shoreline%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/latin-dance-dj-thursday-nights/2026-03-19/
+    *   **Link:** https://golatindance.com/event/latin-dance-dj-thursday-nights/2026-03-05/
 *   **[Latin] Bachata Night at Reverie Ballroom**
-    *   **Time:** March 19 @ 9:00 pm - 1:00 am
+    *   **Time:** March 5 @ 9:00 pm - 1:00 am
     *   **Loc:** Reverie Ballroom - Seattle, 915 E Pine St, Seattle, WA, United States
     *   **Drive:** 33m (20.7 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/915%20E%20Pine%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/bachata-night-at-reverie-ballroom/2026-03-19/
+    *   **Link:** https://golatindance.com/event/bachata-night-at-reverie-ballroom/2026-03-05/
 
-## Mar 20, Friday
+## Mar 06, Friday
 
 *   **[Latin] SALSA & BACHATA DANCE SOCIAL**
-    *   **Time:** March 20 @ 8:00 pm - 11:30 pm
+    *   **Time:** March 6 @ 8:00 pm - 11:30 pm
     *   **Loc:** LaVida Dance Studio, 11961 124th Ave NE, Totem Square Plaza, Kirkland, WA, United States
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/11961%20124th%20Ave%20NE%2C%20Totem%20Square%20Plaza%2C%20Kirkland%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/salsa-bachata-dance-social-w-intro-classes-every-3rd-friday/2026-03-20/
+    *   **Link:** https://golatindance.com/event/salsa-bachata-dance-social-w-intro-classes-every-3rd-friday/2026-03-06/
 *   **[Latin] Latin Night at Seattle Harbor**
-    *   **Time:** March 20 @ 9:00 pm - 2:00 am
+    *   **Time:** March 6 @ 9:00 pm - 2:00 am
     *   **Loc:** Seattle Harbor, 2040 Westlake Ave N, Seattle, WA, United States
     *   **Drive:** 37m (22.7 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2040%20Westlake%20Ave%20N%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/latin-night-at-seattle-harbor-2-2/2026-03-20/
+    *   **Link:** https://golatindance.com/event/latin-night-at-seattle-harbor-2-2/2026-03-06/
 *   **[Latin] SALSA | BACHATA | ZOUK | KIZOMBA at Salsa Con Todo**
-    *   **Time:** March 20 @ 10:00 pm - 1:00 am
+    *   **Time:** March 6 @ 10:00 pm - 1:00 am
     *   **Loc:** Salsa Con Todo Studio, 211 N 36th St, Seattle, WA, United States
     *   **Drive:** 40m (24.9 miles)
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/211%20N%2036th%20St%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/salsa-bachata-zouk-kizomba-at-salsa-con-todo/2026-03-20/
+    *   **Link:** https://golatindance.com/event/salsa-bachata-zouk-kizomba-at-salsa-con-todo/2026-03-06/
+*   **[FB] Winthrop Hot Air Balloon Round Up Weekend March 6th-8th**
+    *   **Loc:** Winthrop, Washington
+    *   **Drive:** 4h 47m (202.2 miles)
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Winthrop%2C%20Washington)
+    *   **Facebook Group:** 40+ Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/1162022429188687/
 
-## Mar 21, Saturday
+## Mar 07, Saturday
 
-*   **[Latin] Live Salsa Saturdays at Sea Monster Lounge**
-    *   **Time:** March 21 @ 7:00 pm - 9:00 pm
-    *   **Loc:** Sea Monster Lounge, 2202 N 45th S, Seattle, WA, United States
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2202%20N%2045th%20S%2C%20Seattle%2C%20WA%2C%20United%20States)
-    *   **Link:** https://golatindance.com/event/live-salsa-at-sea-monster-lounge-2-3/2026-03-21/
-
-## Mar 28, Saturday
-
-*   **[FB] Little Mashel Falls Trail**
-    *   **Time:** 9:30 AM
+*   **[FB] Tarbell to Silver Star**
+    *   **Time:** 8:30 AM
     *   **Loc:** Longman Performing Arts Center at Issaquah High School, 700 2nd Ave SE, Issaquah, WA
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Longman%20Performing%20Arts%20Center%20at%20Issaquah%20High%20School%2C%20700%202nd%20Ave%20SE%2C%20Issaquah%2C%20WA)
+    *   **Facebook Group:** Single Hikers of the PNW
+    *   **Link:** https://www.facebook.com/events/770494448984170/
+*   **[FB] Trail of 10 Falls**
+    *   **Time:** 9 AM
     *   **Facebook Group:** FB Group
-    *   **Link:** https://www.facebook.com/events/3490625861091390/
-
-## Apr 02, Thursday
-
-*   **[FB] Ancient Lakes Campout and Hiking Meetup!**
-    *   **Loc:** Details
-5 people going, including Danny Arias, Jessica Standifer and Vidal Roman
-Event by Zach George and PNW Singles Camping, Hiking, Paddling, And Other Outdoor Adventures
-Duration: 3 days
-Group
- 
- · Members of PNW Singles Camping, Hiking, Paddling, And Other Outdoor Adventures
-Come on out and join cohost Danny and I for a relaxed outdoor meetup!! We will be exploring one of Washington’s most unique landscapes in the Quincy Lakes Wilderness. This area is … See more
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Details%0A5%20people%20going%2C%20including%20Danny%20Arias%2C%20Jessica%20Standifer%20and%20Vidal%20Roman%0AEvent%20by%20Zach%20George%20and%20PNW%20Singles%20Camping%2C%20Hiking%2C%20Paddling%2C%20And%20Other%20Outdoor%20Adventures%0ADuration%3A%203%20days%0AGroup%0A%C2%A0%0A%20%C2%B7%20Members%20of%20PNW%20Singles%20Camping%2C%20Hiking%2C%20Paddling%2C%20And%20Other%20Outdoor%20Adventures%0ACome%20on%20out%20and%20join%20cohost%20Danny%20and%20I%20for%20a%20relaxed%20outdoor%20meetup%21%21%20We%20will%20be%20exploring%20one%20of%20Washington%E2%80%99s%20most%20unique%20landscapes%20in%20the%20Quincy%20Lakes%20Wilderness.%20This%20area%20is%20%E2%80%A6%20See%20more)
+    *   **Link:** https://www.facebook.com/events/1722355138745746/
+*   **[FB] Mazama Ridge Snowshoe, Mount Rainier National Park**
+    *   **Time:** 10 AM
     *   **Facebook Group:** FB Group
-    *   **Link:** https://www.facebook.com/events/930119719389212/
+    *   **Link:** https://www.facebook.com/events/777790328714703/
+*   **[Latin] Live Salsa Saturdays at Sea Monster Lounge**
+    *   **Time:** March 7 @ 7:00 pm - 9:00 pm
+    *   **Loc:** Sea Monster Lounge, 2202 N 45th S, Seattle, WA, United States
+    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/2202%20N%2045th%20S%2C%20Seattle%2C%20WA%2C%20United%20States)
+    *   **Link:** https://golatindance.com/event/live-salsa-at-sea-monster-lounge-2-3/2026-03-07/
 
 ## Jun 08, Monday
 
@@ -463,18 +455,4 @@ Seattle
     *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Tacoma%2C%20Washington)
     *   **Facebook Group:** 40+ Single Hikers of the PNW
     *   **Link:** https://www.facebook.com/events/2952757638254385/
-*   **[FB] Meme Mondays**
-    *   **Loc:** Longman Performing Arts Center at Issaquah High School, 700 2nd Ave SE, Issaquah, WA
-    *   **Directions:** [Google Maps](https://www.google.com/maps/dir/2807%20257th%20Pl%20SE%2C%20Sammamish%2C%20WA%2098075/Longman%20Performing%20Arts%20Center%20at%20Issaquah%20High%20School%2C%20700%202nd%20Ave%20SE%2C%20Issaquah%2C%20WA)
-    *   **Facebook Group:** Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/2378137515965152/
-*   **[FB] Falls Creek Falls**
-    *   **Facebook Group:** Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/790661764110510/
-*   **[FB] Abiqua Falls Hike before it sells.**
-    *   **Facebook Group:** Single Hikers of the PNW
-    *   **Link:** https://www.facebook.com/events/1352647383302446/
-*   **[FB] Falls Creek Falls**
-    *   **Facebook Group:** FB Group
-    *   **Link:** https://www.facebook.com/events/807832181710025/
 ## Sources Checked

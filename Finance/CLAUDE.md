@@ -16,7 +16,6 @@
 - **Categorization**: ~500 keyword rules, 99.7% categorized
 - **Key fields**: date, description, amount (negative = charge), is_transfer, category_id
 - **Import command**: `finance_db.py import`
-- **Card number mapping**: `Finance/card-mapping.yaml` — maps receipt last-4 digits → account name. Includes Apple Pay DAN mappings (Apple Pay shows a virtual token number on receipts, not the physical card number). A card may have multiple last-4 entries due to renewals.
 
 ### Amazon Orders (`amazon_orders` table)
 - **Source CSVs**: `~/Dropbox/0-FinancialStatements/amazon/*.csv`

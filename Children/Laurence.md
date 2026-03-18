@@ -1,6 +1,3 @@
-## 2026-03-12
-- **Health:** Received an email from Endeavour Elementary's health room — Laurence bumped his head at school and was seen by the nurse. He was treated with a cold pack and returned to class without further follow-up. The school will send home a yellow Head Injury Report Form in his backpack. The email noted that even minor head bumps can cause concussions and listed symptoms to watch for over the next 24–72 hours.
-
 ## 2026-03-01
 - **Behavior:** Sheri reported Laurence spent the day throwing things and even tossed a gallon of water that broke and flooded the floor.
 - **Possible Triggers:** She suspects his medication might be contributing, because the entire day felt unusually hard.
