@@ -32,24 +32,28 @@ FairBridge must provide provisional credit within 10 business days. Losses absor
 
 ## Technical Stack Summary
 
-| Layer | Technology |
-|-------|-----------|
-| Backend | Fastify (Node.js) + TypeScript + Zod validation |
-| Database | PostgreSQL 16 (append-only tables, hash-chained) |
-| Queue | Redis + BullMQ (5 queues) |
-| Object Storage | Cloudflare R2 |
-| Email | Resend |
-| SMS | Twilio |
-| Payments | Stripe Connect Express + Financial Connections |
-| Mobile | React Native (Expo bare workflow) |
-| Web | React 18 + TypeScript + Vite + Tailwind + shadcn/ui |
-| State (web) | Zustand (global) + React Query (server) |
-| Forms (web) | React Hook Form + Zod |
-| Calendar (web) | @fullcalendar/react |
-| PDF Export | @react-pdf/renderer (server-side) |
-| Testing | Vitest + React Testing Library + Playwright (E2E) |
-| Auth | Magic link (email) primary + Google OAuth |
-| Hosting (web) | Vercel or Netlify |
+| Layer | Technology | Beta Notes |
+|-------|-----------|------------|
+| Backend | Fastify (Node.js) + TypeScript + Zod validation | |
+| Database | PostgreSQL 16 (append-only tables, hash-chained) | |
+| Queue | Redis + BullMQ (2 queues for beta; 5 at scale) | Collapsed for beta (~50 pairs) |
+| Object Storage | Cloudflare R2 | Free tier sufficient at beta volume |
+| Email | Resend | Free tier (3K emails/mo); sufficient at beta |
+| SMS | Twilio | **Deferred** — email fallback sufficient at 50 pairs |
+| Payments | Stripe Connect Express + Financial Connections | |
+| Mobile | React Native (Expo bare workflow) | |
+| Mobile builds | EAS Build | Free tier (30 builds/mo) |
+| Web | React 18 + TypeScript + Vite + Tailwind + shadcn/ui | |
+| State (web) | Zustand (global) + React Query (server) | |
+| Forms (web) | React Hook Form + Zod | |
+| Calendar (web) | @fullcalendar/react | |
+| PDF Export | @react-pdf/renderer (server-side) | |
+| Testing | Vitest + React Testing Library + Playwright (E2E) | |
+| Auth | Magic link (email) primary + Google OAuth | |
+| Hosting (API + DB + Redis) | **Railway** (all-in-one) | ~$38/mo; replaces AWS ECS + RDS + ElastiCache |
+| Hosting (web) | **Vercel Hobby** (free) | Sufficient for beta |
+
+**Beta infrastructure cost: ~$38–68/mo** (Railway + optional BetterStack). Full production stack estimated at $845+/mo — scale up at 200+ pairs.
 
 ---
 
@@ -141,7 +145,9 @@ The following conflicts were identified across agent specs and are resolved here
        │                  │                  │
 ┌──────▼──────┐  ┌────────▼────────┐  ┌─────▼──────────┐
 │ PostgreSQL  │  │ Redis (BullMQ)  │  │ Cloudflare R2  │
-│ Append-only │  │ 5 job queues    │  │ Receipts/Docs  │
+│ Append-only │  │ 2 job queues    │  │ Receipts/Docs  │
+│             │  │ (beta; 5 at     │  │                │
+│             │  │  scale)         │  │                │
 │ Hash-chained│  │                 │  │                │
 └─────────────┘  └────────┬────────┘  └────────────────┘
                           │
@@ -155,7 +161,7 @@ The following conflicts were identified across agent specs and are resolved here
 └─────────────┘  └─────────────────┘  └────────────────┘
 ```
 
-**BullMQ Queues**: webhook-processing, notification-dispatch, payment-sync, merkle-anchor, dead-letter
+**BullMQ Queues (beta)**: `operations` (priority-ordered: webhooks→payments→disputes→fraud), `notification` (push→email→in-app). Collapse back to 5 queues at ~500 jobs/day (~200+ pairs).
 
 ---
 
@@ -201,7 +207,7 @@ Key endpoints (see Backend-Spec.md Section 7 for full catalog):
 
 ### 2.5 Notification Dispatch Pipeline
 
-Push (FCM/APNs) → 15-min fallback → Email (Resend) → In-app inbox (guaranteed). SMS via Twilio for highest-stakes events only (payment failure, dispute deadline).
+Push (FCM/APNs) → 15-min fallback → Email (Resend) → In-app inbox (guaranteed). **SMS (Twilio) deferred for beta** — email handles payment failures and dispute deadlines at 50-pair scale. Begin A2P 10DLC carrier registration now (4-week lead time) so Twilio is ready to activate when pairs exceed 100.
 
 ### 2.6 Fraud Controls
 
@@ -579,29 +585,57 @@ Key test areas:
 
 ### 11.6 Deployment and Infrastructure
 
-**Recommended architecture** (to be finalized during implementation):
-- **API**: Container-based (Docker) on AWS ECS / Fly.io / Railway
-- **Database**: Managed PostgreSQL 16 (AWS RDS / Supabase / Neon)
-- **Redis**: Managed Redis (AWS ElastiCache / Upstash)
-- **Object storage**: Cloudflare R2 (S3-compatible, no egress fees)
-- **Web**: Vercel (React SPA + edge functions for PDF generation)
-- **Mobile builds**: EAS Build (Expo Application Services)
-- **CI/CD**: GitHub Actions → lint + test + build → deploy
-- **Secrets management**: Environment variables via hosting provider (no .env files in repo)
+#### Beta Stack (~$38–68/mo, sufficient for 0–100 pairs)
+
+| Service | Provider | Cost | Notes |
+|---------|----------|------|-------|
+| API + PostgreSQL 16 + Redis | **Railway** | ~$5–20/mo | All-in-one; one `railway.toml` replaces ECS + RDS + ElastiCache |
+| Web hosting | **Vercel Hobby** | Free | React SPA; upgrade to Pro when custom domain config needed |
+| Email | **Resend free tier** | Free | 3K emails/mo; sufficient at beta volume |
+| Object storage | **Cloudflare R2** | ~$0 | Free tier covers beta receipt/doc volume |
+| Error tracking | **Sentry free tier** | Free | 5K errors/mo; beta generates ~20/mo at 50 pairs |
+| Logs + uptime | **BetterStack** | $0–30/mo | Structured logs + uptime monitors + Slack/email alerts |
+| Mobile crash reporting | **Firebase Crashlytics** | Free | Unchanged |
+| Mobile builds | **EAS Build free tier** | Free | 30 builds/mo; sufficient for initial iteration pace |
+| SMS | **Twilio — deferred** | $0 | Email fallback sufficient; start A2P 10DLC registration now |
+
+**Railway notes**: PostgreSQL 16 on Railway is standard Postgres — append-only triggers, pgcrypto, RLS, and `pg_advisory_xact_lock` all work identically. BullMQ connects to Railway Redis (requires Redis 7+, which Railway provides). One `railway.toml` replaces all ECS task definitions.
+
+**CI/CD**: GitHub Actions → lint + test + build → `railway up` deploy.
+
+**Secrets management**: Environment variables via Railway dashboard and Vercel project settings. No `.env` files in repo.
+
+#### Upgrade Path
+
+| Trigger | Upgrade |
+|---------|---------|
+| 50 paying pairs | Railway Pro ($20/mo flat) |
+| 100 pairs | Activate Twilio (A2P 10DLC should be pre-registered) |
+| 100 pairs | Migrate PostgreSQL to Neon ($19/mo — serverless, auto-scaling, instant branching for staging) |
+| 200 pairs | Add Honeycomb APM (free up to 20M events/mo) |
+| 200 pairs + queue backlog | Split `operations` back to 5 BullMQ queues per original 5-queue design |
+| Hire 2nd engineer | Add PagerDuty ($42/mo) for on-call rotation |
+| 500 pairs | Upgrade EAS Build to Production ($99/mo) |
+| Scale | Migrate API to AWS ECS + RDS + ElastiCache per original full-scale design |
 
 ### 11.7 Monitoring and Observability
 
-| Signal | Tool | Alerting |
-|--------|------|----------|
-| Application logs | Pino (structured JSON) → Datadog/Logtail | Error rate >1% |
-| APM / traces | OpenTelemetry → Datadog/Honeycomb | p99 latency >2s |
-| Uptime | Better Uptime / Checkly | Any downtime |
-| Error tracking | Sentry (web + mobile) | New error types |
-| Crash reporting | Firebase Crashlytics (mobile) | Crash rate >0.5% |
-| Fraud alerts | Custom BullMQ → PagerDuty | Any fraud flag |
-| DLQ monitoring | BullMQ dashboard | Queue depth >10 |
-| Nacha return rate | Custom dashboard | Rate >0.3% (warn), >0.5% (critical) |
-| Financial reconciliation | Daily automated check | Any discrepancy |
+#### Beta Stack (sufficient for 0–100 pairs)
+
+| Signal | Tool | Alerting | Cost |
+|--------|------|----------|------|
+| Application logs | Pino (structured JSON) → **BetterStack** | Error rate >1% | $0–30/mo |
+| Uptime monitors | **BetterStack** | Any downtime → Slack/email | Included above |
+| Error tracking | **Sentry free tier** (web + mobile) | New error types | Free (5K errors/mo) |
+| Crash reporting | **Firebase Crashlytics** (mobile) | Crash rate >0.5% | Free |
+| Fraud alerts | Custom BullMQ → Slack webhook | Any fraud flag | Free |
+| DLQ monitoring | BullMQ dashboard | Queue depth >10 → Slack | Free |
+| Nacha return rate | Custom dashboard | Rate >0.3% (warn), >0.5% (critical) | Free |
+| Financial reconciliation | Daily automated check | Any discrepancy | Free |
+
+**Not included at beta** (add when needed):
+- APM (Honeycomb/Datadog) — no load to optimize at 50 pairs; add at 200+ pairs
+- PagerDuty — solo founder uses Slack/email alerts; add when hiring 2nd engineer
 
 **PII in logs**: All PII (email, name, bank details) MUST be redacted before logging. Log user_id (UUID) only. IP addresses logged as SHA-256 hash.
 

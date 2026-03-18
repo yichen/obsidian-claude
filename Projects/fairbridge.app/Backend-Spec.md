@@ -3,7 +3,9 @@
 **Version**: 1.0
 **Date**: 2026-03-17
 **Author**: Backend Engineer
-**Stack**: Fastify (Node.js) + PostgreSQL + Redis (BullMQ) + Cloudflare R2 + Resend + Twilio
+**Stack**: Fastify (Node.js) + PostgreSQL + Redis (BullMQ) + Cloudflare R2 + Resend
+**Hosting**: Railway (API + PostgreSQL 16 + Redis, ~$38/mo beta) | Vercel Hobby (web, free)
+**SMS**: Twilio deferred for beta — email fallback sufficient at 50 pairs; begin A2P 10DLC registration now
 
 ---
 
@@ -824,7 +826,20 @@ async function processWithLock(eventId: string, handler: () => Promise<void>) {
 
 ## 6. BullMQ Job Queue Architecture
 
+> **Beta design (0–200 pairs)**: 2 queues replace 5. BullMQ's built-in `priority` field provides the same ordering guarantees as queue-level isolation at this scale (~30 jobs/day max at 50 pairs). Split back to 5 queues when daily jobs exceed ~500 (roughly 200+ pairs).
+
 ### 6.1 Queue Definitions
+
+#### Beta (2 queues)
+
+| Queue | Workers | Purpose | Jobs (priority order) |
+|-------|---------|---------|----------------------|
+| `operations` | 3 | All financial operations | webhooks (p1), payments (p2), disputes (p3), fraud checks (p5), merkle anchor cron |
+| `notification` | 2 | All notifications | push → email → in-app inbox |
+
+**Priority field**: Lower number = higher priority. BullMQ processes highest-priority jobs first within a queue. Webhook events (p1) are always processed before fraud checks (p5).
+
+#### Full-scale (5 queues — activate at ~200+ pairs / ~500 jobs/day)
 
 | Queue | Workers | Purpose |
 |-------|---------|---------|
@@ -847,11 +862,29 @@ const BASE_JOB_OPTIONS: JobsOptions = {
   removeOnFail: false,   // keep failed jobs for DLQ inspection
 };
 
+// Beta: 2 queues with priority-based ordering
+const operationsQueue = new Queue('operations', { connection: redisClient });
+const notificationQueue = new Queue('notification', { connection: redisClient });
+
+// Job priority constants (lower = higher priority)
+export const PRIORITY = {
+  WEBHOOK: 1,
+  PAYMENT: 2,
+  DISPUTE: 3,
+  MERKLE_ANCHOR: 4,
+  FRAUD: 5,
+} as const;
+
+// Enqueue examples:
+await operationsQueue.add('stripe-webhook', data, { ...BASE_JOB_OPTIONS, priority: PRIORITY.WEBHOOK });
+await operationsQueue.add('payment-sync', data, { ...BASE_JOB_OPTIONS, priority: PRIORITY.PAYMENT });
+await operationsQueue.add('fraud-check', data, { ...BASE_JOB_OPTIONS, priority: PRIORITY.FRAUD });
+
 // Dead-letter queue: jobs that exhaust retries are moved here
 const dlq = new Queue('dead-letter', { connection: redisClient });
 
 // On job failure after all retries:
-webhookQueue.on('failed', async (job, err) => {
+operationsQueue.on('failed', async (job, err) => {
   if (job.attemptsMade >= job.opts.attempts) {
     await dlq.add('dead-letter', {
       originalQueue: job.queueName,
@@ -859,20 +892,23 @@ webhookQueue.on('failed', async (job, err) => {
       error: err.message,
       failedAt: new Date().toISOString(),
     });
-    // Alert on-call if critical event type
+    // Alert via Slack webhook if critical event type
     if (CRITICAL_EVENT_TYPES.includes(job.data.event_type)) {
-      await alertOncall(job, err);
+      await alertSlack(job, err);
     }
   }
 });
 ```
 
+**Webhook idempotency unchanged**: still uses `stripe_event_id` dedup in `stripe_processed_events` table + `pg_advisory_xact_lock` to prevent race conditions. Queue consolidation does not affect idempotency.
+
 ### 6.3 Merkle Anchor Job (Daily)
 
 ```typescript
-// Runs at 00:05 UTC via BullMQ cron
-await merkleQueue.add('anchor', {}, {
+// Runs at 00:05 UTC via BullMQ repeat cron in operations queue
+await operationsQueue.add('merkle-anchor', {}, {
   repeat: { pattern: '5 0 * * *' },
+  priority: PRIORITY.MERKLE_ANCHOR,
 });
 
 async function computeMerkleAnchor(date: string) {
@@ -1400,13 +1436,45 @@ async function silentDeactivate(userId: string) {
 
 ## 13. Infrastructure & Config
 
+### 13.0 Hosting Platform (Beta)
+
+**Railway** hosts all backend services (API + PostgreSQL 16 + Redis) on one platform.
+
+```toml
+# railway.toml
+[build]
+builder = "nixpacks"
+
+[deploy]
+startCommand = "node dist/app.js"
+healthcheckPath = "/health"
+healthcheckTimeout = 30
+
+[[services]]
+name = "api"
+
+[[services]]
+name = "postgres"
+image = "postgres:16"
+
+[[services]]
+name = "redis"
+image = "redis:7"
+```
+
+Railway PostgreSQL 16 supports all required features: `CREATE EXTENSION pgcrypto`, RLS policies, `pg_advisory_xact_lock`, append-only triggers, and row-level locking for hash chain serialization.
+
+Railway Redis 7+ is compatible with BullMQ 5.x (requires Redis 7+).
+
+**Environment variables** are set via Railway dashboard (API service) and Vercel project settings (web). No `.env` files in repo.
+
 ### 13.1 Environment Variables
 
 ```bash
-# Database
+# Database (Railway injects DATABASE_URL automatically)
 DATABASE_URL=postgresql://user:pass@host:5432/fairbridge
 
-# Redis
+# Redis (Railway injects REDIS_URL automatically)
 REDIS_URL=redis://host:6379
 
 # Stripe
@@ -1464,11 +1532,9 @@ src/
 │   └── webhooks/
 │       └── stripe.ts         # POST /webhooks/stripe
 ├── workers/
-│   ├── webhook.worker.ts     # Stripe event handlers
-│   ├── notification.worker.ts
-│   ├── payment.worker.ts
-│   ├── fraud.worker.ts
-│   └── dispute.worker.ts
+│   ├── operations.worker.ts  # Beta: handles webhook, payment, dispute, fraud, merkle-anchor jobs
+│   │                         # (split into webhook/payment/fraud/dispute workers at 200+ pairs)
+│   └── notification.worker.ts
 ├── services/
 │   ├── hash-chain.ts         # SHA-256 hash chain helpers
 │   ├── fraud.ts              # Velocity, cross-account, geo checks
