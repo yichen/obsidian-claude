@@ -1,3 +1,6 @@
+## 2026-03-17
+- Ciara gave homework for Laurence — a TIPP Skills Chart (Temperature, Intense Exercise, Paced Breathing, Paired Muscle Relaxation) with a note "Laurence 5 min."
+
 ## 2026-03-01
 - **Behavior:** Sheri reported Laurence spent the day throwing things and even tossed a gallon of water that broke and flooded the floor.
 - **Possible Triggers:** She suspects his medication might be contributing, because the entire day felt unusually hard.
