@@ -202,3 +202,7 @@
 - **Remaining levers**: cut dining 50% (+$300), audit Apple subs (+$50-100) → would flip to positive
 - **Spousal maintenance ends ~late 2028**: +$10K/mo — everything becomes very comfortable
 - Re-evaluate withholding in October per safe harbor strategy
+
+### fairbridge.app (2026-03-18) `(active)`
+- Moved `Projects/fairbridge.app/` specs out of Obsidian vault into its own repo
+- 12 spec files removed (Android, iOS, Backend, Web Frontend, Security, UX Flows, MVP plan, software-spec)
