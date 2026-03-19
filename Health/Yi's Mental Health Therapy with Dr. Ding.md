@@ -8,9 +8,18 @@ Yu Ding PsycD
 ### 2026-03-19
 - Sleep was a lot better last week with more meditation
 - Another escalation with Ben from Slack yesterday. Potentially I need to prepare an exit.
+	- He asked for work artifacts for a few hours in the morning yesterday.
 - I did meditation an hour last night, and with medicine, I did sleep more than 7 hours last night. 
 	- Ding: kudos for your ability to take action, able to meditation for an hour.  When distracted, taking your thoughts back to meditation, that's the practice. 
 - Ding: it is OK to take a break even from work.
+- Ding: 内疚是不是因为你自己看错时间表？ 塞翁失马,  不一定是坏事
+- Ding: 你有两个工作的优势出来了，如果只有一个工作，你更难。
+- Ding: 推荐一本书：the art of spending money.
+- Yi: I feel that I am not satisfied with status quo, considering income, etc. I am already making top salary. 
+	- Ding: Insight Timer, search for "enough" , let enough be enough, good enough, I am enough, I have enough, you are enough. 
+	- Keep telling yourself "I have enough, I am enough", 慢慢会变成自己的声音
+- 紧张的时候，可以在户外快走，甩手，可以 reset nerve system. 
+- Yi:
 ### 2026-02-19
 - Yi: Initial impact (reputation) doing very well at ServiceTitan.
 - Yi: too much context switch (multiple jobs, dates), my sleep problem is probably over stimulation. 
