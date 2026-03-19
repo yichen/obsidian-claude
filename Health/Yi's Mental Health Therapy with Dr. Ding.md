@@ -5,6 +5,12 @@ Yu Ding PsycD
 
 [https://doxy.me/drding](https://doxy.me/drding)
 
+### 2026-03-19
+- Sleep was a lot better last week with more meditation
+- Another escalation with Ben from Slack yesterday. Potentially I need to prepare an exit.
+- I did meditation an hour last night, and with medicine, I did sleep more than 7 hours last night. 
+	- Ding: kudos for your ability to take action, able to meditation for an hour.  When distracted, taking your thoughts back to meditation, that's the practice. 
+- Ding: it is OK to take a break even from work.
 ### 2026-02-19
 - Yi: Initial impact (reputation) doing very well at ServiceTitan.
 - Yi: too much context switch (multiple jobs, dates), my sleep problem is probably over stimulation. 
