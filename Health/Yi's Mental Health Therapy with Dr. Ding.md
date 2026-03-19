@@ -19,7 +19,6 @@ Yu Ding PsycD
 	- Ding: Insight Timer, search for "enough" , let enough be enough, good enough, I am enough, I have enough, you are enough. 
 	- Keep telling yourself "I have enough, I am enough", 慢慢会变成自己的声音
 - 紧张的时候，可以在户外快走，甩手，可以 reset nerve system. 
-- Yi:
 ### 2026-02-19
 - Yi: Initial impact (reputation) doing very well at ServiceTitan.
 - Yi: too much context switch (multiple jobs, dates), my sleep problem is probably over stimulation. 
