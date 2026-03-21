@@ -29,6 +29,8 @@
 ### Day 2 — Saturday, March 21: Exploring the Peninsula
 
 - **Lunch**: Pacific Pizza, 870 South Forks Ave, Forks, WA 98331, (360) 374-2626 — $27.90
+  - Ice cream — $8.39 (incl $0.24 surcharge)
+  - Ruby tipped $5 cash for lunch and $5 cash for ice cream
 
 ### Day 3 — Sunday, March 22: Return Home
 
@@ -41,8 +43,10 @@
 | Date | Payee | Amount | Card | Category |
 |------|-------|--------|------|----------|
 | 03/20 | McDonald's #3066, Aberdeen | $29.84 | Chase Sapphire (...6904) | Dining Out |
-| 03/21 | Pacific Pizza, Forks | $27.90 | Chase Sapphire (...2341) | Dining Out |
-| | **Total (so far)** | **$57.74** | | |
+| 03/21 | Pacific Pizza, Forks (lunch) | $27.90 | Chase Sapphire (...2341) | Dining Out |
+| 03/21 | Pacific Pizza, Forks (ice cream) | $8.39 | Chase Sapphire (...2341) | Dining Out |
+| 03/21 | Tips at Pacific Pizza (cash, Ruby) | $10.00 | Cash | Dining Out |
+| | **Total (so far)** | **$76.13** | | |
 
 ---
 
