@@ -92,3 +92,11 @@
   category: Entertainment
   memo: 'Salsa dancing with Tingting (dating)'
   status: pending
+
+- date: '2026-03-20'
+  account: chase-sapphire
+  amount: -29.84
+  payee: McDonald's #3066
+  category: Dining Out
+  memo: 'Dinner in Aberdeen on Olympic National Park trip — 2 Happy Meals, Double Cheeseburger, Big Mac Meal'
+  status: pending
