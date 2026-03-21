@@ -116,3 +116,11 @@
   category: Dining Out
   memo: 'Ice cream at Pacific Pizza, Forks — Olympic National Park trip (incl $0.24 surcharge)'
   status: pending
+
+- date: '2026-03-21'
+  account: chase-sapphire
+  amount: -72.74
+  payee: Sol Duc Hot Springs
+  category: Kids Toys and Games
+  memo: 'Souvenir stuffies for twins — Plush Slug 18" ($39.99) + Plush Color Me Bear ($26.99) + tax'
+  status: pending
