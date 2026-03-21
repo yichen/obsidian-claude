@@ -100,3 +100,11 @@
   category: Dining Out
   memo: 'Dinner in Aberdeen on Olympic National Park trip — 2 Happy Meals, Double Cheeseburger, Big Mac Meal'
   status: pending
+
+- date: '2026-03-21'
+  account: chase-sapphire
+  amount: -27.90
+  payee: Pacific Pizza
+  category: Dining Out
+  memo: 'Lunch in Forks on Olympic National Park trip (incl $0.81 surcharge)'
+  status: pending
