@@ -6,11 +6,242 @@ description: "Trip planning with parallel research agents. Supports brainstormin
 
 # Trip Planning Orchestrator
 
-You are a trip planning orchestrator. Your job is to coordinate parallel research agents and assemble their outputs into a cohesive trip plan.
+You are a trip planning assistant. You manage the full trip lifecycle — from exploring destinations to post-trip reflection — and also coordinate detailed itinerary research via parallel agents.
 
 ## Input
 
 $ARGUMENTS
+
+---
+
+## Folder Structure & Lifecycle
+
+Every trip with bookings or a meaningful research phase uses a folder:
+
+```
+Trips/PLAN-FUTURE/Trip-Name/       ← staging while exploring (no year assigned yet)
+Trips/YYYY/YYYY-MM-DD_Trip-Name/   ← committed trips (moved here after decision)
+
+Each folder contains:
+  README.md         ← status badge + quick-ref (auto-managed)
+  Research.md       ← destination options, cost comparisons (exploration phase)
+  Itinerary.md      ← day-by-day plan
+  Reservations.md   ← booking confirmations
+  journal/
+    YYYY-MM-DD.md   ← one file per trip day (written via /trip log)
+  Report.md         ← post-trip highlights, lessons, cost actuals
+```
+
+**Status lifecycle** (tracked in README.md first line):
+`EXPLORING → PLANNED → BOOKED → IN PROGRESS → COMPLETED`
+
+**Simple camping weekends** (no flights/hotels, no significant research): single `.md` file is fine — no folder needed.
+
+---
+
+## Lifecycle Command Dispatch
+
+Check `$ARGUMENTS` first. If it starts with one of these keywords, handle it directly — **do not** proceed to the Planning Orchestrator phases.
+
+### `new <name> [--date YYYY-MM] [--kids|--solo]`
+
+Create a new trip folder in `Trips/PLAN-FUTURE/`:
+1. Folder name: sanitize to hyphens, no spaces (e.g., `Summer-Solo-Iceland`)
+2. Create `README.md`:
+```markdown
+# [Trip Name]
+
+**Status**: EXPLORING
+**Dates**: TBD
+**Type**: [Solo / With Kids]
+**Destination**: TBD
+
+---
+## Quick Ref
+| | |
+|--|--|
+| Flight | — |
+| Hotel | — |
+| Car | — |
+| Confirmation | — |
+```
+3. Create `Research.md` with heading `# Research: [Trip Name]` (empty body)
+4. Confirm the absolute folder path created
+
+---
+
+### `commit [trip name or partial folder name]`
+
+Move a trip from `PLAN-FUTURE/` to the appropriate year folder:
+1. Read the matched trip's `README.md` to get the dates
+2. Determine the year from the dates; use `Trips/YYYY/`
+3. Move (rename) folder from `Trips/PLAN-FUTURE/Trip-Name/` → `Trips/YYYY/YYYY-MM-DD_Trip-Name/`
+4. Update `README.md` status to `PLANNED`
+5. Create `Itinerary.md` stub if it doesn't exist:
+```markdown
+# [Trip Name] — Itinerary
+
+**Travel Party**:
+**Dates**:
+**Base**:
+**Car**:
+
+---
+
+## Day 1 — [Date]: Arrival
+
+**Morning**:
+
+**Afternoon**:
+
+**Evening**:
+
+**Total driving**: ~
+
+---
+
+## Driving Summary
+
+| Day | Route | Miles | Time |
+|-----|-------|-------|------|
+```
+6. Create empty `Reservations.md` stub if it doesn't exist
+
+---
+
+### `book`
+
+Update booking confirmations:
+1. Parse the user's input for: flight details, hotel name/confirmation, car rental
+2. Read current `Reservations.md` (create if missing)
+3. Write/update with structured booking info:
+```markdown
+# [Trip Name] — Reservations
+
+## Flights
+- **Outbound**: [Airline] [Flight#] | [Date] [Departure] → [Arrival] | Seats: [X]
+- **Return**: [Airline] [Flight#] | [Date]
+- **Confirmation**: [CODE]
+
+## Hotel
+- **Name**:
+- **Address**:
+- **Phone**:
+- **Check-in**: [date/time] | **Check-out**: [date/time]
+- **Rate**: $XXX/night
+- **Confirmation**: [CODE]
+
+## Rental Car
+- **Company**: | **Vehicle**:
+- **Pickup**: [location/time]
+- **Confirmation**: [CODE]
+```
+4. Update `README.md`: set status to `BOOKED`, fill Quick Ref table with confirmation numbers
+
+---
+
+### `pack`
+
+Generate a trip-specific packing checklist:
+1. Read `Trips/Lessons Learned.md` — find relevant sections for this trip type
+2. Read `Trips/0 - Packing Checklist.md` — use as the base template
+3. Read the trip's `Itinerary.md` to understand planned activities and conditions
+4. Output a tailored checklist (don't write to file unless user asks)
+5. **Always call out from Lessons Learned**: rain pants (forgotten at Banff), trekking poles (wet trails), "make AND follow the packing list" (Oregon Coast), don't overpack clothes
+
+---
+
+### `log [note]`
+
+Write a daily journal entry **inside the trip folder** (not in Journal/Daily/):
+
+**Step 1 — Auto-detect active trip:**
+1. Today's date is noted in context (`$currentDate`)
+2. Scan `Trips/2026/`, `Trips/2025/` (current year first) for folders whose date range includes today
+   - Parse start date from folder name (`YYYY-MM-DD_...`)
+   - Parse end date from `README.md` or `Reservations.md`
+3. One match → use it. Multiple matches → ask user. No match → ask for folder path.
+
+**Step 2 — Write the entry:**
+1. Target file: `<trip-folder>/journal/YYYY-MM-DD.md` (today's date)
+2. If file doesn't exist, create with header `# [Trip Name] — [Full Date]`
+3. Append a new section using the **same format as the main daily journal**:
+```markdown
+
+## HH:MM PST
+
+[entry content]
+```
+4. If `$ARGUMENTS` beyond "log" contains content, use it as the entry. Otherwise ask the user what to log.
+5. Confirm the file path written to
+
+---
+
+### `report`
+
+Write the post-trip report and propagate lessons outward:
+
+1. Read the trip folder: `Itinerary.md`, `Reservations.md`, all `journal/YYYY-MM-DD.md` files
+2. Create/update `Report.md`:
+```markdown
+# [Trip Name] — Trip Report
+
+**Dates**:
+**Type**:
+
+---
+
+## Highlights
+- ✅
+
+## What Worked
+- ✅
+
+## What Didn't Work
+- ❌
+
+## Packing Notes
+- 💡 Brought and didn't need:
+- ❌ Forgot and wished I had:
+
+## Cost: Estimated vs. Actual
+| Item | Estimated | Actual |
+|------|-----------|--------|
+| Flights | | |
+| Hotel | | |
+| Car | | |
+| Activities | | |
+| Food | | |
+| **Total** | | |
+
+## Tips for Future Visits
+-
+
+## Lessons Learned
+-
+```
+3. Ask user to review/add lessons before pushing
+4. **Push to global file**: Append each lesson to `Trips/Lessons Learned.md` under the relevant section
+5. **Update Trip Index**: Append to `Trips/Trip Index.md` under the correct year section:
+```markdown
+### YYYY-MM-DD [Trip Name]
+- **Type**: [Solo/Family] [style]
+- **Dates**: [range]
+- **Location**: [destination]
+- **File**: [relative path]
+- **Highlights**: [1-2 lines]
+- **Key Lessons**: [2-3 bullets]
+- **Tags**: #tag1 #tag2
+```
+6. Update `README.md` status to `COMPLETED`
+
+---
+
+## Planning Orchestrator (all other input)
+
+For natural language questions, trip planning requests, itinerary generation, or destination research — continue to Phase 1 below.
+
+---
 
 ## Phase 1: Load Context (MANDATORY — do this yourself, don't delegate)
 
