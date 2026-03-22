@@ -181,13 +181,50 @@ Write a daily journal entry **inside the trip folder** (not in Journal/Daily/):
 
 Write the post-trip report and propagate lessons outward:
 
-1. Read the trip folder: `Itinerary.md`, `Reservations.md`, all `journal/YYYY-MM-DD.md` files
-2. Create/update `Report.md`:
+**Step 1 — Read trip context:**
+Read `Itinerary.md`, `Reservations.md`, and all `journal/YYYY-MM-DD.md` files in the trip folder. Extract trip start/end dates.
+
+**Step 2 — Pull expenses from finance system (do NOT ask user to re-enter):**
+
+The finance DB is the source of truth. Query both sources for the trip date range:
+
+a) **CC transactions already in DB** — run via `Scripts/venv/bin/python3 .claude/scripts/finance_db.py query`:
+```sql
+SELECT t.date, t.description, ROUND(ABS(t.amount), 2) as amount, a.name as account, c.name as category
+FROM transactions t
+JOIN accounts a ON a.id = t.account_id
+LEFT JOIN categories c ON c.id = t.category_id
+WHERE t.is_transfer = 0
+  AND t.date BETWEEN '<trip_start>' AND '<trip_end>'
+ORDER BY t.date, ABS(t.amount) DESC
+```
+Also query `fidelity_cma_transactions` with the same date filter for any lodge/non-CC charges.
+
+b) **Pre-logged pending transactions** — read `Finance/pending-transactions.yaml`, filter for entries where `date` falls within the trip date range (status = pending or matched).
+
+c) **Combine** the two lists. Deduplicate by `date + amount` (a pending entry that was matched won't appear in both). Note the source of each row: `[DB]` or `[pending]`.
+
+d) **Present to user** — show the combined expense list and ask:
+- "Any non-trip items to remove?" (e.g., an Amazon order on the same day)
+- "Any cash transactions to add?"
+
+e) Use the confirmed list as the expenses section in Report.md. If the DB query returns empty (statements not yet imported), say so: "CC statements in DB through [last date] — transactions after that date may only appear in pending log."
+
+**Step 3 — Write Report.md:**
 ```markdown
 # [Trip Name] — Trip Report
 
 **Dates**:
 **Type**:
+
+---
+
+## Expenses
+
+| Date | Payee | Amount | Account | Category |
+|------|-------|--------|---------|----------|
+[confirmed rows from Step 2]
+| | **Total** | **$XX.XX** | | |
 
 ---
 
@@ -204,25 +241,17 @@ Write the post-trip report and propagate lessons outward:
 - 💡 Brought and didn't need:
 - ❌ Forgot and wished I had:
 
-## Cost: Estimated vs. Actual
-| Item | Estimated | Actual |
-|------|-----------|--------|
-| Flights | | |
-| Hotel | | |
-| Car | | |
-| Activities | | |
-| Food | | |
-| **Total** | | |
-
 ## Tips for Future Visits
 -
 
 ## Lessons Learned
 -
 ```
-3. Ask user to review/add lessons before pushing
-4. **Push to global file**: Append each lesson to `Trips/Lessons Learned.md` under the relevant section
-5. **Update Trip Index**: Append to `Trips/Trip Index.md` under the correct year section:
+
+**Step 4 — Push lessons and update index:**
+- Ask user to review/add Lessons Learned before pushing
+- Append each lesson to `Trips/Lessons Learned.md` under the relevant section
+- Append to `Trips/Trip Index.md` under the correct year section:
 ```markdown
 ### YYYY-MM-DD [Trip Name]
 - **Type**: [Solo/Family] [style]
@@ -233,7 +262,7 @@ Write the post-trip report and propagate lessons outward:
 - **Key Lessons**: [2-3 bullets]
 - **Tags**: #tag1 #tag2
 ```
-6. Update `README.md` status to `COMPLETED`
+- Update `README.md` status to `COMPLETED`
 
 ---
 

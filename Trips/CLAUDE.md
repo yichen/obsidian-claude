@@ -41,15 +41,17 @@ The Trip Index provides:
 ### Current Organization
 ```
 Trips/
+├── PLAN-FUTURE/                    # Trips being explored (not yet committed to dates)
 ├── 0 - Packing Checklist.md        # Master packing checklist template
 ├── 1 - Packing Checklist.md        # Alternative packing checklist
 ├── 2 - Weekend Trip Ideas.md       # Collection of potential trip destinations
+├── Lessons Learned.md              # Global lessons (auto-updated by /trip report)
+├── Trip Index.md                   # All completed trips (auto-updated by /trip report)
 ├── 2022/                           # Trip documents from 2022
 ├── 2023/                           # Trip documents from 2023
 ├── 2024/                           # Trip documents from 2024
 ├── 2025/                           # Trip documents from 2025
-
-├── TODO/                           # Future trip ideas and planning
+├── 2026/                           # Trip documents from 2026
 └── CLAUDE.md                       # This file
 ```
 
@@ -344,55 +346,42 @@ When providing an itinerary, you MUST use the following structure:
 
 ---
 
-## Agent Rules & Safety Protocols
+## Trip Lifecycle & `/trip` Command
 
-**MANDATORY EXECUTION INSTRUCTIONS**
+Use `/trip` to manage the full trip lifecycle. It replaces ad-hoc file creation and keeps every phase organized.
 
-### 1. Trip Planning Checklist
-Before planning any new trip, you MUST integrate the checklist at `Trips/Comprehensive_Trip_Checklist.md`. You MUST explicitly reference this checklist in your response.
+### Folder Structure
 
-### 2. Lessons Learned Integration (MANDATORY)
-**Before planning any trip, you MUST:**
-1. Read `Trips/Lessons Learned.md` and identify sections relevant to the trip type
-2. Read `Trips/0 - Packing Checklist.md` and identify conditional packing sections that apply
-3. Explicitly include relevant lessons in your planning output
+```
+Trips/PLAN-FUTURE/Trip-Name/        ← staging while exploring options
+Trips/YYYY/YYYY-MM-DD_Trip-Name/    ← committed trips
 
-**How to match lessons to trips:**
-- **Kids + Resort with pool** → Check "Winter Trips with Outdoor Pools/Hot Tubs", "Resort/Hotel Stays with Kids"
-- **Solo hiking** → Check "Solo Hiking Trips", seasonal sections
-- **Family camping** → Check "Family Camping (with Kids)", "Tent Camping"
-- **International** → Check country-specific sections (China, Hawaii, etc.)
-- **Workation** → Check "Solo Workation Trips"
-- **Road trip** → Check "Road Trips" section
+  README.md         status + quick-ref (confirmation numbers)
+  Research.md       destination options, cost comparisons
+  Itinerary.md      day-by-day plan
+  Reservations.md   booking confirmations
+  journal/
+    YYYY-MM-DD.md   daily notes written during the trip
+  Report.md         post-trip highlights, lessons, actual costs
+```
 
-**In your output, include a "Lessons from Past Trips" section** that lists 3-5 most relevant lessons for this specific trip, with links to source trips.
+Simple camping weekends with no bookings: single `.md` file is fine.
 
-### 3. Past Mistake Avoidance
-When suggesting packing lists or pre-trip steps, you MUST remind the user of past mistakes from `Trips/Lessons Learned.md`, such as:
-- Forgetting rain pants
-- Overpacking clothes
-- Garage clearance issues with a roof box
-- Forgetting to actually check off packing list items
+### Commands
 
-### 4. Critical Constraints: Permits & Safety
-- **PASSES:** ALWAYS check the land management agency (NPS, USFS, WA State Parks, WDFW, DNR).
-  - **Federal Land:** CALL OUT any **required additional fees or permits** not covered by the America the Beautiful Pass.
-  - **WA State Land:** CALL OUT any **required additional fees or permits** not covered by the Discover Pass.
-- **TIMED ENTRY/PERMITS:** ALWAYS research and issue a **BIG RED WARNING** if a destination requires timed entry, lottery permit, or special-use permit. **Explicitly link to booking sites.**
-- **DRIVING SAFETY:** ALWAYS include a **Driving Conditions Warning** for all road trips.
-  - NEVER suggest driving on routes affected by ice/snow/chains unless explicitly requested.
-  - When real-time data is unavailable, use **historical weather data**.
+| Command | Phase | What it does |
+|---------|-------|-------------|
+| `/trip new "Name"` | Explore | Creates folder in `PLAN-FUTURE/` with README + Research stub |
+| `/trip research` | Explore | Researches/compares destinations, writes to Research.md |
+| `/trip commit` | Plan | Moves folder to `Trips/YYYY/`, creates Itinerary stub, status → PLANNED |
+| `/trip book` | Book | Updates Reservations.md with confirmations, status → BOOKED |
+| `/trip pack` | Pre-trip | Generates packing list from Lessons Learned + trip type |
+| `/trip log [note]` | During | Auto-detects active trip, appends to `journal/YYYY-MM-DD.md` |
+| `/trip report` | Post-trip | Fills Report.md, pushes lessons to Lessons Learned.md, updates Trip Index |
+| `/trip <question>` | Any | Natural language search across all past trips |
 
-### 5. Mandatory Output Structure
-When providing an itinerary, you MUST use the following structure:
-1. **Travel Party:** (Solo Traveler / With Kids)
-2. **Summary:** A brief overview of the trip style.
-3. **Itinerary (Day-by-Day):** Detailed plan.
-4. **Key Logistics:**
-   - **Estimated Cost/Booking:** Where to check for options.
-   - **Total Driving Distance/Time**
-   - **Pass/Permit Check:** Bulleted list with mandatory call-outs.
-5. **Weather/Safety:** Forecast with explicit Driving Conditions Warning.
+### Status Lifecycle
+`EXPLORING → PLANNED → BOOKED → IN PROGRESS → COMPLETED`
 
 ### 6. Stress-Aware Trip Recommendations
 **When the user asks about trip planning, proactively check for elevated stress levels.**
