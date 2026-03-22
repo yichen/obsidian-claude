@@ -203,6 +203,10 @@
 - **Spousal maintenance ends ~late 2028**: +$10K/mo — everything becomes very comfortable
 - Re-evaluate withholding in October per safe harbor strategy
 
+### Olympic National Park Family Trip (2026-03-21) `(active)`
+- Staying at Lake Quinault Lodge with kids, returning home March 22
+- **Chase Sapphire card ends in 6904** — used for trip dining
+
 ### fairbridge.app (2026-03-18) `(active)`
 - Moved `Projects/fairbridge.app/` specs out of Obsidian vault into its own repo
 - 12 spec files removed (Android, iOS, Backend, Web Frontend, Security, UX Flows, MVP plan, software-spec)
