@@ -124,3 +124,11 @@
   category: Kids Toys and Games
   memo: 'Souvenir stuffies for twins — Plush Slug 18" ($39.99) + Plush Color Me Bear ($26.99) + tax'
   status: pending
+
+- date: '2026-03-22'
+  account: chase-sapphire
+  amount: -22.22
+  payee: KFC
+  category: Dining Out
+  memo: 'Brunch in Aberdeen on way home from Olympic NP trip — 2 Kids Meals ($5.59x2) + Spicy Sandwich combo ($9.19) + tax'
+  status: pending
