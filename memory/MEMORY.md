@@ -208,5 +208,9 @@
 - **Chase Sapphire card ends in 6904** — used for trip dining
 
 ### fairbridge.app (2026-03-18) `(active)`
-- Moved `Projects/fairbridge.app/` specs out of Obsidian vault into its own repo
+- Moved `Projects/fairbridge.app/` specs out of Obsidian vault into its own repo at `~/personal/fairbridge/`
 - 12 spec files removed (Android, iOS, Backend, Web Frontend, Security, UX Flows, MVP plan, software-spec)
+- **ACH case study** (2026-03-22): Used real OFW OFPay data from Fidelity CMA to model Stripe ACH fees
+  - 52 transactions over 12 months (Feb 2025 – Jan 2026), $115.50 total Stripe fees (~$9.63/mo avg)
+  - Stripe ACH pricing: 0.8% per transaction, capped at $5.00
+  - Saved to `~/personal/fairbridge/ACH-case-study-2025.md`
